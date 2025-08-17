@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Services\DatabaseService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,19 +14,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(RegionSeeder::class);
-        $this->call(SettingSeeder::class);
-        $this->call(RolePermissionSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(MenuSeeder::class);
-        $this->call(NotificationSeeder::class);
-        $this->call(CrudExampleSeeder::class);
-        $this->call(BankSeeder::class);
-        // \App\Models\User::factory(10)->create();
+        $this->fromSql();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // $this->call(RegionSeeder::class);
+        // $this->call(SettingSeeder::class);
+        // $this->call(RolePermissionSeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(MenuSeeder::class);
+        // $this->call(NotificationSeeder::class);
+        // $this->call(CrudExampleSeeder::class);
+        // $this->call(BankSeeder::class);
+    }
+
+    /**
+     * Seed the database from SQL file.
+     */
+    private function fromSql(): void
+    {
+        Schema::disableForeignKeyConstraints();
+        $tables = (new DatabaseService)->getAllTableMySql(config('database.connections.mysql.database'));
+        foreach ($tables as $table) {
+            DB::table($table->table)->truncate();
+        }
+        // dd($tables);
+        $sql = file_get_contents(base_path('database/seeders/data/data.sql'));
+        DB::unprepared($sql);
     }
 }
