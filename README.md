@@ -16,6 +16,7 @@ Beberapa fitur atau komponen yang ada
     -   Perbarui profil
     -   Perbarui email
     -   Perbarui password
+    -   Hapus akun
 -   Contoh Modul CRUD (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
     -   CRUD
     -   Export
