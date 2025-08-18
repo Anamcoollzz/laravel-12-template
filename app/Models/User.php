@@ -42,6 +42,7 @@ class User extends Authenticatable implements JWTSubject
         'last_updated_by_id',
         'blocked_reason',
         'deleted_at',
+        'deleted_by_id'
     ];
 
     /**
@@ -112,5 +113,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Get the user that deleted the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class, 'deleted_by_id');
     }
 }

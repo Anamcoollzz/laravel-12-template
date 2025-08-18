@@ -117,3 +117,29 @@ function auth_id()
 {
     return Auth::id() ?? auth('api')->id();
 }
+
+/**
+ * check if user is logged in
+ *
+ * @return bool
+ */
+function auth_check()
+{
+    return Auth::check() || auth('api')->check();
+}
+
+/**
+ * check if user has permission
+ *
+ * @param string $permission
+ * @return bool
+ */
+function user_can($permission)
+{
+    return Auth::user()->can($permission);
+}
+
+function user_email()
+{
+    return Auth::user()->email ?? auth('api')->user()->email;
+}

@@ -15,7 +15,7 @@ class NotificationSeeder extends Seeder
      */
     public function run()
     {
-        $userId = User::whereEmail('superadmin@laraveltemplate.com')->first()->id ?? 1;
+        $userId = User::whereEmail('superadmin@laravel12template.com')->first()->id ?? 1;
         foreach (range(1, 20) as $i) {
             Notification::create([
                 'title'             => 'Test title',

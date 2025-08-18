@@ -15,15 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->fromSql();
-
-        // $this->call(RegionSeeder::class);
-        // $this->call(SettingSeeder::class);
-        // $this->call(RolePermissionSeeder::class);
-        // $this->call(UserSeeder::class);
-        // $this->call(MenuSeeder::class);
-        // $this->call(NotificationSeeder::class);
-        // $this->call(CrudExampleSeeder::class);
-        // $this->call(BankSeeder::class);
+        // $this->normal();
     }
 
     /**
@@ -31,13 +23,37 @@ class DatabaseSeeder extends Seeder
      */
     private function fromSql(): void
     {
-        Schema::disableForeignKeyConstraints();
-        $tables = (new DatabaseService)->getAllTableMySql(config('database.connections.mysql.database'));
-        foreach ($tables as $table) {
-            DB::table($table->table)->truncate();
+        try {
+            Schema::disableForeignKeyConstraints();
+            $tables = (new DatabaseService)->getAllTableMySql(config('database.connections.mysql.database'));
+            foreach ($tables as $table) {
+                // DB::table($table->table)->truncate();
+                Schema::dropIfExists($table->table);
+            }
+            // dd($tables);
+            // $sql = file_get_contents(base_path('database/seeders/data/data.sql'));
+            $sql = file_get_contents(base_path('database/seeders/data/data_with_ddl.sql'));
+            DB::unprepared($sql);
+        } catch (\Exception $e) {
+            echo 'Error seeding database from SQL file: ' . $e->getMessage();
+        } finally {
+            Schema::enableForeignKeyConstraints();
         }
-        // dd($tables);
-        $sql = file_get_contents(base_path('database/seeders/data/data.sql'));
-        DB::unprepared($sql);
+    }
+
+    /**
+     * Seed the database with normal data.
+     */
+    private function normal()
+    {
+
+        $this->call(RegionSeeder::class);
+        $this->call(SettingSeeder::class);
+        $this->call(RolePermissionSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(MenuSeeder::class);
+        $this->call(NotificationSeeder::class);
+        $this->call(CrudExampleSeeder::class);
+        $this->call(BankSeeder::class);
     }
 }

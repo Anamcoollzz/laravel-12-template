@@ -76,3 +76,15 @@ function backSuccess($successMessage)
 {
     return back()->with('successMessage', __($successMessage));
 }
+
+/**
+ * redirect success
+ *
+ * @param string $routeInstance
+ * @param string $successMessage
+ * @return RedirectResponse
+ */
+function redirectSuccess($routeInstance, $successMessage)
+{
+    return redirect($routeInstance)->with('successMessage', __($successMessage));
+}

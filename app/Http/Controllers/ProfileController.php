@@ -18,6 +18,9 @@ class ProfileController extends StislaController
         parent::__construct();
 
         $this->middleware('can:Profil Ubah')->only(['update', 'updatePassword']);
+        $this->middleware('can:Profil Perbarui Email')->only(['updateEmail']);
+        $this->middleware('can:Profil Perbarui Password')->only(['updatePassword']);
+        $this->middleware('can:Profil Hapus Akun')->only(['deleteAccount']);
     }
 
     /**
@@ -56,6 +59,7 @@ class ProfileController extends StislaController
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $this->fileService->uploadAvatar($request->file('avatar'));
         }
+        $data['last_updated_by_id'] = auth_id();
         $newUser = $this->userRepository->updateProfile($data);
 
         logUpdate('Profil Pengguna', $user, $newUser);
@@ -74,6 +78,7 @@ class ProfileController extends StislaController
         $data = [
             'password'             => $newPassword = bcrypt($request->new_password),
             'last_password_change' => date('Y-m-d H:i:s'),
+            'last_updated_by_id'   => auth_id(),
         ];
         $this->userRepository->updateProfile($data);
 
@@ -89,13 +94,26 @@ class ProfileController extends StislaController
      */
     public function updateEmail(ProfileRequest $request)
     {
-        $oldEmail = Auth::user()->email;
-        $data = [
+        $this->userRepository->updateProfile([
             'email' => $request->email
-        ];
-        $this->userRepository->updateProfile($data);
+        ]);
 
-        logUpdate('Email', $oldEmail, $request->email);
+        logUpdate('Email', user_email(), $request->email);
         return backSuccess('Berhasil memperbarui email');
+    }
+
+    /**
+     * delete account
+     *
+     * @param ProfileRequest $request
+     * @return Response
+     */
+    public function deleteAccount(ProfileRequest $request)
+    {
+        $user = $this->userRepository->softDelete(auth_id());
+
+        logDelete('Akun', $user);
+        Auth::logout();
+        return redirectSuccess(route('login'), 'Berhasil menghapus akun');
     }
 }

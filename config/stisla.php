@@ -281,12 +281,27 @@ return [
     'permissions' => [
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'group' => 'Profil'
+        ],
+        [
+            'name' => 'Profil Perbarui Email',
+            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'group' => 'Profil'
+        ],
+        [
+            'name' => 'Profil Perbarui Password',
+            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'group' => 'Profil'
+        ],
+        [
+            'name' => 'Profil Hapus Akun',
+            'roles' => ['superadmin', 'admin', 'user', 'banker'],
             'group' => 'Profil'
         ],
 
@@ -808,7 +823,7 @@ return [
         ['key' => 'stisla_skin', 'value' => 'style'],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
-        ['key' => 'mail_from_address', 'value' => 'anamkun@laraveltemplate.com'],
+        ['key' => 'mail_from_address', 'value' => 'anamkun@laravel12template.com'],
         ['key' => 'mail_from_name', 'value' => 'Superadmin'],
 
         ['key' => 'mail_mailtrap_host', 'value' => 'sandbox.smtp.mailtrap.io'],
@@ -905,7 +920,7 @@ return [
         ['key' => 'stisla_skin', 'value' => 'style'],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
-        ['key' => 'mail_from_address', 'value' => 'anamkun@laraveltemplate.com'],
+        ['key' => 'mail_from_address', 'value' => 'anamkun@laravel12template.com'],
         ['key' => 'mail_from_name', 'value' => 'Superadmin'],
 
         ['key' => 'mail_mailtrap_host', 'value' => 'sandbox.smtp.mailtrap.io'],
@@ -964,7 +979,7 @@ return [
     'users' => [
         [
             'name'              => 'Hairul Anam Superadmin',
-            'email'             => 'superadmin@laraveltemplate.com',
+            'email'             => 'superadmin@laravel12template.com',
             'password'          => 'superadmin',
             'roles'             => ['superadmin', 'admin'],
             'email_verified_at' => '2021-04-06 04:06:00',
@@ -975,7 +990,7 @@ return [
         ],
         [
             'name'              => 'Hairul Anam Admin',
-            'email'             => 'admin@laraveltemplate.com',
+            'email'             => 'admin@laravel12template.com',
             'password'          => 'admin',
             'roles'             => ['admin'],
             'email_verified_at' => '2021-04-06 04:06:00',
@@ -985,7 +1000,7 @@ return [
         ],
         [
             'name'              => 'Hairul Anam User',
-            'email'             => 'user@laraveltemplate.com',
+            'email'             => 'user@laravel12template.com',
             'password'          => 'user',
             'roles'             => ['user'],
             'email_verified_at' => '2021-04-06 04:06:00',
@@ -995,7 +1010,7 @@ return [
         ],
         [
             'name'              => 'Hairul Anam Banker',
-            'email'             => 'banker@laraveltemplate.com',
+            'email'             => 'banker@laravel12template.com',
             'password'          => 'banker',
             'roles'             => ['banker'],
             'email_verified_at' => '2021-04-06 04:06:00',

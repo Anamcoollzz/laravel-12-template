@@ -119,6 +119,10 @@ class AuthController extends StislaController
      */
     public function loginForm()
     {
+        if (auth_check()) {
+            return redirect()->route('dashboard.index');
+        }
+
         $isGoogleCaptcha = SettingRepository::isGoogleCaptchaLogin();
         if (TEMPLATE === STISLA) {
             $template = $this->settingRepository->stislaLoginTemplate();

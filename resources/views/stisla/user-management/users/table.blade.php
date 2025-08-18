@@ -25,13 +25,14 @@
       @if ($_is_login_must_verified)
         <th>{{ __('Waktu Verifikasi') }}</th>
       @endif
-      <th>{{ __('Deleted At') }}</th>
 
       {{-- wajib --}}
       <th>{{ __('Created At') }}</th>
       <th>{{ __('Updated At') }}</th>
+      <th>{{ __('Deleted At') }}</th>
       <th>{{ __('Created By') }}</th>
       <th>{{ __('Last Updated By') }}</th>
+      <th>{{ __('Deleted By') }}</th>
       @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)
         <th>{{ __('Aksi') }}</th>
       @endif
@@ -69,13 +70,14 @@
         @if ($_is_login_must_verified)
           <td>{{ $item->email_verified_at ?? '-' }}</td>
         @endif
-        <td>{{ $item->deleted_at ?? '-' }}</td>
 
         {{-- wajib --}}
         <td>{{ $item->created_at ?? '-' }}</td>
         <td>{{ $item->updated_at ?? '-' }}</td>
+        <td>{{ $item->deleted_at ?? '-' }}</td>
         <td>{{ $item->createdBy->name ?? '-' }}</td>
         <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+        <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)
           <td style="width: 150px;">
             @if ($canUpdate && $item->deleted_at === null)

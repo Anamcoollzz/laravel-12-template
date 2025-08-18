@@ -39,6 +39,7 @@ Route::get('profile', [ProfileController::class, 'index'])->name('profile.index'
 Route::put('profile', [ProfileController::class, 'update']);
 Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 Route::put('profile/email', [ProfileController::class, 'updateEmail'])->name('profile.update-email');
+Route::put('profile/delete-account', [ProfileController::class, 'deleteAccount'])->name('profile.delete-account');
 
 # EXAMPLE STISLA
 Route::view('datatable', 'stisla.examples.datatable.index')->name('datatable.index');

@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Repositories\UserRepository;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +26,12 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
+        if (Route::is('profile.delete-account')) {
+            return [
+                'confirm_email' => 'required|email|in:' . user_email(),
+            ];
+        }
+
         if (Route::is('profile.update-password')) {
             return [
                 'new_password'              => 'required|min:6|confirmed',

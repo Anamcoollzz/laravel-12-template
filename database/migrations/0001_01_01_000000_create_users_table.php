@@ -35,9 +35,11 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('deleted_by_id')->nullable();
+            $table->foreign('deleted_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

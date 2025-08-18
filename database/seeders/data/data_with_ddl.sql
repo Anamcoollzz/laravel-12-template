@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 18, 2025 at 07:19 PM
+-- Generation Time: Aug 18, 2025 at 07:09 PM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -20,6 +20,46 @@ SET time_zone = "+00:00";
 --
 -- Database: `laravel_12_template`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_logs`
+--
+
+CREATE TABLE `activity_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_data` longtext COLLATE utf8mb4_unicode_ci,
+  `before` longtext COLLATE utf8mb4_unicode_ci,
+  `after` longtext COLLATE utf8mb4_unicode_ci,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `roles` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '[]' COMMENT 'history roles',
+  `browser` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `platform` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banks`
+--
+
+CREATE TABLE `banks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_type` enum('Syariah','Konvensional') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Konvensional',
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `banks`
@@ -45,6 +85,31 @@ INSERT INTO `banks` (`id`, `name`, `bank_type`, `created_by_id`, `last_updated_b
 (17, 'SEABANK', 'Konvensional', 1, NULL, NULL, NULL),
 (18, 'SUPERBANK', 'Konvensional', 1, NULL, NULL, NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_deposits`
+--
+
+CREATE TABLE `bank_deposits` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bank_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `per_anum` double NOT NULL COMMENT 'percentage',
+  `amount` double NOT NULL,
+  `tax_percentage` double NOT NULL DEFAULT '2',
+  `tax` double NOT NULL,
+  `estimation` double NOT NULL,
+  `time_period` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `due_date` date DEFAULT NULL,
+  `status` enum('Aktif','Tidak Aktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Aktif',
+  `realization` double DEFAULT NULL,
+  `difference` double DEFAULT NULL,
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `bank_deposits`
 --
@@ -66,12 +131,96 @@ INSERT INTO `bank_deposits` (`id`, `bank_id`, `per_anum`, `amount`, `tax_percent
 (14, 8, 3, 60000000, 20, 30000, 120000, '1 Bulan', '2025-09-03', 'Aktif', NULL, NULL, 1, 1, '2025-08-16 08:32:10', '2025-08-16 09:10:21'),
 (15, 10, 3, 8000000, 20, 4000, 16000, '1 Bulan', '2025-09-06', 'Aktif', NULL, NULL, 1, 1, '2025-08-16 08:32:26', '2025-08-16 09:09:14');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_deposit_histories`
+--
+
+CREATE TABLE `bank_deposit_histories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bank_deposit_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `per_anum` double NOT NULL COMMENT 'percentage',
+  `amount` double NOT NULL,
+  `tax_percentage` double NOT NULL DEFAULT '2',
+  `tax` double NOT NULL,
+  `estimation` double NOT NULL,
+  `time_period` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `due_date` date DEFAULT NULL,
+  `realization` double DEFAULT NULL,
+  `difference` double DEFAULT NULL,
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `bank_deposit_histories`
 --
 
 INSERT INTO `bank_deposit_histories` (`id`, `bank_deposit_id`, `per_anum`, `amount`, `tax_percentage`, `tax`, `estimation`, `time_period`, `due_date`, `realization`, `difference`, `created_by_id`, `last_updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 6, 6, 750000, 20, 187.5, 750, '7 Hari', '2025-08-13', 863, -113, 1, 1, '2025-08-16 01:26:42', '2025-08-16 02:34:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cache`
+--
+
+CREATE TABLE `cache` (
+  `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cache_locks`
+--
+
+CREATE TABLE `cache_locks` (
+  `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crud_examples`
+--
+
+CREATE TABLE `crud_examples` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qr_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number` double NOT NULL,
+  `currency` double NOT NULL,
+  `currency_idr` double NOT NULL,
+  `select` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `select2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `select2_multiple` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `textarea` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radio` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `checkbox` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `checkbox2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `color` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `summernote_simple` text COLLATE utf8mb4_unicode_ci,
+  `summernote` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `crud_examples`
@@ -181,6 +330,102 @@ INSERT INTO `crud_examples` (`id`, `text`, `barcode`, `qr_code`, `email`, `numbe
 (99, 'DVcdLGwyTm', 'lJSI2au0O7', '1303842823295', 'irsad.haryanti@puspita.co.id', 912, 2412, 2113111, 'Option 2', 'Option 6', '[\"Option 1\"]', 'Explicabo qui corporis molestiae beatae laudantium illum. Placeat non deleniti ut debitis.', 'Option 1', '[\"Option 1\"]', '[\"Option 1\",\"Option 2\"]', 'Option 1,Option 2', 'https://picsum.photos/200/300?random=99', 'https://picsum.photos/200/300?random=99', '2003-09-24', '16:17:08', '#9a3ab2', 'Illum excepturi non officiis vel. Autem consequatur et ea dicta accusamus dolor sed.', '<html><head><title>Aperiam facilis molestias rerum praesentium rerum quae.</title></head><body><form action=\"example.net\" method=\"POST\"><label for=\"username\">ut</label><input type=\"text\" id=\"username\"><label for=\"password\">maiores</label><input type=\"password\" id=\"password\"></form><div class=\"facilis\"><div class=\"excepturi\"></div><div class=\"eum\"></div><div class=\"libero\"></div></div><div class=\"inventore\"></div></body></html>\n', '2025-08-10 13:07:20', '2025-07-25 10:08:39', NULL, NULL),
 (100, '91W6UQlWuu', 'zvrstfYxCV', '7618489441844', 'isusanti@yuniar.co.id', 731, 4458, 7912781, 'Option 3', 'Option 7', '[\"Option 1\"]', 'Temporibus non velit iusto id ratione veritatis vitae. Et et dolores aut itaque.', 'Option 4', '[\"Option 1\",\"Option 2\",\"Option 3\"]', '[\"Option 1\"]', 'Option 1', 'https://picsum.photos/200/300?random=100', 'https://picsum.photos/200/300?random=100', '1980-04-20', '06:28:04', '#3ba31a', 'Corporis molestiae in a. Omnis aut rerum repellat et.', '<html><head><title>Incidunt dicta nemo ut esse quidem ex harum nulla quaerat dolorem temporibus.</title></head><body><form action=\"example.net\" method=\"POST\"><label for=\"username\">amet</label><input type=\"text\" id=\"username\"><label for=\"password\">officiis</label><input type=\"password\" id=\"password\"></form><div id=\"52589\"><div class=\"totam\"></div><div id=\"88812\"></div><div class=\"modi\"></div></div></body></html>\n', '2025-08-15 03:21:35', '2025-07-30 15:33:27', NULL, 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_batches`
+--
+
+CREATE TABLE `job_batches` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int(11) NOT NULL,
+  `pending_jobs` int(11) NOT NULL,
+  `failed_jobs` int(11) NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `cancelled_at` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `finished_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_requests`
+--
+
+CREATE TABLE `log_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uri` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `query_string` longtext COLLATE utf8mb4_unicode_ci,
+  `method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_data` longtext COLLATE utf8mb4_unicode_ci,
+  `ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `roles` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'history roles',
+  `browser` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `platform` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_ajax` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menu_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `route_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uri` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_blank` tinyint(1) NOT NULL DEFAULT '0',
+  `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active_if_url_includes` text COLLATE utf8mb4_unicode_ci,
+  `parent_menu_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `menu_group_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `menus`
 --
@@ -221,6 +466,19 @@ INSERT INTO `menus` (`id`, `menu_name`, `route_name`, `uri`, `is_blank`, `icon`,
 (33, 'Backup Database', 'backup-databases.index', NULL, 0, 'fas fa-database', 'Backup Database', 'backup-databases*', NULL, 2, '2025-08-18 19:09:03', '2025-08-18 19:09:03'),
 (34, 'Keluar', 'logout', NULL, 0, 'fas fa-sign-out-alt', NULL, NULL, NULL, 2, '2025-08-18 19:09:03', '2025-08-18 19:09:03');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_groups`
+--
+
+CREATE TABLE `menu_groups` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `menu_groups`
 --
@@ -228,6 +486,18 @@ INSERT INTO `menus` (`id`, `menu_name`, `route_name`, `uri`, `is_blank`, `icon`,
 INSERT INTO `menu_groups` (`id`, `group_name`, `created_at`, `updated_at`) VALUES
 (1, 'Navigasi', '2025-08-18 19:09:03', '2025-08-18 19:09:03'),
 (2, 'Menu Lainnya', '2025-08-18 19:09:03', '2025-08-18 19:09:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -252,6 +522,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2025_08_16_160846_create_bank_deposits_table', 1),
 (17, '2025_08_17_100159_create_bank_deposit_histories_table', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `model_has_roles`
 --
@@ -262,6 +556,25 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (2, 'App\\Models\\User', 2),
 (4, 'App\\Models\\User', 3),
 (3, 'App\\Models\\User', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `is_read` tinyint(1) NOT NULL,
+  `notification_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bg_color` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'primary',
+  `icon` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'bell',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `notifications`
@@ -288,6 +601,33 @@ INSERT INTO `notifications` (`id`, `title`, `content`, `user_id`, `is_read`, `no
 (18, 'Test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima doloremque, ullam pariatur vero beatae tempora dolor qui autem, similique consequatur iure explicabo. Magnam temporibus blanditiis, nesciunt iusto eius explicabo quae?', 1, 0, 'transaksi masuk', 'primary', 'bell', '2025-08-18 19:09:03', '2025-08-18 19:09:03'),
 (19, 'Test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima doloremque, ullam pariatur vero beatae tempora dolor qui autem, similique consequatur iure explicabo. Magnam temporibus blanditiis, nesciunt iusto eius explicabo quae?', 1, 0, 'transaksi masuk', 'primary', 'bell', '2025-08-18 19:09:03', '2025-08-18 19:09:03'),
 (20, 'Test title', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima doloremque, ullam pariatur vero beatae tempora dolor qui autem, similique consequatur iure explicabo. Magnam temporibus blanditiis, nesciunt iusto eius explicabo quae?', 1, 0, 'transaksi masuk', 'primary', 'bell', '2025-08-18 19:09:03', '2025-08-18 19:09:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `permission_group_id` tinyint(3) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -378,6 +718,19 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (82, 'Riwayat Deposito Bank', 'web', '2025-08-18 19:09:00', '2025-08-18 19:09:00', 19),
 (83, 'Riwayat Deposito Bank Ekspor', 'web', '2025-08-18 19:09:00', '2025-08-18 19:09:00', 19);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permission_groups`
+--
+
+CREATE TABLE `permission_groups` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
+  `group_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `permission_groups`
 --
@@ -403,6 +756,34 @@ INSERT INTO `permission_groups` (`id`, `group_name`, `created_at`, `updated_at`)
 (18, 'Deposito Bank', '2025-08-18 19:09:00', '2025-08-18 19:09:00'),
 (19, 'Riwayat Deposito Bank', '2025-08-18 19:09:00', '2025-08-18 19:09:00');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `regions`
+--
+
+CREATE TABLE `regions` (
+  `code` varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_locked` tinyint(1) NOT NULL DEFAULT '0',
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `roles`
 --
@@ -412,6 +793,17 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `is_locked`, `created_by_id`, `
 (2, 'admin', 'web', 0, 1, NULL, '2025-08-18 19:08:58', '2025-08-18 19:08:58'),
 (3, 'banker', 'web', 0, 1, NULL, '2025-08-18 19:08:58', '2025-08-18 19:08:58'),
 (4, 'user', 'web', 0, 1, NULL, '2025-08-18 19:08:58', '2025-08-18 19:08:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `role_has_permissions`
@@ -577,6 +969,32 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (66, 4),
 (67, 4);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `key` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `settings`
 --
@@ -644,6 +1062,41 @@ INSERT INTO `settings` (`key`, `value`) VALUES
 ('stisla_sidebar_mini', '0'),
 ('stisla_skin', 'style');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `email_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `verification_code` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_locked` tinyint(1) NOT NULL DEFAULT '0',
+  `phone_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `last_password_change` datetime DEFAULT NULL,
+  `twitter_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_upload` text COLLATE utf8mb4_unicode_ci,
+  `wrong_login` tinyint(4) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `blocked_reason` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `last_updated_by_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `deleted_by_id` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `users`
 --
@@ -653,6 +1106,399 @@ INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `email_verified_at`, `pass
 (2, 'Hairul Anam Admin', 'admin@laravel12template.com', NULL, '2021-04-05 21:06:00', '$2y$12$GdsmmmyFhRK.Kg/bxKa3ZOsjOHIoPgUiROLqohgX4MmeY0tfQzjA2', NULL, NULL, NULL, 0, '6285322778935', '1998-04-08', 'Jember', '2025-08-19 02:09:02', NULL, NULL, 0, 1, NULL, NULL, NULL, '2025-08-18 19:09:02', '2025-08-18 19:09:02', 1, NULL, NULL),
 (3, 'Hairul Anam User', 'user@laravel12template.com', NULL, '2021-04-05 21:06:00', '$2y$12$UoTT1s9dYUur2DOsiddO9ufB8W9k.dWUKWU/nhhnUyMSCqocRbEja', NULL, NULL, NULL, 0, '6285322778935', '1998-04-08', 'Jember', '2025-08-19 02:09:02', NULL, NULL, 0, 1, NULL, NULL, NULL, '2025-08-18 19:09:02', '2025-08-18 19:09:02', 1, NULL, NULL),
 (4, 'Hairul Anam Banker', 'banker@laravel12template.com', NULL, '2021-04-05 21:06:00', '$2y$12$dzkKyJ7.C2W23OqZUjpvTul.cZ9hjBhB4e9SmYWpmdTZ3.A2rnEf6', NULL, NULL, NULL, 0, '6285322778935', '1998-04-08', 'Jember', '2025-08-19 02:09:03', NULL, NULL, 0, 1, NULL, NULL, NULL, '2025-08-18 19:09:03', '2025-08-18 19:09:03', 1, NULL, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `activity_logs_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `banks`
+--
+ALTER TABLE `banks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `banks_name_unique` (`name`),
+  ADD KEY `banks_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `banks_last_updated_by_id_foreign` (`last_updated_by_id`);
+
+--
+-- Indexes for table `bank_deposits`
+--
+ALTER TABLE `bank_deposits`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bank_deposits_bank_id_foreign` (`bank_id`),
+  ADD KEY `bank_deposits_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `bank_deposits_last_updated_by_id_foreign` (`last_updated_by_id`);
+
+--
+-- Indexes for table `bank_deposit_histories`
+--
+ALTER TABLE `bank_deposit_histories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bank_deposit_histories_bank_deposit_id_foreign` (`bank_deposit_id`),
+  ADD KEY `bank_deposit_histories_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `bank_deposit_histories_last_updated_by_id_foreign` (`last_updated_by_id`);
+
+--
+-- Indexes for table `cache`
+--
+ALTER TABLE `cache`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `cache_locks`
+--
+ALTER TABLE `cache_locks`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `crud_examples`
+--
+ALTER TABLE `crud_examples`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `crud_examples_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `crud_examples_last_updated_by_id_foreign` (`last_updated_by_id`);
+
+--
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
+
+--
+-- Indexes for table `job_batches`
+--
+ALTER TABLE `job_batches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `log_requests`
+--
+ALTER TABLE `log_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `log_requests_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menus_parent_menu_id_foreign` (`parent_menu_id`),
+  ADD KEY `menus_menu_group_id_foreign` (`menu_group_id`);
+
+--
+-- Indexes for table `menu_groups`
+--
+ALTER TABLE `menu_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`),
+  ADD KEY `permissions_permission_group_id_foreign` (`permission_group_id`);
+
+--
+-- Indexes for table `permission_groups`
+--
+ALTER TABLE `permission_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permission_groups_group_name_unique` (`group_name`);
+
+--
+-- Indexes for table `regions`
+--
+ALTER TABLE `regions`
+  ADD PRIMARY KEY (`code`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`),
+  ADD KEY `roles_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `roles_last_updated_by_id_foreign` (`last_updated_by_id`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sessions_user_id_index` (`user_id`),
+  ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `users_twitter_id_unique` (`twitter_id`),
+  ADD KEY `users_created_by_id_foreign` (`created_by_id`),
+  ADD KEY `users_last_updated_by_id_foreign` (`last_updated_by_id`),
+  ADD KEY `users_deleted_by_id_foreign` (`deleted_by_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `banks`
+--
+ALTER TABLE `banks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `bank_deposits`
+--
+ALTER TABLE `bank_deposits`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `bank_deposit_histories`
+--
+ALTER TABLE `bank_deposit_histories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `crud_examples`
+--
+ALTER TABLE `crud_examples`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `log_requests`
+--
+ALTER TABLE `log_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `menu_groups`
+--
+ALTER TABLE `menu_groups`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+
+--
+-- AUTO_INCREMENT for table `permission_groups`
+--
+ALTER TABLE `permission_groups`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD CONSTRAINT `activity_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `banks`
+--
+ALTER TABLE `banks`
+  ADD CONSTRAINT `banks_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `banks_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bank_deposits`
+--
+ALTER TABLE `bank_deposits`
+  ADD CONSTRAINT `bank_deposits_bank_id_foreign` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `bank_deposits_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `bank_deposits_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bank_deposit_histories`
+--
+ALTER TABLE `bank_deposit_histories`
+  ADD CONSTRAINT `bank_deposit_histories_bank_deposit_id_foreign` FOREIGN KEY (`bank_deposit_id`) REFERENCES `bank_deposits` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `bank_deposit_histories_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `bank_deposit_histories_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `crud_examples`
+--
+ALTER TABLE `crud_examples`
+  ADD CONSTRAINT `crud_examples_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `crud_examples_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `log_requests`
+--
+ALTER TABLE `log_requests`
+  ADD CONSTRAINT `log_requests_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `menus`
+--
+ALTER TABLE `menus`
+  ADD CONSTRAINT `menus_menu_group_id_foreign` FOREIGN KEY (`menu_group_id`) REFERENCES `menu_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `menus_parent_menu_id_foreign` FOREIGN KEY (`parent_menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD CONSTRAINT `permissions_permission_group_id_foreign` FOREIGN KEY (`permission_group_id`) REFERENCES `permission_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `roles`
+--
+ALTER TABLE `roles`
+  ADD CONSTRAINT `roles_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `roles_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_created_by_id_foreign` FOREIGN KEY (`created_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_deleted_by_id_foreign` FOREIGN KEY (`deleted_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_last_updated_by_id_foreign` FOREIGN KEY (`last_updated_by_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

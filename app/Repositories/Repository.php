@@ -239,7 +239,9 @@ class Repository extends RepositoryAbstract
     {
         $model = $this->find($id);
         if ($model)
-            $model->update(['deleted_at' => now()]);
+            $model->update([
+                'deleted_at'     => now(),
+            ]);
         return $model;
     }
 

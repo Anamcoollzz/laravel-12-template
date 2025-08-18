@@ -429,4 +429,25 @@ class UserRepository extends Repository
         $roles = Role::whereIn('id', $roles)->get();
         return $user->syncRoles($roles);
     }
+
+    /**
+     * soft delete data by id
+     *
+     * @param int $id
+     * @return Model
+     */
+    public function softDelete(int $id)
+    {
+        $model = $this->find($id);
+        if ($model)
+            $model->update([
+                'deleted_at'         => now(),
+                'blocked_reason'     => null,
+                'is_active'          => false,
+                'wrong_login'        => 0,
+                'deleted_by_id'      => auth_id(),
+                'last_updated_by_id' => auth_id()
+            ]);
+        return $model;
+    }
 }
