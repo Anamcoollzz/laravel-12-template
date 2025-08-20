@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-12">
 
-        @if ($type === 'general')
+        @if ($setting_type === 'general')
           <div class="card">
             <div class="card-header">
               <h4><i class="fa fa-cogs"></i> {{ $title }} Umum</h4>
@@ -130,7 +130,7 @@
           </div>
         @endif
 
-        @if ($type === 'meta')
+        @if ($setting_type === 'meta')
           <div class="card">
             <div class="card-header">
               <h4><i class="fa fa-globe"></i> {{ $title }} Meta</h4>
@@ -177,7 +177,7 @@
           </div>
         @endif
 
-        @if ($type === 'view')
+        @if ($setting_type === 'view')
           <div class="card">
             <div class="card-header">
               <h4><i class="fa fa-eye"></i> {{ __('Pengaturan Tampilan') }}</h4>
@@ -275,7 +275,7 @@
           </div>
         @endif
 
-        @if ($type === 'email')
+        @if ($setting_type === 'email')
           <div class="alert alert-info alert-has-icon">
             <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
             <div class="alert-body">
@@ -318,7 +318,7 @@
                   </div>
                   <div class="col-sm-6">
                     @include('stisla.includes.forms.inputs.input-name', [
-                        'type' => ($type = 'text'),
+                        'type' => ($setting_type = 'text'),
                         'id' => 'mail_from_name',
                         'label' => __('From Name'),
                         'required' => true,
@@ -449,7 +449,7 @@
           </div>
         @endif
 
-        @if ($type === 'other')
+        @if ($setting_type === 'other')
           <div class="card">
             <div class="card-header">
               <h4><i class="fa fa-cogs"></i> {{ __('Pengaturan Lainnya') }}</h4>
@@ -558,7 +558,7 @@
           </div>
         @endif
 
-        @if ($type === 'sso')
+        @if ($setting_type === 'sso')
           @php
             $i = 0;
             $providers = ['google', 'facebook', 'twitter', 'github'];

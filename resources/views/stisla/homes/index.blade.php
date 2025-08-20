@@ -1,4 +1,4 @@
-@extends('stisla.layouts.app-blank', \App\Repositories\SettingRepository::settings())
+@extends('stisla.layouts.app-blank')
 
 @section('title', $title)
 
@@ -32,7 +32,7 @@
       </div>
       <div class="simple-footer mt-5">
         Copyright &copy; {{ since() ?? year() }} <div class="bullet"></div>
-        <a href="{{ route('dashboard.index') }}">{{ app_name() }}</a>
+        <a href="{{ route('dashboard.index') }}">{{ $_app_name }}</a>
 
         @if (config('app.is_showing_developer'))
           <span> ♥ Aplikasi dibuat oleh {{ developer_name() }}</span>
@@ -42,8 +42,4 @@
       {{-- @include('stisla.includes.footer') --}}
     </div>
   </section>
-@endsection
-
-@section('title')
-  404 {{ __('Halaman yang anda tuju tidak ada') }}
 @endsection

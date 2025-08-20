@@ -63,11 +63,11 @@ class SettingController extends Controller
                 $fullTitle = __('SSO Login dan Register');
             }
             return view('stisla.settings.index', [
-                'skins'      => $skins,
-                'type'       => $type,
-                'routeIndex' => route('settings.all'),
-                'fullTitle'  => $fullTitle,
-                'title'      => __('Pengaturan'),
+                'skins'        => $skins,
+                'setting_type' => $type,
+                'routeIndex'   => route('settings.all'),
+                'fullTitle'    => $fullTitle,
+                'title'        => __('Pengaturan'),
             ]);
         } else {
             $skins = collect($this->settingRepository->getSkins())->map(function ($item) {
