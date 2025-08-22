@@ -112,4 +112,4 @@ Terima kasih, bisa distar ataupun difork ya guys. Kalau ada request module atau 
 
 atau kunjungi https://anamapp.my.id
 
-https://github.com/Anamcoollzz/laravel-11-template
+https://github.com/Anamcoollzz/laravel-12-template
