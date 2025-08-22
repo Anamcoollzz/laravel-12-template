@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             // $sql = file_get_contents(base_path('database/seeders/data/data.sql'));
             $sql = file_get_contents(base_path('database/seeders/data/data_with_ddl.sql'));
             DB::unprepared($sql);
+            $this->call(SettingSeeder::class);
         } catch (\Exception $e) {
             echo 'Error seeding database from SQL file: ' . $e->getMessage();
         } finally {
