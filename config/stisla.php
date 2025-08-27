@@ -781,7 +781,7 @@ return [
         'user'
     ],
 
-    'use_setting' => '1',
+    'use_setting' => env('STISLA_USE_SETTING', '1'),
 
     'settings' => [
         ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
