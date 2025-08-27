@@ -821,6 +821,7 @@ return [
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
         ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'debugbar', 'value' => 1],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
         ['key' => 'mail_from_address', 'value' => 'anamkun@laravel12template.com'],
@@ -918,6 +919,7 @@ return [
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
         ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'debugbar', 'value' => 2],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
         ['key' => 'mail_from_address', 'value' => 'anamkun@laravel12template.com'],
