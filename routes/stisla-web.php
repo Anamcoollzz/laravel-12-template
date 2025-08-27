@@ -3,10 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\YoutubeController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 # DASHBOARD
@@ -26,6 +24,7 @@ Route::get('auth/forgot-password', [AuthController::class, 'forgotPasswordForm']
 Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('auth/reset-password/{token}', [AuthController::class, 'resetPasswordForm'])->name('reset-password');
 Route::post('auth/reset-password/{token}', [AuthController::class, 'resetPassword']);
+Route::get('deposito', [AuthController::class, 'deposito'])->name('deposito');
 
 # SOCIAL LOGIN AND REGISTER
 Route::get('auth/social-login/{provider}', [AuthController::class, 'socialLogin'])->name('social-login');

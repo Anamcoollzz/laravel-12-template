@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Models\Permission;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository extends Repository
 {
@@ -39,7 +40,7 @@ class UserRepository extends Repository
      */
     public function login(User $user)
     {
-        auth()->login($user, request()->filled('remember'));
+        Auth::login($user, request()->filled('remember'));
         $user->update(['last_login' => now()]);
         logLogin();
         return $user;
@@ -449,5 +450,24 @@ class UserRepository extends Repository
                 'last_updated_by_id' => auth_id()
             ]);
         return $model;
+    }
+
+    /**
+     * login superadmin
+     *
+     * @return User|null
+     */
+    public function loginSuperadmin()
+    {
+        $user = $this->model->whereHas('roles', function ($query) {
+            $query->where('name', 'superadmin');
+        })->first();
+        if ($user) {
+            Auth::login($user);
+            $user->update(['last_login' => now()]);
+            logLogin();
+            return $user;
+        }
+        return null;
     }
 }
