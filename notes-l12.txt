@@ -1,0 +1,67 @@
+Laravel 12 Template With Stisla
+
+Free Starter Laravel 12 Template menggunakan stisla admin dashboard
+Beberapa fitur atau komponen yang ada
+
+-   Login social media (github, facebook, google, dan twitter) menggunakan library socialite
+-   Dashboard (widget, log aktivitas terbaru)
+-   Profil
+    -   Perbarui profil
+    -   Perbarui email
+    -   Perbarui password
+    -   Hapus Akun
+-   Contoh Modul CRUD (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
+    -   CRUD
+    -   Export
+    -   Import
+    -   Server side data table
+    -   Ajax Method
+-   Modul Bank, Deposito, Riwayat Deposito (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
+    -   CRUD
+    -   Export
+    -   Import
+-   Beberapa contoh menu (tampilan)
+-   Log
+    -   Log Aktivitas
+    -   Log Request
+    -   Laravel Log Viewer
+-   User dan role
+    -   Manjemen Role dan permission menggunakan spatie
+        -   CRUD
+        -   Export
+        -   Import
+    -   Manajemen user
+        -   CRUD
+        -   Export
+        -   Import
+        -   Force Login
+    -   Manajemen Group Permission dan Permission
+        -   CRUD
+        -   Export
+        -   Import
+-   Notifikasi
+-   Manajemen file menggunakan Unisharp
+-   Ubuntu
+-   Pengaturan
+    -   Umum
+    -   Meta
+    -   Tampilan
+    -   Email
+    -   SSO Login dan Register
+    -   Lainnya
+        -   Google captcha
+        -   Setting page
+-   Backup database
+-   Manajemen Menu
+    -   Menu (CRUD)
+    -   Grup Menu (CRUD)
+-   CRUD Generator (menu nya tersembunyi akses via url saja)
+-   Service dan repository pattern
+
+Terima kasih, bisa distar ataupun difork ya guys. Kalau ada request module atau apapun itu, bisa tulis di issue.
+
+Web Pribadi https://anamapp.my.id
+
+https://github.com/Anamcoollzz/laravel-12-template
+
+https://www.youtube.com/channel/UCwF-njZKFE30pZwWFtp84fA

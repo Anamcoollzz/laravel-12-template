@@ -42,11 +42,7 @@ Beberapa fitur atau komponen yang ada
         -   Import
         -   Force Login
         -   Block / Unblock
-    -   Manajemen Group Permission
-        -   CRUD
-        -   Export
-        -   Import
-    -   Manajemen Permission
+    -   Manajemen Group Permission dan Permission
         -   CRUD
         -   Export
         -   Import
@@ -84,10 +80,10 @@ Beberapa fitur atau komponen yang ada
 
 ## Libraries dan Link Penting
 
--   https://demo.getstisla.com/
+-   https://demo.getstisla.com
 -   https://spatie.be/docs/laravel-permission/v6/introduction
--   https://laravel.com/docs/11.x/socialite
--   https://unisharp.github.io/laravel-filemanager/
+-   https://laravel.com/docs/12.x/socialite
+-   https://unisharp.github.io/laravel-filemanager
 -   https://laravel-excel.com/
 -   https://github.com/barryvdh/laravel-dompdf
 -   https://datatables.net/

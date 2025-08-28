@@ -931,3 +931,11 @@ function confirmation(cb, title = 'Anda yakin?', text = 'Sekali restore, data ak
     }
   });
 }
+
+function rp(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function dollar(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
