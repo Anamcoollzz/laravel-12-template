@@ -391,7 +391,7 @@ class FileService
             $phps = collect($phps)->map(function ($php) {
                 return [
                     'version'     => basename($php),
-                    'status_fpm'  => shell_exec('service php' . basename($php) . '-fpm status'),
+                    'status_fpm'  => exec('service php' . basename($php) . '-fpm status'),
                     'path'        => $php,
                     'directories' => File::directories($php),
                 ];

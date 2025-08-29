@@ -154,9 +154,9 @@ class UbuntuController extends StislaController
         }
 
 
-        $nginxStatus      = shell_exec('service nginx status');
-        $supervisorStatus = shell_exec('service supervisor status');
-        $mysqlStatus      = shell_exec('service mysql status');
+        $nginxStatus      = exec('service nginx status');
+        $supervisorStatus = exec('service supervisor status');
+        $mysqlStatus      = exec('service mysql status');
 
         return view('stisla.ubuntu.index', [
             'files'            => $files,
@@ -365,7 +365,7 @@ class UbuntuController extends StislaController
         $pathnameD = decrypt($pathname);
 
         $command = 'git config --global --add safe.directory ' . $pathnameD . ' 2>&1';
-        $output = shell_exec($command);
+        $output = exec($command);
         return $output;
         // $command = 'git config --global --add safe.directory ' . $pathnameD . ' && /usr/bin/git pull origin 2>&1';
         ShellJob::dispatch($command, $pathnameD);

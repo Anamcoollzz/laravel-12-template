@@ -191,9 +191,9 @@ class SettingController extends Controller
         // return back();
         config(['stisla.use_setting' => '1']);
 
-        // shell_exec('php artisan db:seed');
+        // exec('php artisan db:seed');
         // //get output from shell
-        // $commandOutput = shell_exec('php artisan db:seed');
+        // $commandOutput = exec('php artisan db:seed');
         // dd($commandOutput);
         $output = new BufferedOutput();
         $a = Artisan::call(
