@@ -102,7 +102,8 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ], $request->only(
             [
-                'name', 'email'
+                'name',
+                'email'
             ]
         ));
         $user = $this->userRepository->create($data);
