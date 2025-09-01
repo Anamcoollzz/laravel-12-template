@@ -190,6 +190,10 @@ Route::post('banks/import-excel', [BankController::class, 'importExcel'])->name(
 Route::resource('banks', BankController::class);
 
 # DEPOSITO BANK
+Route::get('toggle-chart', function () {
+    session(['toggle_chart' => !session('toggle_chart')]);
+    return back();
+})->name('toggle-chart');
 Route::get('save-to-history-bank-deposits', [BankDepositController::class, 'saveToHistory'])->name('bank-deposits.save-to-history');
 Route::get('yajra-bank-deposits', [BankDepositController::class, 'index'])->name('bank-deposits.index-yajra');
 Route::get('yajra-bank-deposits/ajax', [BankDepositController::class, 'yajraAjax'])->name('bank-deposits.ajax-yajra');
