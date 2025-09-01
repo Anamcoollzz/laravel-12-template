@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->fromSql();
-        // $this->normal();
+        // $this->fromSql();
+        $this->normal();
     }
 
     /**
@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             $sql = file_get_contents(base_path('database/seeders/data/data_with_ddl.sql'));
             DB::unprepared($sql);
             $this->call(SettingSeeder::class);
+            $this->call(MenuSeeder::class);
         } catch (\Exception $e) {
             echo 'Error seeding database from SQL file: ' . $e->getMessage();
         } finally {

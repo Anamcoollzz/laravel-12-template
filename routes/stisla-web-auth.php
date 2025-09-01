@@ -18,6 +18,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\UbuntuController;
 use App\Http\Controllers\UserManagementController;
@@ -219,6 +220,19 @@ Route::get('bank-deposit-histories/json', [BankDepositHistoryController::class, 
 Route::get('bank-deposit-histories/import-excel-example', [BankDepositHistoryController::class, 'importExcelExample'])->name('bank-deposit-histories.import-excel-example');
 Route::post('bank-deposit-histories/import-excel', [BankDepositHistoryController::class, 'importExcel'])->name('bank-deposit-histories.import-excel');
 Route::resource('bank-deposit-histories', BankDepositHistoryController::class);
+
+# MAHASISWA
+Route::get('yajra-students', [StudentController::class, 'index'])->name('students.index-yajra');
+Route::get('yajra-students/ajax', [StudentController::class, 'yajraAjax'])->name('students.ajax-yajra');
+Route::get('ajax-students', [StudentController::class, 'index'])->name('students.index-ajax');
+Route::get('yajra-ajax-students', [StudentController::class, 'index'])->name('students.index-ajax-yajra');
+Route::get('students/pdf', [StudentController::class, 'exportPdf'])->name('students.pdf');
+Route::get('students/csv', [StudentController::class, 'exportCsv'])->name('students.csv');
+Route::get('students/excel', [StudentController::class, 'exportExcel'])->name('students.excel');
+Route::get('students/json', [StudentController::class, 'exportJson'])->name('students.json');
+Route::get('students/import-excel-example', [StudentController::class, 'importExcelExample'])->name('students.import-excel-example');
+Route::post('students/import-excel', [StudentController::class, 'importExcel'])->name('students.import-excel');
+Route::resource('students', StudentController::class);
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
 Route::get('testing/send-email', [TestingController::class, 'sendEmail']);

@@ -75,6 +75,36 @@ return [
                     ]
                 ],
                 [
+                    'menu_name' => 'Pendidikan',
+                    'route_name' => null,
+                    'icon' => 'fas fa-graduation-cap',
+                    'permission' => null,
+                    'is_active_if_url_includes' => null,
+                    'childs' => [
+                        [
+                            'menu_name' => 'Mahasiswa',
+                            'route_name' => 'students.index',
+                            'icon' => 'fas fa-users',
+                            'permission' => 'Mahasiswa',
+                            'is_active_if_url_includes' => 'students*',
+                        ],
+                        // [
+                        //     'menu_name' => 'Deposito',
+                        //     'route_name' => 'bank-deposits.index',
+                        //     'icon' => 'fas fa-dollar',
+                        //     'permission' => 'Deposito Bank',
+                        //     'is_active_if_url_includes' => 'bank-deposits*',
+                        // ],
+                        // [
+                        //     'menu_name' => 'Riwayat Deposito',
+                        //     'route_name' => 'bank-deposit-histories.index',
+                        //     'icon' => 'fas fa-dollar',
+                        //     'permission' => 'Riwayat Deposito Bank',
+                        //     'is_active_if_url_includes' => 'bank-deposit-histories*',
+                        // ],
+                    ]
+                ],
+                [
                     'menu_name' => 'Stisla Example',
                     'route_name' => null,
                     'icon' => 'fas fa-caret-square-down',
@@ -772,13 +802,61 @@ return [
         //     'roles' => ['superadmin', 'admin', 'banker'],
         //     'group' => 'Bank'
         // ]
+
+        // mahasiswa
+        [
+            'name' => 'Mahasiswa',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Tambah',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Impor Excel',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Ubah',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Detail',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Hapus',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Ekspor',
+            'roles' => ['superadmin', 'admin', 'banker'],
+            'group' => 'Mahasiswa'
+        ],
+        // [
+        //     'name' => 'Mahasiswa Yajra',
+        //     'roles' => ['superadmin', 'admin', 'banker'],
+        //     'group' => 'Mahasiswa'
+        // ],
+        // [
+        //     'name' => 'Mahasiswa Ajax Yajra',
+        //     'roles' => ['superadmin', 'admin', 'banker'],
+        //     'group' => 'Mahasiswa'
+        // ]
     ],
 
     'roles' => [
         'superadmin',
         'admin',
         'banker',
-        'user'
+        'user',
+        'stafffakultas'
     ],
 
     'use_setting' => env('STISLA_USE_SETTING', '1'),
@@ -1015,6 +1093,16 @@ return [
             'email'             => 'banker@laravel12template.com',
             'password'          => 'banker',
             'roles'             => ['banker'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Jember'
+        ],
+        [
+            'name'              => 'Hairul Anam Staff Kemahasiswaan',
+            'email'             => 'stafffakultas@laravel12template.com',
+            'password'          => 'stafffakultas',
+            'roles'             => ['stafffakultas'],
             'email_verified_at' => '2021-04-06 04:06:00',
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',

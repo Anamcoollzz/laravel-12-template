@@ -102,7 +102,7 @@ class CrudExampleController extends StislaController
      */
     public function store(CrudExampleRequest $request)
     {
-        return $this->executeStore($request);
+        return $this->executeStore($request, withUser: true);
     }
 
     /**
@@ -126,7 +126,7 @@ class CrudExampleController extends StislaController
      */
     public function update(CrudExampleRequest $request, CrudExample $crudExample)
     {
-        return $this->executeUpdate($request, $crudExample);
+        return $this->executeUpdate($request, $crudExample, withUser: true);
     }
 
     /**
