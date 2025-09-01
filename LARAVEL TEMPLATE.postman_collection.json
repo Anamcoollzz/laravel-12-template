@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "791f5074-7f96-4dd8-8484-62969abe1704",
+		"name": "LARAVEL TEMPLATE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1758284"
+	},
+	"item": [
+		{
+			"name": "CRUD GENERAL",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "App-Key",
+								"value": "{{APP_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "table",
+									"value": " crud_examples",
+									"type": "text"
+								},
+								{
+									"key": "data[text]",
+									"value": " test",
+									"type": "text"
+								},
+								{
+									"key": "data[email]",
+									"value": " test@test.test",
+									"type": "text"
+								},
+								{
+									"key": "data[number]",
+									"value": " 1",
+									"type": "text"
+								},
+								{
+									"key": "data[currency]",
+									"value": " 12,000",
+									"type": "text"
+								},
+								{
+									"key": "data[currency_idr]",
+									"value": " 13.0000",
+									"type": "text"
+								},
+								{
+									"key": "data[select]",
+									"value": " test select",
+									"type": "text"
+								},
+								{
+									"key": "data[select2]",
+									"value": " test select",
+									"type": "text"
+								},
+								{
+									"key": "data[select2_multiple]",
+									"value": " select multiple",
+									"type": "text"
+								},
+								{
+									"key": "data[textarea]",
+									"value": " textarea",
+									"type": "text"
+								},
+								{
+									"key": "data[radio]",
+									"value": " radion",
+									"type": "text"
+								},
+								{
+									"key": "data[checkbox]",
+									"value": " checkbox",
+									"type": "text"
+								},
+								{
+									"key": "data[checkbox2]",
+									"value": " checkbox2",
+									"type": "text"
+								},
+								{
+									"key": "data[tags]",
+									"value": " tags",
+									"type": "text"
+								},
+								{
+									"key": "data[file]",
+									"type": "file",
+									"src": "/Users/anamkun/Downloads/Test pdf.pdf"
+								},
+								{
+									"key": "data[image]",
+									"type": "file",
+									"src": "/Users/anamkun/Downloads/1679805057834 (1).png"
+								},
+								{
+									"key": "data[date]",
+									"value": " 2021-09-08",
+									"type": "text"
+								},
+								{
+									"key": "data[time]",
+									"value": " 12:00:56",
+									"type": "text"
+								},
+								{
+									"key": "data[color]",
+									"value": " #ccaa33",
+									"type": "text"
+								},
+								{
+									"key": "data[summernote_simple]",
+									"value": " lorem ipsum",
+									"type": "text"
+								},
+								{
+									"key": "data[summernote]",
+									"value": " lorem ipsum",
+									"type": "text"
+								},
+								{
+									"key": "data[barcode]",
+									"value": " 123456",
+									"type": "text"
+								},
+								{
+									"key": "data[qr_code]",
+									"value": " 1234567",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/general",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"general"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "App-Key",
+								"value": "{{APP_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/general/110?table=crud_examples&with_user=true",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"general",
+								"110"
+							],
+							"query": [
+								{
+									"key": "table",
+									"value": "crud_examples"
+								},
+								{
+									"key": "with_user",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "App-Key",
+								"value": "{{APP_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/general?table=crud_examples&perPage=10&sort_by_column=email&sort_by_direction=desc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"general"
+							],
+							"query": [
+								{
+									"key": "table",
+									"value": "crud_examples"
+								},
+								{
+									"key": "with_user",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								},
+								{
+									"key": "sort_by_column",
+									"value": "email"
+								},
+								{
+									"key": "sort_by_direction",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "App-Key",
+								"value": "{{APP_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "table",
+									"value": " crud_examples",
+									"type": "text"
+								},
+								{
+									"key": "data[text]",
+									"value": " test2",
+									"type": "text"
+								},
+								{
+									"key": "data[email]",
+									"value": " test@test.test2",
+									"type": "text"
+								},
+								{
+									"key": "data[number]",
+									"value": " 12",
+									"type": "text"
+								},
+								{
+									"key": "data[currency]",
+									"value": " 12,000",
+									"type": "text"
+								},
+								{
+									"key": "data[currency_idr]",
+									"value": " 13.000",
+									"type": "text"
+								},
+								{
+									"key": "data[select]",
+									"value": " test select",
+									"type": "text"
+								},
+								{
+									"key": "data[select2]",
+									"value": " test select",
+									"type": "text"
+								},
+								{
+									"key": "data[select2_multiple]",
+									"value": " select multiple",
+									"type": "text"
+								},
+								{
+									"key": "data[textarea]",
+									"value": " textarea",
+									"type": "text"
+								},
+								{
+									"key": "data[radio]",
+									"value": " radion",
+									"type": "text"
+								},
+								{
+									"key": "data[checkbox]",
+									"value": " checkbox",
+									"type": "text"
+								},
+								{
+									"key": "data[checkbox2]",
+									"value": " checkbox2",
+									"type": "text"
+								},
+								{
+									"key": "data[tags]",
+									"value": " tags",
+									"type": "text"
+								},
+								{
+									"key": "data[file]",
+									"type": "file",
+									"src": "/Users/anamkun/Downloads/anamapp.sql"
+								},
+								{
+									"key": "data[image]",
+									"type": "file",
+									"src": "/Users/anamkun/Downloads/1679805057834 (1).png"
+								},
+								{
+									"key": "data[date]",
+									"value": " 2021-09-08",
+									"type": "text"
+								},
+								{
+									"key": "data[time]",
+									"value": " 12:00:56",
+									"type": "text"
+								},
+								{
+									"key": "data[color]",
+									"value": " #ccaa33",
+									"type": "text"
+								},
+								{
+									"key": "data[summernote_simple]",
+									"value": " lorem ipsum",
+									"type": "text"
+								},
+								{
+									"key": "data[summernote]",
+									"value": " lorem ipsum",
+									"type": "text"
+								},
+								{
+									"key": "data[barcode]",
+									"value": " 123456",
+									"type": "text"
+								},
+								{
+									"key": "data[qr_code]",
+									"value": " 1234567",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/general/1120000",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"general",
+								"1120000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "App-Key",
+								"value": "{{APP_KEY}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/general/112?table=crud_examples",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"general",
+								"112"
+							],
+							"query": [
+								{
+									"key": "table",
+									"value": "crud_examples"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LOGIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Dapatkan data respons",
+							"const response = pm.response.json();",
+							"",
+							"// Periksa apakah respons memiliki properti 'access_token'",
+							"if (response.data.token.access_token) {",
+							"    // Set variabel environment dengan nilai access_token",
+							"    pm.globals.set(\"TOKEN\", response.data.token.access_token);",
+							"    console.log(\"Access token berhasil disimpan ke environment variable.\");",
+							"} else {",
+							"    console.error(\"Access token tidak ditemukan dalam respons.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "App-Key",
+						"value": "{{APP_KEY}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"superadmin@laravel12template.com\",\n    \"password\": \"superadmin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/auth/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER LOGIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "App-Key",
+						"value": "{{APP_KEY}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/profiles",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

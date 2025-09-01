@@ -18,5 +18,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/laravel*
+/laravel12*
 **.DS_Store
