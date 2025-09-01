@@ -114,188 +114,170 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h4><i class="fa fa-line-chart"></i> Statistik Amount</h4>
-      <div class="card-header-action">
-        @include('stisla.bank-deposits.btn-action-header')
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-12">
-          <canvas id="myChart2"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <h4><i class="fa fa-line-chart"></i> Statistik Estimasi</h4>
-      <div class="card-header-action">
-        @include('stisla.bank-deposits.btn-action-header')
-      </div>
-    </div>
-    <div class="card-body">
-      <canvas id="myChart3"></canvas>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <h4><i class="fa fa-line-chart"></i> Statistik Per Anum</h4>
-      <div class="card-header-action">
-        @include('stisla.bank-deposits.btn-action-header')
-      </div>
-    </div>
-    <div class="card-body">
-      <canvas id="myChart4"></canvas>
-    </div>
-  </div>
-
   @php
     $isHistory = Route::is('bank-deposit-histories.index');
   @endphp
-  @if ($isHistory)
+  @if (!session('toggle_chart'))
     <div class="card">
       <div class="card-header">
-        <h4><i class="fa fa-line-chart"></i> Statistik Realisasi</h4>
+        <h4><i class="fa fa-line-chart"></i> Statistik Amount</h4>
         <div class="card-header-action">
           @include('stisla.bank-deposits.btn-action-header')
         </div>
       </div>
       <div class="card-body">
-        <canvas id="myChart5"></canvas>
+        <div class="row">
+          <div class="col-md-12">
+            <canvas id="myChart2"></canvas>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-header">
+        <h4><i class="fa fa-line-chart"></i> Statistik Estimasi</h4>
+        <div class="card-header-action">
+          @include('stisla.bank-deposits.btn-action-header')
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas id="myChart3"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h4><i class="fa fa-line-chart"></i> Statistik Per Anum</h4>
+        <div class="card-header-action">
+          @include('stisla.bank-deposits.btn-action-header')
+        </div>
+      </div>
+      <div class="card-body">
+        <canvas id="myChart4"></canvas>
+      </div>
+    </div>
+
+    @if ($isHistory)
+      <div class="card">
+        <div class="card-header">
+          <h4><i class="fa fa-line-chart"></i> Statistik Realisasi</h4>
+          <div class="card-header-action">
+            @include('stisla.bank-deposits.btn-action-header')
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="myChart5"></canvas>
+        </div>
+      </div>
+    @endif
   @endif
 @endsection
 
-@push('scripts')
-  @php
+@if (!session('toggle_chart'))
+  @push('scripts')
+    @php
 
-    $data2 = $data->sortByDesc('amount');
-    $chartAmounts = $data2
-        ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
-        ->map(function ($item) use ($isHistory) {
-            return [
-                'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
-                'total_amount' => $item->sum('amount'),
-            ];
-        })
-        ->values();
-    $data3 = $data->sortByDesc('estimation');
-    $chartEstimations = $data3
-        ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
-        ->map(function ($item) use ($isHistory) {
-            return [
-                'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
-                'total_estimation' => $item->sum('estimation'),
-            ];
-        })
-        ->values();
-    $data4 = $data->sortByDesc('per_anum');
-    $data5 = $data->sortByDesc('realization');
-    $chartRealizations = $data5
-        ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
-        ->map(function ($item) use ($isHistory) {
-            return [
-                'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
-                'total_realization' => $item->sum('realization'),
-            ];
-        })
-        ->values();
-  @endphp
-  <script>
-    var options = {
-      legend: {
-        display: true
-      },
-      scales: {
-        yAxes: [{
-          gridLines: {
-            drawBorder: true,
-            color: '#f2f2f2',
-          },
-          ticks: {
-            beginAtZero: true,
-            //   stepSize: 150,
-            callback: function(value, index, ticks) {
-              return rp(value)
-            }
-          }
-        }],
-        xAxes: [{
-          ticks: {
-            display: true
-          },
-          gridLines: {
-            display: true
-          }
-        }]
-      }
-    };
-    var myChart = new Chart(document.getElementById("myChart2").getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: {{ Js::from($chartAmounts->pluck('bank')) }},
-        datasets: [{
-          label: 'Amount',
-          data: {{ Js::from($chartAmounts->pluck('total_amount')) }},
-          borderWidth: 2,
-          backgroundColor: '#6777ef',
-          borderColor: '#6777ef',
-          borderWidth: 2.5,
-          pointBackgroundColor: '#ffffff',
-          pointRadius: 4
-        }]
-      },
-      options: options
-    });
-    var myChart = new Chart(document.getElementById("myChart3").getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: {{ Js::from($chartEstimations->pluck('bank')) }},
-        datasets: [{
-          label: 'Estimasi',
-          data: {{ Js::from($chartEstimations->pluck('total_estimation')) }},
-          borderWidth: 2,
-          backgroundColor: '#6777ef',
-          borderColor: '#6777ef',
-          borderWidth: 2.5,
-          pointBackgroundColor: '#ffffff',
-          pointRadius: 4
-        }]
-      },
-      options: options
-    });
-    var myChart = new Chart(document.getElementById("myChart4").getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: {{ Js::from($data2->pluck($isHistory ? 'bankdeposit.bank.name' : 'bank.name')) }},
-        datasets: [{
-          label: 'Per Anum',
-          data: {{ Js::from($data4->pluck('per_anum')) }},
-          borderWidth: 2,
-          backgroundColor: '#6777ef',
-          borderColor: '#6777ef',
-          borderWidth: 2.5,
-          pointBackgroundColor: '#ffffff',
-          pointRadius: 4
-        }]
-      },
-      options: options
-    });
-  </script>
-
-  @if ($isHistory)
+      $data2 = $data->sortByDesc('amount');
+      $chartAmounts = $data2
+          ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
+          ->map(function ($item) use ($isHistory) {
+              return [
+                  'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
+                  'total_amount' => $item->sum('amount'),
+              ];
+          })
+          ->values();
+      $data3 = $data->sortByDesc('estimation');
+      $chartEstimations = $data3
+          ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
+          ->map(function ($item) use ($isHistory) {
+              return [
+                  'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
+                  'total_estimation' => $item->sum('estimation'),
+              ];
+          })
+          ->values();
+      $data4 = $data->sortByDesc('per_anum');
+      $data5 = $data->sortByDesc('realization');
+      $chartRealizations = $data5
+          ->groupBy($isHistory ? 'bankdeposit.bank_id' : 'bank.id')
+          ->map(function ($item) use ($isHistory) {
+              return [
+                  'bank' => $isHistory ? $item->first()->bankdeposit->bank->name : $item->first()->bank->name,
+                  'total_realization' => $item->sum('realization'),
+              ];
+          })
+          ->values();
+    @endphp
     <script>
-      var myChart = new Chart(document.getElementById("myChart5").getContext('2d'), {
+      var options = {
+        legend: {
+          display: true
+        },
+        scales: {
+          yAxes: [{
+            gridLines: {
+              drawBorder: true,
+              color: '#f2f2f2',
+            },
+            ticks: {
+              beginAtZero: true,
+              //   stepSize: 150,
+              callback: function(value, index, ticks) {
+                return rp(value)
+              }
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              display: true
+            },
+            gridLines: {
+              display: true
+            }
+          }]
+        }
+      };
+      var myChart = new Chart(document.getElementById("myChart2").getContext('2d'), {
         type: 'bar',
         data: {
-          labels: {{ Js::from($chartRealizations->pluck('bank')) }},
+          labels: {{ Js::from($chartAmounts->pluck('bank')) }},
           datasets: [{
-            label: 'Realisasi',
-            data: {{ Js::from($chartRealizations->pluck('total_realization')) }},
+            label: 'Amount',
+            data: {{ Js::from($chartAmounts->pluck('total_amount')) }},
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: options
+      });
+      var myChart = new Chart(document.getElementById("myChart3").getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: {{ Js::from($chartEstimations->pluck('bank')) }},
+          datasets: [{
+            label: 'Estimasi',
+            data: {{ Js::from($chartEstimations->pluck('total_estimation')) }},
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: options
+      });
+      var myChart = new Chart(document.getElementById("myChart4").getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: {{ Js::from($data2->pluck($isHistory ? 'bankdeposit.bank.name' : 'bank.name')) }},
+          datasets: [{
+            label: 'Per Anum',
+            data: {{ Js::from($data4->pluck('per_anum')) }},
             borderWidth: 2,
             backgroundColor: '#6777ef',
             borderColor: '#6777ef',
@@ -307,12 +289,35 @@
         options: options
       });
     </script>
-  @endif
-@endpush
 
-@push('js')
-  {{-- <script src="{{ asset('stisla/node_modules/chart.js/dist/Chart.min.js') }}"></script> --}}
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script> --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-  {{-- <script src="{{ asset('stisla/assets/js/page/modules-chartjs.js') }}"></script> --}}
-@endpush
+    @if ($isHistory)
+      <script>
+        var myChart = new Chart(document.getElementById("myChart5").getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: {{ Js::from($chartRealizations->pluck('bank')) }},
+            datasets: [{
+              label: 'Realisasi',
+              data: {{ Js::from($chartRealizations->pluck('total_realization')) }},
+              borderWidth: 2,
+              backgroundColor: '#6777ef',
+              borderColor: '#6777ef',
+              borderWidth: 2.5,
+              pointBackgroundColor: '#ffffff',
+              pointRadius: 4
+            }]
+          },
+          options: options
+        });
+      </script>
+    @endif
+  @endpush
+
+  @push('js')
+    {{-- <script src="{{ asset('stisla/node_modules/chart.js/dist/Chart.min.js') }}"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    {{-- <script src="{{ asset('stisla/assets/js/page/modules-chartjs.js') }}"></script> --}}
+  @endpush
+
+@endif

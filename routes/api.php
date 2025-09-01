@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserManagementController;
@@ -33,6 +34,9 @@ Route::as('api.')->prefix('v1')->group(function () {
         # ROLES
         Route::get('permissions', [RoleController::class, 'permissions'])->name('permissions');
         Route::apiResource('roles', RoleController::class);
+
+        # GENERAL API
+        Route::apiResource('general', GeneralController::class);
     });
 });
 

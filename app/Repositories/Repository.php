@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class Repository extends RepositoryAbstract
@@ -450,5 +451,132 @@ class Repository extends RepositoryAbstract
     public function updateOrCreate(array $attributes, array $values = [])
     {
         return $this->query()->updateOrCreate($attributes, $values);
+    }
+
+    /**
+     * prepare api data
+     *
+     * @return array
+     */
+    private function prepareApiData()
+    {
+        $request = request();
+        $data = $request->data;
+
+        foreach ($data as $key => $value) {
+            if ($key === 'currency')
+                $data['currency']     = idr_to_double($value);
+
+            if ($key === 'currency_idr')
+                $data['currency_idr'] = rp_to_double($value);
+
+            if ($request->hasFile('data.' . $key)) {
+                $file = $request->file('data.' . $key);
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('uploads/' . $request->table, $fileName, 'public');
+                $data[$key] = asset('/storage/' . $filePath);
+            }
+        }
+
+        $data['created_at']    = now();
+        $data['updated_at']    = now();
+        return $data;
+    }
+
+    /**
+     * Insert general API data
+     *
+     * @return mixed
+     */
+    public function insertGeneralApi()
+    {
+        $data = $this->prepareApiData();
+        $data['created_by_id'] = auth('api')->user()->id;
+
+        DB::table($table = request('table'))->insert($data);
+
+        $pdo     = DB::connection()->getPdo();
+        $last_id = $pdo->lastInsertId();
+        $result  = DB::table($table)->where('id', $last_id)->first();
+
+        return $result;
+    }
+
+    /**
+     * Update general API data
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function updateGeneralApi(string $id)
+    {
+        DB::table($table = request('table'))->where('id', $id)->firstOrFail();
+
+        $data = $this->prepareApiData();
+        $data['last_updated_by_id'] = auth('api')->user()->id;
+
+        DB::table($table = request('table'))->where('id', $id)->update($data);
+
+        $result  = DB::table($table)->where('id', $id)->first();
+
+        return $result;
+    }
+
+    /**
+     * get general API data by id
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function getGeneralApiById(string $id)
+    {
+        DB::table($table = request('table'))->where('id', $id)->firstOrFail();
+
+        $result = DB::table($table = request('table'))->where('id', $id)->first();
+
+        if (request('with_user') === 'true') {
+            $result->created_by = DB::table('users')->where('id', $result->created_by_id)->first();
+            $result->last_updated_by = DB::table('users')->where('id', $result->last_updated_by_id)->first();
+        }
+
+        return $result;
+    }
+
+    /**
+     * get general API data by id
+     *
+     * @return mixed
+     */
+    public function getGeneralApi()
+    {
+        $result = DB::table($table = request('table'))
+            ->when(request('sort_by_column', 'id'), function ($query) {
+                $query->orderBy(request('sort_by_column', 'id'), request('sort_by_direction', 'asc'));
+            })
+            ->paginate(request('perPage', 10));
+
+        if (request('with_user') === 'true') {
+            foreach ($result as $item) {
+                $item->created_by = DB::table('users')->where('id', $item->created_by_id)->first();
+                $item->last_updated_by = DB::table('users')->where('id', $item->last_updated_by_id)->first();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Delete general API data
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function deleteGeneralApi(string $id)
+    {
+        DB::table($table = request('table'))->where('id', $id)->firstOrFail();
+
+        $result = DB::table($table = request('table'))->where('id', $id)->delete();
+
+        return $result;
     }
 }

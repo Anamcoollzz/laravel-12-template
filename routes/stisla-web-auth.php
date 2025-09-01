@@ -13,7 +13,7 @@ use App\Http\Controllers\MenuManagementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionGroupController;
-use App\Http\Controllers\PersonController;
+// use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\RoleController;
@@ -49,7 +49,7 @@ Route::view('pricing', 'stisla.examples.pricing.index')->name('pricing.index');
 Route::view('invoice', 'stisla.examples.invoice.index')->name('invoice.index');
 
 # PENDUDUK
-Route::resource('persons', PersonController::class);
+// Route::resource('persons', PersonController::class);
 
 # USER MANAGEMENT
 Route::prefix('user-management')->as('user-management.')->group(function () {
@@ -190,6 +190,10 @@ Route::post('banks/import-excel', [BankController::class, 'importExcel'])->name(
 Route::resource('banks', BankController::class);
 
 # DEPOSITO BANK
+Route::get('toggle-chart', function () {
+    session(['toggle_chart' => !session('toggle_chart')]);
+    return back();
+})->name('toggle-chart');
 Route::get('save-to-history-bank-deposits', [BankDepositController::class, 'saveToHistory'])->name('bank-deposits.save-to-history');
 Route::get('yajra-bank-deposits', [BankDepositController::class, 'index'])->name('bank-deposits.index-yajra');
 Route::get('yajra-bank-deposits/ajax', [BankDepositController::class, 'yajraAjax'])->name('bank-deposits.ajax-yajra');
