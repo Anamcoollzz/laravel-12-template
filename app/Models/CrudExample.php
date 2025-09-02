@@ -39,6 +39,12 @@ class CrudExample extends Model
         "qr_code",
         "created_by_id",
         "last_updated_by_id",
+        'name',
+        'phone_number',
+        'birthdate',
+        'address',
+        'avatar',
+        'password',
 
         //columns
     ];

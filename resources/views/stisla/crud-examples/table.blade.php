@@ -21,6 +21,11 @@
       @endif
       {{-- columns --}}
 
+      <th>{{ __('Nama') }}</th>
+      <th>{{ __('No HP') }}</th>
+      <th>{{ __('Alamat') }}</th>
+      <th>{{ __('Tanggal Lahir') }}</th>
+      <th>{{ __('Avatar') }}</th>
       <th>{{ __('Text') }}</th>
       <th>{{ __('Barcode') }}</th>
       <th>{{ __('QR Code') }}</th>
@@ -61,6 +66,25 @@
           <td>{{ $loop->iteration }}</td>
           {{-- columnstd --}}
 
+          <td>{{ $item->name }}</td>
+          <td>{{ $item->phone_number }}</td>
+          <td>{{ $item->address }}</td>
+          <td>{{ $item->birthdate }}</td>
+          @if ($isExport)
+            <td>
+              @if (Str::contains($item->avatar, 'http'))
+                <a href="{{ $item->avatar }}">cek</a>
+              @elseif($item->avatar)
+                <a href="{{ $urlLink = Storage::url('' . $prefix . '/' . $item->avatar) }}">cek</a>
+              @else
+                -
+              @endif
+            </td>
+          @else
+            <td>
+              @include('stisla.crud-examples.image', ['file' => $item->avatar])
+            </td>
+          @endif
           <td>{{ $item->text }}</td>
           @if ($isExport)
             <td>{{ $item->barcode }}</td>

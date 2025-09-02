@@ -58,6 +58,11 @@ class CrudExampleController extends StislaController
             'summernote_simple',
             'barcode',
             'qr_code',
+            'name',
+            'phone_number',
+            'birthdate',
+            'address',
+
             //columns
         ]);
 
@@ -70,6 +75,13 @@ class CrudExampleController extends StislaController
         if ($request->hasFile('image'))
             $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
 
+        if ($request->hasFile('avatar'))
+            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
+
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
+
         return $data;
     }
 
@@ -81,7 +93,7 @@ class CrudExampleController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request);
+        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['createdBy', 'lastUpdatedBy'])]);
     }
 
     /**

@@ -1,6 +1,28 @@
 <input type="hidden" id="preloaderImg" value="{{ asset('assets/images/Iphone-spinner-2.gif') }}">
 @stack('modals')
 
+<form action="" enctype="multipart/form-data" method="POST" id="formGlobalModal">
+  @csrf
+  <div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalTitle" aria-hidden="true">
+    <div class="modal-dialog  modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ __('Impor Data') }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          {{-- <button type="submit" class="btn btn-primary">Impor</button> --}}
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
 @if (session('successMessage'))
   <input type="hidden" id="sessionSuccessMessage" value="{{ session('successMessage') }}">
 @endif
