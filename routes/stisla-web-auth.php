@@ -151,7 +151,7 @@ Route::get('ubuntu/{pathname}/toggle-enabled/{nextStatus}', [UbuntuController::c
 Route::get('ubuntu/{pathname}/duplicate', [UbuntuController::class, 'duplicate'])->name('ubuntu.duplicate');
 Route::get('ubuntu/{pathname}/git-pull', [UbuntuController::class, 'gitPull'])->name('ubuntu.git-pull');
 Route::get('ubuntu/{pathname}/set-laravel-permission', [UbuntuController::class, 'setLaravelPermission'])->name('ubuntu.set-laravel-permission');
-Route::get('ubuntu/mysql-all', [UbuntuController::class, 'index'])->name('ubuntu.mysql-all');
+Route::get('mysql-all', [UbuntuController::class, 'index'])->name('ubuntu.mysql-all');
 Route::resource('ubuntu', UbuntuController::class);
 
 # MANAJEMEN MENU

@@ -291,6 +291,13 @@ return [
                     'is_active_if_url_includes' => 'ubuntu*'
                 ],
                 [
+                    'menu_name' => 'MySql',
+                    'route_name' => 'ubuntu.mysql-all',
+                    'icon' => 'fas fa-database',
+                    'permission' => 'MySql',
+                    'is_active_if_url_includes' => 'mysql-all'
+                ],
+                [
                     'menu_name' => 'Backup Database',
                     'route_name' => 'backup-databases.index',
                     'icon' => 'fas fa-database',
@@ -531,6 +538,11 @@ return [
 
         [
             'name' => 'Ubuntu',
+            'roles' => ['superadmin'],
+            'group' => 'Ubuntu'
+        ],
+        [
+            'name' => 'MySql',
             'roles' => ['superadmin'],
             'group' => 'Ubuntu'
         ],

@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->fromSql();
-        // $this->normal();
+        // $this->fromSql();
+        $this->normal();
     }
 
     /**
@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
             $sql = file_get_contents(base_path('database/seeders/data/laravel_12_template1.sql'));
             DB::unprepared($sql);
             $this->call(SettingSeeder::class);
-            // $this->call(MenuSeeder::class);
+            $this->call(MenuSeeder::class);
+            $this->call(UserSeeder::class);
         } catch (\Exception $e) {
             echo 'Error seeding database from SQL file: ' . $e->getMessage();
         } finally {
