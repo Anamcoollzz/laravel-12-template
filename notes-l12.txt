@@ -57,6 +57,8 @@ Beberapa fitur atau komponen yang ada
     -   Grup Menu (CRUD)
 -   CRUD Generator (menu nya tersembunyi akses via url saja)
 -   Service dan repository pattern
+-   Log Request
+-   Command untuk generate module CRUD
 
 Terima kasih, bisa distar ataupun difork ya guys. Kalau ada request module atau apapun itu, bisa tulis di issue.
 

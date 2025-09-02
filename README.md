@@ -68,6 +68,7 @@ Beberapa fitur atau komponen yang ada
 -   Server side export file
 -   Service dan repository pattern
 -   Log Request
+-   Command untuk generate module CRUD
 
 ## How to install and run
 
@@ -77,6 +78,7 @@ Beberapa fitur atau komponen yang ada
 -   `php artisan migrate --seed`
 -   `php artisan storage:link`
 -   [optional] setup google captcha, google login, facebook login, github login, twitter login in `.env`
+-   [optional] untuk membuat modul crud baru, contoh `php artisan make:module Student --columns=name,nim,birthdate --icon="fa fa-users" --title="Mahasiswa"`
 
 ## Libraries dan Link Penting
 
