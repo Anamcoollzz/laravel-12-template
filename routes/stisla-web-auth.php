@@ -20,6 +20,7 @@ use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudyProgramController;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\UbuntuController;
 use App\Http\Controllers\UserManagementController;
@@ -246,6 +247,18 @@ Route::get('faculties/json', [FacultyController::class, 'exportJson'])->name('fa
 Route::get('faculties/import-excel-example', [FacultyController::class, 'importExcelExample'])->name('faculties.import-excel-example');
 Route::post('faculties/import-excel', [FacultyController::class, 'importExcel'])->name('faculties.import-excel');
 Route::resource('faculties', FacultyController::class);
+# PROGRAM STUDI
+Route::get('yajra-study-programs', [StudyProgramController::class, 'index'])->name('study-programs.index-yajra');
+Route::get('yajra-study-programs/ajax', [StudyProgramController::class, 'yajraAjax'])->name('study-programs.ajax-yajra');
+Route::get('ajax-study-programs', [StudyProgramController::class, 'index'])->name('study-programs.index-ajax');
+Route::get('yajra-ajax-study-programs', [StudyProgramController::class, 'index'])->name('study-programs.index-ajax-yajra');
+Route::get('study-programs/pdf', [StudyProgramController::class, 'exportPdf'])->name('study-programs.pdf');
+Route::get('study-programs/csv', [StudyProgramController::class, 'exportCsv'])->name('study-programs.csv');
+Route::get('study-programs/excel', [StudyProgramController::class, 'exportExcel'])->name('study-programs.excel');
+Route::get('study-programs/json', [StudyProgramController::class, 'exportJson'])->name('study-programs.json');
+Route::get('study-programs/import-excel-example', [StudyProgramController::class, 'importExcelExample'])->name('study-programs.import-excel-example');
+Route::post('study-programs/import-excel', [StudyProgramController::class, 'importExcel'])->name('study-programs.import-excel');
+Route::resource('study-programs', StudyProgramController::class);
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
 Route::get('testing/send-email', [TestingController::class, 'sendEmail']);

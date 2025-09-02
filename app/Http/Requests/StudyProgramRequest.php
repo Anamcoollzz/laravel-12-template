@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StudentRequest extends FormRequest
+class StudyProgramRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'              => 'required',
-            'nim'               => $this->isMethod('put') ? 'required|numeric|unique:students,nim,' . $this->route('student')->id : 'required|numeric|unique:students,nim',
-            "date_of_birth"     => "required|date",
-            'study_program_id'  => 'required|numeric|exists:study_programs,id',
+            // 'text'              => 'required',
+            // 'email'             => 'required|email',
+            // "number"            => "required|numeric",
             // "currency"          => "required",
             // "currency_idr"      => "required",
             // "select"            => "required",
@@ -46,6 +45,10 @@ class StudentRequest extends FormRequest
             // "summernote"        => "required",
             // "barcode"           => "required",
             // "qr_code"           => "required",
+
+
+            'name'        => 'required',
+            'faculty_id'        => 'required|numeric|exists:faculties,id',
         ];
     }
 }

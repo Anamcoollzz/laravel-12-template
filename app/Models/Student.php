@@ -18,7 +18,7 @@ class Student extends Model
         "name",
         "nim",
         "date_of_birth",
-        "faculty_id",
+        "study_program_id",
         "created_by_id",
         "last_updated_by_id",
     ];
@@ -51,12 +51,12 @@ class Student extends Model
     }
 
     /**
-     * Get the faculty that the Student belongs to.
+     * Get the study program that the Student belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function faculty()
+    public function studyProgram()
     {
-        return $this->belongsTo(Faculty::class);
+        return $this->belongsTo(StudyProgram::class);
     }
 }

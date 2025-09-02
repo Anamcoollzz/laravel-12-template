@@ -95,13 +95,13 @@ return [
                             'permission' => 'Fakultas',
                             'is_active_if_url_includes' => 'faculties*',
                         ],
-                        // [
-                        //     'menu_name' => 'Riwayat Deposito',
-                        //     'route_name' => 'bank-deposit-histories.index',
-                        //     'icon' => 'fas fa-dollar',
-                        //     'permission' => 'Riwayat Deposito Bank',
-                        //     'is_active_if_url_includes' => 'bank-deposit-histories*',
-                        // ],
+                        [
+                            'menu_name' => 'Program Studi',
+                            'route_name' => 'study-programs.index',
+                            'icon' => 'fas fa-book',
+                            'permission' => 'Program Studi',
+                            'is_active_if_url_includes' => 'study-programs*',
+                        ],
                     ]
                 ],
                 [

@@ -6,6 +6,7 @@
 
     @csrf
   </div>
+  {{-- formcolumns --}}
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'text', 'label' => 'Text'])
   </div>

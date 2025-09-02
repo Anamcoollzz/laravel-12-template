@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StudentRequest;
 use App\Imports\StudentImport;
 use App\Models\Student;
-use App\Repositories\FacultyRepository;
 use App\Repositories\StudentRepository;
+use App\Repositories\StudyProgramRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -44,7 +44,7 @@ class StudentController extends StislaController
             "name",
             "nim",
             "date_of_birth",
-            "faculty_id",
+            "study_program_id",
         ]);
 
         // $data['currency']     = idr_to_double($request->currency);
@@ -67,7 +67,7 @@ class StudentController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request);
+        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['studyProgram.faculty'])]);
     }
 
     /**
@@ -78,7 +78,7 @@ class StudentController extends StislaController
      */
     public function create(Request $request)
     {
-        return $this->prepareCreateForm($request, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
+        return $this->prepareCreateForm($request, ['prodi_options' => (new StudyProgramRepository)->getSelectOptions()]);
     }
 
     /**
@@ -101,7 +101,7 @@ class StudentController extends StislaController
      */
     public function edit(Request $request, Student $student)
     {
-        return $this->prepareDetailForm($request, $student, false, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
+        return $this->prepareDetailForm($request, $student, false, ['prodi_options' => (new StudyProgramRepository)->getSelectOptions()]);
     }
 
     /**
@@ -125,7 +125,7 @@ class StudentController extends StislaController
      */
     public function show(Request $request, Student $student)
     {
-        return $this->prepareDetailForm($request, $student, true, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
+        return $this->prepareDetailForm($request, $student, true, ['prodi_options' => (new StudyProgramRepository)->getSelectOptions()]);
     }
 
     /**

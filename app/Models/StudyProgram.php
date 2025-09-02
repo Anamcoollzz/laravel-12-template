@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Faculty extends Model
+class StudyProgram extends Model
 {
     use HasFactory;
 
@@ -42,6 +42,7 @@ class Faculty extends Model
 
 
         'name',
+        'faculty_id',
     ];
 
     /**
@@ -56,7 +57,7 @@ class Faculty extends Model
     ];
 
     /**
-     * Get the user that created the Faculty.
+     * Get the user that created the StudyProgram.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -66,7 +67,7 @@ class Faculty extends Model
     }
 
     /**
-     * Get the user that updated the Faculty.
+     * Get the user that updated the StudyProgram.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -76,12 +77,22 @@ class Faculty extends Model
     }
 
     /**
-     * Get the programs associated with the Faculty.
+     * Get the faculty that owns the StudyProgram.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    /**
+     * Get the students associated with the StudyProgram.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function programs()
+    public function students()
     {
-        return $this->hasMany(StudyProgram::class);
+        return $this->hasMany(Student::class);
     }
 }
