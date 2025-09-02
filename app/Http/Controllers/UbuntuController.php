@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 class UbuntuController extends StislaController
@@ -158,7 +159,7 @@ class UbuntuController extends StislaController
         $supervisorStatus = exec('service supervisor status');
         $mysqlStatus      = exec('service mysql status');
 
-        return view('stisla.ubuntu.index', [
+        $data = [
             'files'            => $files,
             'filesWww'         => $filesWww,
             'foldersWww'       => $foldersWww,
@@ -178,7 +179,13 @@ class UbuntuController extends StislaController
             'primary'          => $primary,
             'mysqlStatus'      => $mysqlStatus,
             'seeders'          => $seeders,
-        ]);
+        ];
+
+        if (Route::currentRouteName() == 'ubuntu.mysql-all') {
+            return view('stisla.ubuntu.mysql-all', $data);
+        }
+
+        return view('stisla.ubuntu.index', $data);
     }
 
     /**
