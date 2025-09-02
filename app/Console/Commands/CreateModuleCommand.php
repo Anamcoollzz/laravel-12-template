@@ -93,6 +93,9 @@ class CreateModuleCommand extends Command
             \$table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         ", file_get_contents($latestMigration)));
 
+        exec('cp ' . base_path('config/example-crud-permission.php') . ' ' . ($path = base_path('config/' . Str::slug($name) . '-permission.php')));
+        file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
+
         $this->info('Controller: ' . $name . 'Controller');
         $this->info('Model: ' . $name);
         $this->info('Repository: ' . $name . 'Repository');

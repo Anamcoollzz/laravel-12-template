@@ -8,6 +8,7 @@ use App\Http\Controllers\BankDepositHistoryController;
 use App\Http\Controllers\CrudExampleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropboxController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\GroupMenuController;
 use App\Http\Controllers\MenuManagementController;
 use App\Http\Controllers\NotificationController;
@@ -233,6 +234,18 @@ Route::get('students/json', [StudentController::class, 'exportJson'])->name('stu
 Route::get('students/import-excel-example', [StudentController::class, 'importExcelExample'])->name('students.import-excel-example');
 Route::post('students/import-excel', [StudentController::class, 'importExcel'])->name('students.import-excel');
 Route::resource('students', StudentController::class);
+# FAKULTAS
+Route::get('yajra-faculties', [FacultyController::class, 'index'])->name('faculties.index-yajra');
+Route::get('yajra-faculties/ajax', [FacultyController::class, 'yajraAjax'])->name('faculties.ajax-yajra');
+Route::get('ajax-faculties', [FacultyController::class, 'index'])->name('faculties.index-ajax');
+Route::get('yajra-ajax-faculties', [FacultyController::class, 'index'])->name('faculties.index-ajax-yajra');
+Route::get('faculties/pdf', [FacultyController::class, 'exportPdf'])->name('faculties.pdf');
+Route::get('faculties/csv', [FacultyController::class, 'exportCsv'])->name('faculties.csv');
+Route::get('faculties/excel', [FacultyController::class, 'exportExcel'])->name('faculties.excel');
+Route::get('faculties/json', [FacultyController::class, 'exportJson'])->name('faculties.json');
+Route::get('faculties/import-excel-example', [FacultyController::class, 'importExcelExample'])->name('faculties.import-excel-example');
+Route::post('faculties/import-excel', [FacultyController::class, 'importExcel'])->name('faculties.import-excel');
+Route::resource('faculties', FacultyController::class);
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
 Route::get('testing/send-email', [TestingController::class, 'sendEmail']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StudentRequest;
 use App\Imports\StudentImport;
 use App\Models\Student;
+use App\Repositories\FacultyRepository;
 use App\Repositories\StudentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -43,6 +44,7 @@ class StudentController extends StislaController
             "name",
             "nim",
             "date_of_birth",
+            "faculty_id",
         ]);
 
         // $data['currency']     = idr_to_double($request->currency);
@@ -76,7 +78,7 @@ class StudentController extends StislaController
      */
     public function create(Request $request)
     {
-        return $this->prepareCreateForm($request);
+        return $this->prepareCreateForm($request, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
     }
 
     /**
@@ -99,7 +101,7 @@ class StudentController extends StislaController
      */
     public function edit(Request $request, Student $student)
     {
-        return $this->prepareDetailForm($request, $student);
+        return $this->prepareDetailForm($request, $student, false, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
     }
 
     /**
@@ -123,7 +125,7 @@ class StudentController extends StislaController
      */
     public function show(Request $request, Student $student)
     {
-        return $this->prepareDetailForm($request, $student, true);
+        return $this->prepareDetailForm($request, $student, true, ['faculty_options' => (new FacultyRepository)->getSelectOptions()]);
     }
 
     /**

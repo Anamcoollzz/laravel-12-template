@@ -88,13 +88,13 @@ return [
                             'permission' => 'Mahasiswa',
                             'is_active_if_url_includes' => 'students*',
                         ],
-                        // [
-                        //     'menu_name' => 'Deposito',
-                        //     'route_name' => 'bank-deposits.index',
-                        //     'icon' => 'fas fa-dollar',
-                        //     'permission' => 'Deposito Bank',
-                        //     'is_active_if_url_includes' => 'bank-deposits*',
-                        // ],
+                        [
+                            'menu_name' => 'Fakultas',
+                            'route_name' => 'faculties.index',
+                            'icon' => 'fas fa-university',
+                            'permission' => 'Fakultas',
+                            'is_active_if_url_includes' => 'faculties*',
+                        ],
                         // [
                         //     'menu_name' => 'Riwayat Deposito',
                         //     'route_name' => 'bank-deposit-histories.index',

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Faculty extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,33 @@ class Student extends Model
      * @var array
      */
     protected $fillable = [
-        "name",
-        "nim",
-        "date_of_birth",
-        "faculty_id",
+        "text",
+        "email",
+        "number",
+        "currency",
+        "currency_idr",
+        "select",
+        "select2",
+        "select2_multiple",
+        "textarea",
+        "radio",
+        "checkbox",
+        "checkbox2",
+        "tags",
+        "file",
+        "image",
+        "date",
+        "time",
+        "color",
+        "summernote_simple",
+        "summernote",
+        "barcode",
+        "qr_code",
         "created_by_id",
         "last_updated_by_id",
+
+        
+            'name',
     ];
 
     /**
@@ -28,10 +49,14 @@ class Student extends Model
      *
      * @var array
      */
-    protected $casts = [];
+    protected $casts = [
+        'checkbox'         => 'array',
+        'checkbox2'        => 'array',
+        'select2_multiple' => 'array',
+    ];
 
     /**
-     * Get the user that created the Student.
+     * Get the user that created the Faculty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -41,22 +66,12 @@ class Student extends Model
     }
 
     /**
-     * Get the user that updated the Student.
+     * Get the user that updated the Faculty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function lastUpdatedBy()
     {
         return $this->belongsTo(User::class, 'last_updated_by_id');
-    }
-
-    /**
-     * Get the faculty that the Student belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class);
     }
 }
