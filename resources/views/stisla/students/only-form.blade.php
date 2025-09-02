@@ -6,11 +6,25 @@
 
     @csrf
   </div>
-  {{-- formcolumns --}}
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'text', 'label' => 'Text'])
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'name', 'label' => 'Nama'])
   </div>
   <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'nim', 'label' => 'NIM'])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'date_of_birth', 'type' => 'date', 'label' => 'Tanggal Lahir'])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.selects.select', [
+        'id' => 'study_program_id',
+        'name' => 'study_program_id',
+        'options' => $prodi_options,
+        'label' => 'Program Studi',
+        'required' => true,
+    ])
+  </div>
+  {{-- <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode'])
   </div>
   <div class="col-md-6">
@@ -147,5 +161,5 @@
         'label' => 'Summernote',
         'id' => 'summernote',
     ])
-  </div>
+  </div> --}}
 </div>

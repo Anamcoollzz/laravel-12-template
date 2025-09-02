@@ -45,6 +45,8 @@ class CrudExampleRequest extends FormRequest
             "summernote"        => "required",
             "barcode"           => "required",
             "qr_code"           => "required",
+
+            // columns
         ];
     }
 }

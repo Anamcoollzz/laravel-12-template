@@ -65,3 +65,5 @@ Web Pribadi https://anamapp.my.id
 https://github.com/Anamcoollzz/laravel-12-template
 
 https://www.youtube.com/channel/UCwF-njZKFE30pZwWFtp84fA
+
+php artisan make:module Faculty --columns=name --icon="fa fa-university" --title="Fakultas"

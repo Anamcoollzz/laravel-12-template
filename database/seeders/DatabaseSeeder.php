@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->fromSql();
-        // $this->normal();
+        // $this->fromSql();
+        $this->normal();
     }
 
     /**
@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             $sql = file_get_contents(base_path('database/seeders/data/data_with_ddl.sql'));
             DB::unprepared($sql);
             $this->call(SettingSeeder::class);
+            $this->call(MenuSeeder::class);
         } catch (\Exception $e) {
             echo 'Error seeding database from SQL file: ' . $e->getMessage();
         } finally {
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
      */
     private function normal()
     {
-
+        ini_set('memory_limit', '-1');
         $this->call(RegionSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(RolePermissionSeeder::class);
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuSeeder::class);
         $this->call(NotificationSeeder::class);
         $this->call(CrudExampleSeeder::class);
+        $this->call(FacultySeeder::class);
         $this->call(BankSeeder::class);
     }
 }
