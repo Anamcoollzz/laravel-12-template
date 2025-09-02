@@ -319,6 +319,7 @@ class StislaController extends Controller
             'isDetail'    => $isDetail,
             'breadcrumbs' => $breadcrumbs,
             'viewFolder'  => $this->viewFolder,
+            'prefix'      => $this->prefix,
         ];
     }
 
@@ -560,12 +561,13 @@ class StislaController extends Controller
      *
      * @param Request $request
      * @param Model $model
+     * @param bool|null $withUser
      * @return Response
      */
-    protected function executeUpdate(Request $request, Model $model)
+    protected function executeUpdate(Request $request, Model $model, ?bool $withUser = false)
     {
         $data    = $this->getStoreData($request);
-        $newData = $this->repository->updateWithUser($data, $model->id);
+        $newData = $withUser ? $this->repository->updateWithUser($data, $model->id) : $this->repository->update($data, $model->id);
         logUpdate($this->title, $model, $newData);
         $successMessage = successMessageUpdate($this->title);
 
@@ -583,12 +585,13 @@ class StislaController extends Controller
      * save data to db
      *
      * @param Request $request
+     * @param bool|null $withUser
      * @return Response
      */
-    protected function executeStore(Request $request)
+    protected function executeStore(Request $request, ?bool $withUser = false)
     {
         $data   = $this->getStoreData($request);
-        $result = $this->repository->create($data);
+        $result = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
         logCreate($this->title, $result);
         $successMessage = successMessageCreate($this->title);
 
@@ -612,7 +615,7 @@ class StislaController extends Controller
     protected function prepareCreateForm(Request $request, array $data = [])
     {
         $fullTitle  = __('Tambah ' . $this->title);
-        $data       = array_merge($this->getDefaultDataCreate($this->title, $this->prefix), $data);
+        $data       = array_merge($this->getDefaultDataCreate($this->title, $this->prefix), $data, ['prefix' => $this->prefix]);
         $data       = array_merge($data, [
             'selectOptions'   => get_options(10, true),
             'select2Options'  => get_options(10),
@@ -657,7 +660,7 @@ class StislaController extends Controller
      */
     protected function prepareIndex(Request $request, array $data2 = [])
     {
-        $data = array_merge($this->getIndexDataFromParent($data2), $data2);
+        $data = array_merge($this->getIndexDataFromParent($data2), $data2, ['prefix' => $this->prefix]);
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,

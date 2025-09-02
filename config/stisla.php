@@ -75,6 +75,36 @@ return [
                     ]
                 ],
                 [
+                    'menu_name' => 'Pendidikan',
+                    'route_name' => null,
+                    'icon' => 'fas fa-graduation-cap',
+                    'permission' => null,
+                    'is_active_if_url_includes' => null,
+                    'childs' => [
+                        [
+                            'menu_name' => 'Mahasiswa',
+                            'route_name' => 'students.index',
+                            'icon' => 'fas fa-users',
+                            'permission' => 'Mahasiswa',
+                            'is_active_if_url_includes' => 'students*',
+                        ],
+                        [
+                            'menu_name' => 'Fakultas',
+                            'route_name' => 'faculties.index',
+                            'icon' => 'fas fa-university',
+                            'permission' => 'Fakultas',
+                            'is_active_if_url_includes' => 'faculties*',
+                        ],
+                        [
+                            'menu_name' => 'Program Studi',
+                            'route_name' => 'study-programs.index',
+                            'icon' => 'fas fa-book',
+                            'permission' => 'Program Studi',
+                            'is_active_if_url_includes' => 'study-programs*',
+                        ],
+                    ]
+                ],
+                [
                     'menu_name' => 'Stisla Example',
                     'route_name' => null,
                     'icon' => 'fas fa-caret-square-down',
@@ -281,27 +311,27 @@ return [
     'permissions' => [
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Email',
-            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Password',
-            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Hapus Akun',
-            'roles' => ['superadmin', 'admin', 'user', 'banker'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
             'group' => 'Profil'
         ],
 
@@ -772,13 +802,61 @@ return [
         //     'roles' => ['superadmin', 'admin', 'banker'],
         //     'group' => 'Bank'
         // ]
+
+        // mahasiswa
+        [
+            'name' => 'Mahasiswa',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Tambah',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Impor Excel',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Ubah',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Detail',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Hapus',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        [
+            'name' => 'Mahasiswa Ekspor',
+            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'group' => 'Mahasiswa'
+        ],
+        // [
+        //     'name' => 'Mahasiswa Yajra',
+        //     'roles' => ['superadmin', 'admin', 'banker'],
+        //     'group' => 'Mahasiswa'
+        // ],
+        // [
+        //     'name' => 'Mahasiswa Ajax Yajra',
+        //     'roles' => ['superadmin', 'admin', 'banker'],
+        //     'group' => 'Mahasiswa'
+        // ]
     ],
 
     'roles' => [
         'superadmin',
         'admin',
         'banker',
-        'user'
+        'user',
+        'admin pendidikan'
     ],
 
     'use_setting' => env('STISLA_USE_SETTING', '1'),
@@ -1015,6 +1093,16 @@ return [
             'email'             => 'banker@laravel12template.com',
             'password'          => 'banker',
             'roles'             => ['banker'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Jember'
+        ],
+        [
+            'name'              => 'Hairul Anam Admin Pendidikan',
+            'email'             => 'adminpendidikan@laravel12template.com',
+            'password'          => 'adminpendidikan',
+            'roles'             => ['admin pendidikan'],
             'email_verified_at' => '2021-04-06 04:06:00',
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',

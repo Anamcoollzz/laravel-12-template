@@ -65,8 +65,13 @@ class BankSeeder extends Seeder
      */
     public function run(): void
     {
+        ini_set('memory_limit', '-1');
         $this->generate();
-        die;
+        // $this->normal();
+    }
+
+    private function normal(): void
+    {
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');
         // $options      = array_values(get_options());

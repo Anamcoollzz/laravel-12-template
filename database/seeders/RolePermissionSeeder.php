@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use App\Models\Role;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -20,6 +22,8 @@ class RolePermissionSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         Role::truncate();
+        Permission::truncate();
+
         $roles = config('stisla.roles');
         foreach ($roles as $role) {
             $roleObj = Role::create([
@@ -31,30 +35,8 @@ class RolePermissionSeeder extends Seeder
             $roleObj->created_by_id = 1;
             $roleObj->save();
         }
-
-        $roles = Role::all();
-        $rolesArray = $roles->pluck('name')->toArray();
-
-        Permission::truncate();
-
-        // default permissions
-        $permissions = config('stisla.permissions');
-        foreach ($permissions as $permission) {
-            $group = PermissionGroup::updateOrCreate([
-                'group_name' => $permission['group']
-            ]);
-            if ($permission['name'] === 'Reset Sistem') {
-                // dd($permission['roles']);
-            }
-            $perm = Permission::create([
-                'name'                => $permission['name'],
-                'permission_group_id' => $group->id
-            ]);
-            foreach ($permission['roles'] as $role) {
-                if (in_array($role, $rolesArray))
-                    $perm->assignRole($role);
-            }
-        }
+        $this->generatePermission();
+        $this->perModule();
 
         // per module generated permission
         $path = database_path('seeders/data/permission-modules');
@@ -74,6 +56,41 @@ class RolePermissionSeeder extends Seeder
                         if (in_array($role, $rolesArray))
                             $perm->assignRole($role);
                 }
+            }
+        }
+    }
+
+    private function generatePermission($permissions = false)
+    {
+        $roles = Role::all();
+        $rolesArray = $roles->pluck('name')->toArray();
+
+        // default permissions
+        $permissions = $permissions ? $permissions : config('stisla.permissions');
+        foreach ($permissions as $permission) {
+            $group = PermissionGroup::updateOrCreate([
+                'group_name' => $permission['group']
+            ]);
+            if ($permission['name'] === 'Reset Sistem') {
+                // dd($permission['roles']);
+            }
+            $perm = Permission::create([
+                'name'                => $permission['name'],
+                'permission_group_id' => $group->id
+            ]);
+            foreach ($permission['roles'] as $role) {
+                if (in_array($role, $rolesArray))
+                    $perm->assignRole($role);
+            }
+        }
+    }
+
+    private function perModule()
+    {
+        $files = File::allFiles(base_path('config'));
+        foreach ($files as $file) {
+            if (Str::contains($file->getFilename(), '-permission.php') && !Str::contains($file->getFilename(), 'example-crud-permission.php')) {
+                $this->generatePermission(config(str_replace('.php', '', $file->getFilename())));
             }
         }
     }

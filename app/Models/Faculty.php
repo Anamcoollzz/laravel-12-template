@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CrudExample extends Model
+class Faculty extends Model
 {
     use HasFactory;
 
@@ -40,7 +40,8 @@ class CrudExample extends Model
         "created_by_id",
         "last_updated_by_id",
 
-        //columns
+
+        'name',
     ];
 
     /**
@@ -55,7 +56,7 @@ class CrudExample extends Model
     ];
 
     /**
-     * Get the user that created the CrudExample.
+     * Get the user that created the Faculty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -65,12 +66,22 @@ class CrudExample extends Model
     }
 
     /**
-     * Get the user that updated the CrudExample.
+     * Get the user that updated the Faculty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function lastUpdatedBy()
     {
         return $this->belongsTo(User::class, 'last_updated_by_id');
+    }
+
+    /**
+     * Get the programs associated with the Faculty.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function programs()
+    {
+        return $this->hasMany(StudyProgram::class);
     }
 }

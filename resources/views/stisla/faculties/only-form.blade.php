@@ -6,8 +6,10 @@
 
     @csrf
   </div>
-  {{-- formcolumns --}}
   <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-name', ['icon' => 'fas fa-university'])
+  </div>
+  {{-- <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'text', 'label' => 'Text'])
   </div>
   <div class="col-md-6">
@@ -147,5 +149,5 @@
         'label' => 'Summernote',
         'id' => 'summernote',
     ])
-  </div>
+  </div> --}}
 </div>

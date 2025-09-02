@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CrudExample extends Model
+class Student extends Model
 {
     use HasFactory;
 
@@ -15,32 +15,12 @@ class CrudExample extends Model
      * @var array
      */
     protected $fillable = [
-        "text",
-        "email",
-        "number",
-        "currency",
-        "currency_idr",
-        "select",
-        "select2",
-        "select2_multiple",
-        "textarea",
-        "radio",
-        "checkbox",
-        "checkbox2",
-        "tags",
-        "file",
-        "image",
-        "date",
-        "time",
-        "color",
-        "summernote_simple",
-        "summernote",
-        "barcode",
-        "qr_code",
+        "name",
+        "nim",
+        "date_of_birth",
+        "study_program_id",
         "created_by_id",
         "last_updated_by_id",
-
-        //columns
     ];
 
     /**
@@ -48,14 +28,10 @@ class CrudExample extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'checkbox'         => 'array',
-        'checkbox2'        => 'array',
-        'select2_multiple' => 'array',
-    ];
+    protected $casts = [];
 
     /**
-     * Get the user that created the CrudExample.
+     * Get the user that created the Student.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -65,12 +41,22 @@ class CrudExample extends Model
     }
 
     /**
-     * Get the user that updated the CrudExample.
+     * Get the user that updated the Student.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function lastUpdatedBy()
     {
         return $this->belongsTo(User::class, 'last_updated_by_id');
+    }
+
+    /**
+     * Get the study program that the Student belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function studyProgram()
+    {
+        return $this->belongsTo(StudyProgram::class);
     }
 }

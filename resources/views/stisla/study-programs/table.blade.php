@@ -19,9 +19,10 @@
       @else
         <th>{{ __('No') }}</th>
       @endif
-      {{-- columns --}}
+      <th>{{ __('Nama') }}</th>
+      <th>{{ __('Fakultas') }}</th>
 
-      <th>{{ __('Text') }}</th>
+      {{-- <th>{{ __('Text') }}</th>
       <th>{{ __('Barcode') }}</th>
       <th>{{ __('QR Code') }}</th>
       <th>{{ __('Email') }}</th>
@@ -40,7 +41,7 @@
       <th>{{ __('Image') }}</th>
       <th>{{ __('Date') }}</th>
       <th>{{ __('Time') }}</th>
-      <th>{{ __('Color') }}</th>
+      <th>{{ __('Color') }}</th> --}}
       {{-- @if ($isExport)
         <th>{{ __('Summernote Simple') }}</th>
         <th>{{ __('Summernote') }}</th>
@@ -59,9 +60,10 @@
       @foreach ($data as $item)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          {{-- columnstd --}}
+          <td>{{ $item->name }}</td>
+          <td>{{ $item->faculty->name }}</td>
 
-          <td>{{ $item->text }}</td>
+          {{-- <td>{{ $item->text }}</td>
           @if ($isExport)
             <td>{{ $item->barcode }}</td>
             <td>{{ $item->qr_code }}</td>
@@ -112,18 +114,18 @@
             </td>
           @else
             <td>
-              @include('stisla.crud-examples.file', ['file' => $item->file])
+              @include('stisla.study-programs.file', ['file' => $item->file])
             </td>
             <td>
-              @include('stisla.crud-examples.image', ['file' => $item->image])
+              @include('stisla.study-programs.image', ['file' => $item->image])
             </td>
           @endif
 
           <td>{{ $item->date }}</td>
           <td>{{ $item->time }}</td>
           <td>
-            @include('stisla.crud-examples.color', ['color' => $item->color])
-          </td>
+            @include('stisla.study-programs.color', ['color' => $item->color])
+          </td> --}}
 
           {{-- @if ($isExport)
             <td>{{ $item->summernote_simple }}</td>

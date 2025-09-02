@@ -7,6 +7,7 @@ use App\Models\Bank;
 use App\Models\BankDeposit;
 use App\Models\BankDepositHistory;
 use App\Models\CrudExample;
+use App\Models\Faculty;
 use App\Models\LogRequest;
 use App\Models\Menu;
 use App\Models\MenuGroup;
@@ -19,6 +20,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\Permission\Models\Permission;
 use App\Models\Role;
+use App\Models\Student;
+use App\Models\StudyProgram;
 
 class DashboardController extends StislaController
 {
@@ -88,6 +91,33 @@ class DashboardController extends StislaController
                 'icon'  => 'dollar',
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => '#8b743f'
+            ];
+        if ($user->can('Mahasiswa'))
+            $widgets[] = (object)[
+                'title' => 'Mahasiswa',
+                'count' => Student::count(),
+                'bg'    => 'primary',
+                'icon'  => 'users',
+                'route' => route('students.index'),
+                'bg_color' => '#3f6e8bff'
+            ];
+        if ($user->can('Program Studi'))
+            $widgets[] = (object)[
+                'title' => 'Program Studi',
+                'count' => StudyProgram::count(),
+                'bg'    => 'primary',
+                'icon'  => 'book',
+                'route' => route('study-programs.index'),
+                'bg_color' => '#3f8b44ff'
+            ];
+        if ($user->can('Fakultas'))
+            $widgets[] = (object)[
+                'title' => 'Fakultas',
+                'count' => Faculty::count(),
+                'bg'    => 'primary',
+                'icon'  => 'university',
+                'route' => route('faculties.index'),
+                'bg_color' => '#8b3f64ff'
             ];
         if ($user->can('Pengguna'))
             $widgets[] = (object)[

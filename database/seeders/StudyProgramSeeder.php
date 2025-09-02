@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\CrudExample;
+use App\Models\StudyProgram;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class CrudExampleSeeder extends Seeder
+class StudyProgramSeeder extends Seeder
 {
 
     /**
@@ -82,11 +82,12 @@ class CrudExampleSeeder extends Seeder
                 'last_updated_by_id' => Arr::random([null, 1]),
                 // 'last_updated_by_id' => 1,
 
-                //columns
+                'name' => fake()->name(),
+			'faculty_id' => fake()->word(),
             ]);
         }
         foreach (collect($data)->chunk(20) as $chunkData) {
-            CrudExample::insert($chunkData->toArray());
+            StudyProgram::insert($chunkData->toArray());
         }
     }
 }
