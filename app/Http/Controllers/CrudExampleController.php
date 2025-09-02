@@ -58,6 +58,7 @@ class CrudExampleController extends StislaController
             'summernote_simple',
             'barcode',
             'qr_code',
+            //columns
         ]);
 
         $data['currency']     = idr_to_double($request->currency);
@@ -73,7 +74,7 @@ class CrudExampleController extends StislaController
     }
 
     /**
-     * showing crud example page
+     * showing data page
      *
      * @param Request $request
      * @return Response
@@ -84,7 +85,7 @@ class CrudExampleController extends StislaController
     }
 
     /**
-     * showing add new crud example page
+     * showing add new data page
      *
      * @param Request $request
      * @return Response
@@ -95,7 +96,7 @@ class CrudExampleController extends StislaController
     }
 
     /**
-     * save new crud example to db
+     * save new data to db
      *
      * @param CrudExampleRequest $request
      * @return Response
@@ -106,7 +107,7 @@ class CrudExampleController extends StislaController
     }
 
     /**
-     * showing edit crud example page
+     * showing edit data page
      *
      * @param Request $request
      * @param CrudExample $crudExample
@@ -142,7 +143,7 @@ class CrudExampleController extends StislaController
     }
 
     /**
-     * delete crud example from db
+     * delete data from db
      *
      * @param CrudExample $crudExample
      * @return Response

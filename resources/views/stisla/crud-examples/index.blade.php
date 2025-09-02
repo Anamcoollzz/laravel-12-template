@@ -6,11 +6,11 @@
 @extends('stisla.layouts.app-datatable')
 
 @section('table')
-  @include('stisla.' . $prefix . '.table')
+  @include('stisla.crud-examples.table')
 @endsection
 
 @section('filter_top')
-  @if (Route::is($prefix . '.index'))
+  @if (Route::is('crud-examples.index'))
     @include('stisla.includes.others.filter-default', ['is_show' => false])
   @endif
 @endsection

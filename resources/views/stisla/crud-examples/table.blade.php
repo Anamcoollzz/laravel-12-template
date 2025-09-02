@@ -19,6 +19,8 @@
       @else
         <th>{{ __('No') }}</th>
       @endif
+      {{-- columns --}}
+
       <th>{{ __('Text') }}</th>
       <th>{{ __('Barcode') }}</th>
       <th>{{ __('QR Code') }}</th>
@@ -57,6 +59,8 @@
       @foreach ($data as $item)
         <tr>
           <td>{{ $loop->iteration }}</td>
+          {{-- columnstd --}}
+
           <td>{{ $item->text }}</td>
           @if ($isExport)
             <td>{{ $item->barcode }}</td>
@@ -108,17 +112,17 @@
             </td>
           @else
             <td>
-              @include('stisla.' . $prefix . '.file', ['file' => $item->file])
+              @include('stisla.crud-examples.file', ['file' => $item->file])
             </td>
             <td>
-              @include('stisla.' . $prefix . '.image', ['file' => $item->image])
+              @include('stisla.crud-examples.image', ['file' => $item->image])
             </td>
           @endif
 
           <td>{{ $item->date }}</td>
           <td>{{ $item->time }}</td>
           <td>
-            @include('stisla.' . $prefix . '.color', ['color' => $item->color])
+            @include('stisla.crud-examples.color', ['color' => $item->color])
           </td>
 
           {{-- @if ($isExport)
