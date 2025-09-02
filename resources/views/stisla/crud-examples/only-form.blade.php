@@ -7,39 +7,46 @@
     @csrf
   </div>
   {{-- formcolumns --}}
+
+
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-name')
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-phonenumber')
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-date', ['id' => 'birthdate', 'label' => 'Tanggal Lahir'])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-avatar')
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.editors.textarea-address')
+  </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'text', 'label' => 'Text'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode'])
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode', 'icon' => 'fa fa-barcode'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'qr_code', 'label' => 'QR Code'])
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'qr_code', 'label' => 'QR Code', 'icon' => 'fa fa-qrcode'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input-email', ['required' => true])
+    @include('stisla.includes.forms.inputs.input-email')
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-password')
   </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'number', 'type' => 'number', 'label' => 'Number'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input-currency', [
-        'required' => true,
-        'name' => 'currency',
-        'label' => 'Currency',
-        'id' => 'currency',
-        'currency_type' => 'default',
-    ])
+    @include('stisla.includes.forms.inputs.input-currency-dollar')
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input-currency', [
-        'required' => true,
-        'name' => 'currency_idr',
-        'label' => 'Currency IDR',
-        'id' => 'currency_idr',
-        'currency_type' => 'rupiah',
-        'iconText' => 'IDR',
-    ])
+    @include('stisla.includes.forms.inputs.input-currency-rupiah')
   </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.selects.select', [
@@ -98,31 +105,16 @@
     ])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', [
-        'required' => isset($d) ? false : true,
-        'name' => 'file',
-        'type' => 'file',
-        'label' => 'File',
-        'link_file' => isset($d) ? $d->file : null,
-        'link_file_name' => isset($d) ? basename($d->file) : null,
-    ])
+    @include('stisla.includes.forms.inputs.input-file')
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', [
-        'required' => isset($d) ? false : true,
-        'name' => 'image',
-        'type' => 'file',
-        'label' => 'Image',
-        'accept' => 'image/*',
-        'link_file' => isset($d) ? $d->image : null,
-        'link_file_name' => isset($d) ? basename($d->image) : null,
-    ])
+    @include('stisla.includes.forms.inputs.input-image')
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'date', 'type' => 'date', 'label' => 'Date'])
+    @include('stisla.includes.forms.inputs.input-date')
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'time', 'type' => 'time', 'label' => 'Time'])
+    @include('stisla.includes.forms.inputs.input-time')
   </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input-colorpicker', ['required' => true, 'name' => 'color', 'label' => 'Color'])

@@ -939,3 +939,12 @@ function rp(x) {
 function dollar(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+function showImageModal(e, imageUrl) {
+  e.preventDefault();
+  $('#globalModal').modal('show');
+  $('#globalModal')
+    .find('.modal-body')
+    .html('<div class="text-center"><img src="' + imageUrl + '" class="img-fluid" /></div>');
+  $('#globalModal').find('.modal-title').html('Preview Gambar');
+}
