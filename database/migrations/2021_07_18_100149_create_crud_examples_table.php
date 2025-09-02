@@ -15,10 +15,16 @@ class CreateCrudExamplesTable extends Migration
     {
         Schema::create('crud_examples', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 50);
+            $table->string('phone_number', 30);
+            $table->date('birthdate');
+            $table->text('address');
+            $table->string('avatar');
             $table->string('text');
             $table->string('barcode');
             $table->string('qr_code');
-            $table->string('email');
+            $table->string('email', 100);
+            $table->string('password');
             $table->double('number');
             $table->double('currency');
             $table->double('currency_idr');

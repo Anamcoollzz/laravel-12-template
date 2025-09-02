@@ -45,6 +45,12 @@ class CrudExampleRequest extends FormRequest
             "summernote"        => "required",
             "barcode"           => "required",
             "qr_code"           => "required",
+            'name'              => 'required',
+            'phone_number'      => 'required',
+            'birthdate'         => 'required|date',
+            'address'           => 'required',
+            'password'          => $this->isMethod('put') ? 'nullable|min:6' : 'required|min:6',
+            'avatar'            => $this->isMethod('put') ? 'nullable|image' : 'required|image',
 
             // columns
         ];

@@ -23,7 +23,7 @@ class StudyProgramController extends StislaController
     {
         parent::__construct();
 
-        $this->icon       = 'fa fa-university';
+        $this->icon       = 'fa fa-book';
         $this->repository = new StudyProgramRepository;
         $this->prefix     = $this->viewFolder            = 'study-programs';
         $this->pdfPaperSize = 'A2';

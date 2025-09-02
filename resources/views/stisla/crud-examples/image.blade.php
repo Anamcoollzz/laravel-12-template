@@ -1,5 +1,5 @@
 @if (Str::contains($file, 'http'))
-  <a href="{{ $file }}" target="_blank">
+  <a href="{{ $file }}" onclick="showImageModal(event, '{{ $file }}')">
     <img src="{{ $file }}" alt="{{ $item->text }}" style="max-width: 200px;" class="img-thumbnail">
   </a>
 @elseif($file)

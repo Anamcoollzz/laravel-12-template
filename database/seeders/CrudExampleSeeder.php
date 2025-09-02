@@ -39,6 +39,7 @@ class CrudExampleSeeder extends Seeder
         $options      = array_values(get_options());
         $radioOptions = array_values(get_options(4));
         $now          = now();
+        $pass = bcrypt('password');
         foreach (range(1, 100) as $i) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
@@ -78,13 +79,18 @@ class CrudExampleSeeder extends Seeder
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'created_by_id'      => Arr::random([null, 1]),
-                // 'created_by_id'      => 1,
                 'last_updated_by_id' => Arr::random([null, 1]),
-                // 'last_updated_by_id' => 1,
+                'name'               => $faker->name,
+                'password'           => $pass,
+                'avatar'             => $this->generateImage($email),
+                'phone_number'       => $faker->phoneNumber,
+                'birthdate'          => $faker->date('Y-m-d'),
+                'address'            => $faker->address,
 
                 //columns
             ]);
         }
+
         foreach (collect($data)->chunk(20) as $chunkData) {
             CrudExample::insert($chunkData->toArray());
         }
