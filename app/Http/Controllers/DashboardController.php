@@ -8,10 +8,12 @@ use App\Models\BankDeposit;
 use App\Models\BankDepositHistory;
 use App\Models\CrudExample;
 use App\Models\Faculty;
+use App\Models\FacultyLeader;
 use App\Models\LogRequest;
 use App\Models\Menu;
 use App\Models\MenuGroup;
 use App\Models\Notification;
+use App\Models\Ormawa;
 use App\Models\PermissionGroup;
 use App\Models\User;
 use App\Repositories\SettingRepository;
@@ -118,6 +120,24 @@ class DashboardController extends StislaController
                 'icon'  => 'university',
                 'route' => route('faculties.index'),
                 'bg_color' => '#8b3f64ff'
+            ];
+        if ($user->can('Pimpinan Fakultas'))
+            $widgets[] = (object)[
+                'title' => 'Pimpinan Fakultas',
+                'count' => FacultyLeader::count(),
+                'bg'    => 'primary',
+                'icon'  => 'user-plus',
+                'route' => route('faculty-leaders.index'),
+                'bg_color' => '#5f3f8bff'
+            ];
+        if ($user->can('Ormawa'))
+            $widgets[] = (object)[
+                'title' => 'Ormawa',
+                'count' => Ormawa::count(),
+                'bg'    => 'primary',
+                'icon'  => 'sitemap',
+                'route' => route('ormawas.index'),
+                'bg_color' => '#3f8b43ff'
             ];
         if ($user->can('Pengguna'))
             $widgets[] = (object)[
