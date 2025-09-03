@@ -102,6 +102,13 @@ return [
                             'permission' => 'Program Studi',
                             'is_active_if_url_includes' => 'study-programs*',
                         ],
+                        [
+                            'menu_name' => 'Pimpinan Fakultas',
+                            'route_name' => 'faculty-leaders.index',
+                            'icon' => 'fas fa-user-plus',
+                            'permission' => 'Pimpinan Fakultas',
+                            'is_active_if_url_includes' => 'faculty-leaders*',
+                        ],
                     ]
                 ],
                 [

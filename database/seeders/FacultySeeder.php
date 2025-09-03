@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Faculty;
+use App\Models\FacultyLeader;
 use App\Models\Student;
 use App\Models\StudyProgram;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -1256,5 +1257,13 @@ class FacultySeeder extends Seeder
                 \Log::error("Error creating student for program {$program->id}: {$e->getMessage()}");
             }
         });
+
+        FacultyLeader::truncate();
+        foreach (range(1, 100) as $index) {
+            FacultyLeader::create([
+                'name' => fake()->name(),
+                'faculty_id' => rand(1, 10),
+            ]);
+        }
     }
 }

@@ -261,6 +261,20 @@ Route::get('study-programs/import-excel-example', [StudyProgramController::class
 Route::post('study-programs/import-excel', [StudyProgramController::class, 'importExcel'])->name('study-programs.import-excel');
 Route::resource('study-programs', StudyProgramController::class);
 
+# FacultyLeader
+Route::get('yajra-faculty-leaders', [\App\Http\Controllers\FacultyLeaderController::class, 'index'])->name('faculty-leaders.index-yajra');
+Route::get('yajra-faculty-leaders/ajax', [\App\Http\Controllers\FacultyLeaderController::class, 'yajraAjax'])->name('faculty-leaders.ajax-yajra');
+Route::get('ajax-faculty-leaders', [\App\Http\Controllers\FacultyLeaderController::class, 'index'])->name('faculty-leaders.index-ajax');
+Route::get('yajra-ajax-faculty-leaders', [\App\Http\Controllers\FacultyLeaderController::class, 'index'])->name('faculty-leaders.index-ajax-yajra');
+Route::get('faculty-leaders/pdf', [\App\Http\Controllers\FacultyLeaderController::class, 'exportPdf'])->name('faculty-leaders.pdf');
+Route::get('faculty-leaders/csv', [\App\Http\Controllers\FacultyLeaderController::class, 'exportCsv'])->name('faculty-leaders.csv');
+Route::get('faculty-leaders/excel', [\App\Http\Controllers\FacultyLeaderController::class, 'exportExcel'])->name('faculty-leaders.excel');
+Route::get('faculty-leaders/json', [\App\Http\Controllers\FacultyLeaderController::class, 'exportJson'])->name('faculty-leaders.json');
+Route::get('faculty-leaders/import-excel-example', [\App\Http\Controllers\FacultyLeaderController::class, 'importExcelExample'])->name('faculty-leaders.import-excel-example');
+Route::post('faculty-leaders/import-excel', [\App\Http\Controllers\FacultyLeaderController::class, 'importExcel'])->name('faculty-leaders.import-excel');
+Route::resource('faculty-leaders', \App\Http\Controllers\FacultyLeaderController::class);
+//route
+
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
 Route::get('testing/send-email', [TestingController::class, 'sendEmail']);
 Route::get('testing/modal', [TestingController::class, 'modal']);

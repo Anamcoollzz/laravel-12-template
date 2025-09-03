@@ -141,6 +141,23 @@ class CreateModuleCommand extends Command
         exec('cp ' . base_path('config/example-crud-permission.php') . ' ' . ($path = base_path('config/' . Str::slug($name) . '-permission.php')));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
 
+        // route
+        $path = base_path('routes/stisla-web-auth.php');
+        file_put_contents($path, str_replace('//route', "
+# $name
+Route::get('yajra-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-yajra');
+Route::get('yajra-$prefix/ajax', [\App\Http\Controllers\\{$name}Controller::class, 'yajraAjax'])->name('$prefix.ajax-yajra');
+Route::get('ajax-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-ajax');
+Route::get('yajra-ajax-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-ajax-yajra');
+Route::get('$prefix/pdf', [\App\Http\Controllers\\{$name}Controller::class, 'exportPdf'])->name('$prefix.pdf');
+Route::get('$prefix/csv', [\App\Http\Controllers\\{$name}Controller::class, 'exportCsv'])->name('$prefix.csv');
+Route::get('$prefix/excel', [\App\Http\Controllers\\{$name}Controller::class, 'exportExcel'])->name('$prefix.excel');
+Route::get('$prefix/json', [\App\Http\Controllers\\{$name}Controller::class, 'exportJson'])->name('$prefix.json');
+Route::get('$prefix/import-excel-example', [\App\Http\Controllers\\{$name}Controller::class, 'importExcelExample'])->name('$prefix.import-excel-example');
+Route::post('$prefix/import-excel', [\App\Http\Controllers\\{$name}Controller::class, 'importExcel'])->name('$prefix.import-excel');
+Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
+//route", file_get_contents($path)));
+
         $this->info('Controller: ' . $name . 'Controller');
         $this->info('Model: ' . $name);
         $this->info('Repository: ' . $name . 'Repository');
