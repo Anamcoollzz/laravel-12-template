@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudyProgram extends Model
+class FacultyLeader extends Model
 {
-    use HasFactory, UserTrait;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -34,22 +33,32 @@ class StudyProgram extends Model
     ];
 
     /**
-     * Get the faculty that owns the StudyProgram.
+     * Get the user that created the FacultyLeader.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+    /**
+     * Get the user that updated the FacultyLeader.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lastUpdatedBy()
+    {
+        return $this->belongsTo(User::class, 'last_updated_by_id');
+    }
+
+    /**
+     * Get the faculty that owns the FacultyLeader.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function faculty()
     {
         return $this->belongsTo(Faculty::class);
-    }
-
-    /**
-     * Get the students associated with the StudyProgram.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function students()
-    {
-        return $this->hasMany(Student::class);
     }
 }

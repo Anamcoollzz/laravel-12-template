@@ -45,7 +45,7 @@ class CrudExampleRequest extends FormRequest
             "summernote"        => "required",
             "barcode"           => "required",
             "qr_code"           => "required",
-            'name'              => 'required',
+            'name'              => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
             'phone_number'      => 'required',
             'birthdate'         => 'required|date',
             'address'           => 'required',
