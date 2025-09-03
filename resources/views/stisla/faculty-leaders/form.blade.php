@@ -5,7 +5,7 @@
 @extends('stisla.layouts.app-form')
 
 @section('rowForm')
-  @include('stisla.crud-examples.only-form')
+  @include('stisla.faculty-leaders.only-form')
 @endsection
 
 @push('css')

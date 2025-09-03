@@ -61,7 +61,12 @@ class CreateModuleCommand extends Command
         $request = base_path('app/Http/Requests/CrudExampleRequest.php');
         exec('cp ' . $request . ' ' . ($path = base_path('app/Http/Requests/' . $name . 'Request.php')));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
-        file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col'\t\t=> 'required',", $columns)), file_get_contents($path)));
+        file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(function ($col) {
+            if ($col === 'name') {
+                return "'$col'\t\t=> 'required|string|regex:/^[\\pL\\s.,]+$/u|max:50',";
+            }
+            return "'$col'\t\t=> 'required',";
+        }, $columns)), file_get_contents($path)));
 
         $view = base_path('resources/views/stisla/crud-examples');
         exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
@@ -77,6 +82,10 @@ class CreateModuleCommand extends Command
                     function ($col) {
                         if (Str::endsWith($col, '_id')) {
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.selects.select', ['id' => '$col','name' => '$col','options' => '{$col}_options','label' => '$col','required' => true,])\n\t</div>";
+                        } elseif ($col === 'name') {
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-name')\n\t</div>";
+                        } elseif ($col === 'email') {
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-email')\n\t</div>";
                         } else {
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => '$col'])\n\t</div>";
                         }
@@ -140,6 +149,23 @@ class CreateModuleCommand extends Command
 
         exec('cp ' . base_path('config/example-crud-permission.php') . ' ' . ($path = base_path('config/' . Str::slug($name) . '-permission.php')));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
+
+        // route
+        $path = base_path('routes/stisla-web-auth.php');
+        file_put_contents($path, str_replace('//route', "
+# $name
+Route::get('yajra-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-yajra');
+Route::get('yajra-$prefix/ajax', [\App\Http\Controllers\\{$name}Controller::class, 'yajraAjax'])->name('$prefix.ajax-yajra');
+Route::get('ajax-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-ajax');
+Route::get('yajra-ajax-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-ajax-yajra');
+Route::get('$prefix/pdf', [\App\Http\Controllers\\{$name}Controller::class, 'exportPdf'])->name('$prefix.pdf');
+Route::get('$prefix/csv', [\App\Http\Controllers\\{$name}Controller::class, 'exportCsv'])->name('$prefix.csv');
+Route::get('$prefix/excel', [\App\Http\Controllers\\{$name}Controller::class, 'exportExcel'])->name('$prefix.excel');
+Route::get('$prefix/json', [\App\Http\Controllers\\{$name}Controller::class, 'exportJson'])->name('$prefix.json');
+Route::get('$prefix/import-excel-example', [\App\Http\Controllers\\{$name}Controller::class, 'importExcelExample'])->name('$prefix.import-excel-example');
+Route::post('$prefix/import-excel', [\App\Http\Controllers\\{$name}Controller::class, 'importExcel'])->name('$prefix.import-excel');
+Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
+//route", file_get_contents($path)));
 
         $this->info('Controller: ' . $name . 'Controller');
         $this->info('Model: ' . $name);

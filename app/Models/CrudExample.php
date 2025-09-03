@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CrudExample extends Model
 {
-    use HasFactory;
+    use HasFactory, UserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -59,24 +60,4 @@ class CrudExample extends Model
         'checkbox2'        => 'array',
         'select2_multiple' => 'array',
     ];
-
-    /**
-     * Get the user that created the CrudExample.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
-    }
-
-    /**
-     * Get the user that updated the CrudExample.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function lastUpdatedBy()
-    {
-        return $this->belongsTo(User::class, 'last_updated_by_id');
-    }
 }
