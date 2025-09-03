@@ -17,6 +17,8 @@ class FacultyLeader extends Model
     protected $fillable = [
         'name',
         'faculty_id',
+        'created_by_id',
+        'last_updated_by_id',
     ];
 
     /**

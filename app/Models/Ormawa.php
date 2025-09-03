@@ -6,7 +6,7 @@ use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Faculty extends Model
+class Ormawa extends Model
 {
     use HasFactory, UserTrait;
 
@@ -18,7 +18,7 @@ class Faculty extends Model
     protected $fillable = [
         'name',
         'created_by_id',
-        'last_updated_by_id'
+        'last_updated_by_id',
     ];
 
     /**
@@ -26,19 +26,5 @@ class Faculty extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'checkbox'         => 'array',
-        'checkbox2'        => 'array',
-        'select2_multiple' => 'array',
-    ];
-
-    /**
-     * Get the programs associated with the Faculty.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function programs()
-    {
-        return $this->hasMany(StudyProgram::class);
-    }
+    protected $casts = [];
 }

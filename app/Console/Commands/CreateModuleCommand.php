@@ -61,7 +61,12 @@ class CreateModuleCommand extends Command
         $request = base_path('app/Http/Requests/CrudExampleRequest.php');
         exec('cp ' . $request . ' ' . ($path = base_path('app/Http/Requests/' . $name . 'Request.php')));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
-        file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col'\t\t=> 'required',", $columns)), file_get_contents($path)));
+        file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(function ($col) {
+            if ($col === 'name') {
+                return "'$col'\t\t=> 'required|string|regex:/^[\\pL\\s.,]+$/u|max:50',";
+            }
+            return "'$col'\t\t=> 'required',";
+        }, $columns)), file_get_contents($path)));
 
         $view = base_path('resources/views/stisla/crud-examples');
         exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
@@ -77,6 +82,10 @@ class CreateModuleCommand extends Command
                     function ($col) {
                         if (Str::endsWith($col, '_id')) {
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.selects.select', ['id' => '$col','name' => '$col','options' => '{$col}_options','label' => '$col','required' => true,])\n\t</div>";
+                        } elseif ($col === 'name') {
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-name')\n\t</div>";
+                        } elseif ($col === 'email') {
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-email')\n\t</div>";
                         } else {
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => '$col'])\n\t</div>";
                         }

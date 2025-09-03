@@ -109,6 +109,13 @@ return [
                             'permission' => 'Pimpinan Fakultas',
                             'is_active_if_url_includes' => 'faculty-leaders*',
                         ],
+                        [
+                            'menu_name' => 'Ormawa',
+                            'route_name' => 'ormawas.index',
+                            'icon' => 'fas fa-sitemap',
+                            'permission' => 'Ormawa',
+                            'is_active_if_url_includes' => 'ormawas*',
+                        ],
                     ]
                 ],
                 [

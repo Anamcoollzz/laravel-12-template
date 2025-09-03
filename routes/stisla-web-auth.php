@@ -273,6 +273,19 @@ Route::get('faculty-leaders/json', [\App\Http\Controllers\FacultyLeaderControlle
 Route::get('faculty-leaders/import-excel-example', [\App\Http\Controllers\FacultyLeaderController::class, 'importExcelExample'])->name('faculty-leaders.import-excel-example');
 Route::post('faculty-leaders/import-excel', [\App\Http\Controllers\FacultyLeaderController::class, 'importExcel'])->name('faculty-leaders.import-excel');
 Route::resource('faculty-leaders', \App\Http\Controllers\FacultyLeaderController::class);
+
+# Ormawa
+Route::get('yajra-ormawas', [\App\Http\Controllers\OrmawaController::class, 'index'])->name('ormawas.index-yajra');
+Route::get('yajra-ormawas/ajax', [\App\Http\Controllers\OrmawaController::class, 'yajraAjax'])->name('ormawas.ajax-yajra');
+Route::get('ajax-ormawas', [\App\Http\Controllers\OrmawaController::class, 'index'])->name('ormawas.index-ajax');
+Route::get('yajra-ajax-ormawas', [\App\Http\Controllers\OrmawaController::class, 'index'])->name('ormawas.index-ajax-yajra');
+Route::get('ormawas/pdf', [\App\Http\Controllers\OrmawaController::class, 'exportPdf'])->name('ormawas.pdf');
+Route::get('ormawas/csv', [\App\Http\Controllers\OrmawaController::class, 'exportCsv'])->name('ormawas.csv');
+Route::get('ormawas/excel', [\App\Http\Controllers\OrmawaController::class, 'exportExcel'])->name('ormawas.excel');
+Route::get('ormawas/json', [\App\Http\Controllers\OrmawaController::class, 'exportJson'])->name('ormawas.json');
+Route::get('ormawas/import-excel-example', [\App\Http\Controllers\OrmawaController::class, 'importExcelExample'])->name('ormawas.import-excel-example');
+Route::post('ormawas/import-excel', [\App\Http\Controllers\OrmawaController::class, 'importExcel'])->name('ormawas.import-excel');
+Route::resource('ormawas', \App\Http\Controllers\OrmawaController::class);
 //route
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
