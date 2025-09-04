@@ -29,6 +29,9 @@
       <th>{{ __('Email') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Alamat') }}</th>
+      @if ($isAlumniPage = Route::is('alumnis.index'))
+        <th>{{ __('Tahun Lulus') }}</th>
+      @endif
       {{-- <th>{{ __('Email') }}</th>
       <th>{{ __('Number') }}</th>
       <th>{{ __('Currency') }}</th>
@@ -93,6 +96,9 @@
           <td>{{ $item->user?->email }}</td>
           <td>{{ $item->user?->phone_number }}</td>
           <td>{{ $item->user?->address }}</td>
+          @if ($isAlumniPage)
+            <td>{{ $item->graduation_year }}</td>
+          @endif
           {{-- <td>{{ dollar($item->currency) }}</td>
           <td>{{ rp($item->currency_idr) }}</td>
           <td>{{ $item->select }}</td>

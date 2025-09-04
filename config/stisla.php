@@ -89,6 +89,13 @@ return [
                             'is_active_if_url_includes' => 'students*',
                         ],
                         [
+                            'menu_name' => 'Alumni',
+                            'route_name' => 'alumnis.index',
+                            'icon' => 'fas fa-users',
+                            'permission' => 'Alumni',
+                            'is_active_if_url_includes' => 'alumnis*',
+                        ],
+                        [
                             'menu_name' => 'Fakultas',
                             'route_name' => 'faculties.index',
                             'icon' => 'fas fa-university',

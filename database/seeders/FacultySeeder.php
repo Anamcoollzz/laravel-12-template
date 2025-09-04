@@ -1257,8 +1257,8 @@ class FacultySeeder extends Seeder
                         'photo' => fake()->imageUrl(400, 400, 'people', true),
                         'user_id' => 1,
                         'student_status' => $status = Arr::random($statuses),
-                        'class_year' => rand(2018, 2023),
-                        'graduation_year' => in_array($status, ['lulus']) ? rand(2020, 2023) : null,
+                        'class_year' => $year = rand(2018, 2023),
+                        'graduation_year' => in_array($status, ['lulus']) ? $year + 4 : null,
                     ]
                 );
             } catch (\Exception $e) {
