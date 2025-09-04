@@ -123,6 +123,13 @@ return [
                             'permission' => 'Ormawa',
                             'is_active_if_url_includes' => 'ormawas*',
                         ],
+                        [
+                            'menu_name' => 'Pekerjaan',
+                            'route_name' => 'works.index',
+                            'icon' => 'fas fa-bag',
+                            'permission' => 'Pekerjaan',
+                            'is_active_if_url_includes' => 'works*',
+                        ],
                     ]
                 ],
                 [
