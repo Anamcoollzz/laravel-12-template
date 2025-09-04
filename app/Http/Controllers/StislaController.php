@@ -588,12 +588,16 @@ class StislaController extends Controller
      * @param bool|null $withUser
      * @return Response
      */
-    protected function executeStore(Request $request, ?bool $withUser = false)
+    protected function executeStore(Request $request, ?bool $withUser = false, ?callable $callback = null, ?array $data = [])
     {
-        $data   = $this->getStoreData($request);
+        $data   = array_merge($data, $this->getStoreData($request));
         $result = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
         logCreate($this->title, $result);
         $successMessage = successMessageCreate($this->title);
+
+        if ($callback) {
+            $callback($data, $result);
+        }
 
         if ($request->ajax()) {
             return response()->json([

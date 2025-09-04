@@ -127,4 +127,14 @@ class StudentRepository extends Repository
     {
         return $this->queryFullData()->with(['createdBy', 'lastUpdatedBy'])->latest()->get();
     }
+
+    public function getStatus()
+    {
+        return [
+            'aktif' => 'aktif',
+            'lulus' => 'lulus',
+            'cuti' => 'cuti',
+            'dikeluarkan' => 'dikeluarkan',
+        ];
+    }
 }
