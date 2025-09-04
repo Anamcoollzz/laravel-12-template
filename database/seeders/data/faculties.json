@@ -1,0 +1,102 @@
+[
+    {
+        "fakultas": "Fakultas Ekonomi dan Bisnis",
+        "program_studi": ["Manajemen", "Akuntansi", "Ilmu Ekonomi", "Ekonomi Pembangunan", "Ekonomi Syariah", "Bisnis Digital"]
+    },
+    {
+        "fakultas": "Fakultas Hukum",
+        "program_studi": ["Ilmu Hukum", "Hukum Bisnis", "Hukum Pidana", "Hukum Tata Negara"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Sosial dan Ilmu Politik",
+        "program_studi": ["Ilmu Komunikasi", "Hubungan Internasional", "Ilmu Politik", "Sosiologi", "Kriminologi", "Ilmu Pemerintahan"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Budaya",
+        "program_studi": ["Sastra Indonesia", "Sastra Inggris", "Sastra Jepang", "Antropologi Budaya", "Sejarah"]
+    },
+    {
+        "fakultas": "Fakultas Psikologi",
+        "program_studi": ["Psikologi"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Administrasi",
+        "program_studi": ["Ilmu Administrasi Negara", "Ilmu Administrasi Bisnis", "Administrasi Fiskal"]
+    },
+    {
+        "fakultas": "Fakultas Keguruan dan Ilmu Pendidikan",
+        "program_studi": ["Pendidikan Guru Sekolah Dasar (PGSD)", "Pendidikan Matematika", "Pendidikan Bahasa Inggris", "Pendidikan Biologi", "Pendidikan Kimia", "Bimbingan dan Konseling"]
+    },
+    {
+        "fakultas": "Fakultas Sains dan Teknologi",
+        "program_studi": ["Sains Data", "Teknologi Pangan", "Statistika", "Matematika", "Biologi"]
+    },
+    {
+        "fakultas": "Fakultas Teknik",
+        "program_studi": ["Teknik Sipil", "Teknik Mesin", "Teknik Elektro", "Teknik Industri", "Arsitektur", "Perencanaan Wilayah dan Kota", "Teknik Kimia"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Komputer",
+        "program_studi": ["Informatika", "Sistem Informasi", "Teknologi Informasi", "Teknik Komputer"]
+    },
+    {
+        "fakultas": "Fakultas Pertanian",
+        "program_studi": ["Agroteknologi", "Agribisnis", "Teknik Pertanian", "Ilmu Tanah"]
+    },
+    {
+        "fakultas": "Fakultas Kedokteran",
+        "program_studi": ["Pendidikan Dokter", "Ilmu Gizi", "Keperawatan", "Farmasi"]
+    },
+    {
+        "fakultas": "Fakultas Kesehatan Masyarakat",
+        "program_studi": ["Kesehatan Masyarakat", "Gizi Masyarakat"]
+    },
+    {
+        "fakultas": "Fakultas Kedokteran Gigi",
+        "program_studi": ["Pendidikan Dokter Gigi", "Ilmu Kedokteran Gigi"]
+    },
+    {
+        "fakultas": "Fakultas Kedokteran Hewan",
+        "program_studi": ["Pendidikan Dokter Hewan"]
+    },
+    {
+        "fakultas": "Fakultas Teknologi Pertanian",
+        "program_studi": ["Ilmu dan Teknologi Pangan", "Teknik Pertanian dan Biosistem", "Teknologi Industri Pertanian"]
+    },
+    {
+        "fakultas": "Fakultas Perikanan dan Ilmu Kelautan",
+        "program_studi": ["Ilmu Kelautan", "Akuakultur", "Teknologi Hasil Perikanan", "Manajemen Sumber Daya Perairan"]
+    },
+    {
+        "fakultas": "Fakultas Peternakan",
+        "program_studi": ["Ilmu dan Teknologi Peternakan", "Nutrisi dan Teknologi Pakan"]
+    },
+    {
+        "fakultas": "Fakultas Kehutanan",
+        "program_studi": ["Kehutanan", "Konservasi Sumber Daya Hutan dan Ekowisata"]
+    },
+    {
+        "fakultas": "Fakultas Seni Rupa dan Desain",
+        "program_studi": ["Seni Rupa Murni", "Desain Komunikasi Visual", "Desain Interior", "Kriya Seni"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Keolahragaan",
+        "program_studi": ["Pendidikan Jasmani", "Ilmu Keolahragaan", "Pendidikan Kepelatihan Olahraga"]
+    },
+    {
+        "fakultas": "Fakultas Ilmu Komunikasi",
+        "program_studi": ["Ilmu Komunikasi", "Jurnalistik", "Hubungan Masyarakat", "Penyiaran"]
+    },
+    {
+        "fakultas": "Fakultas Pariwisata",
+        "program_studi": ["Pariwisata", "Manajemen Perhotelan"]
+    },
+    {
+        "fakultas": "Fakultas Filsafat",
+        "program_studi": ["Filsafat"]
+    },
+    {
+        "fakultas": "Fakultas Vokasi",
+        "program_studi": ["Manajemen Perkantoran", "Akuntansi Keuangan Publik", "Manajemen Pemasaran"]
+    }
+]

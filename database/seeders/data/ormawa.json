@@ -1,0 +1,602 @@
+[
+    {
+        "id": 1,
+        "name": "Badan Eksekutif Mahasiswa (BEM) Universitas",
+        "jenis": "BEM",
+        "deskripsi": "Organisasi kemahasiswaan tertinggi di tingkat universitas."
+    },
+    {
+        "id": 2,
+        "name": "Himpunan Mahasiswa Teknik Informatika (HMTI)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah pengembangan mahasiswa jurusan Teknik Informatika."
+    },
+    {
+        "id": 3,
+        "name": "Unit Kegiatan Mahasiswa Pecinta Alam (UKM Mapala)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat dan bakat mahasiswa dalam kegiatan alam bebas."
+    },
+    {
+        "id": 4,
+        "name": "Korps Sukarela Palang Merah Indonesia (KSR PMI)",
+        "jenis": "UKM",
+        "deskripsi": "Unit kegiatan yang fokus pada kegiatan sosial dan kemanusiaan."
+    },
+    {
+        "id": 5,
+        "name": "Seni Tari Mahasiswa (Sekar Taji)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan seni dan budaya tari tradisional dan modern."
+    },
+    {
+        "id": 6,
+        "name": "Pers Mahasiswa (Persma)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa yang tertarik di dunia jurnalistik."
+    },
+    {
+        "id": 7,
+        "name": "Forum Studi Islam Mahasiswa (FSIM)",
+        "jenis": "UKM",
+        "deskripsi": "Membina spiritualitas dan keilmuan Islam bagi mahasiswa."
+    },
+    {
+        "id": 8,
+        "name": "Paduan Suara Mahasiswa (PSM)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah bakat vokal dan musikal mahasiswa dalam paduan suara."
+    },
+    {
+        "id": 9,
+        "name": "Komunitas Fotografi (Kofograf)",
+        "jenis": "UKM",
+        "deskripsi": "Mewadahi minat mahasiswa dalam seni fotografi."
+    },
+    {
+        "id": 10,
+        "name": "Badan Eksekutif Mahasiswa Fakultas (BEM F)",
+        "jenis": "BEM",
+        "deskripsi": "Organisasi kemahasiswaan di tingkat fakultas."
+    },
+    {
+        "id": 11,
+        "name": "Himpunan Mahasiswa Akuntansi (HMA)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Membantu pengembangan mahasiswa jurusan Akuntansi."
+    },
+    {
+        "id": 12,
+        "name": "English Debating Society (EDS)",
+        "jenis": "UKM",
+        "deskripsi": "Melatih kemampuan debat dan public speaking dalam bahasa Inggris."
+    },
+    {
+        "id": 13,
+        "name": "Koperasi Mahasiswa (Kopma)",
+        "jenis": "UKM",
+        "deskripsi": "Mengelola unit usaha berbasis koperasi bagi mahasiswa."
+    },
+    {
+        "id": 14,
+        "name": "Teater Mahasiswa (Teater O)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah kreasi seni pertunjukan dan drama."
+    },
+    {
+        "id": 15,
+        "name": "Seni Bela Diri Karate (UKM Karate)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat bela diri dan kedisiplinan."
+    },
+    {
+        "id": 16,
+        "name": "Himpunan Mahasiswa Teknik Elektro (HMTE)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mewadahi mahasiswa yang memiliki minat di bidang elektronika."
+    },
+    {
+        "id": 17,
+        "name": "UKM Renang (UKM Renang)",
+        "jenis": "UKM",
+        "deskripsi": "Unit kegiatan yang berfokus pada olahraga renang."
+    },
+    {
+        "id": 18,
+        "name": "Komunitas Pecinta Otomotif (KPO)",
+        "jenis": "UKM",
+        "deskripsi": "Mengumpulkan mahasiswa yang memiliki hobi di bidang otomotif."
+    },
+    {
+        "id": 19,
+        "name": "Mahasiswa Pecinta Lingkungan (Malin)",
+        "jenis": "UKM",
+        "deskripsi": "Fokus pada isu-isu lingkungan hidup dan pelestarian alam."
+    },
+    {
+        "id": 20,
+        "name": "Himpunan Mahasiswa Sosiologi (HMS)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah diskusi dan pengembangan ilmu sosiologi."
+    },
+    {
+        "id": 21,
+        "name": "UKM Sepak Bola (UKM Sepak Bola)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat dan minat mahasiswa di olahraga sepak bola."
+    },
+    {
+        "id": 22,
+        "name": "Komunitas Astronomi (Astroun)",
+        "jenis": "UKM",
+        "deskripsi": "Mengkaji dan mengamati fenomena astronomi."
+    },
+    {
+        "id": 23,
+        "name": "Forum Mahasiswa Katolik (FMK)",
+        "jenis": "UKM",
+        "deskripsi": "Membina keilmuan dan spiritualitas bagi mahasiswa Katolik."
+    },
+    {
+        "id": 24,
+        "name": "Himpunan Mahasiswa Ilmu Komunikasi (Himakom)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah pengembangan mahasiswa jurusan Ilmu Komunikasi."
+    },
+    {
+        "id": 25,
+        "name": "UKM Badminton (UKM Badminton)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan bakat mahasiswa di bidang olahraga bulu tangkis."
+    },
+    {
+        "id": 26,
+        "name": "Komunitas Pecinta Film (Kofilm)",
+        "jenis": "UKM",
+        "deskripsi": "Mewadahi mahasiswa yang memiliki minat di dunia sinematografi."
+    },
+    {
+        "id": 27,
+        "name": "Himpunan Mahasiswa Biologi (Himabio)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan keilmuan dan minat mahasiswa di bidang Biologi."
+    },
+    {
+        "id": 28,
+        "name": "Mahasiswa Pencinta Seni Rupa (Marseni)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa yang memiliki minat di seni lukis dan rupa."
+    },
+    {
+        "id": 29,
+        "name": "Himpunan Mahasiswa Manajemen (Himamen)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan pengetahuan di bidang manajemen."
+    },
+    {
+        "id": 30,
+        "name": "UKM Musik (UKM Musik)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat dan minat mahasiswa di bidang musik."
+    },
+    {
+        "id": 31,
+        "name": "Himpunan Mahasiswa Hukum (Himakum)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mewadahi diskusi dan pengembangan keilmuan di bidang hukum."
+    },
+    {
+        "id": 32,
+        "name": "UKM Catur (UKM Catur)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah strategi dan pemikiran di olahraga catur."
+    },
+    {
+        "id": 33,
+        "name": "Komunitas Desain Grafis (Kodesain)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa yang tertarik di bidang desain grafis."
+    },
+    {
+        "id": 34,
+        "name": "Himpunan Mahasiswa Kedokteran (Himdok)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Membantu pengembangan mahasiswa di bidang ilmu kedokteran."
+    },
+    {
+        "id": 35,
+        "name": "UKM Bola Basket (UKM Basket)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat mahasiswa di olahraga bola basket."
+    },
+    {
+        "id": 36,
+        "name": "Himpunan Mahasiswa Arsitektur (Himars)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah pengembangan mahasiswa jurusan Arsitektur."
+    },
+    {
+        "id": 37,
+        "name": "UKM Taekwondo (UKM Taekwondo)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat bela diri Taekwondo."
+    },
+    {
+        "id": 38,
+        "name": "Komunitas Bisnis Mahasiswa (Kobis)",
+        "jenis": "UKM",
+        "deskripsi": "Fokus pada pengembangan jiwa kewirausahaan."
+    },
+    {
+        "id": 39,
+        "name": "Himpunan Mahasiswa Psikologi (Himapsi)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah untuk pengembangan pengetahuan psikologi."
+    },
+    {
+        "id": 40,
+        "name": "UKM Jurnalistik (UKM Jurnalistik)",
+        "jenis": "UKM",
+        "deskripsi": "Melatih keterampilan menulis dan jurnalistik."
+    },
+    {
+        "id": 41,
+        "name": "Himpunan Mahasiswa Sastra Inggris (Himasing)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah bagi mahasiswa jurusan Sastra Inggris."
+    },
+    {
+        "id": 42,
+        "name": "UKM Voli (UKM Voli)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan bakat dan minat di olahraga bola voli."
+    },
+    {
+        "id": 43,
+        "name": "Himpunan Mahasiswa Pertanian (Himapertan)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan ilmu pertanian."
+    },
+    {
+        "id": 44,
+        "name": "UKM Panahan (UKM Panahan)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah ketepatan dan konsentrasi di olahraga panahan."
+    },
+    {
+        "id": 45,
+        "name": "Komunitas Robotika (Koro)",
+        "jenis": "UKM",
+        "deskripsi": "Mewadahi mahasiswa yang tertarik di bidang robotika."
+    },
+    {
+        "id": 46,
+        "name": "Himpunan Mahasiswa Teknik Kimia (HMTK)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Membantu pengembangan mahasiswa di bidang Teknik Kimia."
+    },
+    {
+        "id": 47,
+        "name": "UKM Futsal (UKM Futsal)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga futsal."
+    },
+    {
+        "id": 48,
+        "name": "Himpunan Mahasiswa Teknik Sipil (HMTS)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah pengembangan mahasiswa di bidang Teknik Sipil."
+    },
+    {
+        "id": 49,
+        "name": "UKM Tenis Meja (UKM Tenis Meja)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat di olahraga tenis meja."
+    },
+    {
+        "id": 50,
+        "name": "Himpunan Mahasiswa Teknik Mesin (HMTM)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah bagi mahasiswa di jurusan Teknik Mesin."
+    },
+    {
+        "id": 51,
+        "name": "UKM Debat Bahasa Indonesia (Debatindo)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah kemampuan debat dan berpikir kritis."
+    },
+    {
+        "id": 52,
+        "name": "Himpunan Mahasiswa Kimia (Himka)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan keilmuan di bidang Kimia."
+    },
+    {
+        "id": 53,
+        "name": "UKM Panjat Tebing (UKM Panjat Tebing)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa yang memiliki minat panjat tebing."
+    },
+    {
+        "id": 54,
+        "name": "Himpunan Mahasiswa Ekonomi Pembangunan (Himaep)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada keilmuan di bidang ekonomi pembangunan."
+    },
+    {
+        "id": 55,
+        "name": "UKM Bulutangkis (UKM Bulutangkis)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga bulu tangkis."
+    },
+    {
+        "id": 56,
+        "name": "Himpunan Mahasiswa Matematika (Himamat)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah diskusi dan pengembangan ilmu matematika."
+    },
+    {
+        "id": 57,
+        "name": "UKM Wushu (UKM Wushu)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat bela diri Wushu."
+    },
+    {
+        "id": 58,
+        "name": "Himpunan Mahasiswa Gizi (Himagi)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan pengetahuan di bidang gizi."
+    },
+    {
+        "id": 59,
+        "name": "UKM Taekwondo (UKM Taekwondo)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat bela diri Taekwondo."
+    },
+    {
+        "id": 60,
+        "name": "Himpunan Mahasiswa Teknik Industri (HMTI)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mewadahi mahasiswa di jurusan Teknik Industri."
+    },
+    {
+        "id": 61,
+        "name": "UKM Beladiri (UKM Beladiri)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa untuk mempelajari berbagai jenis beladiri."
+    },
+    {
+        "id": 62,
+        "name": "Himpunan Mahasiswa Geografi (Himagraf)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan pengetahuan di bidang geografi."
+    },
+    {
+        "id": 63,
+        "name": "UKM Musik Tradisional (Mustra)",
+        "jenis": "UKM",
+        "deskripsi": "Melestarikan dan mengembangkan seni musik tradisional."
+    },
+    {
+        "id": 64,
+        "name": "Himpunan Mahasiswa Fisika (Himafis)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Membantu pengembangan mahasiswa di bidang fisika."
+    },
+    {
+        "id": 65,
+        "name": "UKM Panahan (UKM Panahan)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah ketepatan dan konsentrasi di olahraga panahan."
+    },
+    {
+        "id": 66,
+        "name": "Himpunan Mahasiswa Hubungan Internasional (Himahi)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada isu-isu dan diplomasi internasional."
+    },
+    {
+        "id": 67,
+        "name": "UKM Jurnalistik (UKM Jurnalistik)",
+        "jenis": "UKM",
+        "deskripsi": "Melatih keterampilan menulis dan jurnalistik."
+    },
+    {
+        "id": 68,
+        "name": "Himpunan Mahasiswa Pertanian (Himapertan)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan ilmu pertanian."
+    },
+    {
+        "id": 69,
+        "name": "UKM Debat Bahasa Inggris (Debating Society)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah kemampuan debat dalam bahasa Inggris."
+    },
+    {
+        "id": 70,
+        "name": "Himpunan Mahasiswa Seni Rupa (Himsur)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah pengembangan kreativitas di bidang seni rupa."
+    },
+    {
+        "id": 71,
+        "name": "UKM Basket (UKM Basket)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga bola basket."
+    },
+    {
+        "id": 72,
+        "name": "Himpunan Mahasiswa Farmasi (Himafar)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah bagi mahasiswa di bidang farmasi."
+    },
+    {
+        "id": 73,
+        "name": "UKM Futsal (UKM Futsal)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga futsal."
+    },
+    {
+        "id": 74,
+        "name": "Himpunan Mahasiswa Kehutanan (Himhut)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada isu-isu dan pengembangan ilmu kehutanan."
+    },
+    {
+        "id": 75,
+        "name": "UKM Tenis Meja (UKM Tenis Meja)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat di olahraga tenis meja."
+    },
+    {
+        "id": 76,
+        "name": "Himpunan Mahasiswa Keperawatan (Himaperta)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Membantu pengembangan mahasiswa di bidang keperawatan."
+    },
+    {
+        "id": 77,
+        "name": "UKM Voli (UKM Voli)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan bakat dan minat di olahraga bola voli."
+    },
+    {
+        "id": 78,
+        "name": "Himpunan Mahasiswa Psikologi (Himapsi)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah untuk pengembangan pengetahuan psikologi."
+    },
+    {
+        "id": 79,
+        "name": "UKM Bulutangkis (UKM Bulutangkis)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga bulu tangkis."
+    },
+    {
+        "id": 80,
+        "name": "Himpunan Mahasiswa Ilmu Pemerintahan (Himip)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah diskusi dan pengembangan di bidang ilmu pemerintahan."
+    },
+    {
+        "id": 81,
+        "name": "UKM Catur (UKM Catur)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah strategi dan pemikiran di olahraga catur."
+    },
+    {
+        "id": 82,
+        "name": "Himpunan Mahasiswa Teknik Lingkungan (HMTL)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada isu lingkungan dan teknik."
+    },
+    {
+        "id": 83,
+        "name": "UKM Renang (UKM Renang)",
+        "jenis": "UKM",
+        "deskripsi": "Unit kegiatan yang berfokus pada olahraga renang."
+    },
+    {
+        "id": 84,
+        "name": "Himpunan Mahasiswa Ilmu Kelautan (Himaka)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan pengetahuan di bidang ilmu kelautan."
+    },
+    {
+        "id": 85,
+        "name": "UKM Sepak Bola (UKM Sepak Bola)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat dan minat mahasiswa di olahraga sepak bola."
+    },
+    {
+        "id": 86,
+        "name": "Himpunan Mahasiswa Antropologi (Himantrop)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah diskusi dan pengembangan ilmu antropologi."
+    },
+    {
+        "id": 87,
+        "name": "UKM Musik Tradisional (Mustra)",
+        "jenis": "UKM",
+        "deskripsi": "Melestarikan dan mengembangkan seni musik tradisional."
+    },
+    {
+        "id": 88,
+        "name": "Himpunan Mahasiswa Seni Tari (Himastari)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan minat di bidang seni tari."
+    },
+    {
+        "id": 89,
+        "name": "UKM Bela Diri Pencak Silat (UKM Silat)",
+        "jenis": "UKM",
+        "deskripsi": "Mengembangkan minat bela diri pencak silat."
+    },
+    {
+        "id": 90,
+        "name": "Himpunan Mahasiswa Seni Musik (Himamus)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah bagi mahasiswa di jurusan seni musik."
+    },
+    {
+        "id": 91,
+        "name": "UKM Bola Basket (UKM Basket)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat di olahraga bola basket."
+    },
+    {
+        "id": 92,
+        "name": "Himpunan Mahasiswa Teknologi Pangan (Himapang)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan pengetahuan di bidang teknologi pangan."
+    },
+    {
+        "id": 93,
+        "name": "UKM Fotografi (UKM Fotografi)",
+        "jenis": "UKM",
+        "deskripsi": "Mewadahi minat mahasiswa di dunia fotografi."
+    },
+    {
+        "id": 94,
+        "name": "Himpunan Mahasiswa Administrasi Publik (Himapub)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan ilmu administrasi publik."
+    },
+    {
+        "id": 95,
+        "name": "UKM Kesenian (UKM Kesenian)",
+        "jenis": "UKM",
+        "deskripsi": "Wadah bagi mahasiswa yang memiliki minat di berbagai jenis kesenian."
+    },
+    {
+        "id": 96,
+        "name": "Himpunan Mahasiswa Ilmu Perpustakaan (Himpers)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Mengembangkan pengetahuan di bidang ilmu perpustakaan."
+    },
+    {
+        "id": 97,
+        "name": "UKM Tari (UKM Tari)",
+        "jenis": "UKM",
+        "deskripsi": "Menyalurkan bakat dan minat di seni tari."
+    },
+    {
+        "id": 98,
+        "name": "Himpunan Mahasiswa Pendidikan Bahasa (Himaba)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Wadah bagi mahasiswa di jurusan pendidikan bahasa."
+    },
+    {
+        "id": 99,
+        "name": "UKM Bahasa Asing (UKM Bahasa)",
+        "jenis": "UKM",
+        "deskripsi": "Mengasah kemampuan berbahasa asing bagi mahasiswa."
+    },
+    {
+        "id": 100,
+        "name": "Himpunan Mahasiswa Geofisika (Himafisika)",
+        "jenis": "Himpunan Mahasiswa Jurusan",
+        "deskripsi": "Fokus pada pengembangan ilmu geofisika."
+    }
+]
