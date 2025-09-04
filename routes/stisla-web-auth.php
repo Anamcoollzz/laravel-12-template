@@ -299,6 +299,19 @@ Route::get('alumnis/json', [\App\Http\Controllers\AlumniController::class, 'expo
 Route::get('alumnis/import-excel-example', [\App\Http\Controllers\AlumniController::class, 'importExcelExample'])->name('alumnis.import-excel-example');
 Route::post('alumnis/import-excel', [\App\Http\Controllers\AlumniController::class, 'importExcel'])->name('alumnis.import-excel');
 Route::resource('alumnis', \App\Http\Controllers\AlumniController::class);
+
+# Work
+Route::get('yajra-works', [\App\Http\Controllers\WorkController::class, 'index'])->name('works.index-yajra');
+Route::get('yajra-works/ajax', [\App\Http\Controllers\WorkController::class, 'yajraAjax'])->name('works.ajax-yajra');
+Route::get('ajax-works', [\App\Http\Controllers\WorkController::class, 'index'])->name('works.index-ajax');
+Route::get('yajra-ajax-works', [\App\Http\Controllers\WorkController::class, 'index'])->name('works.index-ajax-yajra');
+Route::get('works/pdf', [\App\Http\Controllers\WorkController::class, 'exportPdf'])->name('works.pdf');
+Route::get('works/csv', [\App\Http\Controllers\WorkController::class, 'exportCsv'])->name('works.csv');
+Route::get('works/excel', [\App\Http\Controllers\WorkController::class, 'exportExcel'])->name('works.excel');
+Route::get('works/json', [\App\Http\Controllers\WorkController::class, 'exportJson'])->name('works.json');
+Route::get('works/import-excel-example', [\App\Http\Controllers\WorkController::class, 'importExcelExample'])->name('works.import-excel-example');
+Route::post('works/import-excel', [\App\Http\Controllers\WorkController::class, 'importExcel'])->name('works.import-excel');
+Route::resource('works', \App\Http\Controllers\WorkController::class);
 //route
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);

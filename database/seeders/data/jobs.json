@@ -1,0 +1,656 @@
+[
+    {
+        "pekerjaan": "Manajer Proyek",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 18500000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Analis Data",
+        "departemen": "Analitik",
+        "gaji_per_bulan": 12000000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Pengembang Perangkat Lunak",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Spesialis Pemasaran Digital",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 10500000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Akuntan Senior",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Desainer Grafis",
+        "departemen": "Kreatif",
+        "gaji_per_bulan": 8500000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Manajer Sumber Daya Manusia",
+        "departemen": "Sumber Daya Manusia",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Insinyur Sipil",
+        "departemen": "Teknik",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Peneliti Pasar",
+        "departemen": "Penelitian & Pengembangan",
+        "gaji_per_bulan": 11000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Manajer Penjualan",
+        "departemen": "Penjualan",
+        "gaji_per_bulan": 19500000,
+        "pengalaman_tahun": 12
+    },
+    {
+        "pekerjaan": "Asisten Administrasi",
+        "departemen": "Administrasi",
+        "gaji_per_bulan": 6000000,
+        "pengalaman_tahun": 1
+    },
+    {
+        "pekerjaan": "Analis Keuangan",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 13000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Pengembang Web",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 11500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Spesialis Hubungan Masyarakat",
+        "departemen": "Komunikasi",
+        "gaji_per_bulan": 10000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Staf Operasional",
+        "departemen": "Operasi",
+        "gaji_per_bulan": 7500000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Konsultan Bisnis",
+        "departemen": "Konsultasi",
+        "gaji_per_bulan": 22000000,
+        "pengalaman_tahun": 15
+    },
+    {
+        "pekerjaan": "Manajer Produk",
+        "departemen": "Manajemen Produk",
+        "gaji_per_bulan": 16500000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Pengembang Aplikasi Seluler",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 14500000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Spesialis SEO",
+        "departemen": "Pemasaran Digital",
+        "gaji_per_bulan": 9500000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Manajer Logistik",
+        "departemen": "Logistik",
+        "gaji_per_bulan": 15500000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Pengembang Game",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 13500000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Spesialis Keamanan Siber",
+        "departemen": "Keamanan IT",
+        "gaji_per_bulan": 17500000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Arsitek",
+        "departemen": "Arsitektur",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Desainer UX/UI",
+        "departemen": "Desain",
+        "gaji_per_bulan": 11000000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Merek",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Spesialis Jaminan Kualitas",
+        "departemen": "Jaminan Kualitas",
+        "gaji_per_bulan": 9000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Manajer Operasi",
+        "departemen": "Operasi",
+        "gaji_per_bulan": 18000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Analis Bisnis",
+        "departemen": "Analisis Bisnis",
+        "gaji_per_bulan": 12500000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Pengacara",
+        "departemen": "Hukum",
+        "gaji_per_bulan": 20000000,
+        "pengalaman_tahun": 11
+    },
+    {
+        "pekerjaan": "Ahli Gizi",
+        "departemen": "Kesehatan",
+        "gaji_per_bulan": 9000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Editor Konten",
+        "departemen": "Media",
+        "gaji_per_bulan": 8000000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Pengembang Front-End",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 13000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Pengembang Back-End",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Spesialis Cloud Computing",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Manajer Akun",
+        "departemen": "Penjualan",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Staf SDM",
+        "departemen": "Sumber Daya Manusia",
+        "gaji_per_bulan": 7000000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Arsitek Solusi",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 21000000,
+        "pengalaman_tahun": 12
+    },
+    {
+        "pekerjaan": "Analis Sistem",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 12000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Manajer E-commerce",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 15500000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Pengajar",
+        "departemen": "Pendidikan",
+        "gaji_per_bulan": 8500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Fotografer",
+        "departemen": "Kreatif",
+        "gaji_per_bulan": 7000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Spesialis Pemasaran Konten",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 10500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer R&D",
+        "departemen": "Penelitian & Pengembangan",
+        "gaji_per_bulan": 19000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Pilot",
+        "departemen": "Penerbangan",
+        "gaji_per_bulan": 30000000,
+        "pengalaman_tahun": 15
+    },
+    {
+        "pekerjaan": "Perawat",
+        "departemen": "Kesehatan",
+        "gaji_per_bulan": 7500000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Pengembang Full-Stack",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Manajer Keuangan",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 20000000,
+        "pengalaman_tahun": 12
+    },
+    {
+        "pekerjaan": "Insinyur Mesin",
+        "departemen": "Teknik",
+        "gaji_per_bulan": 15500000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Spesialis Data Science",
+        "departemen": "Analitik",
+        "gaji_per_bulan": 18000000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Manajer Proyek Konstruksi",
+        "departemen": "Konstruksi",
+        "gaji_per_bulan": 22000000,
+        "pengalaman_tahun": 14
+    },
+    {
+        "pekerjaan": "Manajer Gudang",
+        "departemen": "Logistik",
+        "gaji_per_bulan": 13000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Resepsionis",
+        "departemen": "Administrasi",
+        "gaji_per_bulan": 5500000,
+        "pengalaman_tahun": 1
+    },
+    {
+        "pekerjaan": "Staf Pemasaran",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 8000000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Manajer Hubungan Pelanggan",
+        "departemen": "Hubungan Pelanggan",
+        "gaji_per_bulan": 14500000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Pengembang Blockchain",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 20000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Manajer Proyek IT",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 18500000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Pustakawan",
+        "departemen": "Pendidikan",
+        "gaji_per_bulan": 6000000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Penulis Konten Teknis",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 11000000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Analisis QA",
+        "departemen": "Jaminan Kualitas",
+        "gaji_per_bulan": 10000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Pemandu Wisata",
+        "departemen": "Pariwisata",
+        "gaji_per_bulan": 7000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Analis Sistem Jaringan",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 13000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Spesialis Rekrutmen",
+        "departemen": "Sumber Daya Manusia",
+        "gaji_per_bulan": 9500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Produksi",
+        "departemen": "Manufaktur",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Pengembang Machine Learning",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 19000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Penata Acara",
+        "departemen": "Acara",
+        "gaji_per_bulan": 12000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Spesialis Pemasaran Afiliasi",
+        "departemen": "Pemasaran Digital",
+        "gaji_per_bulan": 11500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Kepatuhan",
+        "departemen": "Hukum",
+        "gaji_per_bulan": 18500000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Analis Risiko",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Insinyur Listrik",
+        "departemen": "Teknik",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Manajer Akun Kunci",
+        "departemen": "Penjualan",
+        "gaji_per_bulan": 21000000,
+        "pengalaman_tahun": 11
+    },
+    {
+        "pekerjaan": "Pialang Saham",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 25000000,
+        "pengalaman_tahun": 13
+    },
+    {
+        "pekerjaan": "Chef",
+        "departemen": "Kuliner",
+        "gaji_per_bulan": 10000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Manajer Hubungan Investor",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 19000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Teknisi IT",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 8000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Penulis Skrip",
+        "departemen": "Media",
+        "gaji_per_bulan": 9000000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Analis SEO",
+        "departemen": "Pemasaran Digital",
+        "gaji_per_bulan": 10000000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Manajer Layanan Pelanggan",
+        "departemen": "Layanan Pelanggan",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Spesialis E-commerce",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 12500000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Manajer Operasi Bisnis",
+        "departemen": "Operasi",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Desainer Interior",
+        "departemen": "Desain",
+        "gaji_per_bulan": 11000000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Komunikasi",
+        "departemen": "Komunikasi",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Manajer Proyek TI",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 18500000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Analis Keamanan TI",
+        "departemen": "Keamanan IT",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 7
+    },
+    {
+        "pekerjaan": "Staf Keuangan",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 9500000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Manajer Pemasaran",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 19000000,
+        "pengalaman_tahun": 11
+    },
+    {
+        "pekerjaan": "Manajer Pelatihan dan Pengembangan",
+        "departemen": "Sumber Daya Manusia",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Dokter",
+        "departemen": "Kesehatan",
+        "gaji_per_bulan": 25000000,
+        "pengalaman_tahun": 15
+    },
+    {
+        "pekerjaan": "Pengacara Perusahaan",
+        "departemen": "Hukum",
+        "gaji_per_bulan": 22000000,
+        "pengalaman_tahun": 12
+    },
+    {
+        "pekerjaan": "Spesialis Konten Media Sosial",
+        "departemen": "Pemasaran Digital",
+        "gaji_per_bulan": 9500000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Penulis Konten",
+        "departemen": "Pemasaran",
+        "gaji_per_bulan": 8500000,
+        "pengalaman_tahun": 3
+    },
+    {
+        "pekerjaan": "Analis Kredit",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 11000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Arsitek Jaringan",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 18000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Manajer Operasi Ritel",
+        "departemen": "Ritel",
+        "gaji_per_bulan": 15000000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Spesialis Keberlanjutan",
+        "departemen": "Lingkungan",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Manajer Kebijakan Publik",
+        "departemen": "Pemerintahan",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 10
+    },
+    {
+        "pekerjaan": "Pengembang Aplikasi Web",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 13000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Pengembang JavaScript",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 12500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Hubungan Masyarakat",
+        "departemen": "Komunikasi",
+        "gaji_per_bulan": 16000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Manajer Penjualan E-commerce",
+        "departemen": "Penjualan",
+        "gaji_per_bulan": 17500000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Spesialis Pemasaran SEO",
+        "departemen": "Pemasaran Digital",
+        "gaji_per_bulan": 10500000,
+        "pengalaman_tahun": 4
+    },
+    {
+        "pekerjaan": "Manajer Operasi Logistik",
+        "departemen": "Logistik",
+        "gaji_per_bulan": 15500000,
+        "pengalaman_tahun": 8
+    },
+    {
+        "pekerjaan": "Staf Pajak",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 10000000,
+        "pengalaman_tahun": 5
+    },
+    {
+        "pekerjaan": "Penata Rias",
+        "departemen": "Kreatif",
+        "gaji_per_bulan": 6500000,
+        "pengalaman_tahun": 2
+    },
+    {
+        "pekerjaan": "Manajer Keamanan Siber",
+        "departemen": "Keamanan IT",
+        "gaji_per_bulan": 20000000,
+        "pengalaman_tahun": 11
+    },
+    {
+        "pekerjaan": "Insinyur Perangkat Keras",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 17000000,
+        "pengalaman_tahun": 9
+    },
+    {
+        "pekerjaan": "Manajer Pengembangan Bisnis",
+        "departemen": "Pengembangan Bisnis",
+        "gaji_per_bulan": 21000000,
+        "pengalaman_tahun": 12
+    },
+    {
+        "pekerjaan": "Pengembang Python",
+        "departemen": "Teknologi Informasi",
+        "gaji_per_bulan": 14000000,
+        "pengalaman_tahun": 6
+    },
+    {
+        "pekerjaan": "Manajer SDM",
+        "departemen": "Sumber Daya Manusia",
+        "gaji_per_bulan": 18000000,
+        "pengalaman_tahun": 11
+    },
+    {
+        "pekerjaan": "Manajer Keuangan Korporat",
+        "departemen": "Keuangan",
+        "gaji_per_bulan": 23000000,
+        "pengalaman_tahun": 14
+    }
+]

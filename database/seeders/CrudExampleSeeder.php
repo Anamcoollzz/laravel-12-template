@@ -40,6 +40,19 @@ class CrudExampleSeeder extends Seeder
         $radioOptions = array_values(get_options(4));
         $now          = now();
         $pass = bcrypt('password');
+        // $jobs = file_get_contents(database_path('seeders/data/jobs.json'));
+        // $jobs = json_decode($jobs, true);
+        CrudExample::truncate();
+        // foreach ($jobs as $job) {
+        //     $data[] = [
+        //         'job_name' => $job['pekerjaan'],
+        //         'department' => $job['departemen'] ?? null,
+        //         'created_at'         => $now,
+        //         'updated_at'         => $now,
+        //         'created_by_id'      => 1,
+        //         'last_updated_by_id' => null,
+        //     ];
+        // }
         foreach (range(1, 100) as $i) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
