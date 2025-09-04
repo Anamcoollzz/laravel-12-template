@@ -7,11 +7,14 @@ use App\Models\FacultyLeader;
 use App\Models\Ormawa;
 use App\Models\Student;
 use App\Models\StudyProgram;
+use App\Models\User;
 use App\Repositories\StudentRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
+
+use function Symfony\Component\String\b;
 
 class FacultySeeder extends Seeder
 {
@@ -1248,16 +1251,32 @@ class FacultySeeder extends Seeder
 ]';
         $students = json_decode($students, true);
         $statuses = array_keys((new StudentRepository)->getStatus());
-        StudyProgram::all()->each(function ($program, $i) use ($students, $statuses) {
+        $pass = bcrypt('123456');
+        User::withoutRole([
+            'superadmin',
+            'admin',
+            'banker',
+            'user',
+            'admin pendidikan'
+        ])->delete();
+        StudyProgram::all()->each(function ($program, $i) use ($students, $statuses, $pass) {
+            $user = User::create([
+                'name'         => $students[$i]['nama'],
+                'email'        => strtolower(str_replace(' ', '.', $students[$i]['nama'])) . '@univ.ac.id',
+                'phone_number' => fake()->phoneNumber(),
+                'password'     => $pass,
+                'address'      => fake()->address(),
+                'birth_date'   => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
+            ]);
             try {
                 $program->students()->create(
                     [
-                        'name' => $students[$i]['nama'],
-                        'nim' => $students[$i]['nim'],
-                        'photo' => fake()->imageUrl(400, 400, 'people', true),
-                        'user_id' => 1,
-                        'student_status' => $status = Arr::random($statuses),
-                        'class_year' => $year = rand(2018, 2023),
+                        'name'            => $students[$i]['nama'],
+                        'nim'             => $students[$i]['nim'],
+                        'photo'           => fake()->imageUrl(400, 400, 'people', true),
+                        'user_id'         => $user->id,
+                        'class_year'      => $year = ($user->birth_date ? (int)date('Y', strtotime($user->birth_date)) + 18 : null),
+                        'student_status'  => $status = Arr::random($statuses),
                         'graduation_year' => in_array($status, ['lulus']) ? $year + 4 : null,
                     ]
                 );
