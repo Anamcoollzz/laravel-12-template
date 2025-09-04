@@ -319,7 +319,7 @@ class StislaController extends Controller
             'isDetail'    => $isDetail,
             'breadcrumbs' => $breadcrumbs,
             'viewFolder'  => $this->viewFolder,
-            'prefix'      => $this->prefix,
+            'prefix'      => $this->prefix ?? null,
         ];
     }
 

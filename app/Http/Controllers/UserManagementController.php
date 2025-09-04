@@ -60,6 +60,9 @@ class UserManagementController extends StislaController
             'birth_date',
             'address',
         ]);
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = $this->fileService->uploadAvatar($request->file('avatar'));
+        }
         if ($request->filled('password')) {
             $data['password'] = bcrypt($request->password);
         }

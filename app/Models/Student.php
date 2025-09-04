@@ -17,7 +17,6 @@ class Student extends Model
     protected $fillable = [
         "name",
         "nim",
-        "date_of_birth",
         "study_program_id",
         "created_by_id",
         "last_updated_by_id",

@@ -1087,7 +1087,7 @@ return [
             'name'              => 'Hairul Anam Superadmin',
             'email'             => 'superadmin@laravel12template.com',
             'password'          => 'superadmin',
-            'roles'             => ['superadmin', 'admin'],
+            'roles'             => ['superadmin'],
             'email_verified_at' => '2021-04-06 04:06:00',
             'is_locked'         => 1,
             'phone_number'      => '6285322778935',

@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('nim', 20)->unique();
-            $table->date('date_of_birth');
             $table->unsignedBigInteger('study_program_id')->nullable();
             $table->foreign('study_program_id')->references('id')->on('study_programs')->onUpdate('cascade')->onDelete('set null');
             // wajib
             $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
