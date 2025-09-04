@@ -7,8 +7,12 @@
 
   @csrf
   <div class="row">
+    @include('stisla.user-management.users.avatar')
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input-name', ['required' => true])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input-avatar', ['required' => false])
     </div>
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input', [

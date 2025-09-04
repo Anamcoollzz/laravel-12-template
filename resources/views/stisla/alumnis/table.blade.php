@@ -1,0 +1,1 @@
+@include('stisla.students.table')

@@ -24,6 +24,14 @@
       <th>{{ __('Tanggal Lahir') }}</th>
       <th>{{ __('Prodi') }}</th>
       <th>{{ __('Fakultas') }}</th>
+      <th>{{ __('Angkatan') }}</th>
+      <th>{{ __('Status') }}</th>
+      <th>{{ __('Email') }}</th>
+      <th>{{ __('No HP') }}</th>
+      <th>{{ __('Alamat') }}</th>
+      @if ($isAlumniPage = Route::is('alumnis.index'))
+        <th>{{ __('Tahun Lulus') }}</th>
+      @endif
       {{-- <th>{{ __('Email') }}</th>
       <th>{{ __('Number') }}</th>
       <th>{{ __('Currency') }}</th>
@@ -68,9 +76,29 @@
             <td>{!! \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3) !!}</td>
           @endif --}}
           <td>{{ $item->nim }}</td>
-          <td>{{ $item->date_of_birth }}</td>
+          <td>{{ $item->user?->birth_date }}</td>
           <td>{{ $item->studyProgram->name ?? '-' }}</td>
           <td>{{ $item->studyProgram->faculty->name ?? '-' }}</td>
+          <td>{{ $item->class_year }}</td>
+          <td>
+            @if ($item->student_status == 'aktif')
+              <span class="badge badge-success">{{ $item->student_status }}</span>
+            @elseif($item->student_status == 'lulus')
+              <span class="badge badge-primary">{{ $item->student_status }}</span>
+            @elseif($item->student_status == 'cuti')
+              <span class="badge badge-warning">{{ $item->student_status }}</span>
+            @elseif($item->student_status == 'dikeluarkan')
+              <span class="badge badge-danger">{{ $item->student_status }}</span>
+            @else
+              <span class="badge badge-secondary">{{ $item->student_status }}</span>
+            @endif
+          </td>
+          <td>{{ $item->user?->email }}</td>
+          <td>{{ $item->user?->phone_number }}</td>
+          <td>{{ $item->user?->address }}</td>
+          @if ($isAlumniPage)
+            <td>{{ $item->graduation_year }}</td>
+          @endif
           {{-- <td>{{ dollar($item->currency) }}</td>
           <td>{{ rp($item->currency_idr) }}</td>
           <td>{{ $item->select }}</td>

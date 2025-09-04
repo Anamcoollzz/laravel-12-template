@@ -43,15 +43,19 @@ class StudentController extends StislaController
         $data = $request->only([
             "name",
             "nim",
-            "date_of_birth",
+            // "birth_date",
             "study_program_id",
+            // "user_id",
+            "class_year",
+            "student_status",
+            // "graduation_year",
         ]);
 
         // $data['currency']     = idr_to_double($request->currency);
         // $data['currency_idr'] = rp_to_double($request->currency_idr);
 
-        // if ($request->hasFile('file'))
-        //     $data['file'] = $this->fileService->uploadStudentFile($request->file('file'));
+        if ($request->hasFile('photo'))
+            $data['photo'] = $this->fileService->uploadPhoto($request->file('photo'));
 
         // if ($request->hasFile('image'))
         //     $data['image'] = $this->fileService->uploadStudentFile($request->file('image'));
@@ -67,7 +71,7 @@ class StudentController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['studyProgram.faculty'])]);
+        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['studyProgram.faculty', 'user'])]);
     }
 
     /**
@@ -89,7 +93,15 @@ class StudentController extends StislaController
      */
     public function store(StudentRequest $request)
     {
-        return $this->executeStore($request, withUser: true);
+        $data = $this->userRepository->create([
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'password'     => bcrypt($request->password),
+            'phone_number' => $request->phone_number,
+            'birth_date'   => $request->birth_date,
+            'address'      => $request->address,
+        ]);
+        return $this->executeStore($request, withUser: true, data: ['user_id' => $data->id]);
     }
 
     /**
@@ -113,6 +125,14 @@ class StudentController extends StislaController
      */
     public function update(StudentRequest $request, Student $student)
     {
+        $this->userRepository->update([
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'password'     => $request->password ? bcrypt($request->password) : $student->user?->password,
+            'phone_number' => $request->phone_number,
+            'birth_date'   => $request->birth_date,
+            'address'      => $request->address,
+        ], $student->user_id);
         return $this->executeUpdate($request, $student, withUser: true);
     }
 

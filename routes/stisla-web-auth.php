@@ -286,6 +286,19 @@ Route::get('ormawas/json', [\App\Http\Controllers\OrmawaController::class, 'expo
 Route::get('ormawas/import-excel-example', [\App\Http\Controllers\OrmawaController::class, 'importExcelExample'])->name('ormawas.import-excel-example');
 Route::post('ormawas/import-excel', [\App\Http\Controllers\OrmawaController::class, 'importExcel'])->name('ormawas.import-excel');
 Route::resource('ormawas', \App\Http\Controllers\OrmawaController::class);
+
+# Alumni
+Route::get('yajra-alumnis', [\App\Http\Controllers\AlumniController::class, 'index'])->name('alumnis.index-yajra');
+Route::get('yajra-alumnis/ajax', [\App\Http\Controllers\AlumniController::class, 'yajraAjax'])->name('alumnis.ajax-yajra');
+Route::get('ajax-alumnis', [\App\Http\Controllers\AlumniController::class, 'index'])->name('alumnis.index-ajax');
+Route::get('yajra-ajax-alumnis', [\App\Http\Controllers\AlumniController::class, 'index'])->name('alumnis.index-ajax-yajra');
+Route::get('alumnis/pdf', [\App\Http\Controllers\AlumniController::class, 'exportPdf'])->name('alumnis.pdf');
+Route::get('alumnis/csv', [\App\Http\Controllers\AlumniController::class, 'exportCsv'])->name('alumnis.csv');
+Route::get('alumnis/excel', [\App\Http\Controllers\AlumniController::class, 'exportExcel'])->name('alumnis.excel');
+Route::get('alumnis/json', [\App\Http\Controllers\AlumniController::class, 'exportJson'])->name('alumnis.json');
+Route::get('alumnis/import-excel-example', [\App\Http\Controllers\AlumniController::class, 'importExcelExample'])->name('alumnis.import-excel-example');
+Route::post('alumnis/import-excel', [\App\Http\Controllers\AlumniController::class, 'importExcel'])->name('alumnis.import-excel');
+Route::resource('alumnis', \App\Http\Controllers\AlumniController::class);
 //route
 
 Route::get('testing/datatable', [TestingController::class, 'datatable']);
