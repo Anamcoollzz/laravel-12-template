@@ -7,8 +7,10 @@ use App\Models\FacultyLeader;
 use App\Models\Ormawa;
 use App\Models\Student;
 use App\Models\StudyProgram;
+use App\Repositories\StudentRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 class FacultySeeder extends Seeder
@@ -1245,13 +1247,18 @@ class FacultySeeder extends Seeder
   }
 ]';
         $students = json_decode($students, true);
-        StudyProgram::all()->each(function ($program, $i) use ($students) {
+        $statuses = array_keys((new StudentRepository)->getStatus());
+        StudyProgram::all()->each(function ($program, $i) use ($students, $statuses) {
             try {
                 $program->students()->create(
                     [
                         'name' => $students[$i]['nama'],
                         'nim' => $students[$i]['nim'],
-                        'date_of_birth' => $students[$i]['date_of_birth'],
+                        'photo' => fake()->imageUrl(400, 400, 'people', true),
+                        'user_id' => 1,
+                        'student_status' => $status = Arr::random($statuses),
+                        'class_year' => $year = rand(2018, 2023),
+                        'graduation_year' => in_array($status, ['lulus']) ? $year + 4 : null,
                     ]
                 );
             } catch (\Exception $e) {

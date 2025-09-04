@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Student;
+use App\Models\Alumni;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
-class StudentRepository extends Repository
+class AlumniRepository extends Repository
 {
 
     /**
@@ -16,7 +16,7 @@ class StudentRepository extends Repository
      */
     public function __construct()
     {
-        $this->model = new Student();
+        $this->model = new Alumni();
     }
 
     /**
@@ -32,22 +32,22 @@ class StudentRepository extends Repository
         })
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
-            'currency'         => fn(Student $item) => dollar($item->currency),
-            'currency_idr'     => fn(Student $item) => rp($item->currency_idr),
+            'currency'         => fn(Alumni $item) => dollar($item->currency),
+            'currency_idr'     => fn(Alumni $item) => rp($item->currency_idr),
             'select2_multiple' => '{{implode(", ", $select2_multiple)}}',
             'checkbox'         => '{{implode(", ", $checkbox)}}',
             'checkbox2'        => '{{implode(", ", $checkbox2)}}',
             'tags'             => 'stisla.crud-examples.tags',
             'file'             => 'stisla.crud-examples.file',
-            'image'            => fn(Student $item) => view('stisla.crud-examples.image', ['file' => $item->image, 'item' => $item]),
-            'barcode'          => fn(Student $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
-            'qr_code'          => fn(Student $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
+            'image'            => fn(Alumni $item) => view('stisla.crud-examples.image', ['file' => $item->image, 'item' => $item]),
+            'barcode'          => fn(Alumni $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
+            'qr_code'          => fn(Alumni $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
             'color'            => 'stisla.crud-examples.color',
             'created_at'       => '{{\Carbon\Carbon::parse($created_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             'updated_at'       => '{{\Carbon\Carbon::parse($updated_at)->addHour(7)->format("Y-m-d H:i:s")}}',
-            // 'created_by'       => fn(Student $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
-            // 'last_updated_by'  => fn(Student $crudExample) => $crudExample->lastUpdatedBy ? $crudExample->lastUpdatedBy->name : '-',
-            'action'           => function (Student $crudExample) use ($additionalParams) {
+            // 'created_by'       => fn(Alumni $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
+            // 'last_updated_by'  => fn(Alumni $crudExample) => $crudExample->lastUpdatedBy ? $crudExample->lastUpdatedBy->name : '-',
+            'action'           => function (Alumni $crudExample) use ($additionalParams) {
                 $isAjaxYajra = Route::is('crud-examples.index-ajax-yajra') || request('isAjaxYajra') == 1;
                 $data = array_merge($additionalParams ? $additionalParams : [], [
                     'item'        => $crudExample,
@@ -60,10 +60,10 @@ class StudentRepository extends Repository
             'editColumns' => $editColumns,
             'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code'],
             'addColumns'  => [
-                'created_by' => function (Student $item) {
+                'created_by' => function (Alumni $item) {
                     return $item->createdBy ? $item->createdBy->name : '-';
                 },
-                'last_updated_by' => function (Student $item) {
+                'last_updated_by' => function (Alumni $item) {
                     return $item->lastUpdatedBy ? $item->lastUpdatedBy->name : '-';
                 }
             ]
@@ -126,15 +126,5 @@ class StudentRepository extends Repository
     public function getFullData()
     {
         return $this->queryFullData()->with(['createdBy', 'lastUpdatedBy'])->latest()->get();
-    }
-
-    public function getStatus()
-    {
-        return [
-            'aktif' => 'aktif',
-            'lulus' => 'lulus',
-            'cuti' => 'cuti',
-            'dikeluarkan' => 'dikeluarkan',
-        ];
     }
 }

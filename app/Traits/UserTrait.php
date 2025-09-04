@@ -25,4 +25,14 @@ trait UserTrait
     {
         return $this->belongsTo(User::class, 'last_updated_by_id');
     }
+
+    /**
+     * Get the user id
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    use HasFactory;
+    use HasFactory, UserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -17,8 +18,13 @@ class Student extends Model
     protected $fillable = [
         "name",
         "nim",
-        "date_of_birth",
         "study_program_id",
+        "user_id",
+        "photo",
+        "class_year",
+        "student_status",
+        "graduation_year",
+        // wajib
         "created_by_id",
         "last_updated_by_id",
     ];
@@ -29,26 +35,6 @@ class Student extends Model
      * @var array
      */
     protected $casts = [];
-
-    /**
-     * Get the user that created the Student.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
-    }
-
-    /**
-     * Get the user that updated the Student.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function lastUpdatedBy()
-    {
-        return $this->belongsTo(User::class, 'last_updated_by_id');
-    }
 
     /**
      * Get the study program that the Student belongs to.

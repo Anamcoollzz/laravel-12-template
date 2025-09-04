@@ -71,6 +71,17 @@ class FileService
     }
 
     /**
+     * upload photo file
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @return string
+     */
+    public function uploadPhoto(\Illuminate\Http\UploadedFile $file)
+    {
+        return $this->executeUpload($file, 'photos');
+    }
+
+    /**
      * upload avatar file
      *
      * @param \Illuminate\Http\UploadedFile $file

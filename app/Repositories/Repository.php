@@ -436,9 +436,9 @@ class Repository extends RepositoryAbstract
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFullDataWith(array $relations = [])
+    public function getFullDataWith(array $relations = [], ?array $where = [])
     {
-        return $this->queryFullData()->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->latest()->get();
+        return $this->queryFullData()->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)->latest()->get();
     }
 
     /**
