@@ -74,11 +74,14 @@ class ViewShare
             session($settings);
             foreach ($settings as $key => $value) {
                 view()->share($key, $value);
+                view()->share('_' . $key, $value);
             }
             $menus = $this->menuRepository->getMenus();
             view()->share('_sidebar_menus', $menus);
 
             view()->share('_my_notifications', (new \App\Repositories\NotificationRepository)->myUnReadNotif(20));
+
+            view()->share('_app_is_demo', config('app.is_demo'));
         }
         return $next($request);
     }

@@ -31,13 +31,13 @@ class BankController extends StislaController
      */
     public function __construct()
     {
+        $this->defaultMiddleware('Bank');
+
         parent::__construct();
 
         $this->icon           = 'fa fa-university';
         $this->bankRepository = new BankRepository;
         $this->viewFolder     = 'banks';
-
-        $this->defaultMiddleware('Bank');
     }
 
     /**

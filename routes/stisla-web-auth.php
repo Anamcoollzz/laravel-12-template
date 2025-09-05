@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropboxController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\GroupMenuController;
+use App\Http\Controllers\LogViewerController;
 use App\Http\Controllers\MenuManagementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -127,7 +128,7 @@ Route::group(['prefix' => 'file-managers', 'middleware' => [FileManagerPermissio
 });
 
 # LOG VIEWER
-Route::get('logs-viewer', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs.index')->middleware('can:Laravel Log Viewer');
+Route::get('logs-viewer', [LogViewerController::class, 'index'])->name('logs.index')->middleware('can:Laravel Log Viewer');
 
 # YOUTUBE VIEWER (SECRET MENU)
 Route::get('youtube-viewer', [YoutubeController::class, 'viewer'])->name('youtube.viewer');

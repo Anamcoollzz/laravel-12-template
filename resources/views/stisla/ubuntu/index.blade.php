@@ -1,12 +1,12 @@
 @extends('stisla.layouts.app-table')
 
 @section('title')
-  Ubuntu
+  {{ $title ?? 'Ubuntu' }}
 @endsection
 
 @section('content')
   <div class="section-header">
-    <h1>{{ __('Ubuntu') }}</h1>
+    <h1>{{ $title ?? __('Ubuntu') }}</h1>
   </div>
   <div class="row">
     @if (config('app.is_demo'))

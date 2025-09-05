@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Exports\RoleExampleExport;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\StislaController;
 use App\Http\Requests\ImportExcelRequest;
 use App\Http\Requests\RoleRequest;
 use App\Imports\RoleImport;
-use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,14 +15,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Role;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class RoleController extends Controller
+class RoleController extends StislaController
 {
-    /**
-     * user repository
-     *
-     * @var UserRepository
-     */
-    private UserRepository $userRepository;
 
     /**
      * constructor method
@@ -32,12 +25,13 @@ class RoleController extends Controller
      */
     public function __construct()
     {
-        $this->userRepository = new UserRepository;
-
-        $this->middleware('can:Role');
-        $this->middleware('can:Role Tambah')->only(['store']);
-        $this->middleware('can:Role Ubah')->only(['update']);
-        $this->middleware('can:Role Hapus')->only(['destroy']);
+        $this->setPermissions([
+            ['name' => 'Role', 'only' => []],
+            ['name' => 'Role Tambah', 'only' => ['store']],
+            ['name' => 'Role Ubah', 'only' => ['update']],
+            ['name' => 'Role Hapus', 'only' => ['destroy']],
+        ]);
+        parent::__construct();
     }
 
     /**

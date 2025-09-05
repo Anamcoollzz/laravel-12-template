@@ -899,7 +899,7 @@ return [
         'admin pendidikan'
     ],
 
-    'use_setting' => env('STISLA_USE_SETTING', '1'),
+    'use_setting' => env('STISLA_USE_SETTING', '2'),
 
     'settings' => [
         ['key' => 'application_name', 'value' => 'Laravel 12 Template'],

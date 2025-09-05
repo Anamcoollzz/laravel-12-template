@@ -41,6 +41,8 @@ class AuthController extends StislaController
     public function __construct()
     {
         parent::__construct();
+
+        $this->defaultMiddleware('');
     }
 
     /**

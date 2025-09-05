@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\StislaController;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ProfileRequest;
@@ -16,11 +17,12 @@ use App\Services\FileService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class AuthController extends Controller
+class AuthController extends StislaController
 {
     /**
      * user repository
@@ -62,9 +64,12 @@ class AuthController extends Controller
         $this->emailService      = new EmailService;
         $this->fileService       = new FileService;
 
-        $this->middleware('can:Profil Ubah')->only(['updateProfile', 'updatePassword']);
-        $this->middleware('can:Pengaturan')->only(['settings']);
-        $this->middleware('can:Log Aktivitas')->only(['logActivities']);
+        $this->middlewares = [
+            new Middleware('can:Profil Ubah', only: ['updateProfile', 'updatePassword']),
+            new Middleware('can:Pengaturan', only: ['settings']),
+            new Middleware('can:Log Aktivitas', only: ['logActivities']),
+        ];
+        $this->defaultMiddleware();
     }
 
     /**
