@@ -22,8 +22,7 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
         <td>{{ $item->permissions_count }}</td>
-        <td>{{ $item->created_at }}</td>
-        <td>{{ $item->updated_at }}</td>
+        @include('stisla.includes.others.td-created-updated-at')
         <td>{{ $item->createdBy->name ?? '-' }}</td>
         <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
         @if ($canAction && $isExport === false)

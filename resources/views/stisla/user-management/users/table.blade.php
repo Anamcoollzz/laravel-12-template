@@ -44,13 +44,9 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
         @include('stisla.includes.others.td-phone-number')
-        <td>{{ $item->birth_date }}</td>
+        @include('stisla.includes.others.td-dob')
         @include('stisla.includes.others.td-address')
-        <td>
-          <a href="mailto:{{ $item->email }}" target="_blank">
-            {{ $item->email }}
-          </a>
-        </td>
+        @include('stisla.includes.others.td-email')
         @if ($roleCount > 1)
           <td>
             @foreach ($item->roles as $role)
@@ -66,17 +62,15 @@
             class="badge badge-{{ $item->deleted_at !== null ? 'danger' : ($item->is_active == 1 ? 'success' : 'warning') }}">{{ $item->deleted_at !== null ? 'Dihapus' : ($item->is_active == 1 ? 'Aktif' : 'Tidak Aktif') }}</span>
         </td>
         <td>{{ $item->blocked_reason }}</td>
-        <td>{{ $item->last_login ?? '-' }}</td>
+        @include('stisla.includes.others.td-datetime', ['DateTime' => $item->last_login])
         @if ($_is_login_must_verified)
-          <td>{{ $item->email_verified_at ?? '-' }}</td>
+          @include('stisla.includes.others.td-datetime', ['DateTime' => $item->email_verified_at])
         @endif
 
         {{-- wajib --}}
-        <td>{{ $item->created_at ?? '-' }}</td>
-        <td>{{ $item->updated_at ?? '-' }}</td>
-        <td>{{ $item->deleted_at ?? '-' }}</td>
-        <td>{{ $item->createdBy->name ?? '-' }}</td>
-        <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+        @include('stisla.includes.others.td-created-updated-at')
+        @include('stisla.includes.others.td-deleted-at')
+        @include('stisla.includes.others.td-created-updated-by')
         <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)
           <td style="width: 150px;">

@@ -1,3 +1,3 @@
 <td>
-  <a href="mailto:{{ $Email = $item->user?->email ?? $item->email }}">{{ $Email }}</a>
+  <a target="_blank" href="mailto:{{ $Email = $item->user?->email ?? $item->email }}">{{ $Email }}</a>
 </td>
