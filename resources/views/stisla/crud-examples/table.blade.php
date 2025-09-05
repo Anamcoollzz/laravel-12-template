@@ -67,9 +67,9 @@
           {{-- columnstd --}}
 
           <td>{{ $item->name }}</td>
-          <td>{{ $item->phone_number }}</td>
-          <td>{{ $item->address }}</td>
-          <td>{{ $item->birthdate }}</td>
+          @include('stisla.includes.others.td-phone-number')
+          @include('stisla.includes.others.td-address')
+          @include('stisla.includes.others.td-dob')
           @if ($isExport)
             <td>
               @if (Str::contains($item->avatar, 'http'))
@@ -143,7 +143,7 @@
             </td>
           @endif
 
-          <td>{{ $item->date }}</td>
+          @include('stisla.includes.others.td-datetime')
           <td>{{ $item->time }}</td>
           <td>
             @include('stisla.crud-examples.color', ['color' => $item->color])
@@ -156,8 +156,7 @@
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')
-          <td>{{ $item->createdBy->name ?? '-' }}</td>
-          <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+          @include('stisla.includes.others.td-created-updated-by')
 
           @if ($isExport === false)
             @include('stisla.includes.forms.buttons.btn-action')

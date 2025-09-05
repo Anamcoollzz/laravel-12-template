@@ -67,8 +67,8 @@
           <td>{{ $item->name }}</td>
 
           {{-- <td>{{ $item->name }}</td>
-          <td>{{ $item->phone_number }}</td>
-          <td>{{ $item->address }}</td>
+          @include('stisla.includes.others.td-phone-number')
+          @include('stisla.includes.others.td-address')
           <td>{{ $item->birthdate }}</td>
           @if ($isExport)
             <td>
@@ -156,8 +156,7 @@
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')
-          <td>{{ $item->createdBy->name ?? '-' }}</td>
-          <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+          @include('stisla.includes.others.td-created-updated-by')
 
           @if ($isExport === false)
             @include('stisla.includes.forms.buttons.btn-action')
