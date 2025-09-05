@@ -40,48 +40,24 @@ class AlumniController extends StislaController
     public function getStoreData(AlumniRequest $request)
     {
         $data = $request->only([
-            'text',
-            'email',
-            "number",
-            "select",
-            "textarea",
-            "radio",
-            "date",
-            'checkbox',
-            'checkbox2',
-            "time",
-            'tags',
-            "color",
-            'select2',
-            'select2_multiple',
-            'summernote',
-            'summernote_simple',
-            'barcode',
-            'qr_code',
-            'name',
-            'phone_number',
-            'birthdate',
-            'address',
-
-
-            '',
+            'work_id',
         ]);
 
-        $data['currency']     = idr_to_double($request->currency);
-        $data['currency_idr'] = rp_to_double($request->currency_idr);
+        // $data['currency']     = idr_to_double($request->currency);
+        // $data['currency_idr'] = rp_to_double($request->currency_idr);
 
-        if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadAlumniFile($request->file('file'));
+        // if ($request->hasFile('file'))
+        //     $data['file'] = $this->fileService->uploadAlumniFile($request->file('file'));
 
-        if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadAlumniFile($request->file('image'));
+        // if ($request->hasFile('image'))
+        //     $data['image'] = $this->fileService->uploadAlumniFile($request->file('image'));
 
-        if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadAlumniFile($request->file('avatar'));
+        // if ($request->hasFile('avatar'))
+        //     $data['avatar'] = $this->fileService->uploadAlumniFile($request->file('avatar'));
 
-        if ($request->password) {
-            $data['password'] = bcrypt($request->password);
-        }
+        // if ($request->password) {
+        //     $data['password'] = bcrypt($request->password);
+        // }
 
         return $data;
     }
@@ -94,7 +70,7 @@ class AlumniController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['createdBy', 'lastUpdatedBy'], where: ['student_status' => 'lulus'])]);
+        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['createdBy', 'lastUpdatedBy', 'work'], where: ['student_status' => 'lulus'])]);
     }
 
     /**
@@ -163,7 +139,7 @@ class AlumniController extends StislaController
      */
     public function destroy(Alumni $alumni)
     {
-        $this->fileService->deleteAlumniFile($alumni);
+        // $this->fileService->deleteAlumniFile($alumni);
         return $this->executeDestroy($alumni);
     }
 

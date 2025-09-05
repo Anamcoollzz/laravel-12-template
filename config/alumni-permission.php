@@ -6,16 +6,16 @@ return [
         'roles' => ['superadmin', 'admin', 'user'],
         'group' => 'Alumni'
     ],
-    [
-        'name' => 'Alumni Tambah',
-        'roles' => ['superadmin', 'admin', 'user'],
-        'group' => 'Alumni'
-    ],
-    [
-        'name' => 'Alumni Impor Excel',
-        'roles' => ['superadmin', 'admin', 'user'],
-        'group' => 'Alumni'
-    ],
+    // [
+    //     'name' => 'Alumni Tambah',
+    //     'roles' => ['superadmin', 'admin', 'user'],
+    //     'group' => 'Alumni'
+    // ],
+    // [
+    //     'name' => 'Alumni Impor Excel',
+    //     'roles' => ['superadmin', 'admin', 'user'],
+    //     'group' => 'Alumni'
+    // ],
     [
         'name' => 'Alumni Ubah',
         'roles' => ['superadmin', 'admin', 'user'],

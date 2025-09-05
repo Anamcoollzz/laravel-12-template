@@ -24,6 +24,7 @@ class Student extends Model
         "class_year",
         "student_status",
         "graduation_year",
+        'work_id',
         // wajib
         "created_by_id",
         "last_updated_by_id",
@@ -44,5 +45,15 @@ class Student extends Model
     public function studyProgram()
     {
         return $this->belongsTo(StudyProgram::class);
+    }
+
+    /**
+     * Get the work that the Student belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function work()
+    {
+        return $this->belongsTo(Work::class);
     }
 }

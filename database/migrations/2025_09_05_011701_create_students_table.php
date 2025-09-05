@@ -19,6 +19,8 @@ return new class extends Migration
             $table->year('class_year');
             $table->string('student_status', 30)->comment('e.g., aktif, lulus, cuti, dikeluarkan');
             $table->year('graduation_year')->nullable();
+            $table->unsignedBigInteger('work_id')->nullable();
+            $table->foreign('work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('study_program_id')->nullable();
             $table->foreign('study_program_id')->references('id')->on('study_programs')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('user_id')->nullable();

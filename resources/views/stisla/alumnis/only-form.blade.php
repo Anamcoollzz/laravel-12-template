@@ -7,11 +7,19 @@
     @csrf
   </div>
   <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '', 'label' => ''])
-	</div>
+    @php
+      $jobs = new \App\Repositories\WorkRepository();
+    @endphp
+    @include('stisla.includes.forms.selects.select2', [
+        'id' => 'work_id',
+        'name' => 'work_id',
+        'options' => $jobs->getSelectOptions('job_name'),
+        'label' => 'Pekerjaan',
+        'required' => true,
+    ])
+  </div>
 
-
-  <div class="col-md-6">
+  {{-- <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input-name')
   </div>
   <div class="col-md-6">
@@ -141,5 +149,5 @@
         'label' => 'Summernote',
         'id' => 'summernote',
     ])
-  </div>
+  </div> --}}
 </div>
