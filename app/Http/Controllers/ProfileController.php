@@ -16,11 +16,6 @@ class ProfileController extends StislaController
     public function __construct()
     {
         parent::__construct();
-
-        $this->middleware('can:Profil Ubah')->only(['update', 'updatePassword']);
-        $this->middleware('can:Profil Perbarui Email')->only(['updateEmail']);
-        $this->middleware('can:Profil Perbarui Password')->only(['updatePassword']);
-        $this->middleware('can:Profil Hapus Akun')->only(['deleteAccount']);
     }
 
     /**

@@ -6,27 +6,14 @@ use App\Http\Requests\SettingRequest;
 use App\Repositories\SettingRepository;
 use App\Services\FileService;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class SettingController extends Controller
+class SettingController extends StislaController
 {
-
-    /**
-     * setting repository var
-     *
-     * @var SettingRepository
-     */
-    private $settingRepository;
-
-    /**
-     * fileservice
-     *
-     * @var FileService
-     */
-    private FileService $fileService;
 
     /**
      * construct function
@@ -35,11 +22,12 @@ class SettingController extends Controller
      */
     public function __construct()
     {
-        $this->settingRepository = new SettingRepository;
-        $this->fileService       = new FileService;
+        parent::__construct();
 
-        $this->middleware('can:Pengaturan');
-        $this->middleware('can:Reset Sistem')->only(['reset', 'reset2']);
+        $this->middlewares = [
+            new Middleware('permission:Pengaturan'),
+            new Middleware('permission:Reset Sistem', only: ['reset', 'reset2']),
+        ];
     }
 
     /**

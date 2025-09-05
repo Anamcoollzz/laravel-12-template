@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\StislaController;
 use App\Http\Requests\UserRequest;
-use App\Models\User;
-use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 
-class UserManagementController extends Controller
+class UserManagementController extends StislaController
 {
-    /**
-     * user repository
-     *
-     * @var UserRepository
-     */
-    private UserRepository $userRepository;
 
     /**
      * constructor method
@@ -24,11 +16,13 @@ class UserManagementController extends Controller
      */
     public function __construct()
     {
-        $this->userRepository = new UserRepository;
-        $this->middleware('can:Pengguna');
-        $this->middleware('can:Pengguna Tambah')->only(['create', 'store']);
-        $this->middleware('can:Pengguna Ubah')->only(['edit', 'update', 'updatePassword']);
-        $this->middleware('can:Pengguna Hapus')->only(['destroy']);
+        $this->setPermissions([
+            ['name' => 'Pengguna', 'only' => []],
+            ['name' => 'Pengguna Tambah', 'only' => ['create', 'store']],
+            ['name' => 'Pengguna Ubah', 'only' => ['edit', 'update', 'updatePassword']],
+            ['name' => 'Pengguna Hapus', 'only' => ['destroy']],
+        ]);
+        parent::__construct();
     }
 
     /**

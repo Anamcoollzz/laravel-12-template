@@ -37,12 +37,11 @@ class UbuntuController extends StislaController
      */
     public function __construct()
     {
-        if (config('app.is_demo')) {
-            abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
-        }
-        parent::__construct();
+        $this->constructIsDemo();
 
-        $this->middleware('can:Ubuntu');
+        $this->defaultMiddleware('Ubuntu');
+
+        parent::__construct();
 
         $this->commandService = new CommandService();
         $this->dbService      = new DatabaseService();
@@ -56,6 +55,7 @@ class UbuntuController extends StislaController
      */
     public function index(Request $request)
     {
+
         if ($request->query('redirect_folder')) {
             $path = $request->query('redirect_folder');
             return redirect()->route('ubuntu.index', ['folder' => encrypt($path)]);

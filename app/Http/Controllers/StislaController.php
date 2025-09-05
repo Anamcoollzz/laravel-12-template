@@ -21,8 +21,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class StislaController extends Controller
+class StislaController extends Controller implements HasMiddleware
 {
     /**
      * file service
@@ -158,6 +159,13 @@ class StislaController extends Controller
     protected SettingRepository $settingRepository;
 
     /**
+     * middlewares
+     *
+     * @var array
+     */
+    protected array $middlewares = [];
+
+    /**
      * import
      *
      * @var GeneralImport
@@ -186,19 +194,64 @@ class StislaController extends Controller
     /**
      * Default middleware
      *
-     * @param string $moduleName
+     * @param string|null $moduleName
+     * @param array $only
      * @return void
      */
-    public function defaultMiddleware(string $moduleName)
+    public function defaultMiddleware($moduleName = null, ?array $only = [])
     {
-        $this->middleware($moduleName);
-        $this->middleware($moduleName . ' Tambah', only: ['create', 'store']);
-        $this->middleware($moduleName . ' Ubah', only: ['edit', 'update']);
-        $this->middleware($moduleName . ' Detail', only: ['show']);
-        $this->middleware($moduleName . ' Hapus', only: ['destroy']);
-        $this->middleware($moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']);
-        $this->middleware($moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']);
-        $this->middleware($moduleName . ' Force Login', only: ['forceLogin']);
+        if (empty($moduleName)) {
+            return;
+        }
+        $middlewares = [];
+        foreach ($this->middlewares as $middleware) {
+            if (is_string($middleware)) {
+                $middlewares[] = new Middleware('permission:' . $middleware);
+            } else {
+                $middlewares[] = $middleware;
+            }
+        }
+        if ($moduleName) {
+            $moduleName = str_replace('can:', '', $moduleName);
+            if (count($only) > 0) {
+                $middlewares[] = new Middleware('permission:' . $moduleName, only: $only);
+            } else {
+                $middlewares[] = new Middleware('permission:' . $moduleName);
+            }
+        }
+        $this->middlewares = array_merge([
+            new Middleware('permission:' . $moduleName),
+            new Middleware('permission:' . $moduleName . ' Tambah', only: ['create', 'store']),
+            new Middleware('permission:' . $moduleName . ' Ubah', only: ['edit', 'update']),
+            new Middleware('permission:' . $moduleName . ' Detail', only: ['show']),
+            new Middleware('permission:' . $moduleName . ' Hapus', only: ['destroy']),
+            new Middleware('permission:' . $moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']),
+            new Middleware('permission:' . $moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']),
+            new Middleware('permission:' . $moduleName . ' Force Login', only: ['forceLogin']),
+            new Middleware('permission:Profil Ubah', only: ['update', 'updatePassword']),
+            new Middleware('permission:Profil Perbarui Email', only: ['updateEmail']),
+            new Middleware('permission:Profil Perbarui Password', only: ['updatePassword']),
+            new Middleware('permission:Profil Hapus Akun', only: ['deleteAccount']),
+        ], $middlewares);
+    }
+
+    /**
+     * set permissions
+     *
+     * @param array $middlewares
+     * @return void
+     */
+    protected function setPermissions(array $middlewares)
+    {
+        foreach ($middlewares as $middleware) {
+            $middlewareName = str_replace('can:', '', $middleware['name']);
+            if (count($middleware['only'] ?? []) > 0) {
+                $middlewares[] = new Middleware('permission:' . $middlewareName, only: $middleware['only']);
+            } else {
+                $middlewares[] = new Middleware('permission:' . $middlewareName);
+            }
+        }
+        $this->middlewares = array_merge($this->middlewares, $middlewares);
     }
 
     /**
@@ -707,16 +760,44 @@ class StislaController extends Controller
         return $this->repository->getYajraDataTables($defaultData);
     }
 
-    public static function middleware($permission, ?array $only = []): array
+    public static function middleware(): array
     {
-        return [
-            // examples with aliases, pipe-separated names, guards, etc:
-            // 'role_or_permission:manager|edit articles',
-            // new Middleware('role:author', only: ['index']),
-            // new Middleware(\Spatie\Permission\Middleware\RoleMiddleware::using('manager'), except: ['show']),
-            count($only) > 0
-                ? new Middleware('permission:' . $permission, only: $only)
-                : new Middleware('permission:' . $permission),
-        ];
+        $class = new static();
+        if (count($class->middlewares) > 0) {
+            return $class->middlewares;
+        }
+        return [];
+    }
+
+    /**
+     * check is demo
+     *
+     * @param string $title
+     * @return array|Response|null
+     */
+    public function checkIsDemo($title)
+    {
+        if (config('app.is_demo')) {
+            if (request()->isMethod('get')) {
+                return [true, view('stisla.ubuntu.index', ['title' => $title])->render()];
+            } else {
+                abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
+            }
+        }
+    }
+
+    /**
+     * construct is demo
+     *
+     * @return void
+     */
+    protected function constructIsDemo()
+    {
+        if (config('app.is_demo')) {
+            if (request()->isMethod('get')) {
+            } else {
+                abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
+            }
+        }
     }
 }
