@@ -2,10 +2,10 @@
 
 @section('content')
   @if (config('app.template') === 'stisla')
-    @include('errors.default-stisla', ['code' => 404, 'description' => __('Halaman yang anda tuju tidak ada')])
+    @include('errors.default-stisla', ['code' => 403, 'description' => $exception->getMessage()])
   @endif
 @endsection
 
 @section('title')
-  404 {{ __('Halaman yang anda tuju tidak ada') }}
+  403 {{ $exception->getMessage() }}
 @endsection

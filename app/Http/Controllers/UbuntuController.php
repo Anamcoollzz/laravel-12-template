@@ -37,6 +37,9 @@ class UbuntuController extends StislaController
      */
     public function __construct()
     {
+        if (config('app.is_demo')) {
+            abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
+        }
         parent::__construct();
 
         $this->middleware('can:Ubuntu');
