@@ -19,7 +19,7 @@ class ActivityLogController extends StislaController
     {
         parent::__construct();
 
-        $this->middleware('can:Log Aktivitas');
+        $this->defaultMiddleware('Log Aktivitas');
     }
 
     /**

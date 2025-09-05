@@ -101,7 +101,7 @@
                         'required' => true,
                     ])
                   </div>
-                  <div class="col-sm-6">
+                  {{-- <div class="col-sm-6">
                     @include('stisla.includes.forms.inputs.input-radio-toggle', [
                         'id' => 'app_is_demo',
                         'label' => __('Apakah Ini Versi Demo?'),
@@ -109,16 +109,18 @@
                         'options' => ['0' => 'Tidak', '1' => 'Ya'],
                         'required' => true,
                     ])
-                  </div>
-                  <div class="col-sm-6">
-                    @include('stisla.includes.forms.inputs.input-radio-toggle', [
-                        'id' => 'debugbar',
-                        'label' => __('Debugbar'),
-                        'value' => $_debugbar,
-                        'options' => ['0' => 'Tidak', '1' => 'Ya'],
-                        'required' => true,
-                    ])
-                  </div>
+                  </div> --}}
+                  @if (!config('app.is_demo'))
+                    <div class="col-sm-6">
+                      @include('stisla.includes.forms.inputs.input-radio-toggle', [
+                          'id' => 'debugbar',
+                          'label' => __('Debugbar'),
+                          'value' => $_debugbar,
+                          'options' => ['0' => 'Tidak', '1' => 'Ya'],
+                          'required' => true,
+                      ])
+                    </div>
+                  @endif
 
                   <div class="col-md-12">
                     @include('stisla.includes.forms.buttons.btn-save')
@@ -641,13 +643,13 @@
                     </div>
 
                     {{-- <div class="col-md-12">
-                    Pastikan redirect url (callback) nya sebagai berikut:
-                    <ul>
-                      <li>Google: <code>{{ config('services.google.redirect') }}</code></li>
-                      <li>Facebook: <code>{{ config('services.facebook.redirect') }}</code></li>
-                      <li>Twitter: <code>{{ config('services.twitter.redirect') }}</code></li>
-                    </ul>
-                  </div> --}}
+                      Pastikan redirect url (callback) nya sebagai berikut:
+                      <ul>
+                        <li>Google: <code>{{ config('services.google.redirect') }}</code></li>
+                        <li>Facebook: <code>{{ config('services.facebook.redirect') }}</code></li>
+                        <li>Twitter: <code>{{ config('services.twitter.redirect') }}</code></li>
+                      </ul>
+                    </div> --}}
 
                     <div class="col-md-12">
                       @include('stisla.includes.forms.buttons.btn-save')

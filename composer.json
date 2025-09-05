@@ -21,7 +21,7 @@
         "maatwebsite/excel": "*",
         "milon/barcode": "*",
         "rap2hpoutre/laravel-log-viewer": "*",
-        "spatie/laravel-permission": "*",
+        "spatie/laravel-permission": "^6.21",
         "tymon/jwt-auth": "*",
         "unisharp/laravel-filemanager": "*",
         "yajra/laravel-datatables": "^12.0"

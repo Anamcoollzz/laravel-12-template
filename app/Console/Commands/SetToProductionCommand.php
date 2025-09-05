@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Menu;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 
 class SetToProductionCommand extends Command
@@ -30,5 +31,6 @@ class SetToProductionCommand extends Command
         Permission::query()->where('name', 'like', '%Contoh CRUD%')->delete();
         Menu::query()->where('menu_name', 'like', '%Contoh CRUD%')->delete();
         Menu::query()->where('menu_name', 'like', '%Stisla Example%')->delete();
+        Artisan::call('permission:cache-reset');
     }
 }

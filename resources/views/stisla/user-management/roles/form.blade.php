@@ -26,7 +26,7 @@
               <label class="colorinput d-flex align-items-center">
                 <div>
                   <input @if ($i === 0) onchange="onChangeFirst(event)" @endif name="permissions[]" value="{{ $item->name }}" type="checkbox" class="colorinput-input"
-                    @if (isset($d) && $d->name === 'superadmin') disabled @endif @if (isset($d) && in_array($item->name, $rolePermissions)) checked @endif />
+                    {{-- @if (isset($d) && $d->name === 'superadmin') disabled @endif  --}} @if (isset($d) && in_array($item->name, $rolePermissions)) checked @endif />
                   <span class="colorinput-color bg-primary"></span>
                 </div>
                 &nbsp;&nbsp;

@@ -20,7 +20,7 @@ class RequestLogController extends StislaController
     {
         parent::__construct();
 
-        $this->middleware('can:Log Request');
+        $this->defaultMiddleware('Log Request');
     }
 
     /**

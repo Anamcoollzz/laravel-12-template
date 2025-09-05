@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Services\DatabaseService;
 use Illuminate\Support\Str;
 
-class BackupDatabaseController extends Controller
+class BackupDatabaseController extends StislaController
 {
     private DatabaseService $databaseService;
 
@@ -18,12 +17,10 @@ class BackupDatabaseController extends Controller
      */
     public function __construct()
     {
-        if (config('app.is_demo')) {
-            abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
-        }
+        $this->constructIsDemo();
 
         $this->databaseService = new DatabaseService;
-        $this->middleware('can:Backup Database');
+        $this->defaultMiddleware('can:Backup Database');
     }
 
     /**
@@ -33,6 +30,10 @@ class BackupDatabaseController extends Controller
      */
     public function index(Request $request)
     {
+        $check = $this->checkIsDemo('Backup Database');
+        if ($check && $check[0]) {
+            return response($check[1]);
+        }
         $filter_month = $request->query('filter_month') ?? (int) date('m');
         $filter_year = $request->query('filter_year') ?? (int) date('Y');
 
