@@ -17,6 +17,7 @@ use App\Services\PDFService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
@@ -190,14 +191,14 @@ class StislaController extends Controller
      */
     public function defaultMiddleware(string $moduleName)
     {
-        $this->middleware('can:' . $moduleName . '');
-        $this->middleware('can:' . $moduleName . ' Tambah')->only(['create', 'store']);
-        $this->middleware('can:' . $moduleName . ' Ubah')->only(['edit', 'update']);
-        $this->middleware('can:' . $moduleName . ' Detail')->only(['show']);
-        $this->middleware('can:' . $moduleName . ' Hapus')->only(['destroy']);
-        $this->middleware('can:' . $moduleName . ' Ekspor')->only(['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']);
-        $this->middleware('can:' . $moduleName . ' Impor Excel')->only(['importExcel', 'importExcelExample']);
-        $this->middleware('can:' . $moduleName . ' Force Login')->only(['forceLogin']);
+        $this->middleware($moduleName);
+        $this->middleware($moduleName . ' Tambah', only: ['create', 'store']);
+        $this->middleware($moduleName . ' Ubah', only: ['edit', 'update']);
+        $this->middleware($moduleName . ' Detail', only: ['show']);
+        $this->middleware($moduleName . ' Hapus', only: ['destroy']);
+        $this->middleware($moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']);
+        $this->middleware($moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']);
+        $this->middleware($moduleName . ' Force Login', only: ['forceLogin']);
     }
 
     /**
@@ -704,5 +705,18 @@ class StislaController extends Controller
     {
         $defaultData = $this->getDefaultDataIndex(__($this->title), $this->title, $this->prefix);
         return $this->repository->getYajraDataTables($defaultData);
+    }
+
+    public static function middleware($permission, ?array $only = []): array
+    {
+        return [
+            // examples with aliases, pipe-separated names, guards, etc:
+            // 'role_or_permission:manager|edit articles',
+            // new Middleware('role:author', only: ['index']),
+            // new Middleware(\Spatie\Permission\Middleware\RoleMiddleware::using('manager'), except: ['show']),
+            count($only) > 0
+                ? new Middleware('permission:' . $permission, only: $only)
+                : new Middleware('permission:' . $permission),
+        ];
     }
 }

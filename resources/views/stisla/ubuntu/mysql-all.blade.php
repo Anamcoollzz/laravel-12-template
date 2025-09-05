@@ -8,9 +8,14 @@
   <div class="section-header">
     <h1>{{ __('MySql') }}</h1>
   </div>
-  <div class="row">
 
-    @include('stisla.ubuntu.mysql')
+  @if (config('app.is_demo'))
+    @include('stisla.ubuntu.alert-demo')
+  @else
+    <div class="row">
 
-  </div>
+      @include('stisla.ubuntu.mysql')
+
+    </div>
+  @endif
 @endsection

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class BackupDatabaseController extends Controller
 {
-    private $databaseService;
+    private DatabaseService $databaseService;
 
     /**
      * constructor method
@@ -18,6 +18,10 @@ class BackupDatabaseController extends Controller
      */
     public function __construct()
     {
+        if (config('app.is_demo')) {
+            abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
+        }
+
         $this->databaseService = new DatabaseService;
         $this->middleware('can:Backup Database');
     }

@@ -81,7 +81,7 @@
 
     <div class="mt-1 mb-4 p-3 hide-sidebar-mini">
       <a href="{{ route('profile.index') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
-        <i class="fas fa-user"></i> {{ Auth::user()->roles->first()->name }}
+        <i class="fas fa-user"></i> {{ Auth::user()->roles->first()->name ?? '-' }}
       </a>
     </div>
   </aside>
