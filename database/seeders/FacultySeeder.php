@@ -45,9 +45,9 @@ class FacultySeeder extends Seeder
             $user = User::create([
                 'name'         => $students[$i]['nama'],
                 'email'        => strtolower(str_replace(' ', '.', $students[$i]['nama'])) . '@univ.ac.id',
-                'phone_number' => fake()->phoneNumber(),
+                'phone_number' => fake('id_ID')->phoneNumber(),
                 'password'     => $pass,
-                'address'      => fake()->address(),
+                'address'      => fake('id_ID')->address(),
                 'birth_date'   => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
             ]);
             try {

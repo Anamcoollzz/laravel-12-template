@@ -125,7 +125,7 @@
                           <span class="badge badge-primary mb-1">{{ $role }}</span>
                         @endforeach
                       </td>
-                      <td>{{ $item->created_at }}</td>
+                      @include('stisla.includes.others.td-created-at')
                     </tr>
                   @endforeach
                 </tbody>

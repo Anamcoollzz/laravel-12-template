@@ -20,8 +20,7 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->group_name }}</td>
-        <td>{{ $item->created_at }}</td>
-        <td>{{ $item->updated_at }}</td>
+        @include('stisla.includes.others.td-created-updated-at')
         @if ($isExport == false && $canAction)
           <td>
             @if ($canUpdate)
