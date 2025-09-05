@@ -21,7 +21,7 @@ class OverrideConfig
     {
         // config(['app.debug' => false]);
         // config(['debugbar.enabled' => null]);
-        config(['app.is_demo' => Setting::firstOrCreate(['key' => 'app_is_demo'], ['value' => false])->value === '1']);
+        // config(['app.is_demo' => Setting::firstOrCreate(['key' => 'app_is_demo'], ['value' => false])->value === '1']);
         $debug = Setting::firstOrCreate(['key' => 'debugbar'], ['value' => config('app.debug')])->value === '1';
         if ($debug) {
             Debugbar::enable();
