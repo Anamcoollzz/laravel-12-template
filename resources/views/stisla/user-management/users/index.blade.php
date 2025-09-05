@@ -9,6 +9,13 @@
   @include('stisla.user-management.users.table')
 @endsection
 
+@section('filter_top')
+  @if (Route::is('user-management.users.index'))
+    @include('stisla.includes.others.filter-default', ['is_show' => false])
+  @endif
+@endsection
+
+
 @push('modals')
   <form action="" enctype="multipart/form-data" method="POST" id="formBlock">
     @csrf

@@ -49,6 +49,9 @@
             ])
           </div>
           <div class="col-md-6">
+            @php
+              $users = isset($users) ? $users : \App\Models\User::select('id', 'name')->orderBy('name')->get();
+            @endphp
             @include('stisla.includes.forms.selects.select', [
                 'id' => 'filter_created_by_id',
                 'name' => 'filter_created_by_id',

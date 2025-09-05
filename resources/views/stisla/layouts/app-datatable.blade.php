@@ -27,10 +27,10 @@
               <div class="card-header">
                 <h4><i class="fa fa-print"></i> {!! __('Aksi Ekspor <small>(Server Side)</small>') !!}</h4>
                 <div class="card-header-action">
-                  @include('stisla.includes.forms.buttons.btn-pdf-download', ['link' => $routePdf])
-                  @include('stisla.includes.forms.buttons.btn-excel-download', ['link' => $routeExcel])
-                  @include('stisla.includes.forms.buttons.btn-csv-download', ['link' => $routeCsv])
-                  @include('stisla.includes.forms.buttons.btn-json-download', ['link' => $routeJson])
+                  @include('stisla.includes.forms.buttons.btn-pdf-download', ['link' => $routePdf . '?' . request()->getQueryString()])
+                  @include('stisla.includes.forms.buttons.btn-excel-download', ['link' => $routeExcel . '?' . request()->getQueryString()])
+                  @include('stisla.includes.forms.buttons.btn-csv-download', ['link' => $routeCsv . '?' . request()->getQueryString()])
+                  @include('stisla.includes.forms.buttons.btn-json-download', ['link' => $routeJson . '?' . request()->getQueryString()])
                 </div>
               </div>
             </div>
