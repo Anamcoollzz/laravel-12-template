@@ -43,9 +43,9 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
-        <td>{{ $item->phone_number }}</td>
+        @include('stisla.includes.others.td-phone-number')
         <td>{{ $item->birth_date }}</td>
-        <td>{{ $item->address }}</td>
+        @include('stisla.includes.others.td-address')
         <td>
           <a href="mailto:{{ $item->email }}" target="_blank">
             {{ $item->email }}

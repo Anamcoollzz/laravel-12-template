@@ -93,9 +93,9 @@
               <span class="badge badge-secondary">{{ $item->student_status }}</span>
             @endif
           </td>
-          <td>{{ $item->user?->email }}</td>
-          <td>{{ $item->user?->phone_number }}</td>
-          <td>{{ $item->user?->address }}</td>
+          @include('stisla.includes.others.td-email')
+          @include('stisla.includes.others.td-phone-number')
+          @include('stisla.includes.others.td-address')
           @if ($isAlumniPage)
             <td>{{ $item->graduation_year }}</td>
           @endif
