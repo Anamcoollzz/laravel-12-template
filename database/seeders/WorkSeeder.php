@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Work;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class WorkSeeder extends Seeder
@@ -34,6 +35,7 @@ class WorkSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());
@@ -43,6 +45,14 @@ class WorkSeeder extends Seeder
         $jobs = file_get_contents(database_path('seeders/data/jobs.json'));
         $jobs = json_decode($jobs, true);
         Work::truncate();
+        $data[] = [
+            'job_name' => 'Belum Bekerja',
+            'department' => null,
+            'created_at'         => $now,
+            'updated_at'         => $now,
+            'created_by_id'      => 1,
+            'last_updated_by_id' => null,
+        ];
         foreach ($jobs as $job) {
             $data[] = [
                 'job_name' => $job['pekerjaan'],
@@ -53,6 +63,14 @@ class WorkSeeder extends Seeder
                 'last_updated_by_id' => null,
             ];
         }
+        $data[] = [
+            'job_name' => 'Lainnya',
+            'department' => null,
+            'created_at'         => $now,
+            'updated_at'         => $now,
+            'created_by_id'      => 1,
+            'last_updated_by_id' => null,
+        ];
         // foreach (range(1, 100) as $i) {
         //     $selectMultiple = [];
         //     foreach (range(1, Arr::random(range(1, 3))) as $j) {
