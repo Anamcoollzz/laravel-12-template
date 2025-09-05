@@ -28,7 +28,7 @@
         <td>{{ $item->user_agent }}</td>
         <td>{{ $item->user->name }}</td>
         <td>{{ $item->role->name ?? '-' }}</td>
-        <td>{{ $item->created_at }}</td>
+        @include('stisla.includes.others.td-created-at')
       </tr>
     @endforeach
   </tbody>

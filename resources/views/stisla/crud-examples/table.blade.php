@@ -67,32 +67,13 @@
           {{-- columnstd --}}
 
           <td>{{ $item->name }}</td>
-          <td>{{ $item->phone_number }}</td>
-          <td>{{ $item->address }}</td>
-          <td>{{ $item->birthdate }}</td>
-          @if ($isExport)
-            <td>
-              @if (Str::contains($item->avatar, 'http'))
-                <a href="{{ $item->avatar }}">cek</a>
-              @elseif($item->avatar)
-                <a href="{{ $urlLink = Storage::url('' . $prefix . '/' . $item->avatar) }}">cek</a>
-              @else
-                -
-              @endif
-            </td>
-          @else
-            <td>
-              @include('stisla.crud-examples.image', ['file' => $item->avatar])
-            </td>
-          @endif
+          @include('stisla.includes.others.td-phone-number')
+          @include('stisla.includes.others.td-address')
+          @include('stisla.includes.others.td-dob')
+          @include('stisla.crud-examples.td-avatar')
           <td>{{ $item->text }}</td>
-          @if ($isExport)
-            <td>{{ $item->barcode }}</td>
-            <td>{{ $item->qr_code }}</td>
-          @else
-            <td>{!! \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10) !!}</td>
-            <td>{!! \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3) !!}</td>
-          @endif
+          @include('stisla.includes.others.td-barcode')
+          @include('stisla.includes.others.td-qrcode')
           <td>{{ $item->email }}</td>
           <td>{{ $item->number }}</td>
           <td>{{ dollar($item->currency) }}</td>
@@ -115,35 +96,9 @@
             <td>{{ implode(', ', explode(',', $item->tags)) }}</td>
           @endif
 
-          @if ($isExport)
-            <td>
-              @if (Str::contains($item->file, 'http'))
-                <a href="{{ $item->file }}">cek</a>
-              @elseif($item->file)
-                <a href="{{ $urlLink = Storage::url('' . $prefix . '/' . $item->file) }}">cek</a>
-              @else
-                -
-              @endif
-            </td>
-            <td>
-              @if (Str::contains($item->image, 'http'))
-                <a href="{{ $item->image }}">cek</a>
-              @elseif($item->image)
-                <a href="{{ $urlLink = Storage::url('' . $prefix . '/' . $item->image) }}">cek</a>
-              @else
-                -
-              @endif
-            </td>
-          @else
-            <td>
-              @include('stisla.crud-examples.file', ['file' => $item->file])
-            </td>
-            <td>
-              @include('stisla.crud-examples.image', ['file' => $item->image])
-            </td>
-          @endif
-
-          <td>{{ $item->date }}</td>
+          @include('stisla.crud-examples.td-file')
+          @include('stisla.crud-examples.td-image')
+          @include('stisla.includes.others.td-datetime')
           <td>{{ $item->time }}</td>
           <td>
             @include('stisla.crud-examples.color', ['color' => $item->color])
@@ -155,10 +110,8 @@
           @endif --}}
 
           {{-- wajib --}}
-          <td>{{ $item->created_at }}</td>
-          <td>{{ $item->updated_at }}</td>
-          <td>{{ $item->createdBy->name ?? '-' }}</td>
-          <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+          @include('stisla.includes.others.td-created-updated-at')
+          @include('stisla.includes.others.td-created-updated-by')
 
           @if ($isExport === false)
             @include('stisla.includes.forms.buttons.btn-action')

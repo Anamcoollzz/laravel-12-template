@@ -130,10 +130,8 @@
 
           <td>{{ $item->name }}</td>
           <td>{{ $item->bank_type }}</td>
-          <td>{{ $item->created_at }}</td>
-          <td>{{ $item->updated_at }}</td>
-          <td>{{ $item->createdBy->name ?? '-' }}</td>
-          <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>
+          @include('stisla.includes.others.td-created-updated-at')
+          @include('stisla.includes.others.td-created-updated-by')
 
           @if ($isExport === false)
             @include('stisla.includes.forms.buttons.btn-action')

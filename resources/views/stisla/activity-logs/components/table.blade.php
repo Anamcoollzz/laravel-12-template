@@ -90,7 +90,7 @@
             @endforeach
           </td>
         @endif
-        <td>{{ $item->created_at }}</td>
+        @include('stisla.includes.others.td-created-at')
       </tr>
     @endforeach
   </tbody>
