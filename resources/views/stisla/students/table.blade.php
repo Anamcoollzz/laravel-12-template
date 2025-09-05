@@ -29,8 +29,9 @@
       <th>{{ __('Email') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Alamat') }}</th>
-      @if ($isAlumniPage = Route::is('alumnis.index'))
+      @if ($isAlumniPage = Route::is('alumnis.index') || Route::is('alumnis.pdf') || Route::is('alumnis.excel') || Route::is('alumnis.csv'))
         <th>{{ __('Tahun Lulus') }}</th>
+        <th>{{ __('Pekerjaan') }}</th>
       @endif
       {{-- <th>{{ __('Email') }}</th>
       <th>{{ __('Number') }}</th>
@@ -98,6 +99,7 @@
           @include('stisla.includes.others.td-address')
           @if ($isAlumniPage)
             <td>{{ $item->graduation_year }}</td>
+            <td>{{ $item->work->job_name ?? '-' }}</td>
           @endif
           {{-- <td>{{ dollar($item->currency) }}</td>
           <td>{{ rp($item->currency_idr) }}</td>
