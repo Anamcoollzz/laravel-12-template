@@ -10,7 +10,7 @@
 @endsection
 
 @section('filter_top')
-  @if (Route::is($prefix . '.index'))
+  @if (Route::is($prefix . '.index') && !is_mahasiswa())
     @include('stisla.includes.others.filter-default', ['is_show' => false])
   @endif
 @endsection

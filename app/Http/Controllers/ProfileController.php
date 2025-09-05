@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends StislaController
@@ -16,6 +17,13 @@ class ProfileController extends StislaController
     public function __construct()
     {
         parent::__construct();
+
+        $this->middlewares = array_merge($this->middlewares, [
+            new Middleware('permission:Profil Ubah', only: ['update', 'updatePassword']),
+            new Middleware('permission:Profil Perbarui Email', only: ['updateEmail']),
+            new Middleware('permission:Profil Perbarui Password', only: ['updatePassword']),
+            new Middleware('permission:Profil Hapus Akun', only: ['deleteAccount']),
+        ]);
     }
 
     /**

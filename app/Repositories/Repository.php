@@ -438,6 +438,9 @@ class Repository extends RepositoryAbstract
      */
     public function getFullDataWith(array $relations = [], ?array $where = [])
     {
+        if (count($where) > 0) {
+            $where = array_filter($where);
+        }
         return $this->queryFullData()->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)->latest()->get();
     }
 

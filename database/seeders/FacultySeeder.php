@@ -50,6 +50,7 @@ class FacultySeeder extends Seeder
                 'address'      => fake('id_ID')->address(),
                 'birth_date'   => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
             ]);
+            $user->assignRole('mahasiswa');
             try {
                 $program->students()->create(
                     [

@@ -92,7 +92,7 @@ class DashboardController extends StislaController
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => '#8b743f'
             ];
-        if ($user->can('Mahasiswa'))
+        if ($user->can('Mahasiswa') && !is_mahasiswa())
             $widgets[] = (object)[
                 'title' => 'Mahasiswa',
                 'count' => Student::count(),

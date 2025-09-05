@@ -10,7 +10,7 @@
 @endsection
 
 @section('filter_top')
-  @if (Route::is('alumnis.index'))
+  @if (Route::is('alumnis.index' && !is_mahasiswa()))
     @include('stisla.includes.others.filter-default', ['is_show' => false])
   @endif
 @endsection

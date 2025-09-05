@@ -51,6 +51,12 @@ class StudentController extends StislaController
             // "graduation_year",
         ]);
 
+        if (is_mahasiswa()) {
+            $data = $request->only([
+                "name",
+            ]);
+        }
+
         // $data['currency']     = idr_to_double($request->currency);
         // $data['currency_idr'] = rp_to_double($request->currency_idr);
 
@@ -59,7 +65,6 @@ class StudentController extends StislaController
 
         // if ($request->hasFile('image'))
         //     $data['image'] = $this->fileService->uploadStudentFile($request->file('image'));
-
         return $data;
     }
 
@@ -71,7 +76,10 @@ class StudentController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['studyProgram.faculty', 'user'])]);
+        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(
+            ['studyProgram.faculty', 'user'],
+            where: auth_user()->hasRole('mahasiswa') ? ['user_id' => auth_id()] : []
+        )]);
     }
 
     /**
@@ -113,7 +121,12 @@ class StudentController extends StislaController
      */
     public function edit(Request $request, Student $student)
     {
-        return $this->prepareDetailForm($request, $student, false, ['prodi_options' => (new StudyProgramRepository)->getSelectOptions()]);
+        if (auth_user()->hasRole('mahasiswa') && $student->user_id != auth_id()) {
+            abort(404);
+        }
+        return $this->prepareDetailForm($request, $student, false, [
+            'prodi_options' => (new StudyProgramRepository)->getSelectOptions()
+        ]);
     }
 
     /**
@@ -125,6 +138,9 @@ class StudentController extends StislaController
      */
     public function update(StudentRequest $request, Student $student)
     {
+        if (auth_user()->hasRole('mahasiswa') && $student->user_id != auth_id()) {
+            abort(404);
+        }
         $this->userRepository->update([
             'name'         => $request->name,
             'email'        => $request->email,
@@ -145,6 +161,9 @@ class StudentController extends StislaController
      */
     public function show(Request $request, Student $student)
     {
+        if (auth_user()->hasRole('mahasiswa') && $student->user_id != auth_id()) {
+            abort(404);
+        }
         return $this->prepareDetailForm($request, $student, true, ['prodi_options' => (new StudyProgramRepository)->getSelectOptions()]);
     }
 
@@ -156,6 +175,9 @@ class StudentController extends StislaController
      */
     public function destroy(Student $student)
     {
+        if (auth_user()->hasRole('mahasiswa') && $student->user_id != auth_id()) {
+            abort(404);
+        }
         // $this->fileService->deleteStudentFile($student);
         return $this->executeDestroy($student);
     }

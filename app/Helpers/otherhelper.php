@@ -109,6 +109,16 @@ function auth_user()
 }
 
 /**
+ * check if user has role mahasiswa
+ *
+ * @return bool
+ */
+function is_mahasiswa()
+{
+    return auth_user()->hasRole('mahasiswa');
+}
+
+/**
  * get user login id
  *
  * @return int

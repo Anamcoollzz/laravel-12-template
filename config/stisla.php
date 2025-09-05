@@ -846,37 +846,37 @@ return [
         // mahasiswa
         [
             'name' => 'Mahasiswa',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'mahasiswa'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Tambah',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Impor Excel',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Ubah',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'mahasiswa'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Detail',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'mahasiswa'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Hapus',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin'],
             'group' => 'Mahasiswa'
         ],
         [
             'name' => 'Mahasiswa Ekspor',
-            'roles' => ['superadmin', 'admin', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin'],
             'group' => 'Mahasiswa'
         ],
         // [
@@ -896,7 +896,10 @@ return [
         'admin',
         'banker',
         'user',
-        'admin pendidikan'
+        'admin pendidikan',
+        'mahasiswa',
+        'ormawa',
+        'pimpinan fakultas',
     ],
 
     'use_setting' => env('STISLA_USE_SETTING', '2'),
@@ -1001,9 +1004,9 @@ return [
     'settings2' => [
         ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Ini hanyalah sistem biasa'],
+        ['key' => 'app_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
         ['key' => 'city', 'value' => 'Jember'],
-        ['key' => 'company_name', 'value' => '[Nama Perusahaannya]'],
+        ['key' => 'company_name', 'value' => 'CV AnamTechno'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
         [

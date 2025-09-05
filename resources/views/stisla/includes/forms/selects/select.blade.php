@@ -20,8 +20,8 @@
       <span class="text-danger">*</span>
     @endif
   </label>
-  <select @if ($isRequired) required @endif @if ($isMultiple) multiple @endif name="{{ $isMultiple ? $name . '[]' : $name }}" id="{{ $id }}"
-    class="form-control">
+  <select @if ($isRequired) required @endif @if ($isMultiple) multiple @endif name="{{ $isMultiple ? $name . '[]' : $name }}" id="{{ $id }}" class="form-control"
+    @if (isset($disabled) && $disabled) disabled @endif>
     @if ($with_all ?? false)
       <option value="">{{ __('Semua') }}</option>
     @endif

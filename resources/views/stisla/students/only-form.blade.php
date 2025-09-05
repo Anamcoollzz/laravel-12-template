@@ -1,3 +1,6 @@
+@php
+  $isDisabled = auth_user()->hasRole('mahasiswa');
+@endphp
 <div class="row">
   <div class="col-12">
     @isset($d)
@@ -11,7 +14,7 @@
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'name', 'label' => 'Nama'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'nim', 'label' => 'NIM'])
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'nim', 'label' => 'NIM', 'disabled' => $isDisabled])
   </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'birth_date', 'type' => 'date', 'label' => 'Tanggal Lahir', 'value' => $d->user->birth_date ?? ''])
@@ -23,6 +26,7 @@
         'options' => $prodi_options,
         'label' => 'Program Studi',
         'required' => true,
+        'disabled' => $isDisabled,
     ])
   </div>
   <div class="col-md-6">
@@ -32,6 +36,8 @@
         'options' => array_year(now()->year, now()->year - 10),
         'label' => 'Tahun Angkatan',
         'required' => true,
+        'value' => $d->class_year ?? null,
+        'disabled' => $isDisabled,
     ])
   </div>
   <div class="col-md-6">
@@ -44,6 +50,8 @@
         'options' => $sp->getStatus(),
         'label' => 'Status Mahasiswa',
         'required' => true,
+        'value' => $d->student_status ?? null,
+        'disabled' => $isDisabled,
     ])
   </div>
   <div class="col-md-6">

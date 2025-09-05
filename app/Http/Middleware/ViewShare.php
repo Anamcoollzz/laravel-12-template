@@ -45,7 +45,7 @@ class ViewShare
 
             // default value
             view()->share('_logo_url', asset('assets/images/logo.png'));
-            view()->share('_company_name', "Nama Perusahaan");
+            view()->share('_company_name', "CV AnamTechno");
             view()->share('_is_forgot_password_send_to_email', false);
             view()->share('_is_login_must_verified', false);
             view()->share('_is_active_register_page', false);

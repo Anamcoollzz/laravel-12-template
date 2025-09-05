@@ -56,8 +56,10 @@
       @endif --}}
       <th>{{ __('Created At') }}</th>
       <th>{{ __('Updated At') }}</th>
-      <th>{{ __('Created By') }}</th>
-      <th>{{ __('Last Updated By') }}</th>
+      @if (is_mahasiswa() === false)
+        <th>{{ __('Created By') }}</th>
+        <th>{{ __('Last Updated By') }}</th>
+      @endif
       @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
         <th>{{ __('Aksi') }}</th>
       @endif
@@ -162,7 +164,9 @@
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')
-          @include('stisla.includes.others.td-created-updated-by')
+          @if (is_mahasiswa() === false)
+            @include('stisla.includes.others.td-created-updated-by')
+          @endif
 
           @if ($isExport === false)
             @include('stisla.includes.forms.buttons.btn-action')
