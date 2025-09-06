@@ -160,7 +160,7 @@
           <td class="text-right">{{ rp($item->tax) }}</td>
           <td class="text-right">{{ rp($item->estimation) }}</td>
           <td class="text-right">{{ rp($item->realization) }}</td>
-          <td class="text-right">{{ rp($item->difference) }}</td>
+          <td class="text-right">{{ $item->difference || $item->difference < 0 ? rp($item->difference * -1) : 0 }}</td>
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')
