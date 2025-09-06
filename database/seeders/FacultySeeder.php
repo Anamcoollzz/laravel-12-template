@@ -41,32 +41,34 @@ class FacultySeeder extends Seeder
             'user',
             'admin pendidikan'
         ])->delete();
-        StudyProgram::all()->each(function ($program, $i) use ($students, $statuses, $pass) {
-            $user = User::create([
-                'name'         => $students[$i]['nama'],
-                'email'        => strtolower(str_replace(' ', '.', $students[$i]['nama'])) . '@univ.ac.id',
-                'phone_number' => fake('id_ID')->phoneNumber(),
-                'password'     => $pass,
-                'address'      => fake('id_ID')->address(),
-                'birth_date'   => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
-            ]);
-            $user->assignRole('mahasiswa');
+
+        $studyPrograms = StudyProgram::all();
+        $studyProgramIds = $studyPrograms->pluck('id')->toArray();
+        foreach ($students as $student) {
             try {
-                $program->students()->create(
-                    [
-                        'name'            => $students[$i]['nama'],
-                        'nim'             => $students[$i]['nim'],
-                        'photo'           => fake()->imageUrl(400, 400, 'people', true),
-                        'user_id'         => $user->id,
-                        'class_year'      => $year = ($user->birth_date ? (int)date('Y', strtotime($user->birth_date)) + 18 : null),
-                        'student_status'  => $status = Arr::random($statuses),
-                        'graduation_year' => in_array($status, ['lulus']) ? $year + 4 : null,
-                    ]
-                );
+                $user = User::create([
+                    'name'         => $student['nama'],
+                    'email'        => strtolower(str_replace(' ', '.', $student['nama'])) . '@univ.ac.id',
+                    'phone_number' => fake('id_ID')->phoneNumber(),
+                    'password'     => $pass,
+                    'address'      => fake('id_ID')->address(),
+                    'birth_date'   => fake()->dateTimeBetween('-25 years', '-18 years')->format('Y-m-d'),
+                ]);
+                $user->assignRole('mahasiswa');
+                Student::create([
+                    'name'             => $student['nama'],
+                    'nim'              => $student['nim'],
+                    'photo'            => fake()->imageUrl(400, 400, 'people', true),
+                    'user_id'          => $user->id,
+                    'class_year'       => $year = ($user->birth_date ? (int)date('Y', strtotime($user->birth_date)) + 18 : null),
+                    'student_status'   => $status = Arr::random($statuses),
+                    'graduation_year'  => in_array($status, ['lulus']) ? $year + 4 : null,
+                    'study_program_id' => Arr::random($studyProgramIds),
+                ]);
             } catch (\Exception $e) {
-                \Log::error("Error creating student for program {$program->id}: {$e->getMessage()}");
+                \Log::error("Error creating student : {$e->getMessage()}");
             }
-        });
+        }
 
         FacultyLeader::truncate();
         foreach (range(1, 100) as $index) {
