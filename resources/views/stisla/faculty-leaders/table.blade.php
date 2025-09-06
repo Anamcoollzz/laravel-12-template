@@ -21,6 +21,10 @@
       @endif
       <th>{{ __('Nama') }}</th>
       <th>{{ __('Fakultas') }}</th>
+      <th>{{ __('Email') }}</th>
+      <th>{{ __('No HP') }}</th>
+      <th>{{ __('Tanggal Lahir') }}</th>
+      <th>{{ __('Alamat') }}</th>
 
       {{-- <th>{{ __('Nama') }}</th>
       <th>{{ __('No HP') }}</th>
@@ -65,8 +69,12 @@
       @foreach ($data as $item)
         <tr>
           <td>{{ $loop->iteration }}</td>
-          <td>{{ $item->name }}</td>
+          <td>{{ $item->user->name }}</td>
           <td>{{ $item->faculty->name }}</td>
+          @include('stisla.includes.others.td-email')
+          @include('stisla.includes.others.td-phone-number')
+          @include('stisla.includes.others.td-datetime')
+          @include('stisla.includes.others.td-address')
 
           {{-- <td>{{ $item->name }}</td>
           @include('stisla.includes.others.td-phone-number')

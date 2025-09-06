@@ -70,16 +70,17 @@ class AlumniController extends StislaController
      */
     public function index(Request $request)
     {
-        $where = [
-            'student_status' => 'lulus',
-        ];
-        if (is_mahasiswa()) {
-            $where['user_id'] = auth_id();
-        }
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(
-            ['createdBy', 'lastUpdatedBy', 'work', 'studyProgram.faculty'],
-            where: $where
-        )]);
+        return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
+    }
+
+    /**
+     * get data for index page
+     *
+     * @return Collection
+     */
+    protected function getIndexData()
+    {
+        return $this->repository->getAlumnis();
     }
 
     /**

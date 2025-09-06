@@ -137,4 +137,23 @@ class StudentRepository extends Repository
             'dikeluarkan' => 'dikeluarkan',
         ];
     }
+
+    /**
+     * get students
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getStudents()
+    {
+        return $this->queryFullData()->with(['studyProgram.faculty', 'user', 'createdBy', 'lastUpdatedBy'])
+            ->when(is_mahasiswa(), function ($query) {
+                $query->where('user_id', auth_id());
+            })
+            ->when(is_pimpinan_fakultas(), function ($query) {
+                $query->whereHas('studyProgram.faculty', function ($q) {
+                    $q->where('id', auth_user()->facultyLeader->faculty->id);
+                });
+            })
+            ->get();
+    }
 }

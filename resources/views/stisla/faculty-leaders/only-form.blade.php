@@ -7,10 +7,25 @@
     @csrf
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input-name')
+    @include('stisla.includes.forms.inputs.input-name', ['value' => $d->user->name ?? ''])
   </div>
   <div class="col-md-6">
     @include('stisla.includes.forms.selects.select', ['id' => 'faculty_id', 'name' => 'faculty_id', 'options' => $faculty_options, 'label' => 'Fakultas', 'required' => true])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'birth_date', 'type' => 'date', 'label' => 'Tanggal Lahir', 'value' => $d->user->birth_date ?? ''])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-phonenumber', ['required' => true, 'value' => $d->user->phone_number ?? ''])
+  </div>
+  <div class="col-md-12">
+    @include('stisla.includes.forms.editors.textarea-address', ['required' => true, 'id' => 'address', 'label' => 'Alamat', 'value' => $d->user->address ?? ''])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-email', ['required' => true, 'value' => $d->user->email ?? ''])
+  </div>
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input-password', ['required' => !isset($d)])
   </div>
 
 

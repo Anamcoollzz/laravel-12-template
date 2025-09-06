@@ -24,37 +24,13 @@ class FacultyLeaderRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'text'              => 'required',
-            // 'email'             => 'required|email',
-            // "number"            => "required|numeric",
-            // "currency"          => "required",
-            // "currency_idr"      => "required",
-            // "select"            => "required",
-            // "select2"           => "required",
-            // "select2_multiple"  => "required|array",
-            // "textarea"          => "required",
-            // "checkbox"          => "required|array",
-            // "checkbox2"         => "required|array",
-            // "radio"             => "required",
-            // "file"              => $this->isMethod('put') ? 'nullable|file' : "required|file",
-            // "image"             => $this->isMethod('put') ? 'nullable|image' : "required|image",
-            // "date"              => "required|date",
-            // "time"              => "required",
-            // "color"             => "required",
-            // "summernote_simple" => "required",
-            // "summernote"        => "required",
-            // "barcode"           => "required",
-            // "qr_code"           => "required",
-            // 'name'              => 'required',
-            // 'phone_number'      => 'required',
-            // 'birthdate'         => 'required|date',
-            // 'address'           => 'required',
-            // 'password'          => $this->isMethod('put') ? 'nullable|min:6' : 'required|min:6',
-            // 'avatar'            => $this->isMethod('put') ? 'nullable|image' : 'required|image',
-
-
-            'name'        => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
-            'faculty_id'        => 'required|numeric|exists:faculties,id',
+            'name'         => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
+            'faculty_id'   => 'required|numeric|exists:faculties,id',
+            "birth_date"   => "required|date",
+            'email'        => $this->isMethod('put') ? 'nullable|email|unique:users,email,' . $this->route('faculty_leader')->user->id : 'nullable|email|unique:users,email',
+            'password'     => $this->isMethod('put') ? 'nullable|min:6' : 'required|min:6',
+            'phone_number' => 'required|string|max:20',
+            'address'      => 'required|string|max:191',
         ];
     }
 }

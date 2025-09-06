@@ -346,27 +346,27 @@ return [
     'permissions' => [
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Email',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Password',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Hapus Akun',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'admin pendidikan'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
         ],
 
@@ -846,7 +846,7 @@ return [
         // mahasiswa
         [
             'name' => 'Mahasiswa',
-            'roles' => ['superadmin', 'admin', 'mahasiswa'],
+            'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Mahasiswa'
         ],
         [
@@ -866,7 +866,7 @@ return [
         ],
         [
             'name' => 'Mahasiswa Detail',
-            'roles' => ['superadmin', 'admin', 'mahasiswa'],
+            'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Mahasiswa'
         ],
         [
@@ -876,7 +876,7 @@ return [
         ],
         [
             'name' => 'Mahasiswa Ekspor',
-            'roles' => ['superadmin', 'admin'],
+            'roles' => ['superadmin', 'admin', 'pimpinan fakultas'],
             'group' => 'Mahasiswa'
         ],
         // [

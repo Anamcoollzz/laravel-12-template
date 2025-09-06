@@ -124,4 +124,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(User::class, 'deleted_by_id');
     }
+
+    /**
+     * Get the faculty leader associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function facultyLeader()
+    {
+        return $this->hasOne(FacultyLeader::class);
+    }
 }
