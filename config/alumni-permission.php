@@ -3,7 +3,7 @@
 return [
     [
         'name' => 'Alumni',
-        'roles' => ['superadmin', 'admin', 'mahasiswa'],
+        'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
         'group' => 'Alumni'
     ],
     // [
@@ -23,7 +23,7 @@ return [
     ],
     [
         'name' => 'Alumni Detail',
-        'roles' => ['superadmin', 'admin', 'mahasiswa'],
+        'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
         'group' => 'Alumni'
     ],
     [
@@ -33,7 +33,7 @@ return [
     ],
     [
         'name' => 'Alumni Ekspor',
-        'roles' => ['superadmin', 'admin'],
+        'roles' => ['superadmin', 'admin', 'pimpinan fakultas'],
         'group' => 'Alumni'
     ],
     [

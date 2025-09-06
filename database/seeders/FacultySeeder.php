@@ -70,8 +70,17 @@ class FacultySeeder extends Seeder
 
         FacultyLeader::truncate();
         foreach (range(1, 100) as $index) {
+            $user = User::create([
+                'name'         => fake()->name(),
+                'email'        => fake()->unique()->safeEmail(),
+                'phone_number' => fake('id_ID')->phoneNumber(),
+                'password'     => $pass,
+                'address'      => fake('id_ID')->address(),
+                'birth_date'   => fake()->dateTimeBetween('-50 years', '-25 years')->format('Y-m-d'),
+            ]);
+            $user->assignRole('pimpinan fakultas');
             FacultyLeader::create([
-                'name' => fake()->name(),
+                'user_id' => $user->id,
                 'faculty_id' => rand(1, 10),
             ]);
         }

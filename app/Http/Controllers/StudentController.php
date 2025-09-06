@@ -7,6 +7,7 @@ use App\Imports\StudentImport;
 use App\Models\Student;
 use App\Repositories\StudentRepository;
 use App\Repositories\StudyProgramRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -69,6 +70,16 @@ class StudentController extends StislaController
     }
 
     /**
+     * get data for index page
+     *
+     * @return Collection
+     */
+    protected function getIndexData()
+    {
+        return $this->repository->getStudents();
+    }
+
+    /**
      * showing student page
      *
      * @param Request $request
@@ -76,10 +87,7 @@ class StudentController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(
-            ['studyProgram.faculty', 'user'],
-            where: auth_user()->hasRole('mahasiswa') ? ['user_id' => auth_id()] : []
-        )]);
+        return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
     }
 
     /**

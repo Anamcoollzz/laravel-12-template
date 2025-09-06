@@ -14,6 +14,7 @@ use App\Services\DropBoxService;
 use App\Services\EmailService;
 use App\Services\FileService;
 use App\Services\PDFService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -164,6 +165,13 @@ class StislaController extends Controller implements HasMiddleware
      * @var array
      */
     protected array $middlewares = [];
+
+    /**
+     * data
+     *
+     * @var array
+     */
+    protected array $data = [];
 
     /**
      * import
@@ -336,6 +344,16 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
+     * get index data
+     *
+     * @return Collection|null
+     */
+    protected function getIndexData()
+    {
+        return null;
+    }
+
+    /**
      * Default data detail
      *
      * @param string $title
@@ -467,6 +485,8 @@ class StislaController extends Controller implements HasMiddleware
         else {
             if (isset($data['data']))
                 $data = $data['data'];
+            // else if (count($this->data) > 0)
+            //     $data = $this->data;
             else
                 $data = $this->repository->getFullData();
         }
@@ -549,14 +569,15 @@ class StislaController extends Controller implements HasMiddleware
     /**
      * download export data as pdf
      *
+     * @param null|Collection $data
      * @return Response
      */
-    public function exportPdf()
+    protected function executePdf($data = null)
     {
         $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.pdf';
         $html     = view('stisla.' . $this->prefix . '.export-pdf', [
             'title'    => $this->title,
-            'data'     => $this->repository->getFullData(),
+            'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport' => true,
         ])->render();
         // return $html;
@@ -568,6 +589,16 @@ class StislaController extends Controller implements HasMiddleware
         } else if ($this->pdfPaperSize === 'A3') {
             return $this->pdfService->downloadPdfA3($html, $filename);
         }
+    }
+
+    /**
+     * download export data as pdf
+     *
+     * @return Response
+     */
+    public function exportPdf()
+    {
+        return $this->executePdf();
     }
 
     /**
