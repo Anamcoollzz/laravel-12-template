@@ -23,6 +23,10 @@ Beberapa fitur atau komponen yang ada
     -   Import
     -   Server side data table
     -   Ajax Method
+-   Modul Pendidikan >> Mahasiswa, Alumni, Fakultas, Program Studi, Pimpinan Fakultas, Ormawa, Pekerjaan (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
+    -   CRUD
+    -   Export
+    -   Import
 -   Modul Bank, Deposito, Riwayat Deposito (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
     -   CRUD
     -   Export
@@ -48,6 +52,7 @@ Beberapa fitur atau komponen yang ada
         -   Import
 -   Notifikasi
 -   Ubuntu
+-   MySql
 -   Manajemen file menggunakan [Unisharp](https://unisharp.github.io/laravel-filemanager/)
 -   Pengaturan
     -   Umum
