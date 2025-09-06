@@ -119,6 +119,16 @@ function is_mahasiswa()
 }
 
 /**
+ * check if user has role pimpinan fakultas
+ *
+ * @return bool
+ */
+function is_pimpinan_fakultas()
+{
+    return auth_user()->hasRole('pimpinan fakultas');
+}
+
+/**
  * get user login id
  *
  * @return int

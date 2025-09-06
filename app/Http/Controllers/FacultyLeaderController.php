@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class FacultyLeaderController extends StislaController
 {
 
+    private int $user_id;
+
     /**
      * constructor method
      *
@@ -40,10 +42,26 @@ class FacultyLeaderController extends StislaController
      */
     public function getStoreData(FacultyLeaderRequest $request)
     {
-        $data = $request->only([
+        $user = $request->only([
             'name',
+            'email',
+            'phone_number',
+            'address',
+            'birth_date',
+        ]);
+        if ($request->password)
+            $user['password'] = bcrypt($request->password);
+        if ($this->user_id) {
+            $user = $this->userRepository->update($user, $this->user_id);
+        } else {
+            $user = $this->userRepository->create($user);
+        }
+        $user->assignRole('pimpinan fakultas');
+        $data = $request->only([
+            // 'name',
             'faculty_id',
         ]);
+        $data['user_id'] = $user->id;
 
         // $data['currency']     = idr_to_double($request->currency);
         // $data['currency_idr'] = rp_to_double($request->currency_idr);
@@ -120,6 +138,7 @@ class FacultyLeaderController extends StislaController
      */
     public function update(FacultyLeaderRequest $request, FacultyLeader $facultyLeader)
     {
+        $this->user_id = $facultyLeader->user_id;
         return $this->executeUpdate($request, $facultyLeader, withUser: true);
     }
 
