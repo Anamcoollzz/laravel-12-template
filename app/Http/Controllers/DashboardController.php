@@ -95,11 +95,26 @@ class DashboardController extends StislaController
         if ($user->can('Mahasiswa') && !is_mahasiswa())
             $widgets[] = (object)[
                 'title' => 'Mahasiswa',
-                'count' => Student::count(),
+                'count' => is_pimpinan_fakultas() ? Student::query()->whereHas('studyProgram.faculty', function ($q) {
+                    $q->where('id', auth_user()->facultyLeader->faculty->id);
+                })->count() : Student::count(),
                 'bg'    => 'primary',
                 'icon'  => 'users',
                 'route' => route('students.index'),
                 'bg_color' => '#3f6e8bff'
+            ];
+        if ($user->can('Alumni') && !is_mahasiswa())
+            $widgets[] = (object)[
+                'title' => 'Alumni',
+                'count' => is_pimpinan_fakultas() ? Student::query()->whereHas('studyProgram.faculty', function ($q) {
+                    $q->where('id', auth_user()->facultyLeader->faculty->id);
+                })
+                    ->where('student_status', 'lulus')
+                    ->count() : Student::where('student_status', 'lulus')->count(),
+                'bg'    => 'primary',
+                'icon'  => 'users',
+                'route' => route('alumnis.index'),
+                'bg_color' => '#3f8b8bff'
             ];
         if ($user->can('Program Studi'))
             $widgets[] = (object)[
