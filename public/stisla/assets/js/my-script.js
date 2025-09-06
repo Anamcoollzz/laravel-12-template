@@ -779,18 +779,24 @@ function initColorPicker() {
 }
 
 function initCleave() {
-  if ($('.currency').length > 0)
-    new Cleave('.currency', {
-      numeral: true,
-      numeralThousandsGroupStyle: 'thousand',
+  if ($('.currency').length > 0) {
+    $('.currency').each(function (index, item) {
+      new Cleave(item, {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+      });
     });
+  }
 
-  if ($('.currency_idr').length > 0)
-    new Cleave('.currency_idr', {
-      numeral: true,
-      numeralDecimalMark: ',',
-      delimiter: '.',
+  if ($('.currency_idr').length > 0) {
+    $('.currency_idr').each(function (index, item) {
+      new Cleave(item, {
+        numeral: true,
+        numeralDecimalMark: ',',
+        delimiter: '.',
+      });
     });
+  }
 }
 
 function initTags() {

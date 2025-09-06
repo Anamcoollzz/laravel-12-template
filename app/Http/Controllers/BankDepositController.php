@@ -98,7 +98,9 @@ class BankDepositController extends StislaController
     public function index(Request $request)
     {
         $this->canExport = true;
-        $data = $this->repository->getFullDataWith(['bank:id,name,bank_type']);;
+        $data = $this->repository->getFullDataWith(['bank:id,name,bank_type'], orderBy: ['due_date' => 'asc'], where: [
+            'status' => $request->status ?? 'Aktif',
+        ]);
         return $this->prepareIndex($request, ['data' => $data]);
     }
 

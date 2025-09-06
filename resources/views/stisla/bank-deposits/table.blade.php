@@ -146,7 +146,7 @@
           <td>{{ $item->bankdeposit->bank->name ?? $item->bank->name }}</td>
           <td>{{ $item->bankdeposit->bank->bank_type ?? $item->bank->bank_type }}</td>
           <td>{{ $item->time_period }}</td>
-          <td>{{ $item->due_date }}</td>
+          @include('stisla.includes.others.td-datetime')
           @if ($statusExport)
             @if ($isExport)
               <td>{{ $item->status }}</td>
@@ -154,13 +154,13 @@
               <td><span class="badge badge-{{ $item->status === 'Aktif' ? 'success' : 'danger' }}">{{ $item->status }}</span></td>
             @endif
           @endif
-          <td>{{ $item->per_anum }}</td>
-          <td>{{ rp($item->amount) }}</td>
-          <td>{{ $item->tax_percentage }}%</td>
-          <td>{{ rp($item->tax) }}</td>
-          <td>{{ rp($item->estimation) }}</td>
-          <td>{{ $item->realization }}</td>
-          <td>{{ $item->difference }}</td>
+          <td class="text-right">{{ $item->per_anum }}%</td>
+          <td class="text-right">{{ rp($item->amount) }}</td>
+          <td class="text-right">{{ $item->tax_percentage }}%</td>
+          <td class="text-right">{{ rp($item->tax) }}</td>
+          <td class="text-right">{{ rp($item->estimation) }}</td>
+          <td class="text-right">{{ rp($item->realization) }}</td>
+          <td class="text-right">{{ rp($item->difference) }}</td>
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')

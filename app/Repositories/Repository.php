@@ -387,7 +387,7 @@ class Repository extends RepositoryAbstract
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function queryFullData()
+    public function queryFullData(?array $orderBy = [])
     {
         return $this->model
             ->when(request('filter_created_by_id'), function (Builder $query) {
@@ -411,7 +411,7 @@ class Repository extends RepositoryAbstract
             ->when(request('filter_limit', 50), function (Builder $query) {
                 $query->limit(request('filter_limit', 50));
             })
-            ->when(request('filter_sort_by_created_at', 'latest'), function (Builder $query) {
+            ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();
                 } else {
@@ -436,12 +436,22 @@ class Repository extends RepositoryAbstract
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFullDataWith(array $relations = [], ?array $where = [])
+    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [])
     {
         if (count($where) > 0) {
             $where = array_filter($where);
         }
-        return $this->queryFullData()->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)->latest()->get();
+
+        return $this->queryFullData(orderBy: $orderBy)->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)
+            ->when(count($orderBy) > 0, function ($query) use ($orderBy) {
+                foreach ($orderBy as $column => $direction) {
+                    $query->orderBy($column, $direction ?? 'asc');
+                }
+            })
+            ->when(count($orderBy) === 0, function ($query) {
+                $query->latest();
+            })
+            ->get();
     }
 
     /**

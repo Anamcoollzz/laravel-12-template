@@ -30,6 +30,8 @@
       <h4><i class="fa fa-pencil"></i> Summary</h4>
 
       <div class="card-header-action">
+        @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter'])
+        @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter'])
         @include('stisla.bank-deposits.btn-action-header')
       </div>
     </div>
@@ -122,6 +124,8 @@
       <div class="card-header">
         <h4><i class="fa fa-line-chart"></i> Statistik Amount</h4>
         <div class="card-header-action">
+          @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter'])
+          @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter'])
           @include('stisla.bank-deposits.btn-action-header')
         </div>
       </div>
@@ -148,6 +152,8 @@
       <div class="card-header">
         <h4><i class="fa fa-line-chart"></i> Statistik Per Anum</h4>
         <div class="card-header-action">
+          @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter'])
+          @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter'])
           @include('stisla.bank-deposits.btn-action-header')
         </div>
       </div>
@@ -161,6 +167,8 @@
         <div class="card-header">
           <h4><i class="fa fa-line-chart"></i> Statistik Realisasi</h4>
           <div class="card-header-action">
+            @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter'])
+            @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter'])
             @include('stisla.bank-deposits.btn-action-header')
           </div>
         </div>
