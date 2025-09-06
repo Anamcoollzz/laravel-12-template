@@ -436,7 +436,7 @@ class Repository extends RepositoryAbstract
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [])
+    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [])
     {
         if (count($where) > 0) {
             $where = array_filter($where);
@@ -446,6 +446,11 @@ class Repository extends RepositoryAbstract
             ->when(count($orderBy) > 0, function ($query) use ($orderBy) {
                 foreach ($orderBy as $column => $direction) {
                     $query->orderBy($column, $direction ?? 'asc');
+                }
+            })
+            ->when(count($whereHas) > 0, function ($query) use ($whereHas) {
+                foreach ($whereHas as $relation => $condition) {
+                    $query->whereHas($relation, $condition);
                 }
             })
             ->when(count($orderBy) === 0, function ($query) {

@@ -134,4 +134,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(FacultyLeader::class);
     }
+
+    /**
+     * Get the student associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 }

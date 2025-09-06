@@ -38,8 +38,6 @@ class CrudExample extends Model
         "summernote",
         "barcode",
         "qr_code",
-        "created_by_id",
-        "last_updated_by_id",
         'name',
         'phone_number',
         'birthdate',
@@ -48,6 +46,8 @@ class CrudExample extends Model
         'password',
 
         //columns
+        "created_by_id",
+        "last_updated_by_id",
     ];
 
     /**

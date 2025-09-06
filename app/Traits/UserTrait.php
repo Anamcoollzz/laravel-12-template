@@ -13,7 +13,7 @@ trait UserTrait
      */
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'created_by_id')->select(['id', 'name']);
     }
 
     /**
@@ -23,7 +23,7 @@ trait UserTrait
      */
     public function lastUpdatedBy()
     {
-        return $this->belongsTo(User::class, 'last_updated_by_id');
+        return $this->belongsTo(User::class, 'last_updated_by_id')->select(['id', 'name']);
     }
 
     /**
