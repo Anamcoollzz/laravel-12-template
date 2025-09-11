@@ -136,7 +136,7 @@ return [
                     'menu_name' => 'Stisla Example',
                     'route_name' => null,
                     'icon' => 'fas fa-caret-square-down',
-                    'permission' => null,
+                    'permission' => 'Stisla Example',
                     'is_active_if_url_includes' => null,
                     'is_mockup' => true,
                     'childs' => [
@@ -144,7 +144,7 @@ return [
                             'menu_name' => 'Datatable',
                             'route_name' => 'datatable.index',
                             'icon' => 'fas fa-table',
-                            'permission' => null,
+                            'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'datatable*',
                             'is_mockup' => true
                         ],
@@ -152,7 +152,7 @@ return [
                             'menu_name' => 'Form',
                             'route_name' => 'form.index',
                             'icon' => 'fas fa-file-alt',
-                            'permission' => null,
+                            'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'form*',
                             'is_mockup' => true
                         ],
@@ -160,7 +160,7 @@ return [
                             'menu_name' => 'Chart JS',
                             'route_name' => 'chart-js.index',
                             'icon' => 'fas fa-chart-line',
-                            'permission' => null,
+                            'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'chart-js*',
                             'is_mockup' => true
                         ],
@@ -168,7 +168,7 @@ return [
                             'menu_name' => 'Pricing',
                             'route_name' => 'pricing.index',
                             'icon' => 'fas fa-dollar',
-                            'permission' => null,
+                            'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'pricing*',
                             'is_mockup' => true
                         ],
@@ -176,7 +176,7 @@ return [
                             'menu_name' => 'Invoice',
                             'route_name' => 'invoice.index',
                             'icon' => 'fas fa-dollar',
-                            'permission' => null,
+                            'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'invoice*',
                             'is_mockup' => true
                         ]
@@ -368,6 +368,12 @@ return [
             'name' => 'Profil Hapus Akun',
             'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
             'group' => 'Profil'
+        ],
+
+        [
+            'name' => 'Stisla Example',
+            'roles' => ['superadmin', 'admin'],
+            'group' => 'Stisla Example'
         ],
 
         [
