@@ -411,6 +411,11 @@ class Repository extends RepositoryAbstract
             ->when(request('filter_limit', 50), function (Builder $query) {
                 $query->limit(request('filter_limit', 50));
             })
+            ->when(request('filter_role'), function (Builder $query) {
+                $query->whereHas('roles', function (Builder $query) {
+                    $query->where('id', request('filter_role'));
+                });
+            })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();

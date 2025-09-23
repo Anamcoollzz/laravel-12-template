@@ -6,6 +6,7 @@ use App\Http\Requests\CrudExampleRequest;
 use App\Imports\CrudExampleImport;
 use App\Models\CrudExample;
 use App\Repositories\CrudExampleRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -93,7 +94,24 @@ class CrudExampleController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->repository->getFullDataWith(['createdBy', 'lastUpdatedBy'])]);
+        return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
+    }
+
+    /**
+     * get data for index page
+     *
+     * @return Collection|null
+     */
+    public function getIndexData()
+    {
+        return $this->repository->getFullDataWith(
+            [
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            where: [],
+            whereHas: []
+        );
     }
 
     /**

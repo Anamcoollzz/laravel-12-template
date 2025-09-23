@@ -416,6 +416,7 @@ class StislaController extends Controller implements HasMiddleware
             'excel_name' => $times . '_' . $moduleName . '.xlsx',
             'csv_name'   => $times . '_' . $moduleName . '.csv',
             'json_name'  => $times . '_' . $moduleName . '.json',
+            'prefix'     => $this->prefix ?? null,
         ];
 
         return array_merge($data, $this->getIndexDataFromParent());
@@ -488,7 +489,7 @@ class StislaController extends Controller implements HasMiddleware
             // else if (count($this->data) > 0)
             //     $data = $this->data;
             else
-                $data = $this->repository->getFullData();
+                $data = $this->getIndexData() ?? $this->repository->getFullData();
         }
 
         $defaultData = $this->getDefaultDataIndex($title, $title, $prefix . '');
@@ -539,7 +540,7 @@ class StislaController extends Controller implements HasMiddleware
     public function exportJson()
     {
         $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.json';
-        $data     = $this->repository->getLatest();
+        $data     = $this->getIndexData() ?? $this->repository->getLatest();
 
         return $this->fileService->downloadJson($data, $filename);
     }
@@ -579,6 +580,7 @@ class StislaController extends Controller implements HasMiddleware
             'title'    => $this->title,
             'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport' => true,
+            'prefix'   => $this->prefix,
         ])->render();
         // return $html;
 

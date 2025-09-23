@@ -94,6 +94,22 @@
                 'min' => 1,
             ])
           </div>
+          @if (Route::is('user-management.users.index'))
+            <div class="col-md-6">
+              @php
+                $userRepo = new \App\Repositories\UserRepository();
+              @endphp
+              @include('stisla.includes.forms.selects.select', [
+                  'id' => 'filter_role',
+                  'name' => 'filter_role',
+                  'options' => $userRepo->getRoleOptions(),
+                  'label' => 'Role',
+                  'required' => false,
+                  'with_all' => true,
+                  'selected' => request('filter_role', null),
+              ])
+            </div>
+          @endif
           <div class="col-12">
             @include('stisla.includes.forms.buttons.btn-search')
           </div>

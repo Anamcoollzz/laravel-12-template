@@ -3,7 +3,7 @@
     @isset($d)
       @method('PUT')
     @endisset
-
+    {{-- {{ dd($errors->all()) }} --}}
     @csrf
   </div>
   {{-- formcolumns --}}
@@ -49,19 +49,27 @@
     @include('stisla.includes.forms.inputs.input-currency-rupiah')
   </div>
   <div class="col-md-6">
+    {{-- @php
+      $repository = new \App\Repositories\TpaClassRepository();
+    @endphp --}}
     @include('stisla.includes.forms.selects.select', [
         'id' => 'select',
         'name' => 'select',
         'options' => $selectOptions,
+        // 'options' => $repository->getOptions(),
         'label' => 'Select',
         'required' => true,
     ])
   </div>
   <div class="col-md-6">
+    {{-- @php
+      $repository = new \App\Repositories\TpaClassRepository();
+    @endphp --}}
     @include('stisla.includes.forms.selects.select2', [
         'id' => 'select2',
         'name' => 'select2',
         'options' => $selectOptions,
+        // 'options' => $repository->getOptions(),
         'label' => 'Select2',
         'required' => true,
     ])
