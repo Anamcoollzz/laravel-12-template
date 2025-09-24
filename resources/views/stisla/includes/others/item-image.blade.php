@@ -1,4 +1,7 @@
-@if (Str::contains($file, 'http'))
+@php
+  $file = $file ?? $item->file;
+@endphp
+@if (Str::contains($file, 'http') || Str::contains($file, 'https://'))
   <a href="{{ $file }}" onclick="showImageModal(event, '{{ $file }}')">
     <img src="{{ $file }}" alt="{{ $item->text }}" style="max-width: 200px;" class="img-thumbnail">
   </a>

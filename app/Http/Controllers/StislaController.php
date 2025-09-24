@@ -181,6 +181,13 @@ class StislaController extends Controller implements HasMiddleware
     protected GeneralImport $import;
 
     /**
+     * is crud
+     *
+     * @var bool
+     */
+    protected bool $isCrud = false;
+
+    /**
      * constructor method
      *
      * @return void
@@ -208,6 +215,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function defaultMiddleware($moduleName = null, ?array $only = [])
     {
+        return;
         if (empty($moduleName)) {
             return;
         }
@@ -278,6 +286,7 @@ class StislaController extends Controller implements HasMiddleware
         $canExport      = $user->can($permissionPrefix . ' Ekspor');
         $canForceLogin  = $user->can($permissionPrefix . ' Force Login');
         $canBlock       = $user->can($permissionPrefix . ' Blokir');
+        $canFilterData  = $user->can($permissionPrefix . ' Filter Data');
 
         return [
             'canCreate'         => $canCreate,
@@ -288,6 +297,7 @@ class StislaController extends Controller implements HasMiddleware
             'canExport'         => $canExport,
             'canForceLogin'     => $canForceLogin,
             'canBlock'          => $canBlock,
+            'canFilterData'     => $canFilterData,
             'title'             => $title,
             'moduleIcon'        => $this->icon,
             'route_create'      => $canCreate ? route($routePrefix . '.create') : null,
@@ -576,7 +586,14 @@ class StislaController extends Controller implements HasMiddleware
     protected function executePdf($data = null)
     {
         $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.pdf';
-        $html     = view('stisla.' . $this->prefix . '.export-pdf', [
+        // $html     = view('stisla.' . $this->prefix . '.export-pdf', [
+        //     'title'    => $this->title,
+        //     'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
+        //     'isExport' => true,
+        //     'prefix'   => $this->prefix,
+        // ])->render();
+
+        $html     = view('stisla.includes.others.export-pdf', [
             'title'    => $this->title,
             'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport' => true,
@@ -715,6 +732,8 @@ class StislaController extends Controller implements HasMiddleware
             return view('stisla.' . $this->prefix . '.only-form', $data);
         }
 
+        if ($this->isCrud)
+            return view('stisla.layouts.app-crud-form', $data);
         return view('stisla.' . $this->prefix . '.form', $data);
     }
 
@@ -755,7 +774,8 @@ class StislaController extends Controller implements HasMiddleware
             ]);
         }
 
-        return view('stisla.' . $this->prefix . '.index', $data);
+        return view('stisla.layouts.app-crud-index', $data);
+        // return view('stisla.' . $this->prefix . '.index', $data);
     }
 
     /**
@@ -775,6 +795,8 @@ class StislaController extends Controller implements HasMiddleware
             return view('stisla.' . $this->prefix . '.only-form', $data);
         }
 
+        if ($this->isCrud)
+            return view('stisla.layouts.app-crud-form', $data);
         return view('stisla.' . $this->prefix . '.form', $data);
     }
 

@@ -12,7 +12,7 @@
 
 <body>
   <h1>{{ $title }}</h1>
-  @include('stisla.' . $folder . '.table')
+  @include('stisla.' . $prefix . '.table')
 </body>
 
 </html>

@@ -27,6 +27,7 @@ class CrudExampleController extends StislaController
         $this->repository = new CrudExampleRepository;
         $this->prefix     = $this->viewFolder            = 'crud-examples';
         $this->pdfPaperSize = 'A2';
+        $this->isCrud     = true;
         // $this->import     = new CrudExampleImport;
 
         $this->defaultMiddleware($this->title = 'Contoh CRUD');

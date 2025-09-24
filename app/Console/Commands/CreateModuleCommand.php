@@ -21,7 +21,10 @@ class CreateModuleCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a new module';
+    protected $description = 'Create a new module with controller, model, repository, request, views, migration, seeder, and permission config
+    --- Example: php artisan make:module Product --columns=name,price,description --icon="fa fa-box" --title="Product Management"
+    --- Note: --columns is required, --icon is required, --title is required
+    ';
 
     /**
      * Execute the console command.
@@ -29,22 +32,41 @@ class CreateModuleCommand extends Command
     public function handle()
     {
         $columns = $this->option('columns');
+        $icon    = $this->option('icon');
+        $title   = $this->option('title');
+        $name    = $this->argument('name');
+
+        if ($name === null || $name === '') {
+            $this->error('Name is required');
+            return;
+        }
+        if ($columns === null || $columns === '') {
+            $this->error('--columns is required');
+            return;
+        }
+        if ($icon === null || $icon === '') {
+            $this->error('--icon is required');
+            return;
+        }
+        if ($title === null || $title === '') {
+            $this->error('--title is required');
+            return;
+        }
+
         $columns = explode(',', $columns);
 
-        $icon = $this->option('icon');
-        $title = $this->option('title');
-
-        $name = $this->argument('name');
-        $snake = Str::snake($name);
+        $snake       = Str::snake($name);
         $pluralSnake = Str::plural($snake);
-        $prefix = Str::kebab(Str::plural($name));
+        $prefix      = Str::kebab(Str::plural($name));
+        $camel       = Str::camel($name);
+        $slug        = Str::slug($name);
 
         $controller = base_path('app/Http/Controllers/CrudExampleController.php');
         exec('cp ' . $controller . ' ' . ($path = base_path('app/Http/Controllers/' . $name . 'Controller.php')));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
-        file_put_contents($path, str_replace('crudExample', Str::camel($name), file_get_contents($path)));
+        file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
-        file_put_contents($path, str_replace('crud example', Str::slug($name), file_get_contents($path)));
+        file_put_contents($path, str_replace('crud example', $slug, file_get_contents($path)));
         file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col',", $columns)), file_get_contents($path)));
         file_put_contents($path, str_replace('fa fa-atom', $icon, file_get_contents($path)));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
@@ -57,6 +79,11 @@ class CreateModuleCommand extends Command
         $repository = base_path('app/Repositories/CrudExampleRepository.php');
         exec('cp ' . $repository . ' ' . ($path = base_path('app/Repositories/' . $name . 'Repository.php')));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
+        file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
+        file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
+        file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(function ($col) {
+            return "['data' => '$col', 'name' => '$col'],";
+        }, $columns)), file_get_contents($path)));
 
         $request = base_path('app/Http/Requests/CrudExampleRequest.php');
         exec('cp ' . $request . ' ' . ($path = base_path('app/Http/Requests/' . $name . 'Request.php')));
@@ -147,7 +174,7 @@ class CreateModuleCommand extends Command
             file_get_contents($latestMigration)
         ));
 
-        exec('cp ' . base_path('config/example-crud-permission.php') . ' ' . ($path = base_path('config/' . Str::slug($name) . '-permission.php')));
+        exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
 
         // route
@@ -174,7 +201,7 @@ Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
         $this->info('Views: ' . $prefix);
         $this->info('Migration: ' . $latestMigration);
         $this->info('Seeder: ' . $name . 'Seeder');
-        $this->info('Permission Config: ' . Str::slug($name) . '-permission.php');
+        $this->info('Permission Config: ' . $slug . '-permission.php');
         $this->info('Module created successfully.');
     }
 }
