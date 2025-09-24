@@ -1,4 +1,5 @@
 @extends('stisla.layouts.app-export')
+
 @section('content')
-  @include('stisla.crud-examples.table')
+  @include('stisla.' . $prefix . '.table')
 @endsection

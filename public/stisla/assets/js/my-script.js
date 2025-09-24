@@ -664,7 +664,9 @@ function showModalForm(e, action, link) {
   window.axios.get(link).then(function (response) {
     setTimeout(
       function () {
-        $('#modalForm').find('.modal-body').html(response.data);
+        $('#modalForm')
+          .find('.modal-body')
+          .html('<div class="row">' + response.data + '</div>');
 
         if (action === 'detail') disableForm();
         // test purpose

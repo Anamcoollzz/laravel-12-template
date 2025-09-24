@@ -32,6 +32,11 @@ return [
         'group' => 'Contoh CRUD'
     ],
     [
+        'name' => 'Contoh CRUD Filter Data',
+        'roles' => ['superadmin', 'admin', 'user'],
+        'group' => 'Contoh CRUD'
+    ],
+    [
         'name' => 'Contoh CRUD Ekspor',
         'roles' => ['superadmin', 'admin', 'user'],
         'group' => 'Contoh CRUD'

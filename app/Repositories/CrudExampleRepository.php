@@ -37,12 +37,16 @@ class CrudExampleRepository extends Repository
             'select2_multiple' => '{{implode(", ", $select2_multiple)}}',
             'checkbox'         => '{{implode(", ", $checkbox)}}',
             'checkbox2'        => '{{implode(", ", $checkbox2)}}',
-            'tags'             => 'stisla.crud-examples.tags',
-            'file'             => 'stisla.crud-examples.file',
-            'image'            => fn(CrudExample $item) => view('stisla.crud-examples.image', ['file' => $item->image, 'item' => $item]),
+            'tags'             => 'stisla.includes.others.item-tags',
+            'file'             => 'stisla.includes.others.item-file',
+            'birthdate'        => fn(CrudExample $item) => view('stisla.includes.others.item-datetime', ['item' => $item]),
+            'email'            => fn(CrudExample $item) => view('stisla.includes.others.item-email', ['item' => $item]),
+            'phone_number'     => fn(CrudExample $item) => view('stisla.includes.others.item-phonenumber', ['item' => $item]),
+            'avatar'           => fn(CrudExample $item) => view('stisla.includes.others.item-image', ['file' => $item->avatar, 'item' => $item]),
+            'image'            => fn(CrudExample $item) => view('stisla.includes.others.item-image', ['file' => $item->image, 'item' => $item]),
             'barcode'          => fn(CrudExample $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
             'qr_code'          => fn(CrudExample $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
-            'color'            => 'stisla.crud-examples.color',
+            'color'            => 'stisla.includes.others.item-color',
             'created_at'       => '{{\Carbon\Carbon::parse($created_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             'updated_at'       => '{{\Carbon\Carbon::parse($updated_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             // 'created_by'       => fn(CrudExample $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
@@ -58,7 +62,7 @@ class CrudExampleRepository extends Repository
         ];
         $params = [
             'editColumns' => $editColumns,
-            'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code'],
+            'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code', 'avatar', 'phone_number', 'email', 'birthdate'],
             'addColumns'  => [
                 'created_by' => function (CrudExample $item) {
                     return $item->createdBy ? $item->createdBy->name : '-';
@@ -85,6 +89,13 @@ class CrudExampleRepository extends Repository
                 'searchable' => false,
                 'orderable'  => false
             ],
+            //columns
+
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'phone_number', 'name' => 'phone_number'],
+            ['data' => 'address', 'name' => 'address'],
+            ['data' => 'birthdate', 'name' => 'birthdate'],
+            ['data' => 'avatar', 'name' => 'avatar'],
             ['data' => 'text', 'name' => 'text'],
             ['data' => 'barcode', 'name' => 'barcode'],
             ['data' => 'qr_code', 'name' => 'qr_code'],
@@ -109,6 +120,7 @@ class CrudExampleRepository extends Repository
             ['data' => 'updated_at', 'name' => 'updated_at'],
             ['data' => 'created_by', 'name' => 'createdBy.name'],
             ['data' => 'last_updated_by', 'name' => 'lastUpdatedBy.name'],
+
             [
                 'data' => 'action',
                 'name' => 'action',

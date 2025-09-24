@@ -1,3 +1,3 @@
 <td>
-  <a href="tel:{{ $PhoneNumber = $item->user?->phone_number ?? $item->phone_number }}">{{ $PhoneNumber }}</a>
+  @include('stisla.includes.others.item-phonenumber')
 </td>
