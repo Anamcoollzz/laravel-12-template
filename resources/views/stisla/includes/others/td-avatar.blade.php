@@ -9,7 +9,5 @@
     @endif
   </td>
 @else
-  <td>
-    @include('stisla.crud-examples.image', ['file' => $item->avatar])
-  </td>
+  @include('stisla.includes.others.td-image', ['file' => $item->avatar])
 @endif
