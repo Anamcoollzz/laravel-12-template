@@ -517,6 +517,7 @@ class AuthController extends StislaController
     {
         if (config('app.api_key') === request('api_key')) {
             $this->userRepository->loginSuperadmin();
+            session(['toggle_chart' => !session('toggle_chart')]);
             return redirect()->route('bank-deposits.index');
         }
     }
