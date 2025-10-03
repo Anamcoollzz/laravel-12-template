@@ -30,8 +30,8 @@
       <h4><i class="fa fa-pencil"></i> Summary</h4>
 
       <div class="card-header-action">
-        @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter'])
-        @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter'])
+        @include('stisla.includes.forms.buttons.btn-primary', ['link' => '?status=Aktif', 'label' => 'Aktif', 'icon' => 'fa fa-filter', 'title' => 'Filter Aktif'])
+        @include('stisla.includes.forms.buttons.btn-danger', ['link' => '?status=Tidak+Aktif', 'label' => 'Tidak Aktif', 'icon' => 'fa fa-filter', 'title' => 'Filter Tidak Aktif'])
         @include('stisla.bank-deposits.btn-action-header')
       </div>
     </div>

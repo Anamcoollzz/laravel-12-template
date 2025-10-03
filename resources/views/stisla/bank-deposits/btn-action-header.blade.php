@@ -10,7 +10,7 @@
   </a>
 @endif
 @if (session('toggle_chart'))
-  @include('stisla.includes.forms.buttons.btn-primary', ['link' => route('toggle-chart'), 'label' => 'Tampilkan Chart', 'icon' => 'fa fa-chart-bar'])
+  @include('stisla.includes.forms.buttons.btn-primary', ['link' => route('toggle-chart'), 'title' => 'Tampilkan Chart', 'icon' => 'fa fa-chart-bar'])
 @else
-  @include('stisla.includes.forms.buttons.btn-danger', ['link' => route('toggle-chart'), 'label' => 'Sembunyikan Chart', 'icon' => 'fa fa-chart-bar'])
+  @include('stisla.includes.forms.buttons.btn-danger', ['link' => route('toggle-chart'), 'title' => 'Sembunyikan Chart', 'icon' => 'fa fa-chart-bar'])
 @endif

@@ -774,8 +774,9 @@ class StislaController extends Controller implements HasMiddleware
             ]);
         }
 
-        return view('stisla.layouts.app-crud-index', $data);
-        // return view('stisla.' . $this->prefix . '.index', $data);
+        if ($this->isCrud)
+            return view('stisla.layouts.app-crud-index', $data);
+        return view('stisla.' . $this->prefix . '.index', $data);
     }
 
     /**
