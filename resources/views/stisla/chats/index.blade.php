@@ -75,18 +75,30 @@
   </div> --}}
 
 
-  <div class="section-body">
+  <div class="section-body" id="app-chat">
     <h2 class="section-title">Chat Boxes</h2>
     <p class="section-lead">The chat component and is equipped with a JavaScript API, making it easy for you to integrate with Back-end.</p>
 
     <div class="row align-items-center justify-content-center">
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="card">
-          <div class="card-header">
-            <h4>Who's Online?</h4>
-          </div>
-          <div class="card-body">
-            <ul class="list-unstyled list-unstyled-border">
+      @if ($_is_superadmin)
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h4>Who's Online?</h4>
+            </div>
+            <div class="card-body">
+              @verbatim
+                <ul class="list-unstyled list-unstyled-border">
+                  <li class="media" v-for="user1 in users" :key="user1.id" style="cursor: pointer;" v-on:click="changeUser(user1)">
+                    <img alt="image" class="mr-3 rounded-circle" width="50" :src="avatar">
+                    <div class="media-body">
+                      <div class="mt-0 mb-1 font-weight-bold">{{ user1 . name }}</div>
+                      <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i> Online</div>
+                    </div>
+                  </li>
+                </ul>
+              @endverbatim
+              {{-- <ul class="list-unstyled list-unstyled-border">
               <li class="media">
                 <img alt="image" class="mr-3 rounded-circle" width="50" src="{{ url('stisla') }}/assets/img/avatar/avatar-1.png">
                 <div class="media-body">
@@ -115,28 +127,48 @@
                   <div class="text-small font-weight-600 text-success"><i class="fas fa-circle"></i> Online</div>
                 </div>
               </li>
-            </ul>
+            </ul> --}}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="card chat-box" id="mychatbox">
-          <div class="card-header">
-            <h4>Chat with Rizal</h4>
-          </div>
-          <div class="card-body chat-content">
-          </div>
-          <div class="card-footer chat-form">
-            <form id="chat-form">
-              <input type="text" class="form-control" placeholder="Type a message">
-              <button class="btn btn-primary">
+      @endif
+
+      <div class="col-12 @if ($_is_superadmin) col-lg-8 @endif">
+        @verbatim
+          <div class="card chat-box" id="mychatboxVue">
+            <div class="card-header">
+              <h4>Chat with {{ user && user . name }}</h4>
+            </div>
+            <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none">
+              <template v-for="chat in messages">
+                <div v-if="chat.typing" :key="chat.id" :class="chat.side === 'left' ? 'chat-item chat-left chat-typing' : 'chat-item chat-right chat-typing'" style="">
+                  <img :src="chat.avatar" />
+                  <div class="chat-details">
+                    <div class="chat-text"></div>
+                  </div>
+                </div>
+                <div v-else :key="chat.id" :class="chat.side === 'left' ? 'chat-item chat-left' : 'chat-item chat-right'" style="">
+                  <img :src="chat.avatar" />
+                  <div class="chat-details">
+                    <div class="chat-text">{{ chat . message }}</div>
+                    <div class="chat-time">{{ chat . time }}</div>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div class="card-footer chat-form">
+
+              <input id="message-chat" type="text" class="form-control" placeholder="Type a message" v-on:keyup.enter.prevent="onSendMessage" v-model="message">
+              <button class="btn btn-primary" v-on:click.prevent="onSendMessage">
                 <i class="far fa-paper-plane"></i>
               </button>
-            </form>
+
+            </div>
           </div>
-        </div>
+        @endverbatim
       </div>
-      <div class="col-12 col-sm-6 col-lg-4">
+
+      {{-- <div class="col-12 col-sm-6 col-lg-4">
         <div class="card chat-box card-success" id="mychatbox2">
           <div class="card-header">
             <h4><i class="fas fa-circle text-success mr-2" title="Online" data-toggle="tooltip"></i> Chat with Ryan</h4>
@@ -152,7 +184,7 @@
             </form>
           </div>
         </div>
-      </div>
+      </div> --}}
     </div>
   </div>
 @endsection
@@ -163,9 +195,133 @@
 @push('js')
   <!-- Page Specific JS File -->
   <script src="{{ url('stisla') }}/assets/js/page/components-chat-box.js?id=1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
 @endpush
 
 @push('scripts')
+  <script>
+    var vm = new Vue({
+      el: '#app-chat',
+      data: {
+        userLoggedInId: {{ auth_user()->id }},
+        avatar: '{{ url('stisla') }}/assets/img/avatar/avatar-1.png',
+        users: @json($users),
+        user: null,
+        message: '',
+        messages: [{
+            "side": "left",
+            "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-1.png",
+            "text": "Hi, dude!",
+            "time": "09:22"
+          },
+          {
+            "side": "right",
+            "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-2.png",
+            "text": "Wat?",
+            "time": "09:22"
+          },
+          {
+            "side": "left",
+            "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-1.png",
+            "text": "You wanna know?",
+            "time": "09:22"
+          },
+          {
+            "side": "right",
+            "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-2.png",
+            "text": "Wat?!",
+            "time": "09:22"
+          },
+          {
+            "side": "left",
+            "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-1.png",
+            "text": "",
+            "typing": true
+          }
+        ]
+
+      },
+      methods: {
+        onSendMessage: function() {
+          var self = this;
+          if (this.message.trim().length > 0) {
+            // this.messages.push({
+            //   side: 'right',
+            //   avatar: '{{ url('stisla') }}/assets/img/avatar/avatar-2.png',
+            //   text: this.message || $('#message-chat').val(),
+            //   time: new Date().toLocaleTimeString()
+            // });
+            // this.message = '';
+            axios.post('{{ url('chats') }}', {
+              to_user_id: self.user.id, // for demo purpose, send to user id 1
+              message: this.message || $('#message-chat').val()
+            }, {
+              headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).then(function(response) {
+              self.message = '';
+              console.log(response.data);
+              self.fetchList();
+            });
+          }
+        },
+        fetchList: function() {
+          var self = this;
+          axios.get('{{ url('chats') }}', {
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            params: {
+              to_user_id: self.user.id
+            }
+          }).then(function(response) {
+            if (response.data.status === 'success') {
+              console.log(response.data.data);
+              if (self.message.length != response.data.data.length) {
+                self.messages = response.data.data;
+                // scroll to bottom
+                var chatContent = document.querySelector('.chat-content');
+                chatContent.scrollTop = chatContent.scrollHeight;
+                // process response.data.data
+              } else if (response.data.data.length === 0) {
+                self.messages = [];
+              }
+            }
+          });
+        },
+        changeUser: function(user) {
+          if (user.id === this.user.id) return;
+          this.user = user;
+          this.messages = [];
+          this.fetchList();
+        }
+      },
+      mounted: function() {
+        @if ($_is_superadmin)
+          if (this.users.length > 0) {
+            this.user = this.users[0];
+            this.fetchList();
+            setInterval(() => {
+              this.fetchList();
+            }, 5000)
+          }
+        @else
+          this.user = {
+            name: 'Admin'
+          }
+          this.fetchList();
+          setInterval(() => {
+            this.fetchList();
+          }, 5000)
+        @endif
+      }
+    });
+  </script>
 @endpush
 
 @push('modals')

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CrudExampleRequest;
 use App\Imports\CrudExampleImport;
+use App\Models\ChatMessage;
 use App\Models\CrudExample;
+use App\Models\User;
 use App\Repositories\CrudExampleRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -95,7 +97,42 @@ class ChatController extends StislaController
      */
     public function index(Request $request)
     {
-        return view('stisla.chats.index', ['title' => 'Chat']);
+        $isSuperAdmin = auth_user()->hasRole('superadmin');
+        if ($request->ajax()) {
+            if ($isSuperAdmin) {
+                return [
+                    'status' => 'success',
+                    'data' => ChatMessage::where(function ($query) use ($request) {
+                        $query->where('from_user_id', 1)
+                            ->where('to_user_id', $request->to_user_id);
+                    })
+                        ->orWhere(function ($query) use ($request) {
+                            $query->where('from_user_id', $request->to_user_id)
+                                ->where('to_user_id', 1);
+                        })
+                        ->get(),
+                ];
+            } else {
+                return [
+                    'status' => 'success',
+                    'data' => ChatMessage::where(function ($query) use ($request) {
+                        $query->where('from_user_id', auth_user()->id)
+                            ->where('to_user_id', 1);
+                    })
+                        ->orWhere(function ($query) use ($request) {
+                            $query->where('from_user_id', 1)
+                                ->where('to_user_id', auth_user()->id);
+                        })
+                        ->get(),
+                ];
+            }
+        }
+        $users = $isSuperAdmin ? User::select(['id', 'name'])->role('user')->get() : [];
+        return view('stisla.chats.index', [
+            'title' => 'Chat',
+            'users' => $users,
+            '_is_superadmin' => $isSuperAdmin ?? 0,
+        ]);
         return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
     }
 
@@ -130,11 +167,25 @@ class ChatController extends StislaController
     /**
      * save new data to db
      *
-     * @param CrudExampleRequest $request
+     * @param Request $request
      * @return Response
      */
-    public function store(CrudExampleRequest $request)
+    public function store(Request $request)
     {
+        $isSuperAdmin = auth_user()->hasRole('superadmin');
+        if ($isSuperAdmin)
+            $store = ChatMessage::create([
+                'from_user_id' => auth_user()->id,
+                'to_user_id'   => $request->to_user_id, // for demo purpose, send to user id 1
+                'message'      => $request->message,
+            ]);
+        else
+            $store = ChatMessage::create([
+                'from_user_id' => auth_user()->id,
+                'to_user_id'   => 1, // for demo purpose, send to user id 1
+                'message'      => $request->message,
+            ]);
+        return ['status' => 'success', 'data' => $store];
         return $this->executeStore($request, withUser: true);
     }
 

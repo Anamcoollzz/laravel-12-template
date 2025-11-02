@@ -1159,6 +1159,16 @@ return [
             'address'           => 'Jember'
         ],
         [
+            'name'              => 'Ahfa User',
+            'email'             => 'ahfauser@laravel12template.com',
+            'password'          => 'user',
+            'roles'             => ['user'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Jember'
+        ],
+        [
             'name'              => 'Hairul Anam Banker',
             'email'             => 'banker@laravel12template.com',
             'password'          => 'banker',
