@@ -5,7 +5,7 @@
 Free Starter Laravel 12 Template menggunakan [stisla admin dashboard ](https://github.com/stisla/stisla)
 
 Beberapa fitur atau komponen yang ada
-[![N|Solid](https://res.cloudinary.com/sistem-informasi/image/upload/v1755440754/laravel/Screenshot_2025-08-17_at_21.23.59_mbvs1a.png)](https://anamapp.my.id)
+[![N|Solid](https://res.cloudinary.com/sistem-informasi/image/upload/v1759596553/github/Screenshot_2025-10-04_at_23.47.54_n0wnne.png)](https://anamapp.my.id)
 
 ## Fitur dan komponen
 

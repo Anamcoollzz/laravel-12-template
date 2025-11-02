@@ -19,7 +19,7 @@ class SettingSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        DB::table('settings')->truncate();
+        Setting::truncate();
         if (config('stisla.use_setting') === '1') {
             $settings = config('stisla.settings');
         } else {

@@ -1,6 +1,5 @@
-Laravel 12 Template With Stisla
+Free Starter Kit Laravel 12 Admin Template menggunakan stisla admin dashboard
 
-Free Starter Laravel 12 Template menggunakan stisla admin dashboard
 Beberapa fitur atau komponen yang ada
 
 -   Login social media (github, facebook, google, dan twitter) menggunakan library socialite
@@ -16,6 +15,10 @@ Beberapa fitur atau komponen yang ada
     -   Import
     -   Server side data table
     -   Ajax Method
+-   Modul Pendidikan >> Mahasiswa, Alumni, Fakultas, Program Studi, Pimpinan Fakultas, Ormawa, Pekerjaan (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
+    -   CRUD
+    -   Export
+    -   Import
 -   Modul Bank, Deposito, Riwayat Deposito (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
     -   CRUD
     -   Export
@@ -64,8 +67,8 @@ Terima kasih, bisa distar ataupun difork ya guys. Kalau ada request module atau 
 
 Web Pribadi https://anamapp.my.id
 
-https://github.com/Anamcoollzz/laravel-12-template
+Youtube Channel https://www.youtube.com/channel/UCwF-njZKFE30pZwWFtp84fA
 
-https://www.youtube.com/channel/UCwF-njZKFE30pZwWFtp84fA
+Link Repository https://github.com/Anamcoollzz/laravel-12-template
 
 php artisan make:module Faculty --columns=name --icon="fa fa-university" --title="Fakultas"

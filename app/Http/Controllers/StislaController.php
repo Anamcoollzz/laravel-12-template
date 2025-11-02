@@ -215,7 +215,6 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function defaultMiddleware($moduleName = null, ?array $only = [])
     {
-        return;
         if (empty($moduleName)) {
             return;
         }
