@@ -50,15 +50,15 @@ class DatabaseSeeder extends Seeder
     private function normal()
     {
         ini_set('memory_limit', '-1');
-        $this->call(RegionSeeder::class);
+        // $this->call(RegionSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(RolePermissionSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(MenuSeeder::class);
-        $this->call(NotificationSeeder::class);
-        $this->call(CrudExampleSeeder::class);
-        $this->call(WorkSeeder::class);
-        $this->call(FacultySeeder::class);
-        $this->call(BankSeeder::class);
+        // $this->call(NotificationSeeder::class);
+        // $this->call(CrudExampleSeeder::class);
+        // $this->call(WorkSeeder::class);
+        // $this->call(FacultySeeder::class);
+        // $this->call(BankSeeder::class);
     }
 }

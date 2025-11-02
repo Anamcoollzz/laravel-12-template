@@ -45,6 +45,27 @@ return [
                     'is_mockup' => true
                 ],
                 [
+                    'menu_name' => 'Kategori 1',
+                    'route_name' => 'chats.index',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Kategori 1',
+                    'is_active_if_url_includes' => 'chats*',
+                ],
+                [
+                    'menu_name' => 'Kategori 2',
+                    'route_name' => 'chats.index',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Kategori 2',
+                    'is_active_if_url_includes' => 'chats*',
+                ],
+                [
+                    'menu_name' => 'Kategori 3',
+                    'route_name' => 'chats.index',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Kategori 3',
+                    'is_active_if_url_includes' => 'chats*',
+                ],
+                [
                     'menu_name' => 'Bank',
                     'route_name' => null,
                     'icon' => 'fas fa-university',

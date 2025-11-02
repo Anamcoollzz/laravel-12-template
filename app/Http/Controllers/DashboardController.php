@@ -262,6 +262,7 @@ class DashboardController extends StislaController
      */
     public function home()
     {
+        return view('welcome-chat');
         return view('stisla.homes.index', [
             'title' => __('Selamat datang di ') . SettingRepository::applicationName(),
         ]);

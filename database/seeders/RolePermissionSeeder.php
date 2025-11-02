@@ -32,6 +32,7 @@ class RolePermissionSeeder extends Seeder
         Permission::truncate();
 
         $roles = config('stisla.roles');
+        $roles = config('stisla-chat.roles');
         $rolesData = [];
         foreach ($roles as $role) {
             // $roleObj = Role::create([
@@ -99,7 +100,8 @@ class RolePermissionSeeder extends Seeder
     {
 
         // default permissions
-        $permissions = $permissions ? $permissions : config('stisla.permissions');
+        // $permissions = $permissions ? $permissions : config('stisla.permissions');
+        $permissions = $permissions ? $permissions : config('stisla-chat.permissions');
         foreach ($permissions as $permission) {
             if (!in_array($permission['group'], $this->groupNames)) {
                 $this->groupNames[] = $permission['group'];
@@ -129,6 +131,7 @@ class RolePermissionSeeder extends Seeder
 
     private function perModule()
     {
+        return;
         $files = File::allFiles(base_path('config'));
         foreach ($files as $file) {
             if (

@@ -10,6 +10,7 @@
 {{-- {{ dd($_stisla_sidebar_mini) }} --}}
 
 <body class="{{ $_stisla_sidebar_mini == 1 ? 'sidebar-mini' : '' }}">
+  <input type="hidden" id="stisla_asset" value="{{ asset('stisla') }}">
   <div id="app">
     <div class="main-wrapper">
       @include('stisla.includes.others.navbar')

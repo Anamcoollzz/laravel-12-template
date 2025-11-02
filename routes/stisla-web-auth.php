@@ -5,6 +5,7 @@ use App\Http\Controllers\BackupDatabaseController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankDepositController;
 use App\Http\Controllers\BankDepositHistoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CrudExampleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropboxController;
@@ -327,3 +328,16 @@ Route::delete('dropboxs', [DropboxController::class, 'destroy'])->name('dropboxs
 # RESET
 Route::get('reset', [SettingController::class, 'reset'])->name('reset');
 Route::get('reset2', [SettingController::class, 'reset2'])->name('reset2');
+
+# CHATS
+Route::get('yajra-chats', [ChatController::class, 'index'])->name('chats.index-yajra');
+Route::get('yajra-chats/ajax', [ChatController::class, 'yajraAjax'])->name('chats.ajax-yajra');
+Route::get('ajax-chats', [ChatController::class, 'index'])->name('chats.index-ajax');
+Route::get('yajra-ajax-chats', [ChatController::class, 'index'])->name('chats.index-ajax-yajra');
+Route::get('chats/pdf', [ChatController::class, 'exportPdf'])->name('chats.pdf');
+Route::get('chats/csv', [ChatController::class, 'exportCsv'])->name('chats.csv');
+Route::get('chats/excel', [ChatController::class, 'exportExcel'])->name('chats.excel');
+Route::get('chats/json', [ChatController::class, 'exportJson'])->name('chats.json');
+Route::get('chats/import-excel-example', [ChatController::class, 'importExcelExample'])->name('chats.import-excel-example');
+Route::post('chats/import-excel', [ChatController::class, 'importExcel'])->name('chats.import-excel');
+Route::resource('chats', ChatController::class);
