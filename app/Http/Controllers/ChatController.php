@@ -213,7 +213,7 @@ class ChatController extends StislaController
                 'category'     => $request->category,
                 'file_path'    => $file,
             ]);
-            User::where('id', $request->to_user_id)->update(['last_seen_at' => now()]);
+            // User::where('id', $request->to_user_id)->update(['last_seen_at' => now()]);
         } else {
             $store = ChatMessage::create([
                 'from_user_id' => auth_user()->id,
