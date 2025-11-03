@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
     'menus' => [
         [
             'group_name' => 'Navigasi',

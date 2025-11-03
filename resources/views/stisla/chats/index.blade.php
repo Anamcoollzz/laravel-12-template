@@ -194,6 +194,8 @@
 
 @push('js')
   <!-- Page Specific JS File -->
+  <script src="{{ config('stisla.chat_base_url') }}/socket.io/socket.io.js"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script> --}}
   <script src="{{ url('stisla') }}/assets/js/page/components-chat-box.js?id=1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
 @endpush
@@ -204,8 +206,10 @@
       el: '#app-chat',
       data: {
         userLoggedInId: {{ auth_user()->id }},
+        roomId: '{{ $roomId }}',
         avatar: '{{ url('stisla') }}/assets/img/avatar/avatar-1.png',
         users: @json($users),
+        socket: null,
         user: null,
         message: '',
         messages: [{
@@ -262,9 +266,14 @@
                 'X-Requested-With': 'XMLHttpRequest'
               }
             }).then(function(response) {
+
+              //   console.log(response.data);
+              self.socket.emit('sendMessage', {
+                roomId: self.roomId,
+                content: self.message,
+              });
               self.message = '';
-              console.log(response.data);
-              self.fetchList();
+              //   self.fetchList();
             });
           }
         },
@@ -281,12 +290,14 @@
             }
           }).then(function(response) {
             if (response.data.status === 'success') {
-              console.log(response.data.data);
+              //   console.log(response.data.data);
               if (self.message.length != response.data.data.length) {
                 self.messages = response.data.data;
                 // scroll to bottom
-                var chatContent = document.querySelector('.chat-content');
-                chatContent.scrollTop = chatContent.scrollHeight;
+                setTimeout(() => {
+                  var chatContent = document.querySelector('.chat-content');
+                  chatContent.scrollTop = chatContent.scrollHeight;
+                }, 2000);
                 // process response.data.data
               } else if (response.data.data.length === 0) {
                 self.messages = [];
@@ -298,27 +309,74 @@
           if (user.id === this.user.id) return;
           this.user = user;
           this.messages = [];
-          this.fetchList();
+          this.getRoomId().then((roomId) => {
+            this.roomId = roomId;
+            this.fetchList();
+          });
+        },
+        getRoomId: function(cb) {
+          let self = this;
+          return axios.get('{{ url('chats/get-room-id') }}', {
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            params: {
+              to_user_id: self.user.id
+            }
+          }).then(function(response) {
+            if (response.data.success) {
+              self.roomId = response.data.roomId;
+              self.socket.emit('leaveRoom', self.roomId);
+              console.log('Joining room', response.data.roomId);
+              self.socket.emit('joinRoom', response.data.roomId);
+              return Promise.resolve(response.data.roomId)
+            }
+          });
         }
       },
       mounted: function() {
         @if ($_is_superadmin)
           if (this.users.length > 0) {
             this.user = this.users[0];
-            this.fetchList();
-            setInterval(() => {
+            this.getRoomId().then((roomId) => {
+              //   this.roomId = roomId;
               this.fetchList();
-            }, 5000)
+            });
+            // this.fetchList();
+            // setInterval(() => {
+            //   this.fetchList();
+            // }, 5000)
           }
         @else
           this.user = {
             name: 'Admin'
           }
           this.fetchList();
-          setInterval(() => {
-            this.fetchList();
-          }, 5000)
+          //   setInterval(() => {
+          //     this.fetchList();
+          //   }, 5000)
         @endif
+
+        this.socket = io('{{ config('stisla.chat_base_url') }}', {
+          auth: {
+            // token: window.token
+          }
+        });
+        // var hash = md5.create();
+        console.log('roomId', this.roomId);
+        this.socket.on('connect', () => {
+          if (this.roomId)
+            this.socket.emit('joinRoom', this.roomId);
+        });
+
+        this.socket.on('message', (m) => {
+          if (m.roomId === this.roomId) {
+            console.log('message added', m);
+            this.fetchList()
+          };
+        });
       }
     });
   </script>

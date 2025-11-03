@@ -340,4 +340,5 @@ Route::get('chats/excel', [ChatController::class, 'exportExcel'])->name('chats.e
 Route::get('chats/json', [ChatController::class, 'exportJson'])->name('chats.json');
 Route::get('chats/import-excel-example', [ChatController::class, 'importExcelExample'])->name('chats.import-excel-example');
 Route::post('chats/import-excel', [ChatController::class, 'importExcel'])->name('chats.import-excel');
+Route::get('chats/get-room-id', [ChatController::class, 'getRoomId'])->name('chats.get-room-id');
 Route::resource('chats', ChatController::class);

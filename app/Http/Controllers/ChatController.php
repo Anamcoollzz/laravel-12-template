@@ -127,11 +127,18 @@ class ChatController extends StislaController
                 ];
             }
         }
+        // if ($isSuperAdmin) {
+        //     $roomId = md5(auth_user()->id);
+        // } else {
+        //     $roomId = md5('admin_chat_room');
+        // }
+        $roomId = md5('1_' . auth_user()->id);
         $users = $isSuperAdmin ? User::select(['id', 'name'])->role('user')->get() : [];
         return view('stisla.chats.index', [
             'title' => 'Chat',
             'users' => $users,
             '_is_superadmin' => $isSuperAdmin ?? 0,
+            'roomId' => $isSuperAdmin ? null : $roomId,
         ]);
         return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
     }
@@ -249,5 +256,20 @@ class ChatController extends StislaController
         // return response()->download($filepath);
 
         return $this->executeImportExcelExample();
+    }
+
+    public function getRoomId(Request $request)
+    {
+        if (auth_user()->hasRole('superadmin')) {
+            $roomId = md5('1_' . $request->to_user_id);
+            return response()->json([
+                'success' => true,
+                'roomId'  => $roomId,
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'roomId'  => null,
+        ]);
     }
 }
