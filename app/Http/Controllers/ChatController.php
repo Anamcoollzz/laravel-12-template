@@ -93,36 +93,46 @@ class ChatController extends StislaController
      * showing data page
      *
      * @param Request $request
+     * @param string|null $category
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $category = null)
     {
         $isSuperAdmin = auth_user()->hasRole('superadmin');
         if ($request->ajax()) {
+            $category = $request->category ?? null;
             if ($isSuperAdmin) {
                 return [
                     'status' => 'success',
-                    'data' => ChatMessage::where(function ($query) use ($request) {
-                        $query->where('from_user_id', 1)
-                            ->where('to_user_id', $request->to_user_id);
-                    })
-                        ->orWhere(function ($query) use ($request) {
-                            $query->where('from_user_id', $request->to_user_id)
-                                ->where('to_user_id', 1);
+                    'data' => ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
+                        ->where(function ($query) use ($request) {
+                            $query->where(function ($query) use ($request) {
+                                $query->where('from_user_id', 1)
+                                    ->where('to_user_id', $request->to_user_id);
+                            })
+                                ->orWhere(function ($query) use ($request) {
+                                    $query->where('from_user_id', $request->to_user_id)
+                                        ->where('to_user_id', 1);
+                                });
                         })
+                        ->where('category', $category)
                         ->get(),
                 ];
             } else {
                 return [
                     'status' => 'success',
-                    'data' => ChatMessage::where(function ($query) use ($request) {
-                        $query->where('from_user_id', auth_user()->id)
-                            ->where('to_user_id', 1);
-                    })
-                        ->orWhere(function ($query) use ($request) {
-                            $query->where('from_user_id', 1)
-                                ->where('to_user_id', auth_user()->id);
+                    'data' => ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
+                        ->where(function ($query) use ($request) {
+                            $query->where(function ($query) use ($request) {
+                                $query->where('from_user_id', auth_user()->id)
+                                    ->where('to_user_id', 1);
+                            })
+                                ->orWhere(function ($query) use ($request) {
+                                    $query->where('from_user_id', 1)
+                                        ->where('to_user_id', auth_user()->id);
+                                });
                         })
+                        ->where('category', $category)
                         ->get(),
                 ];
             }
@@ -133,14 +143,25 @@ class ChatController extends StislaController
         //     $roomId = md5('admin_chat_room');
         // }
         $roomId = md5('1_' . auth_user()->id);
-        $users = $isSuperAdmin ? User::select(['id', 'name'])->role('user')->get() : [];
+        $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->get() : [];
+        // return $users;
         return view('stisla.chats.index', [
-            'title' => 'Chat',
-            'users' => $users,
+            'title'          => 'Chat',
+            'users'          => $users,
             '_is_superadmin' => $isSuperAdmin ?? 0,
-            'roomId' => $isSuperAdmin ? null : $roomId,
+            'roomId'         => $isSuperAdmin ? null : $roomId,
+            'category'       => $category
         ]);
         return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
+    }
+
+    public function users(Request $request)
+    {
+        $users = User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->get();
+        return response()->json([
+            'status' => 'success',
+            'data'   => $users,
+        ]);
     }
 
     /**
@@ -180,18 +201,29 @@ class ChatController extends StislaController
     public function store(Request $request)
     {
         $isSuperAdmin = auth_user()->hasRole('superadmin');
-        if ($isSuperAdmin)
+        $file = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file')->store('public/chat-files');
+        }
+        if ($isSuperAdmin) {
             $store = ChatMessage::create([
                 'from_user_id' => auth_user()->id,
-                'to_user_id'   => $request->to_user_id, // for demo purpose, send to user id 1
+                'to_user_id'   => $request->to_user_id,
                 'message'      => $request->message,
+                'category'     => $request->category,
+                'file_path'    => $file,
             ]);
-        else
+            User::where('id', $request->to_user_id)->update(['last_seen_at' => now()]);
+        } else {
             $store = ChatMessage::create([
                 'from_user_id' => auth_user()->id,
-                'to_user_id'   => 1, // for demo purpose, send to user id 1
+                'to_user_id'   => 1,
                 'message'      => $request->message,
+                'category'     => $request->category,
+                'file_path'    => $file,
             ]);
+            User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
+        }
         return ['status' => 'success', 'data' => $store];
         return $this->executeStore($request, withUser: true);
     }

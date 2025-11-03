@@ -32,6 +32,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(1);
             $table->string('blocked_reason')->nullable();
             $table->dateTime('deleted_at')->nullable();
+            $table->dateTime('last_seen_at')->nullable();
+            $table->boolean('is_anonymous')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();

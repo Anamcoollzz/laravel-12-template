@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
         User::truncate();
 
         $users = config('stisla.users');
+        $users = config('stisla-chat.users');
         foreach ($users as $user) {
             $userObj = User::create([
                 'name'                 => $user['name'],
@@ -41,6 +42,26 @@ class UserSeeder extends Seeder
             foreach ($user['roles'] as $role)
                 if (in_array($role, $rolesArray))
                     $userObj->assignRole($role);
+        }
+
+        $password = bcrypt('12345');
+        foreach (range(1, 50) as $index) {
+            $userObj = User::create([
+                'name'                 => $name = fake()->name(),
+                'email'                => fake()->unique()->safeEmail(),
+                'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
+                'password'             => $password,
+                'is_locked'            => $user['is_locked'] ?? 0,
+                'phone_number'         => fake()->optional()->phoneNumber(),
+                'birth_date'           => fake()->optional()->date('Y-m-d'),
+                'address'              => fake()->address(),
+                'last_password_change' => date('Y-m-d H:i:s'),
+                'created_by_id'        => 1,
+                'last_updated_by_id'   => null,
+                'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                'is_anonymous'         => fake()->randomElement([0, 1]),
+            ]);
+            $userObj->assignRole('user');
         }
     }
 }

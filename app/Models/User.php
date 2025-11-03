@@ -42,7 +42,9 @@ class User extends Authenticatable implements JWTSubject
         'last_updated_by_id',
         'blocked_reason',
         'deleted_at',
-        'deleted_by_id'
+        'deleted_by_id',
+        'last_seen_at',
+        'is_anonymous',
     ];
 
     /**
@@ -64,6 +66,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen_at'      => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -74,8 +77,27 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $appends = [
-        'avatar_url'
+        'avatar_url',
+        'is_online',
     ];
+
+    public function getNameAttribute($value)
+    {
+        if ($this->is_anonymous) {
+            return 'Anonymous';
+        }
+        return $value;
+    }
+
+    /**
+     * add custom column is online
+     *
+     * @return bool
+     */
+    public function getIsOnlineAttribute(): bool
+    {
+        return $this->last_seen_at ? $this->last_seen_at->isAfter(now()->subMinutes(5)) : false;
+    }
 
     /**
      * add custom column avatar url
@@ -85,13 +107,14 @@ class User extends Authenticatable implements JWTSubject
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar) {
-            if (Storage::exists('public/avatars/' . $this->avatar)) {
-                return asset('storage/avatars/' . $this->avatar);
-            }
             if (StringHelper::isUrl($this->avatar)) {
                 return $this->avatar;
             }
+            if (Storage::exists('public/avatars/' . $this->avatar)) {
+                return asset('storage/avatars/' . $this->avatar);
+            }
         }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random&size=128';
         return null;
     }
 

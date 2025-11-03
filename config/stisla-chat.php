@@ -165,17 +165,17 @@ return [
         // ],
 
         [
-            'name' => 'Kategori 1',
+            'name' => 'Curhat',
             'roles' => ['superadmin', 'user'],
             'group' => 'Chatting'
         ],
         [
-            'name' => 'Kategori 2',
+            'name' => 'Keluhan Penyakit',
             'roles' => ['superadmin', 'user'],
             'group' => 'Chatting'
         ],
         [
-            'name' => 'Kategori 3',
+            'name' => 'Pertanyaan Lainnya',
             'roles' => ['superadmin', 'user'],
             'group' => 'Chatting'
         ],
@@ -573,5 +573,242 @@ return [
         'superadmin',
         'admin',
         'user',
+    ],
+    'users' => [
+        [
+            'name'              => 'Hairul Anam Superadmin',
+            'email'             => 'superadmin@aidssupportmajalengka.com',
+            'password'          => 'superadmin',
+            'roles'             => ['superadmin'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'is_locked'         => 1,
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Majalengka'
+        ],
+        [
+            'name'              => 'Hairul Anam Admin',
+            'email'             => 'admin@aidssupportmajalengka.com',
+            'password'          => 'admin',
+            'roles'             => ['admin'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Majalengka'
+        ],
+        [
+            'name'              => 'Hairul Anam User',
+            'email'             => 'user@aidssupportmajalengka.com',
+            'password'          => 'user',
+            'roles'             => ['user'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Majalengka'
+        ],
+        [
+            'name'              => 'Ahfa User',
+            'email'             => 'ahfauser@aidssupportmajalengka.com',
+            'password'          => 'user',
+            'roles'             => ['user'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Majalengka'
+        ]
+    ],
+    'settings' => [
+        ['key' => 'application_name', 'value' => 'AIDS App Chat'],
+        ['key' => 'application_version', 'value' => '1.0.0'],
+        ['key' => 'app_description', 'value' => 'Aplikasi ini dibuat untuk mempermudah komunikasi, konsultasi, dan koordinasi antara masyarakat, tenaga kesehatan, serta tim penanggulangan AIDS di Kabupaten Majalengka. Mari bersama kita wujudkan lingkungan yang lebih sehat, peduli, dan bebas stigma terhadap HIV & AIDS.'],
+        ['key' => 'city', 'value' => 'Majalengka'],
+        ['key' => 'company_name', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
+        ['key' => 'country', 'value' => 'Indonesia'],
+        [
+            'key' => 'favicon',
+            'value' => 'assets/icons/favicon.ico',
+            'is_url' => true
+        ],
+        ['key' => 'logo', 'value' => 'assets/images/aids.jpeg', 'is_url' => true],
+        ['key' => 'since', 'value' => '2021'],
+
+        [
+            'key' => 'meta_author',
+            'value' => 'Hairul Anam'
+        ],
+        ['key' => 'meta_description', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
+        [
+            'key' => 'meta_keywords',
+            'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
+        ],
+
+        [
+            'key' => 'stisla_bg_home',
+            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            'is_url' => true
+        ],
+        [
+            'key' => 'stisla_bg_login',
+            'value' => 'assets/images/aids2.png',
+            'is_url' => true
+        ],
+        ['key' => 'stisla_sidebar_mini', 'value' => '0'],
+        ['key' => 'stisla_login_template', 'value' => 'default'],
+        ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'debugbar', 'value' => 1],
+
+        ['key' => 'mail_provider', 'value' => 'mailtrap'],
+        ['key' => 'mail_from_address', 'value' => 'anamkun@aidssupportmajalengka.com'],
+        ['key' => 'mail_from_name', 'value' => 'Superadmin'],
+
+        ['key' => 'mail_mailtrap_host', 'value' => 'sandbox.smtp.mailtrap.io'],
+        ['key' => 'mail_mailtrap_port', 'value' => '2525'],
+        ['key' => 'mail_mailtrap_username', 'value' => '10c9ffc0387d2a'],
+        ['key' => 'mail_mailtrap_password', 'value' => '11fd65a07d9f25'],
+        ['key' => 'mail_mailtrap_encryption', 'value' => 'tls'],
+
+        ['key' => 'mail_host', 'value' => 'smtp'],
+        ['key' => 'mail_port', 'value' => '2525'],
+        ['key' => 'mail_username', 'value' => '809d58dfa23ade'],
+        ['key' => 'mail_password', 'value' => 'e9d1aa54a61db1'],
+        ['key' => 'mail_encryption', 'value' => 'tls'],
+
+        ['key' => 'mail_mailgun_domain', 'value' => 'test'],
+        ['key' => 'mail_mailgun_api_key', 'value' => 'test'],
+
+        ['key' => 'is_login_must_verified', 'value' => '1'],
+        ['key' => 'is_active_register_page', 'value' => '1'],
+
+        ['key' => 'is_forgot_password_send_to_email', 'value' => '1'],
+        ['key' => 'google_captcha_site_key', 'value' => 'default_site_key'],
+        ['key' => 'google_captcha_secret', 'value' => 'default_secret'],
+        ['key' => 'is_google_captcha_login', 'value' => '1'],
+        ['key' => 'is_google_captcha_register', 'value' => '1'],
+        ['key' => 'is_google_captcha_forgot_password', 'value' => '1'],
+        ['key' => 'is_google_captcha_reset_password', 'value' => '1'],
+
+        ['key' => 'is_login_with_google', 'value' => '1'],
+        ['key' => 'is_login_with_facebook', 'value' => '1'],
+        ['key' => 'is_login_with_twitter', 'value' => '1'],
+        ['key' => 'is_login_with_github', 'value' => '1'],
+
+        ['key' => 'is_register_with_google', 'value' => '1'],
+        ['key' => 'is_register_with_facebook', 'value' => '1'],
+        ['key' => 'is_register_with_twitter', 'value' => '1'],
+        ['key' => 'is_register_with_github', 'value' => '1'],
+
+        ['key' => 'sso_google_client_id', 'value' => '-'],
+        ['key' => 'sso_google_client_secret', 'value' => '-'],
+        ['key' => 'sso_google_redirect', 'value' => '/auth/social/google/callback', 'is_url' => true],
+
+        ['key' => 'sso_facebook_client_id', 'value' => '-'],
+        ['key' => 'sso_facebook_client_secret', 'value' => '-'],
+        ['key' => 'sso_facebook_redirect', 'value' => '/auth/social/facebook/callback', 'is_url' => true],
+
+        ['key' => 'sso_twitter_client_id', 'value' => '-'],
+        ['key' => 'sso_twitter_client_secret', 'value' => '-'],
+        ['key' => 'sso_twitter_redirect', 'value' => '/auth/social/twitter/callback', 'is_url' => true],
+
+        ['key' => 'sso_github_client_id', 'value' => '-'],
+        ['key' => 'sso_github_client_secret', 'value' => '-'],
+        ['key' => 'sso_github_redirect', 'value' => '/auth/social/github/callback', 'is_url' => true]
+    ],
+
+    'settings2' => [
+        ['key' => 'application_name', 'value' => 'AIDS App Chat'],
+        ['key' => 'application_version', 'value' => '1.0.0'],
+        ['key' => 'app_description', 'value' => 'Aplikasi ini dibuat untuk mempermudah komunikasi, konsultasi, dan koordinasi antara masyarakat, tenaga kesehatan, serta tim penanggulangan AIDS di Kabupaten Majalengka. Mari bersama kita wujudkan lingkungan yang lebih sehat, peduli, dan bebas stigma terhadap HIV & AIDS.'],
+        ['key' => 'city', 'value' => 'Majalengka'],
+        ['key' => 'company_name', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
+        ['key' => 'country', 'value' => 'Indonesia'],
+        ['key' => 'app_is_demo', 'value' => '0'],
+        [
+            'key' => 'favicon',
+            'value' => 'assets/icons/favicon.ico',
+            'is_url' => true
+        ],
+        ['key' => 'logo', 'value' => 'assets/images/aids.jpeg', 'is_url' => true],
+        ['key' => 'since', 'value' => '2021'],
+
+        [
+            'key' => 'meta_author',
+            'value' => 'Hairul Anam'
+        ],
+        ['key' => 'meta_description', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
+        [
+            'key' => 'meta_keywords',
+            'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
+        ],
+
+        [
+            'key' => 'stisla_bg_home',
+            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            'is_url' => true
+        ],
+        [
+            'key' => 'stisla_bg_login',
+            'value' => 'assets/images/aids2.png',
+            'is_url' => true
+        ],
+        ['key' => 'stisla_sidebar_mini', 'value' => '0'],
+        ['key' => 'stisla_login_template', 'value' => 'default'],
+        ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'debugbar', 'value' => 2],
+
+        ['key' => 'mail_provider', 'value' => 'mailtrap'],
+        ['key' => 'mail_from_address', 'value' => 'anamkun@aidssupportmajalengka.com'],
+        ['key' => 'mail_from_name', 'value' => 'Superadmin'],
+
+        ['key' => 'mail_mailtrap_host', 'value' => 'sandbox.smtp.mailtrap.io'],
+        ['key' => 'mail_mailtrap_port', 'value' => '2525'],
+        ['key' => 'mail_mailtrap_username', 'value' => '10c9ffc0387d2a'],
+        ['key' => 'mail_mailtrap_password', 'value' => '11fd65a07d9f25'],
+        ['key' => 'mail_mailtrap_encryption', 'value' => 'tls'],
+
+        ['key' => 'mail_host', 'value' => 'smtp'],
+        ['key' => 'mail_port', 'value' => '2525'],
+        ['key' => 'mail_username', 'value' => '809d58dfa23ade'],
+        ['key' => 'mail_password', 'value' => 'e9d1aa54a61db1'],
+        ['key' => 'mail_encryption', 'value' => 'tls'],
+
+        ['key' => 'mail_mailgun_domain', 'value' => 'test'],
+        ['key' => 'mail_mailgun_api_key', 'value' => 'test'],
+
+        ['key' => 'is_login_must_verified', 'value' => '0'],
+        ['key' => 'is_active_register_page', 'value' => '0'],
+
+        ['key' => 'is_forgot_password_send_to_email', 'value' => '0'],
+        ['key' => 'google_captcha_site_key', 'value' => 'default_site_key'],
+        ['key' => 'google_captcha_secret', 'value' => 'default_secret'],
+        ['key' => 'is_google_captcha_login', 'value' => '0'],
+        ['key' => 'is_google_captcha_register', 'value' => '0'],
+        ['key' => 'is_google_captcha_forgot_password', 'value' => '0'],
+        ['key' => 'is_google_captcha_reset_password', 'value' => '0'],
+
+        ['key' => 'is_login_with_google', 'value' => '0'],
+        ['key' => 'is_login_with_facebook', 'value' => '0'],
+        ['key' => 'is_login_with_twitter', 'value' => '0'],
+        ['key' => 'is_login_with_github', 'value' => '0'],
+
+        ['key' => 'is_register_with_google', 'value' => '0'],
+        ['key' => 'is_register_with_facebook', 'value' => '0'],
+        ['key' => 'is_register_with_twitter', 'value' => '0'],
+        ['key' => 'is_register_with_github', 'value' => '0'],
+
+        ['key' => 'sso_google_client_id', 'value' => '-'],
+        ['key' => 'sso_google_client_secret', 'value' => '-'],
+        ['key' => 'sso_google_redirect', 'value' => '/auth/social/google/callback', 'is_url' => true],
+
+        ['key' => 'sso_facebook_client_id', 'value' => '-'],
+        ['key' => 'sso_facebook_client_secret', 'value' => '-'],
+        ['key' => 'sso_facebook_redirect', 'value' => '/auth/social/facebook/callback', 'is_url' => true],
+
+        ['key' => 'sso_twitter_client_id', 'value' => '-'],
+        ['key' => 'sso_twitter_client_secret', 'value' => '-'],
+        ['key' => 'sso_twitter_redirect', 'value' => '/auth/social/twitter/callback', 'is_url' => true],
+
+        ['key' => 'sso_github_client_id', 'value' => '-'],
+        ['key' => 'sso_github_client_secret', 'value' => '-'],
+        ['key' => 'sso_github_redirect', 'value' => '/auth/social/github/callback', 'is_url' => true]
     ],
 ];

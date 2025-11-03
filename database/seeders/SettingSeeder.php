@@ -25,7 +25,7 @@ class SettingSeeder extends Seeder
         } else {
             $settings = config('stisla.settings2');
         }
-        // $settings = config('stisla.settings2');
+        $settings = config('stisla-chat.settings2');
 
         $encrypts = SettingRepository::getEncryptedKeys();
         foreach ($settings as $setting) {

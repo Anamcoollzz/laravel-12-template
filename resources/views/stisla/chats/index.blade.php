@@ -76,24 +76,29 @@
 
 
   <div class="section-body" id="app-chat">
-    <h2 class="section-title">Chat Boxes</h2>
-    <p class="section-lead">The chat component and is equipped with a JavaScript API, making it easy for you to integrate with Back-end.</p>
+    <h2 class="section-title">Chating Yuk</h2>
+    <p class="section-lead">Menampilkan percakapan yang sedang berlangsung.</p>
 
     <div class="row align-items-center justify-content-center">
       @if ($_is_superadmin)
-        <div class="col-12 col-sm-6 col-lg-4">
+        <div class="col-12 col-sm-6 col-lg-3">
           <div class="card">
-            <div class="card-header">
-              <h4>Who's Online?</h4>
-            </div>
+            @verbatim
+              <div class="card-header">
+                <h4>Pengguna ({{ users . length }})</h4>
+              </div>
+            @endverbatim
             <div class="card-body">
               @verbatim
-                <ul class="list-unstyled list-unstyled-border">
+                <ul class="list-unstyled list-unstyled-border" style="max-height: 400px; overflow: auto;">
                   <li class="media" v-for="user1 in users" :key="user1.id" style="cursor: pointer;" v-on:click="changeUser(user1)">
-                    <img alt="image" class="mr-3 rounded-circle" width="50" :src="avatar">
+                    <img alt="image" class="mr-3 rounded-circle" width="50" :src="(user1 && user1.avatar_url) || avatar">
                     <div class="media-body">
                       <div class="mt-0 mb-1 font-weight-bold">{{ user1 . name }}</div>
-                      <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i> Online</div>
+                      <div :class="user1.is_online ? 'text-success text-small font-600-bold' : 'text-danger text-small font-600-bold'">
+                        <i class="fas fa-circle"></i>
+                        {{ user1 . is_online ? 'Online' : 'Offline' }}
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -133,24 +138,30 @@
         </div>
       @endif
 
-      <div class="col-12 @if ($_is_superadmin) col-lg-8 @endif">
+      <div class="col-12 @if ($_is_superadmin) col-lg-9 @endif">
         @verbatim
           <div class="card chat-box" id="mychatboxVue">
             <div class="card-header">
-              <h4>Chat with {{ user && user . name }}</h4>
+              <h4>Chat dengan {{ user && user . name }}</h4>
             </div>
-            <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none">
+            <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none; height: 400px;">
               <template v-for="chat in messages">
                 <div v-if="chat.typing" :key="chat.id" :class="chat.side === 'left' ? 'chat-item chat-left chat-typing' : 'chat-item chat-right chat-typing'" style="">
-                  <img :src="chat.avatar" />
+                  <img :src="avatar" />
                   <div class="chat-details">
                     <div class="chat-text"></div>
                   </div>
                 </div>
                 <div v-else :key="chat.id" :class="chat.side === 'left' ? 'chat-item chat-left' : 'chat-item chat-right'" style="">
-                  <img :src="chat.avatar" />
+                  <img :src="chat.side === 'left' ? (!isSuperAdmin ? avatar : user.avatar_url) : (chat.avatar || avatar)" />
                   <div class="chat-details">
-                    <div class="chat-text">{{ chat . message }}</div>
+                    <div class="chat-text" v-if="chat.file_path">
+                      <a :class="{ 'text-white': chat.side === 'right' }" :href="chat.file_url" target="_blank">
+                        <i class="fa fa-paperclip"></i>
+                        Lihat File
+                      </a>
+                    </div>
+                    <div class="chat-text" v-else>{{ chat . message }}</div>
                     <div class="chat-time">{{ chat . time }}</div>
                   </div>
                 </div>
@@ -159,11 +170,15 @@
             <div class="card-footer chat-form">
 
               <input id="message-chat" type="text" class="form-control" placeholder="Type a message" v-on:keyup.enter.prevent="onSendMessage" v-model="message">
+              <button class="btn btn-info" v-on:click.prevent="onAttachFile" style="right: 40px;">
+                <i class="fa fa-paperclip"></i>
+              </button>
               <button class="btn btn-primary" v-on:click.prevent="onSendMessage">
                 <i class="far fa-paper-plane"></i>
               </button>
 
             </div>
+            <input type="file" id="chat-file-input" style="display: none;" v-on:change="onFileSelected" accept="image/*" />
           </div>
         @endverbatim
       </div>
@@ -206,12 +221,14 @@
       el: '#app-chat',
       data: {
         userLoggedInId: {{ auth_user()->id }},
+        isSuperAdmin: {{ $_is_superadmin ? 'true' : 'false' }},
         roomId: '{{ $roomId }}',
         avatar: '{{ url('stisla') }}/assets/img/avatar/avatar-1.png',
         users: @json($users),
         socket: null,
         user: null,
         message: '',
+        category: '{{ $category ?? '' }}',
         messages: [{
             "side": "left",
             "avatar": "http://127.0.0.1:8000/stisla/assets/img/avatar/avatar-1.png",
@@ -258,7 +275,8 @@
             // this.message = '';
             axios.post('{{ url('chats') }}', {
               to_user_id: self.user.id, // for demo purpose, send to user id 1
-              message: this.message || $('#message-chat').val()
+              message: this.message || $('#message-chat').val(),
+              category: self.category
             }, {
               headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -266,7 +284,7 @@
                 'X-Requested-With': 'XMLHttpRequest'
               }
             }).then(function(response) {
-
+              self.getUsers();
               //   console.log(response.data);
               self.socket.emit('sendMessage', {
                 roomId: self.roomId,
@@ -286,7 +304,8 @@
               'X-Requested-With': 'XMLHttpRequest'
             },
             params: {
-              to_user_id: self.user.id
+              to_user_id: self.user.id,
+              category: self.category
             }
           }).then(function(response) {
             if (response.data.status === 'success') {
@@ -334,6 +353,50 @@
               return Promise.resolve(response.data.roomId)
             }
           });
+        },
+        getUsers: function() {
+          let self = this;
+          return axios.get('{{ url('chatting-yuk-users') }}', {
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          }).then(function(response) {
+            if (response.data.status === 'success') {
+              self.users = response.data.data;
+            }
+          });
+        },
+        onAttachFile: function() {
+          document.getElementById('chat-file-input').click();
+        },
+        onFileSelected: function(event) {
+          var self = this;
+          var file = event.target.files[0];
+          if (file) {
+            var formData = new FormData();
+            formData.append('to_user_id', self.user.id);
+            formData.append('category', self.category);
+            formData.append('file', file);
+
+            axios.post('{{ url('chats') }}', formData, {
+              headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'multipart/form-data',
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).then(function(response) {
+              if (response.data.status === 'success') {
+                self.getUsers();
+                self.socket.emit('sendMessage', {
+                  roomId: self.roomId,
+                  content: '[File] ' + response.data.file_name,
+                });
+                //   self.fetchList();
+              }
+            });
+          }
         }
       },
       mounted: function() {
@@ -375,6 +438,9 @@
           if (m.roomId === this.roomId) {
             console.log('message added', m);
             this.fetchList()
+            @if ($_is_superadmin)
+              this.getUsers()
+            @endif
           };
         });
       }
