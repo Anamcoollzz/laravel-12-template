@@ -67,6 +67,9 @@ class ChatMessage extends Model
 
     public function getTimeAttribute()
     {
+        if ($this->created_at->format('Y-m-d') !== now()->format('Y-m-d')) {
+            return $this->created_at->format('d M Y H:i:s');
+        }
         return $this->created_at->format('H:i:s');
     }
 
@@ -80,4 +83,8 @@ class ChatMessage extends Model
     {
         return $this->belongsTo(User::class, 'to_user_id');
     }
+
+    const CATEGORY_CURHAT = 'curhat';
+    const CATEGORY_KELUHAN_PENYAKIT = 'keluhan-penyakit';
+    const CATEGORY_PERTANYAAN_LAINNYA = 'pertanyaan-lainnya';
 }

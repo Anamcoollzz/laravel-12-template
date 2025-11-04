@@ -82,6 +82,7 @@ class ViewShare
             view()->share('_my_notifications', (new \App\Repositories\NotificationRepository)->myUnReadNotif(20));
 
             view()->share('_app_is_demo', config('app.is_demo'));
+            view()->share('_is_superadmin', auth_user() ? auth_user()->hasRole('superadmin') : false);
         }
         return $next($request);
     }

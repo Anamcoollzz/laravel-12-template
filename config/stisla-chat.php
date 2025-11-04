@@ -644,7 +644,8 @@ return [
 
         [
             'key' => 'stisla_bg_home',
-            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            // 'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            'value' => 'assets/images/aids2.png',
             'is_url' => true
         ],
         [
@@ -742,7 +743,8 @@ return [
 
         [
             'key' => 'stisla_bg_home',
-            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            // 'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            'value' => 'assets/images/aids2.png',
             'is_url' => true
         ],
         [

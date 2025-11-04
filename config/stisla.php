@@ -2,6 +2,7 @@
 
 return [
     'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
+    'app' => 'chat',
     'menus' => [
         [
             'group_name' => 'Navigasi',

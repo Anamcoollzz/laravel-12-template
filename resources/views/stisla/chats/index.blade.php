@@ -4,15 +4,23 @@
   $isAjaxYajra = $isAjaxYajra ?? false;
 @endphp
 
-@extends('stisla.layouts.app')
+@extends($_is_superadmin ? 'stisla.layouts.app' : 'stisla.layouts.app-top-nav')
 
 @section('title')
   {{ $title }}
 @endsection
 
 @section('content')
-  @include('stisla.includes.breadcrumbs.breadcrumb-table')
-  @include('stisla.includes.others.alert-password')
+  <div class="section-header">
+    <h1>{{ $title }}</h1>
+    <div class="section-header-breadcrumb">
+      <div class="breadcrumb-item active"><a href="{{ route('dashboard.index') }}">Dashboard</a></div>
+      <div class="breadcrumb-item"><a href="#">Chat</a></div>
+      <div class="breadcrumb-item">{{ ucwords(implode(' ', explode('-', $category))) }}</div>
+    </div>
+  </div>
+  {{-- @include('stisla.includes.breadcrumbs.breadcrumb-table')
+  @include('stisla.includes.others.alert-password') --}}
   {{-- <div class="section-body">
     <h2 class="section-title">{{ $title }}</h2>
     <p class="section-lead">{{ __('Menampilkan halaman ' . $title) }}.</p>

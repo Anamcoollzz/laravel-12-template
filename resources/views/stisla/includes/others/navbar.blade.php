@@ -142,91 +142,12 @@
                 </div>
             </div>
         </li> --}}
-    @if (auth_user()->can('Notifikasi'))
-      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{ $_my_notifications->count() ? 'beep' : '' }}"><i
-            class="far fa-bell"></i></a>
-        <div class="dropdown-menu dropdown-list dropdown-menu-right">
-          <div class="dropdown-header">
-            Notifikasi
-            @if ($_my_notifications->count())
-              <div class="float-right">
-                <a href="{{ route('notifications.read-all') }}">Tandai semua telah dibaca</a>
-              </div>
-            @endif
-          </div>
-          <div class="dropdown-list-content dropdown-list-icons">
-            @if ($_my_notifications->count())
-              @foreach ($_my_notifications as $_n)
-                <a href="{{ route('notifications.read', [$_n->id]) }}" class="dropdown-item">
-                  <div class="dropdown-item-icon bg-{{ $_n->bg_color ?? 'primary' }} text-white">
-                    <i class="fas fa-{{ $_n->icon ?? 'bell' }}"></i>
-                  </div>
-                  <div class="dropdown-item-desc">
-                    {{ $_n->content }}
-                    <div class="time text-primary">{{ time_since($_n->created_at) }}</div>
-                  </div>
-                </a>
-              @endforeach
-            @else
-              <a href="#" class="dropdown-item">
-                Tidak ada notifikasi
-              </a>
-            @endif
-          </div>
-          <div class="dropdown-footer text-center">
-            <a href="{{ route('notifications.index') }}" class="text-grey">Lihat Semua <i class="fas fa-chevron-right"></i></a>
-          </div>
-        </div>
-      </li>
-    @endif
+    @include('stisla.includes.navbar.notification')
 
     {{-- @if (!config('developer.no_developer'))
       <li><a href="{{ route('tentang-aplikasi') }}" class="nav-link nav-link-lg"><i class="fa fa-info-circle"></i></a>
     @endif --}}
 
-    @if (Auth::check())
-      <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-          @if (Auth::user()->avatar_url)
-            <img alt="{{ Auth::user()->name }}" src="{{ Auth::user()->avatar_url }}" class="rounded-circle mr-1">
-          @else
-            <figure class="avatar mr-2 bg-success text-white" data-initial="{{ \App\Helpers\StringHelper::acronym(Auth::user()->name, 2) }}"></figure>
-          @endif
-          <div class="d-sm-none d-lg-inline-block">{{ __('Hai') }}, {{ Auth::user()->name }}</div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <div class="dropdown-title">{{ __('Waktu masuk') }}
-            <br>{{ Auth::user()->last_login }}
-          </div>
-
-          @if (auth_user()->can('Profil'))
-            <a href="{{ route('profile.index') }}" class="dropdown-item has-icon">
-              <i class="far fa-user"></i> {{ __('Profil') }}
-            </a>
-          @endif
-
-          <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
-            <i class="fas fa-sign-out-alt"></i> Keluar
-          </a>
-        </div>
-      </li>
-    @else
-      <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-
-          <img alt="" src="" class="rounded-circle mr-1">
-          <div class="d-sm-none d-lg-inline-block">Hai, Guest</div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <div class="dropdown-title">Waktu masuk <br>senin 12:pm</div>
-          <a href="#" class="dropdown-item has-icon">
-            <i class="far fa-user"></i> Profil
-          </a>
-          <a href="#" class="dropdown-item has-icon text-danger">
-            <i class="fas fa-sign-out-alt"></i> Keluar
-          </a>
-        </div>
-      </li>
-    @endif
+    @include('stisla.includes.navbar.user-dropdown')
   </ul>
 </nav>

@@ -116,6 +116,7 @@ class ChatController extends StislaController
                                 });
                         })
                         ->where('category', $category)
+                        ->oldest('created_at')
                         ->get(),
                 ];
             } else {
@@ -132,6 +133,7 @@ class ChatController extends StislaController
                                         ->where('to_user_id', auth_user()->id);
                                 });
                         })
+                        ->oldest('created_at')
                         ->where('category', $category)
                         ->get(),
                 ];
