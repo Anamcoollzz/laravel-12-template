@@ -134,7 +134,7 @@ class DashboardController extends StislaController
                 'route' => route('faculties.index'),
                 'bg_color' => '#8b3f64ff'
             ];
-        if ($user->can('Pengguna'))
+        if ($user->can('Pengguna')) {
             $widgets[] = (object)[
                 'title' => 'Pengguna',
                 'count' => User::count(),
@@ -142,6 +142,49 @@ class DashboardController extends StislaController
                 'icon'  => 'users',
                 'route' => route('user-management.users.index'),
             ];
+            $widgets[] = (object)[
+                'title' => User::GENDER_MALE,
+                'count' => User::where('gender', User::GENDER_MALE)->role('user')->count(),
+                'bg'    => 'info',
+                'icon'  => 'mars',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => User::GENDER_FEMALE,
+                'count' => User::where('gender', User::GENDER_FEMALE)->role('user')->count(),
+                'bg'    => 'primary',
+                'icon'  => 'venus',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => 'Usia 10-18 Tahun',
+                'count' => User::age1018()->role('user')->count(),
+                'bg'    => 'warning',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => 'Usia 19-25 Tahun',
+                'count' => User::age1925()->role('user')->count(),
+                'bg'    => 'warning',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => 'Usia 26-50 Tahun',
+                'count' => User::age2650()->role('user')->count(),
+                'bg'    => 'warning',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => 'Usia > 51 Tahun',
+                'count' => User::age511000()->role('user')->count(),
+                'bg'    => 'warning',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
+        }
         if ($user->can('Role'))
             $widgets[] = (object)[
                 'title' => 'Role',

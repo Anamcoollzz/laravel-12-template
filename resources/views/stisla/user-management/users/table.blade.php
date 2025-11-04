@@ -12,6 +12,8 @@
     <tr>
       <th class="text-center">#</th>
       <th>{{ __('Nama') }}</th>
+      <th>{{ __('NIK') }}</th>
+      <th>{{ __('Jenis Kelamin') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Tanggal Lahir') }}</th>
       <th>{{ __('Alamat') }}</th>
@@ -43,6 +45,8 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
+        <td>{{ $item->nik }}</td>
+        <td>{{ $item->gender }}</td>
         @include('stisla.includes.others.td-phone-number')
         @include('stisla.includes.others.td-dob')
         @include('stisla.includes.others.td-address')

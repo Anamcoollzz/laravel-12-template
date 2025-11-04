@@ -14,13 +14,13 @@ class Helper
      * @param array $errorMessages
      * @return RedirectResponse
      */
-    public static function backError(array $errorMessages)
+    public static function backError(array $errorMessages, $msg = null)
     {
         $validator = Validator::make([], []);
         foreach ($errorMessages as $key => $value) {
             $validator->getMessageBag()->add($key, $value);
         }
-        return redirect()->back()->withInput()->withErrors($validator);
+        return redirect()->back()->withInput()->withErrors($validator)->with('errorMessage', $msg);
     }
 
     /**

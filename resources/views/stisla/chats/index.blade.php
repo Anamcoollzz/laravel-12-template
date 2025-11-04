@@ -2,6 +2,7 @@
   $isYajra = $isYajra ?? false;
   $isAjax = $isAjax ?? false;
   $isAjaxYajra = $isAjaxYajra ?? false;
+  $cat = ucwords(implode(' ', explode('-', $category)));
 @endphp
 
 @extends($_is_superadmin ? 'stisla.layouts.app' : 'stisla.layouts.app-top-nav')
@@ -12,11 +13,11 @@
 
 @section('content')
   <div class="section-header">
-    <h1>{{ $title }}</h1>
+    <h1>{{ $title }} ({{ $cat }})</h1>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active"><a href="{{ route('dashboard.index') }}">Dashboard</a></div>
       <div class="breadcrumb-item"><a href="#">Chat</a></div>
-      <div class="breadcrumb-item">{{ ucwords(implode(' ', explode('-', $category))) }}</div>
+      <div class="breadcrumb-item">{{ $cat }}</div>
     </div>
   </div>
   {{-- @include('stisla.includes.breadcrumbs.breadcrumb-table')
@@ -84,8 +85,16 @@
 
 
   <div class="section-body" id="app-chat">
-    <h2 class="section-title">Chating Yuk</h2>
-    <p class="section-lead">Menampilkan percakapan yang sedang berlangsung.</p>
+    @if (is_superadmin())
+      {{-- <h2 class="section-title">Chating Yuk</h2>
+      <p class="section-lead">Menampilkan percakapan yang sedang berlangsung.</p> --}}
+    @endif
+
+    @if (is_user() && config('app.is_mobile'))
+      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Beranda</a>
+      <a href="#" onclick="if(confirm('Anda yakin?')) { location.href='{{ route('chatting-yuk-delete', $category) }}'; }" class="btn btn-danger btn-icon mb-3"><i class="fa fa-trash"></i> Hapus
+        Riwayat Chat</a>
+    @endif
 
     <div class="row align-items-center justify-content-center">
       @if ($_is_superadmin)
@@ -98,6 +107,8 @@
             @endverbatim
             <div class="card-body">
               @verbatim
+                <input v-if="users2.length > 5" type="text" class="form-control mb-3" placeholder="Cari Pengguna" v-model="searchUser"
+                  v-on:input="users = users2.filter(u => u.name.toLowerCase().includes(searchUser.toLowerCase()))">
                 <ul class="list-unstyled list-unstyled-border" style="max-height: 400px; overflow: auto;">
                   <li class="media" v-for="user1 in users" :key="user1.id" style="cursor: pointer;" v-on:click="changeUser(user1)">
                     <img alt="image" class="mr-3 rounded-circle" width="50" :src="(user1 && user1.avatar_url) || avatar">
@@ -152,7 +163,7 @@
             <div class="card-header">
               <h4>Chat dengan {{ user && user . name }}</h4>
             </div>
-            <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none; height: 400px;">
+            <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none; height: 450px;">
               <template v-for="chat in messages">
                 <div v-if="chat.typing" :key="chat.id" :class="chat.side === 'left' ? 'chat-item chat-left chat-typing' : 'chat-item chat-right chat-typing'" style="">
                   <img :src="avatar" />
@@ -233,6 +244,8 @@
         roomId: '{{ $roomId }}',
         avatar: '{{ url('stisla') }}/assets/img/avatar/avatar-1.png',
         users: @json($users),
+        users2: @json($users),
+        searchUser: '',
         socket: null,
         user: null,
         message: '',
@@ -324,7 +337,7 @@
                 setTimeout(() => {
                   var chatContent = document.querySelector('.chat-content');
                   chatContent.scrollTop = chatContent.scrollHeight;
-                }, 2000);
+                }, 500);
                 // process response.data.data
               } else if (response.data.data.length === 0) {
                 self.messages = [];
@@ -372,7 +385,9 @@
             }
           }).then(function(response) {
             if (response.data.status === 'success') {
+              console.log('users refreshed');
               self.users = response.data.data;
+              self.users2 = response.data.data.map(user => Object.assign({}, user));
             }
           });
         },
@@ -438,11 +453,20 @@
         // var hash = md5.create();
         console.log('roomId', this.roomId);
         this.socket.on('connect', () => {
-          if (this.roomId)
+          if (this.roomId) {
             this.socket.emit('joinRoom', this.roomId);
+            @if (is_user())
+              this.socket.emit('sendMessage', {
+                roomId: this.roomId,
+                content: 'refreshUsers',
+              });
+            @endif
+
+          }
         });
 
         this.socket.on('message', (m) => {
+          console.log('message received', m);
           if (m.roomId === this.roomId) {
             console.log('message added', m);
             this.fetchList()
@@ -450,6 +474,12 @@
               this.getUsers()
             @endif
           };
+
+          @if (is_superadmin())
+            if (m.content === 'refreshUsers') {
+              this.getUsers();
+            }
+          @endif
         });
       }
     });

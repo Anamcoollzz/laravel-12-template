@@ -20,6 +20,9 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->string('category')->nullable();
             $table->string('file_path')->nullable();
+            $table->boolean('is_read')->default(false);
+            $table->dateTime('read_at')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

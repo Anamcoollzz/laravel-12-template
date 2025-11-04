@@ -126,6 +126,9 @@ class AuthController extends StislaController
         }
 
         $isGoogleCaptcha = SettingRepository::isGoogleCaptchaLogin();
+        if (config('stisla.app') === 'chat') {
+            return view('tailwind.auth.login');
+        }
         if (TEMPLATE === STISLA) {
             $template = $this->settingRepository->stislaLoginTemplate();
             $data     = [
@@ -151,19 +154,19 @@ class AuthController extends StislaController
         $maxWrongLogin = 5;
         $user = $this->userRepository->findByEmail($request->email);
         if ($user->deleted_at !== null) {
-            return Helper::backError(['email' => __('Akun anda sudah dihapus, silakan menggunakan akun lain ')]);
+            return Helper::backError(['email' => $msg = __('Akun anda sudah dihapus, silakan menggunakan akun lain ')], $msg);
         }
         if ($user->is_active == 0) {
-            return Helper::backError(['email' => __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason]);
+            return Helper::backError(['email' => $msg = __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason], $msg);
         }
         if (Hash::check($request->password, $user->password)) {
             if ($user->wrong_login >= $maxWrongLogin) {
-                return Helper::backError(['email' => __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason]);
+                return Helper::backError(['email' => $msg = __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason], $msg);
             }
             $loginMustVerified = $this->settingRepository->loginMustVerified();
 
             if ($loginMustVerified && $user->email_verified_at === null) {
-                return Helper::backError(['email' => __('Email belum diverifikasi')]);
+                return Helper::backError(['email' => __('Email belum diverifikasi')], __('Silakan verifikasi email anda terlebih dahulu'));
             }
             $this->userRepository->update([
                 'is_active'      => true,
@@ -181,12 +184,12 @@ class AuthController extends StislaController
                     'blocked_reason' => $blockedReason
                 ]);
                 logExecute(__('Login'), UPDATE, $user, $userNew);
-                return Helper::backError(['email' => __('Akun anda sudah diblokir dikarenakan ') . $blockedReason]);
+                return Helper::backError(['email' => __('Akun anda sudah diblokir dikarenakan ') . $blockedReason], __('Anda salah memasukkan kata sandi sebanyak 5 kali, akun diblokir'));
             }
             logExecute(__('Login'), UPDATE, $user, $userNew);
-            return Helper::backError(['password' => __('Password yang dimasukkan salah (tersisa ' . $maxWrongLogin - $userNew->wrong_login . ')')]);
+            return Helper::backError(['password' => __('Password yang dimasukkan salah (tersisa ' . $maxWrongLogin - $userNew->wrong_login . ')')], __('Password yang dimasukkan salah (tersisa ' . $maxWrongLogin - $userNew->wrong_login . ')'));
         }
-        return Helper::backError(['password' => __('Password yang dimasukkan salah')]);
+        return Helper::backError(['password' => __('Password yang dimasukkan salah')], __('Password yang dimasukkan salah'));
     }
 
     /**

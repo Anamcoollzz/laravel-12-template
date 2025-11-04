@@ -47,4 +47,14 @@ class GeneralService
     {
         return $this->agent->platform();
     }
+
+    /**
+     * check if user is using mobile device
+     *
+     * @return boolean
+     */
+    public function isMobile()
+    {
+        return $this->agent->isMobile();
+    }
 }

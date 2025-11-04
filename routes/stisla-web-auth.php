@@ -343,5 +343,6 @@ Route::get('chats/import-excel-example', [ChatController::class, 'importExcelExa
 Route::post('chats/import-excel', [ChatController::class, 'importExcel'])->name('chats.import-excel');
 Route::get('chats/get-room-id', [ChatController::class, 'getRoomId'])->name('chats.get-room-id');
 Route::get('chatting-yuk/{category}', [ChatController::class, 'index'])->name('chatting-yuk');
+Route::get('chatting-yuk-delete/{category}', [ChatController::class, 'reset'])->name('chatting-yuk-delete');
 Route::get('chatting-yuk-users', [ChatController::class, 'users'])->name('chatting-yuk-users');
 Route::resource('chats', ChatController::class);

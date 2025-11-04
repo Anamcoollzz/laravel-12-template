@@ -13,6 +13,9 @@ class ChatMessage extends Model
         'message',
         'category',
         'file_path',
+        'is_read',
+        'read_at',
+        'deleted_at',
     ];
 
     protected $table = 'chat_messages';

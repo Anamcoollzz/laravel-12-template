@@ -123,6 +123,7 @@ class ChatController extends StislaController
                 return [
                     'status' => 'success',
                     'data' => ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
+                        ->whereNull('deleted_at')
                         ->where(function ($query) use ($request) {
                             $query->where(function ($query) use ($request) {
                                 $query->where('from_user_id', auth_user()->id)
@@ -139,13 +140,16 @@ class ChatController extends StislaController
                 ];
             }
         }
+        if (is_user()) {
+            User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
+        }
         // if ($isSuperAdmin) {
         //     $roomId = md5(auth_user()->id);
         // } else {
         //     $roomId = md5('admin_chat_room');
         // }
         $roomId = md5('1_' . auth_user()->id);
-        $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->get() : [];
+        $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->latest('last_seen_at')->get() : [];
         // return $users;
         return view('stisla.chats.index', [
             'title'          => 'Chat',
@@ -159,7 +163,7 @@ class ChatController extends StislaController
 
     public function users(Request $request)
     {
-        $users = User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->get();
+        $users = User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->latest('last_seen_at')->get();
         return response()->json([
             'status' => 'success',
             'data'   => $users,
@@ -305,5 +309,20 @@ class ChatController extends StislaController
             'success' => false,
             'roomId'  => null,
         ]);
+    }
+
+    public function reset(Request $request, $category)
+    {
+        if (is_user()) {
+            ChatMessage::where('category', $category)
+                ->where(function ($query) {
+                    $query->where('from_user_id', auth_user()->id)
+                        ->orWhere('to_user_id', auth_user()->id);
+                })
+                ->whereNull('deleted_at')
+                ->update(['deleted_at' => now()]);
+            return back()->with('successMessage', 'Riwayat chat berhasil dihapus.');
+        }
+        abort(403);
     }
 }

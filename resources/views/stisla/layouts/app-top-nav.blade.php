@@ -12,23 +12,25 @@
       <div class="navbar-bg"></div>
       <nav class="navbar navbar-expand-lg main-navbar">
         <a class="navbar-brand sidebar-gone-hide" href="{{ url('') }}">{{ $_app_name }}</a>
-        <div class="navbar-nav">
-          <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
-        </div>
-        <div class="nav-collapse">
-          <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
-            <i class="fas fa-ellipsis-v"></i>
-          </a>
-          <ul class="navbar-nav">
-            <img class="logoku" src="{{ $_logo_url }}" alt="{{ $_company_name }}">
-            <h5 class="nama_perusahaan">
-              {{ $_company_name }}
-            </h5>
-            {{-- <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ route('dashboard.index') }}" class="nav-link">Dashboard</a></li> --}}
-            {{-- <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
+        @if (!config('app.is_mobile') && is_user())
+          <div class="navbar-nav">
+            <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
+          </div>
+          <div class="nav-collapse">
+            <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
+              <i class="fas fa-ellipsis-v"></i>
+            </a>
+            <ul class="navbar-nav">
+              <img class="logoku" src="{{ $_logo_url }}" alt="{{ $_company_name }}">
+              <h5 class="nama_perusahaan">
+                {{ $_company_name }}
+              </h5>
+              {{-- <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}"><a href="{{ route('dashboard.index') }}" class="nav-link">Dashboard</a></li> --}}
+              {{-- <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Server Status</a></li> --}}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        @endif
         <form class="form-inline ml-auto">
           <ul class="navbar-nav">
             {{-- <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>

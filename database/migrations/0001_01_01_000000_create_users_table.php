@@ -34,6 +34,9 @@ return new class extends Migration
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('last_seen_at')->nullable();
             $table->boolean('is_anonymous')->default(0);
+            $table->string('gender', 30)->nullable();
+            $table->string('nik', 50)->nullable()->unique();
+            $table->uuid()->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();

@@ -16,14 +16,27 @@
     <div class="col-12 mb-4">
       <div class="hero text-white hero-bg-image" data-background="{{ $_stisla_bg_home }}">
         <div class="hero-inner">
-          <h2>{{ __('Selamat Datang') }}, {{ Auth::user()->name ?? 'Your Name' }}</h2>
+          <h2>{{ __('Selamat Datang') }}, {{ Auth::user()->name ?? 'Your Name' }} di {{ $_application_name }}</h2>
           <p class="lead">{{ $_app_description }}</p>
 
-          @if (auth_user()->can('Profil'))
+          @if (can('Profil') || is_user())
             <div class="mt-4">
-              <a href="{{ route('profile.index') }}" class="btn btn-outline-white btn-lg btn-icon icon-left">
-                <i class="far fa-user"></i> {{ __('Lihat Profil') }}
-              </a>
+              @if (can('Profil'))
+                <a href="{{ route('profile.index') }}" class="btn btn-outline-white btn-lg btn-icon icon-left mb-2">
+                  <i class="far fa-user"></i> {{ __('Lihat Profil') }}
+                </a>
+              @endif
+              @if (is_user() && config('app.is_mobile'))
+                <a href="{{ route('chatting-yuk', ['curhat']) }}" class="btn btn-outline-white btn-lg btn-icon icon-left mb-2">
+                  <i class="fa fa-message"></i> {{ __('Curhat') }}
+                </a>
+                <a href="{{ route('chatting-yuk', ['keluhan-penyakit']) }}" class="btn btn-outline-white btn-lg btn-icon icon-left mb-2">
+                  <i class="fa fa-message"></i> {{ __('Keluhan Penyakit') }}
+                </a>
+                <a href="{{ route('chatting-yuk', ['pertanyaan-lainnya']) }}" class="btn btn-outline-white btn-lg btn-icon icon-left mb-2">
+                  <i class="fa fa-message"></i> {{ __('Pertanyaan Lainnya') }}
+                </a>
+              @endif
             </div>
           @endif
 

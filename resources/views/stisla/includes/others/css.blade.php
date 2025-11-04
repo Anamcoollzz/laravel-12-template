@@ -29,8 +29,13 @@
 @stack('css')
 
 <!-- Template CSS -->
-<link rel="stylesheet" href="{{ asset('stisla/assets/css/' . $_skin . '.css') }}">
-<link rel="stylesheet" href="{{ asset('stisla/assets/css/components.min.css') }}">
+@if (config('stisla.app') === 'chat')
+  <link rel="stylesheet" href="{{ asset('stisla/assets/css/chat/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('stisla/assets/css/chat/components.css') }}">
+@else
+  <link rel="stylesheet" href="{{ asset('stisla/assets/css/' . $_skin . '.css') }}">
+  <link rel="stylesheet" href="{{ asset('stisla/assets/css/components.min.css') }}">
+@endif
 <link rel="stylesheet" href="{{ asset('stisla/assets/css/styleku.min.css') }}">
 
 {{-- <style>

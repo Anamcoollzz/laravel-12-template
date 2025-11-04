@@ -129,6 +129,37 @@ function is_pimpinan_fakultas()
 }
 
 /**
+ * check if user has role user
+ *
+ * @return bool
+ */
+function is_user()
+{
+    return auth_user()->hasRole('user');
+}
+
+/**
+ * check if user has role superadmin
+ *
+ * @return bool
+ */
+function is_superadmin()
+{
+    return auth_user()->hasRole('superadmin');
+}
+
+/**
+ * check if user has permission
+ *
+ * @param string $permission
+ * @return bool
+ */
+function can($permission)
+{
+    return auth_user()->can($permission);
+}
+
+/**
  * get user login id
  *
  * @return int

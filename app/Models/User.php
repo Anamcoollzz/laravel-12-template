@@ -45,7 +45,13 @@ class User extends Authenticatable implements JWTSubject
         'deleted_by_id',
         'last_seen_at',
         'is_anonymous',
+        'gender',
+        'nik',
+        'uuid',
     ];
+
+    const GENDER_MALE = 'Laki-laki';
+    const GENDER_FEMALE = 'Perempuan';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -81,6 +87,52 @@ class User extends Authenticatable implements JWTSubject
         'is_online',
     ];
 
+    /**
+     * Scope a query to only include users of a given age range.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAge1018()
+    {
+        return $this->whereBetween('birth_date', [now()->subYears(18), now()->subYears(10)]);
+    }
+
+    /**
+     * Scope a query to only include users of a given age range.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAge1925()
+    {
+        return $this->whereBetween('birth_date', [now()->subYears(25), now()->subYears(18)]);
+    }
+
+    /**
+     * Scope a query to only include users of a given age range.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAge2650()
+    {
+        return $this->whereBetween('birth_date', [now()->subYears(50), now()->subYears(25)]);
+    }
+
+    /**
+     * Scope a query to only include users of a given age range.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAge511000()
+    {
+        return $this->whereBetween('birth_date', [now()->subYears(1000), now()->subYears(51)]);
+    }
+
+    /**
+     * add custom column name to hide real name if is_anonymous is true
+     *
+     * @param string $value
+     * @return string
+     */
     public function getNameAttribute($value)
     {
         if ($this->is_anonymous) {

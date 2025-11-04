@@ -618,11 +618,10 @@ return [
         ]
     ],
     'settings' => [
-        ['key' => 'application_name', 'value' => 'AIDS App Chat'],
+        ['key' => 'application_name', 'value' => 'Pojok Lajur pesat'],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Aplikasi ini dirancang sebagai sarana digital yang inovatif untuk mempermudah komunikasi, konsultasi, serta koordinasi antara masyarakat, tenaga kesehatan, dan tim penanggulangan AIDS di Kabupaten Majalengka. Melalui platform ini, masyarakat dapat dengan mudah mengakses berbagai informasi penting seputar pencegahan, penanganan, serta pendampingan HIV & AIDS, sekaligus menjalin komunikasi langsung dengan tenaga medis dan konselor yang kompeten.
-
-Dengan hadirnya aplikasi ini, diharapkan tidak hanya mempercepat proses penanganan kasus dan pelayanan kesehatan, tetapi juga menumbuhkan kesadaran dan kepedulian bersama akan pentingnya hidup sehat tanpa diskriminasi. Aplikasi ini turut berperan aktif dalam membangun lingkungan yang inklusif dan bebas stigma, di mana setiap individu mendapatkan hak yang sama untuk memperoleh informasi, perlindungan, serta dukungan moral.'],
+        // ['key' => 'app_description', 'value' => 'Aplikasi ini dirancang sebagai sarana digital yang inovatif untuk mempermudah komunikasi, konsultasi, serta koordinasi antara masyarakat, tenaga kesehatan, dan tim penanggulangan AIDS di Kabupaten Majalengka. Melalui platform ini, masyarakat dapat dengan mudah mengakses berbagai informasi penting seputar pencegahan, penanganan, serta pendampingan HIV & AIDS, sekaligus menjalin komunikasi langsung dengan tenaga medis dan konselor yang kompeten. Dengan hadirnya aplikasi ini, diharapkan tidak hanya mempercepat proses penanganan kasus dan pelayanan kesehatan, tetapi juga menumbuhkan kesadaran dan kepedulian bersama akan pentingnya hidup sehat tanpa diskriminasi. Aplikasi ini turut berperan aktif dalam membangun lingkungan yang inklusif dan bebas stigma, di mana setiap individu mendapatkan hak yang sama untuk memperoleh informasi, perlindungan, serta dukungan moral.'],
+        ['key' => 'app_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
         ['key' => 'city', 'value' => 'Majalengka'],
         ['key' => 'company_name', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
         ['key' => 'country', 'value' => 'Indonesia'],
@@ -718,11 +717,10 @@ Dengan hadirnya aplikasi ini, diharapkan tidak hanya mempercepat proses penangan
     ],
 
     'settings2' => [
-        ['key' => 'application_name', 'value' => 'AIDS App Chat'],
+        ['key' => 'application_name', 'value' => 'Pojok Lajur pesat'],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Aplikasi ini dirancang sebagai sarana digital yang inovatif untuk mempermudah komunikasi, konsultasi, serta koordinasi antara masyarakat, tenaga kesehatan, dan tim penanggulangan AIDS di Kabupaten Majalengka. Melalui platform ini, masyarakat dapat dengan mudah mengakses berbagai informasi penting seputar pencegahan, penanganan, serta pendampingan HIV & AIDS, sekaligus menjalin komunikasi langsung dengan tenaga medis dan konselor yang kompeten.
-
-Dengan hadirnya aplikasi ini, diharapkan tidak hanya mempercepat proses penanganan kasus dan pelayanan kesehatan, tetapi juga menumbuhkan kesadaran dan kepedulian bersama akan pentingnya hidup sehat tanpa diskriminasi. Aplikasi ini turut berperan aktif dalam membangun lingkungan yang inklusif dan bebas stigma, di mana setiap individu mendapatkan hak yang sama untuk memperoleh informasi, perlindungan, serta dukungan moral.'],
+        // ['key' => 'app_description', 'value' => 'Aplikasi ini dirancang sebagai sarana digital yang inovatif untuk mempermudah komunikasi, konsultasi, serta koordinasi antara masyarakat, tenaga kesehatan, dan tim penanggulangan AIDS di Kabupaten Majalengka. Melalui platform ini, masyarakat dapat dengan mudah mengakses berbagai informasi penting seputar pencegahan, penanganan, serta pendampingan HIV & AIDS, sekaligus menjalin komunikasi langsung dengan tenaga medis dan konselor yang kompeten. Dengan hadirnya aplikasi ini, diharapkan tidak hanya mempercepat proses penanganan kasus dan pelayanan kesehatan, tetapi juga menumbuhkan kesadaran dan kepedulian bersama akan pentingnya hidup sehat tanpa diskriminasi. Aplikasi ini turut berperan aktif dalam membangun lingkungan yang inklusif dan bebas stigma, di mana setiap individu mendapatkan hak yang sama untuk memperoleh informasi, perlindungan, serta dukungan moral.'],
+        ['key' => 'app_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
         ['key' => 'city', 'value' => 'Majalengka'],
         ['key' => 'company_name', 'value' => 'Komunitas Penanggulangan AIDS Kab Majalengka'],
         ['key' => 'country', 'value' => 'Indonesia'],

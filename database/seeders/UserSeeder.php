@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
                 'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
                 'password'             => $password,
                 'is_locked'            => $user['is_locked'] ?? 0,
-                'phone_number'         => fake()->optional()->phoneNumber(),
+                'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
                 'birth_date'           => fake()->optional()->date('Y-m-d'),
                 'address'              => fake()->address(),
                 'last_password_change' => date('Y-m-d H:i:s'),
@@ -60,6 +60,9 @@ class UserSeeder extends Seeder
                 'last_updated_by_id'   => null,
                 'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
                 'is_anonymous'         => fake()->randomElement([0, 1]),
+                'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
+                'nik'                  => fake()->unique()->numerify('##################'),
+                'uuid'                 => fake()->unique()->uuid(),
             ]);
             $userObj->assignRole('user');
         }
