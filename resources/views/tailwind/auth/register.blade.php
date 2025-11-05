@@ -1,4 +1,4 @@
-@extends('tailwind.layouts.app-auth')
+@extends('tailwind.layouts.app-auth', ['title' => 'Pendaftaran'])
 
 @section('content')
   <div class="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-center">

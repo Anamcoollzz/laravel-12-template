@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
-  <title>Login - {{ $_application_name }}</title>
+  <title>{{ $title }} - {{ $_application_name }}</title>
 
   <link rel="stylesheet" href="{{ url('assets/disdik') }}/all.min.css">
 
