@@ -73,7 +73,7 @@
   <header class="site-header">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-12 d-flex flex-wrap mt-2">
+        <div class="col-lg-8 col-12 d-flex flex-wrap mt-lg-2">
           <p class="d-flex me-4 mb-0">
             <i class="bi-geo-alt me-2"></i>
             {{ $_city }}, Jawa Barat, Indonesia
@@ -248,7 +248,12 @@
     </div>
   </footer>
 
-  <script src="{{ asset('assets/disdik2') }}/jquery.min.js"></script>
+  <script data-cfasync="false" src="{{ url('') }}/js/email-decode.min.js"></script>
+  <script src="{{ url('') }}/js/jquery.min.js"></script>
+  <script src="{{ url('') }}/js/bootstrap.min.js"></script>
+  <script src="{{ url('') }}/js/jquery.sticky.js"></script>
+  <script src="{{ url('') }}/js/counter.js"></script>
+  <script src="{{ url('') }}/js/custom.js"></script>
 </body>
 
 </html>
