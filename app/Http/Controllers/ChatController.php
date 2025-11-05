@@ -122,21 +122,7 @@ class ChatController extends StislaController
             } else {
                 return [
                     'status' => 'success',
-                    'data' => ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
-                        ->whereNull('deleted_at')
-                        ->where(function ($query) use ($request) {
-                            $query->where(function ($query) use ($request) {
-                                $query->where('from_user_id', auth_user()->id)
-                                    ->where('to_user_id', 1);
-                            })
-                                ->orWhere(function ($query) use ($request) {
-                                    $query->where('from_user_id', 1)
-                                        ->where('to_user_id', auth_user()->id);
-                                });
-                        })
-                        ->oldest('created_at')
-                        ->where('category', $category)
-                        ->get(),
+                    'data' => $this->getChat($request, $category),
                 ];
             }
         }
@@ -159,6 +145,29 @@ class ChatController extends StislaController
             'category'       => $category
         ]);
         return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
+    }
+
+    private function getChat($request, $category, ?bool $isCountOnly = false)
+    {
+        $query = ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
+            ->whereNull('deleted_at')
+            ->where(function ($query) use ($request) {
+                $query->where(function ($query) use ($request) {
+                    $query->where('from_user_id', auth_user()->id)
+                        ->where('to_user_id', 1);
+                })
+                    ->orWhere(function ($query) use ($request) {
+                        $query->where('from_user_id', 1)
+                            ->where('to_user_id', auth_user()->id);
+                    });
+            })
+            ->oldest('created_at')
+            ->where('category', $category);
+        $isCountOnly = $isCountOnly ?? false;
+        if ($isCountOnly) {
+            return $query->count();
+        }
+        return $query->get();
     }
 
     public function users(Request $request)
@@ -221,6 +230,8 @@ class ChatController extends StislaController
             ]);
             // User::where('id', $request->to_user_id)->update(['last_seen_at' => now()]);
         } else {
+            // ChatMessage::truncate();
+            $count = $this->getChat($request, $request->category, isCountOnly: true);
             $store = ChatMessage::create([
                 'from_user_id' => auth_user()->id,
                 'to_user_id'   => 1,
@@ -228,6 +239,14 @@ class ChatController extends StislaController
                 'category'     => $request->category,
                 'file_path'    => $file,
             ]);
+            if ($count === 0) {
+                ChatMessage::create([
+                    'from_user_id' => 1,
+                    'to_user_id'   => auth_user()->id,
+                    'message'      => 'Terima kasih telah memulai percakapan. Admin akan membalas pesan anda. Ada yang bisa kami bantu?',
+                    'category'     => $request->category,
+                ]);
+            }
             User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
         }
         return ['status' => 'success', 'data' => $store];

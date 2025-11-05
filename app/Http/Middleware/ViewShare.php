@@ -83,6 +83,7 @@ class ViewShare
 
             view()->share('_app_is_demo', config('app.is_demo'));
             view()->share('_is_superadmin', auth_user() ? auth_user()->hasRole('superadmin') : false);
+            view()->share('_email', config('stisla.email'));
         }
         return $next($request);
     }

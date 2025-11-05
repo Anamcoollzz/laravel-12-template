@@ -1,4 +1,4 @@
-@extends('stisla.layouts.app-table')
+@extends($is_chat ? 'stisla.layouts.app-top-nav' : 'stisla.layouts.app-table')
 
 @section('title')
   Dashboard

@@ -16,8 +16,13 @@
       <th>{{ __('Jenis Kelamin') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Tanggal Lahir') }}</th>
+      <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
       <th>{{ __('Email') }}</th>
+      <th>{{ __('Provinsi') }}</th>
+      <th>{{ __('Kota/Kabupaten') }}</th>
+      <th>{{ __('Kecamatan') }}</th>
+      <th>{{ __('Desa/Kelurahan') }}</th>
       @if ($roleCount > 1)
         <th>{{ __('Role') }}</th>
       @endif
@@ -49,8 +54,13 @@
         <td>{{ $item->gender }}</td>
         @include('stisla.includes.others.td-phone-number')
         @include('stisla.includes.others.td-dob')
+        <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
         @include('stisla.includes.others.td-email')
+        <td>{{ $item->province?->name }}</td>
+        <td>{{ $item->city?->name }}</td>
+        <td>{{ $item->district?->name }}</td>
+        <td>{{ $item->village?->name }}</td>
         @if ($roleCount > 1)
           <td>
             @foreach ($item->roles as $role)

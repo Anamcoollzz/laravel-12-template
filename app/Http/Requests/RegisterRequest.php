@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\AppEnum;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->all());
         if (Route::is('api.register')) {
             return [
                 'name'                  => 'required',
@@ -36,6 +38,7 @@ class RegisterRequest extends FormRequest
         }
 
         $isGoogleCaptcha = SettingRepository::isGoogleCaptchaRegister();
+        $isChat = config('stisla.app') === AppEnum::APP_CHAT;
 
         return [
             'name'                  => 'required',
@@ -44,6 +47,9 @@ class RegisterRequest extends FormRequest
             'password_confirmation' => 'required|min:4',
             'g-recaptcha-response'  => $isGoogleCaptcha ? 'required|captcha' : 'nullable',
             'phone_number'          => 'nullable|numeric',
+            'nik'                   => $isChat ? 'required|numeric|unique:users,nik' : 'nullable|numeric|unique:users,nik',
+            'birth_date'            => $isChat ? 'required|date' : 'nullable|date',
+            'gender'                => $isChat ? 'required|in:Laki-laki,Perempuan' : 'nullable|in:Laki-laki,Perempuan',
         ];
     }
 }

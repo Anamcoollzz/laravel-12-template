@@ -48,6 +48,11 @@ class User extends Authenticatable implements JWTSubject
         'gender',
         'nik',
         'uuid',
+        'is_majalengka',
+        'province_code',
+        'city_code',
+        'district_code',
+        'village_code',
     ];
 
     const GENDER_MALE = 'Laki-laki';
@@ -85,7 +90,18 @@ class User extends Authenticatable implements JWTSubject
     protected $appends = [
         'avatar_url',
         'is_online',
+        'age',
     ];
+
+    /**
+     * Get the user's age.
+     *
+     * @return int
+     */
+    public function getAgeAttribute(): int
+    {
+        return $this->birth_date ? (new \Carbon\Carbon($this->birth_date))->age : 0;
+    }
 
     /**
      * Scope a query to only include users of a given age range.
@@ -218,5 +234,75 @@ class User extends Authenticatable implements JWTSubject
     public function student()
     {
         return $this->hasOne(Student::class);
+    }
+
+    /**
+     * Scope a query to only include Majalengka residents.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMajalengkaResidents($query)
+    {
+        return $query->where('is_majalengka', true);
+    }
+
+    /**
+     * Scope a query to only include non-Majalengka residents.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNonMajalengkaResidents($query)
+    {
+        return $query->where('is_majalengka', false);
+    }
+
+    /**
+     * Get the region associated with the User's province.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'province_code', 'code');
+    }
+
+    /**
+     * Get the region associated with the User's province.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function province()
+    {
+        return $this->belongsTo(Region::class, 'province_code', 'code');
+    }
+
+    /**
+     * Get the region associated with the User's city.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(Region::class, 'city_code', 'code');
+    }
+
+    /**
+     * Get the region associated with the User's district.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function district()
+    {
+        return $this->belongsTo(Region::class, 'district_code', 'code');
+    }
+
+    /**
+     * Get the region associated with the User's village.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function village()
+    {
+        return $this->belongsTo(Region::class, 'village_code', 'code');
     }
 }

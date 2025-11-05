@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppEnum;
 use App\Http\Requests\ProfileRequest;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -34,12 +35,15 @@ class ProfileController extends StislaController
     public function index()
     {
         $user = Auth::user();
+        // dd($user->getAllPermissions()->toArray());
         $totalDay = \Carbon\Carbon::parse($user->last_password_change)->diffInDays(now());
-
+        // dd(auth_user()->permissions()->get()->toArray());
+        $is_chat = config('stisla.app') === AppEnum::APP_CHAT && is_user();
         return view('stisla.profile.index', [
             'user'     => $user,
             'd'        => $user,
             'totalDay' => $totalDay,
+            'is_chat'  => $is_chat,
         ]);
     }
 

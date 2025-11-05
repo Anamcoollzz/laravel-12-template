@@ -30,6 +30,15 @@ return new class extends Migration
             $table->text('file_upload')->nullable();
             $table->tinyInteger('wrong_login')->default(0);
             $table->boolean('is_active')->default(1);
+            $table->boolean('is_majalengka')->default(0);
+            $table->string('province_code', 20)->nullable();
+            $table->string('city_code', 20)->nullable();
+            $table->string('district_code', 20)->nullable();
+            $table->string('village_code', 20)->nullable();
+            // $table->foreign('province_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('city_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('district_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('village_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
             $table->string('blocked_reason')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('last_seen_at')->nullable();

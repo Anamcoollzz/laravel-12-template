@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppEnum;
 use App\Helpers\Helper;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Repositories\RegionRepository;
 use App\Repositories\SettingRepository;
 use Exception;
 use Illuminate\Http\Response;
@@ -33,6 +35,8 @@ class AuthController extends StislaController
         'github',
     ];
 
+    private RegionRepository $regionRepository;
+
     /**
      * constructor method
      *
@@ -41,6 +45,8 @@ class AuthController extends StislaController
     public function __construct()
     {
         parent::__construct();
+
+        $this->regionRepository = new RegionRepository();
 
         $this->defaultMiddleware('');
     }
@@ -54,6 +60,13 @@ class AuthController extends StislaController
     {
         if ($this->settingRepository->isActiveRegisterPage() === false)
             abort(404);
+
+        if (config('stisla.app') === AppEnum::APP_CHAT) {
+            $provinces = $this->regionRepository->getProvinces();
+            return view('tailwind.auth.register', [
+                'provinces' => $provinces,
+            ]);
+        }
 
         // if (config('app.template') === 'stisla') {
         //     $template = \App\Models\Setting::firstOrCreate(['key' => 'login_template'], ['value' => 'default'])->value;
@@ -87,10 +100,17 @@ class AuthController extends StislaController
                     'phone_number',
                     'birth_date',
                     'address',
+                    'nik',
+                    'is_anonymous',
+                    'is_majalengka',
                 ]
             );
             $data = array_merge([
-                'password' => bcrypt($request->password)
+                'password'      => bcrypt($request->password),
+                'province_code' => $request->province,
+                'city_code'     => $request->city,
+                'district_code' => $request->district,
+                'village_code'  => $request->village,
             ], $data);
             $user = $this->userRepository->create($data);
             $this->userRepository->assignRole($user, 'user');
@@ -126,7 +146,7 @@ class AuthController extends StislaController
         }
 
         $isGoogleCaptcha = SettingRepository::isGoogleCaptchaLogin();
-        if (config('stisla.app') === 'chat') {
+        if (config('stisla.app') === AppEnum::APP_CHAT) {
             return view('tailwind.auth.login');
         }
         if (TEMPLATE === STISLA) {

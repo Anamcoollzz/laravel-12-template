@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AppEnum;
 use App\Models\User;
 use App\Repositories\SettingRepository;
 use Illuminate\Support\Facades\Auth;
@@ -193,4 +194,9 @@ function user_can($permission)
 function user_email()
 {
     return Auth::user()->email ?? auth('api')->user()->email;
+}
+
+function is_app_chat()
+{
+    return config('stisla.app') === AppEnum::APP_CHAT;
 }

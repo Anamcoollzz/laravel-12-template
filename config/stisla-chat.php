@@ -24,7 +24,7 @@ return [
         ],
         [
             'name' => 'Profil Hapus Akun',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin'],
             'group' => 'Profil'
         ],
 
@@ -586,16 +586,16 @@ return [
             'birth_date'        => '1998-04-08',
             'address'           => 'Majalengka'
         ],
-        [
-            'name'              => 'Hairul Anam Admin',
-            'email'             => 'admin@aidssupportmajalengka.com',
-            'password'          => 'admin',
-            'roles'             => ['admin'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Majalengka'
-        ],
+        // [
+        //     'name'              => 'Hairul Anam Admin',
+        //     'email'             => 'admin@aidssupportmajalengka.com',
+        //     'password'          => 'admin',
+        //     'roles'             => ['admin'],
+        //     'email_verified_at' => '2021-04-06 04:06:00',
+        //     'phone_number'      => '6285322778935',
+        //     'birth_date'        => '1998-04-08',
+        //     'address'           => 'Majalengka'
+        // ],
         [
             'name'              => 'Hairul Anam User',
             'email'             => 'user@aidssupportmajalengka.com',
@@ -630,7 +630,7 @@ return [
             'value' => 'assets/icons/favicon.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/aids.jpeg', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/logo2.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2021'],
 
         [
@@ -645,8 +645,8 @@ return [
 
         [
             'key' => 'stisla_bg_home',
-            // 'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
-            'value' => 'assets/images/aids3.png',
+            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            // 'value' => 'assets/images/aids3.png',
             'is_url' => true
         ],
         [
@@ -730,7 +730,7 @@ return [
             'value' => 'assets/icons/favicon.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/aids.jpeg', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/logo2.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2021'],
 
         [
@@ -745,8 +745,8 @@ return [
 
         [
             'key' => 'stisla_bg_home',
-            // 'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
-            'value' => 'assets/images/aids3.png',
+            'value' => 'stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg',
+            // 'value' => 'assets/images/aids3.png',
             'is_url' => true
         ],
         [
@@ -779,7 +779,7 @@ return [
         ['key' => 'mail_mailgun_api_key', 'value' => 'test'],
 
         ['key' => 'is_login_must_verified', 'value' => '0'],
-        ['key' => 'is_active_register_page', 'value' => '0'],
+        ['key' => 'is_active_register_page', 'value' => '1'],
 
         ['key' => 'is_forgot_password_send_to_email', 'value' => '0'],
         ['key' => 'google_captcha_site_key', 'value' => 'default_site_key'],

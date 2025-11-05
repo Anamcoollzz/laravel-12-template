@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Role;
+use App\Repositories\RegionRepository;
 
 class UserSeeder extends Seeder
 {
@@ -44,6 +45,9 @@ class UserSeeder extends Seeder
                     $userObj->assignRole($role);
         }
 
+        $gs = new RegionRepository;
+        $provinces = $gs->getProvinces();
+
         $password = bcrypt('12345');
         foreach (range(1, 50) as $index) {
             $userObj = User::create([
@@ -63,6 +67,11 @@ class UserSeeder extends Seeder
                 'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
                 'nik'                  => fake()->unique()->numerify('##################'),
                 'uuid'                 => fake()->unique()->uuid(),
+                'is_majalengka'        => fake()->randomElement([0, 1]),
+                'province_code'        => $province = $provinces->random()->code,
+                'city_code'            => $city = $gs->getCities($province)->random()->code,
+                'district_code'        => $district = $gs->getDistricts($city)->random()->code,
+                'village_code'         => $gs->getVillages($district)->random()->code,
             ]);
             $userObj->assignRole('user');
         }

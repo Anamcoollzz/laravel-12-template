@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppEnum;
 use App\Models\ActivityLog;
 use App\Models\Bank;
 use App\Models\BankDeposit;
@@ -277,6 +278,7 @@ class DashboardController extends StislaController
         }
 
         $logs = $this->activityLogRepository->getMineLatest();
+        $is_chat = config('stisla.app') === AppEnum::APP_CHAT && is_user();
 
         // \Debugbar::enable();
         // \Debugbar::disable();
@@ -285,6 +287,7 @@ class DashboardController extends StislaController
             'widgets' => $widgets,
             'logs'    => $logs,
             'user'    => $user,
+            'is_chat' => $is_chat,
         ]);
     }
 
@@ -305,6 +308,7 @@ class DashboardController extends StislaController
      */
     public function home()
     {
+        return view('welcome-chat2');
         return view('welcome-chat');
         return view('stisla.homes.index', [
             'title' => __('Selamat datang di ') . SettingRepository::applicationName(),

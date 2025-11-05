@@ -3,7 +3,7 @@
   $_is_superadmin = auth_id() == $_superadmin_account->id;
 @endphp
 
-@extends('stisla.layouts.app')
+@extends($is_chat ? 'stisla.layouts.app-top-nav' : 'stisla.layouts.app')
 
 @section('title')
   {{ $title = 'Profil' }}

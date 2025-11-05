@@ -118,13 +118,17 @@ class RolePermissionSeeder extends Seeder
                 // dd($permission['roles']);
             }
             $perm = Permission::create([
-                'name'                => $permission['name'],
+                'name'                => $name = $permission['name'],
                 'permission_group_id' => $group->id
             ]);
             // foreach ($permission['roles'] as $role) {
             //     if (in_array($role, $this->rolesArray))
             //         $perm->assignRole($role);
             // }
+            // if ($name === 'Profil Hapus Akun') {
+            //     dd($permission['roles'], $roles->toArray());
+            // }
+            $roles = Role::whereIn('name', $permission['roles'])->get();
             $perm->syncRoles($roles);
         }
     }

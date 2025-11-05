@@ -29,7 +29,7 @@
 @stack('css')
 
 <!-- Template CSS -->
-@if (config('stisla.app') === 'chat')
+@if (is_app_chat())
   <link rel="stylesheet" href="{{ asset('stisla/assets/css/chat/style.css') }}">
   <link rel="stylesheet" href="{{ asset('stisla/assets/css/chat/components.css') }}">
 @else

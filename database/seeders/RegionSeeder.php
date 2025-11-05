@@ -20,7 +20,7 @@ class RegionSeeder extends Seeder
         Region::truncate();
 
         // import sql
-        // $sql = file_get_contents(base_path('database/seeders/data/regions.sql'));
-        // DB::unprepared($sql);
+        $sql = file_get_contents(base_path('database/seeders/data/regions.sql'));
+        DB::unprepared($sql);
     }
 }
