@@ -8,6 +8,7 @@
     content="A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgwODAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
   <title>Login - {{ $_application_name }}</title>
 
   <link rel="stylesheet" href="{{ url('assets/disdik') }}/all.min.css">
@@ -747,7 +748,9 @@
         <h1 class="text-white text-3xl md:text-4xl font-bold leading-tight">{{ $_application_name }}</h1>
         <p class="text-white text-lg md:text-xl mt-1">Kabupaten {{ $_city }}</p>
       </div>
-      <img src="{{ url('assets/disdik') }}/draw2.webp" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl">
+      {{-- <img src="{{ url('assets/disdik') }}/draw2.webp" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl"> --}}
+      <img src="{{ asset('assets/images/homeleft.png') }}" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl">
+
     </div>
 
     <!-- Kanan: Form Login -->

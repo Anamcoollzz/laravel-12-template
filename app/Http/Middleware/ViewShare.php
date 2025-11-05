@@ -72,9 +72,15 @@ class ViewShare
             $settings = SettingRepository::settings();
 
             session($settings);
+            // dd($settings);
             foreach ($settings as $key => $value) {
                 view()->share($key, $value);
                 view()->share('_' . $key, $value);
+                if ($key === 'application_name') {
+                    view()->share('_app_name', $value);
+                } else if ($key === '_app_description') {
+                    view()->share('_app_desc', $value);
+                }
             }
             $menus = $this->menuRepository->getMenus();
             view()->share('_sidebar_menus', $menus);

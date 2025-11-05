@@ -200,3 +200,8 @@ function is_app_chat()
 {
     return config('stisla.app') === AppEnum::APP_CHAT;
 }
+
+function domain()
+{
+    return parse_url(config('app.url'), PHP_URL_HOST);
+}

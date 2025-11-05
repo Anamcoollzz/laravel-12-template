@@ -8,32 +8,33 @@
   <meta name="language" content="id">
   <meta name="geo.country" content="ID">
   <meta name="geo.placename" content="Indonesia">
-  <meta name="author" content="Dinas Pendidikan Kabupaten Majalengka">
-  <meta name="description" content="Manajemen Data dan Informasi Sekolah Dasar Kabupaten Majalengka">
+  <meta name="author" content="{{ $_company_name }}">
+  <meta name="description" content="{{ $_app_desc }}">
   <meta name="keywords" content="Manajemen Data, Manajemen Informasi, Sekolah Dasar, Kabupaten Majalengka, Metafora">
 
   <title>{{ $_application_name }}</title>
 
-  <link rel="icon" type="image/png" href="{{ url('') }}/images/metafora-m.webp">
+  {{-- <link rel="icon" type="image/png" href="{{ url('') }}/images/metafora-m.webp"> --}}
+  <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
 
   <meta property="og:locale" content="id_ID">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ url('') }}">
-  <meta property="og:title" content="METOFORA SD Dinas Pendidikan Kabupaten Majalengka">
-  <meta property="og:description" content="Manajemen Data dan Informasi Sekolah Dasar Kabupaten Majalengka">
-  <meta property="og:image" content="{{ url('') }}/images/metafora.webp">
+  <meta property="og:title" content="{{ $_app_name }} {{ $_company_name }}">
+  <meta property="og:description" content="{{ $_app_desc }}">
+  <meta property="og:image" content="{{ $homeleft = asset('assets/images/homeleft.png') }}">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:domain" content="metaforasd.majalengkakab.go.id">
+  <meta name="twitter:domain" content="{{ domain() }}">
   <meta name="twitter:url" content="{{ url('') }}">
-  <meta name="twitter:title" content="METOFORA SD Dinas Pendidikan Kabupaten Majalengka">
-  <meta name="twitter:description" content="Manajemen Data dan Informasi Sekolah Dasar Kabupaten Majalengka">
-  <meta name="twitter:image" content="{{ url('') }}/images/metafora.webp">
+  <meta name="twitter:title" content="{{ $_app_name }} {{ $_company_name }}">
+  <meta name="twitter:description" content="{{ $_app_desc }}">
+  <meta name="twitter:image" content="{{ $homeleft }}">
 
   <meta itemprop="url" content="{{ url('') }}">
-  <meta itemprop="headline" content="METOFORA SD Dinas Pendidikan Kabupaten Majalengka">
-  <meta itemprop="description" content="Manajemen Data dan Informasi Sekolah Dasar Kabupaten Majalengka">
-  <meta itemprop="thumbnailUrl" content="{{ url('') }}/images/metafora.webp">
+  <meta itemprop="headline" content="{{ $_app_name }} {{ $_company_name }}">
+  <meta itemprop="description" content="{{ $_app_desc }}">
+  <meta itemprop="thumbnailUrl" content="{{ $homeleft }}">
 
   <meta name="alternate" hreflang="id" href="{{ url('') }}">
 
@@ -46,8 +47,8 @@
             {
                 "@context": "http://schema.org",
                 "@type": "Organization",
-                "name": "METOFORA SD Dinas Pendidikan Kabupaten Majalengka",
-                "description": Manajemen Data dan Informasi Sekolah Dasar Kabupaten Majalengka",
+                "name": "{{ $_app_name }} {{ $_company_name }}",
+                "description": {{ $_app_desc }}",
                 "url": "{{ url('') }}",
                 "logo": "{{ url('') }}/images/metafora.webp",
                 "image": "{{ url('') }}/images/metafora.webp",
@@ -91,11 +92,11 @@
           <ul class="social-icon">
 
             <li class="social-icon-item">
-              <a href="https://www.facebook.com/profile.php?id=61556100502282" class="social-icon-link bi-facebook"></a>
+              <a href="https://www.facebook.com/" class="social-icon-link bi-facebook"></a>
             </li>
 
             <li class="social-icon-item">
-              <a href="https://www.instagram.com/bidangsd_disdikmjlk/" class="social-icon-link bi-instagram"></a>
+              <a href="https://www.instagram.com/" class="social-icon-link bi-instagram"></a>
             </li>
 
             <li class="social-icon-item">
@@ -130,6 +131,8 @@
 
           <li class="nav-item ms-3">
             <a class="nav-link custom-btn custom-border-btn btn" href="{{ route('login') }}">Masuk</a>
+            <a class="nav-link custom-btn custom-border-btn btn btn-primary" style="background-color: rgb(230, 163, 96); border-color:rgb(230, 163, 96); color: white;"
+              href="{{ route('register') }}">Daftar</a>
           </li>
         </ul>
       </div>
@@ -143,7 +146,7 @@
 
           <div class="col-lg-6 col-12 mb-5 mb-lg-0 px-0 d-flex justify-content-center">
             {{-- <img src="{{ asset('assets/disdik2') }}/anak-sd.webp" class="img-fluid" width="70%" alt=""> --}}
-            <img src="{{ asset('assets/images/homeleft.png') }}" class="img-fluid" width="70%" alt="">
+            <img src="{{ $homeleft }}" class="img-fluid" width="70%" alt="">
           </div>
 
           <div class="col-lg-6 col-12">
@@ -172,30 +175,32 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
-          <h5 class="mb-3">Dinas Pendidikan <br>Kabupaten {{ $_city }}</h5>
+          <h5 class="mb-3">
+            {{ $_company_name }}
+            {{-- <br>Kabupaten {{ $_city }} --}}
+          </h5>
           <img src="{{ asset('assets/images/logo3.png') }}" class="logo img-fluid mb-2" alt="">
           <img src="{{ asset('assets/images/logo4.png') }}" class="logo img-fluid mb-2" alt="">
         </div>
 
         <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
-          <h5 class="site-footer-title mb-3">Tentang Disdik</h5>
+          <h5 class="site-footer-title mb-3">Tentang {{ $_app_name }}</h5>
           <ul class="footer-menu-item px-0">
-            <li class="text-white mb-2" style="text-align: center"><a href="https://disdik.majalengkakab.go.id/profil/visi-dan-misi" class="footer-menu-link mx-auto">Visi dan Misi</a></li>
-            <li class="text-white mb-2" style="text-align: center"><a href="https://disdik.majalengkakab.go.id/profil/struktur-organisasi" class="footer-menu-link mx-auto">Struktur dan
-                Organisasi</a></li>
+            <li class="text-white mb-2" style="text-align: center"><a href="#" class="footer-menu-link mx-auto">Visi dan Misi</a></li>
+            <li class="text-white mb-2" style="text-align: center"><a href="#" class="footer-menu-link mx-auto">Struktur dan Organisasi</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
           <h5 class="site-footer-title mb-3">Informasi Kontak</h5>
 
-          <p class="text-white mb-2">
+          {{-- <p class="text-white mb-2">
             <i class="bi-telephone me-2"></i>
 
             <a href="tel: 120-240-9600" class="site-footer-link">
               120-240-9600
             </a>
-          </p>
+          </p> --}}
 
           <p class="text-white">
             <i class="bi-envelope me-2"></i>
@@ -225,11 +230,11 @@
           <div class="col-lg-6 col-md-5 col-12 d-flex justify-content-center align-items-center mx-auto">
             <ul class="social-icon">
               <li class="social-icon-item">
-                <a href="https://www.facebook.com/profile.php?id=61556100502282" class="social-icon-link bi-facebook"></a>
+                <a href="https://www.facebook.com/" class="social-icon-link bi-facebook"></a>
               </li>
 
               <li class="social-icon-item">
-                <a href="https://www.instagram.com/bidangsd_disdikmjlk/" class="social-icon-link bi-instagram"></a>
+                <a href="https://www.instagram.com" class="social-icon-link bi-instagram"></a>
               </li>
 
               <li class="social-icon-item">

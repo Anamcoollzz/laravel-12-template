@@ -627,7 +627,7 @@ return [
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon.ico',
+            'value' => 'assets/icons/chats/favicon.ico',
             'is_url' => true
         ],
         ['key' => 'logo', 'value' => 'assets/images/logo2.png', 'is_url' => true],
@@ -727,7 +727,7 @@ return [
         ['key' => 'app_is_demo', 'value' => '0'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon.ico',
+            'value' => 'assets/icons/chats/favicon.ico',
             'is_url' => true
         ],
         ['key' => 'logo', 'value' => 'assets/images/logo2.png', 'is_url' => true],

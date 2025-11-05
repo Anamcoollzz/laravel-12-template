@@ -187,6 +187,23 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'nama',
+        'username' => 'nama pengguna',
+        'email' => 'alamat email',
+        'first_name' => 'nama depan',
+        'last_name' => 'nama belakang',
+        'password' => 'kata sandi',
+        'password_confirmation' => 'konfirmasi kata sandi',
+        'city' => 'kota',
+        'country' => 'negara',
+        'address' => 'alamat',
+        'phone' => 'telepon',
+        'mobile' => 'ponsel',
+        'age' => 'usia',
+        'birth_date' => 'tanggal lahir',
+        'gender' => 'jenis kelamin',
+        'website' => 'situs web',
+    ],
 
 ];
