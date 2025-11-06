@@ -749,7 +749,7 @@
         <p class="text-white text-lg md:text-xl mt-1">Kabupaten {{ $_city }}</p>
       </div>
       {{-- <img src="{{ url('assets/disdik') }}/draw2.webp" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl"> --}}
-      <img src="{{ asset('assets/images/homeleft.png') }}" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl">
+      <img src="{{ asset('assets/images/aids12.png') }}" alt="{{ $_application_name }}" class="w-full max-w-sm float-animation drop-shadow-xl">
 
     </div>
 

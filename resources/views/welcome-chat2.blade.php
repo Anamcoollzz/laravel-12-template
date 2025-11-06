@@ -22,7 +22,7 @@
   <meta property="og:url" content="{{ url('') }}">
   <meta property="og:title" content="{{ $_app_name }} {{ $_company_name }}">
   <meta property="og:description" content="{{ $_app_desc }}">
-  <meta property="og:image" content="{{ $homeleft = asset('assets/images/homeleft.png') }}">
+  <meta property="og:image" content="{{ $homeleft = asset('assets/images/aids12.png') }}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:domain" content="{{ domain() }}">
