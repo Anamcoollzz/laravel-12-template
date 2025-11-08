@@ -62,7 +62,8 @@ class CreateModuleCommand extends Command
         $slug        = Str::slug($name);
 
         $controller = base_path('app/Http/Controllers/CrudExampleController.php');
-        exec('cp ' . $controller . ' ' . ($path = base_path('app/Http/Controllers/' . $name . 'Controller.php')));
+        // exec('cp ' . $controller . ' ' . ($path = base_path('app/Http/Controllers/' . $name . 'Controller.php')));
+        $this->copy($controller, $path = base_path('app/Http/Controllers/' . $name . 'Controller.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
@@ -72,12 +73,13 @@ class CreateModuleCommand extends Command
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
 
         $model = base_path('app/Models/CrudExample.php');
-        exec('cp ' . $model . ' ' . ($path = base_path('app/Models/' . $name . '.php')));
+        // exec('cp ' . $model . ' ' . ($path = base_path('app/Models/' . $name . '.php')));
+        $this->copy($model, $path = base_path('app/Models/' . $name . '.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col',", $columns)), file_get_contents($path)));
 
         $repository = base_path('app/Repositories/CrudExampleRepository.php');
-        exec('cp ' . $repository . ' ' . ($path = base_path('app/Repositories/' . $name . 'Repository.php')));
+        $this->copy($repository, $path = base_path('app/Repositories/' . $name . 'Repository.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
         file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
@@ -86,7 +88,7 @@ class CreateModuleCommand extends Command
         }, $columns)), file_get_contents($path)));
 
         $request = base_path('app/Http/Requests/CrudExampleRequest.php');
-        exec('cp ' . $request . ' ' . ($path = base_path('app/Http/Requests/' . $name . 'Request.php')));
+        $this->copy($request, $path = base_path('app/Http/Requests/' . $name . 'Request.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(function ($col) {
             if ($col === 'name') {
@@ -94,10 +96,12 @@ class CreateModuleCommand extends Command
             }
             return "'$col'\t\t=> 'required',";
         }, $columns)), file_get_contents($path)));
-
         $view = base_path('resources/views/stisla/crud-examples');
-        exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
-        exec('cp -r ' . $view . ' ' . $path);
+        // exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
+        FacadesFile::deleteDirectory($path = base_path('resources/views/stisla/' . $prefix));
+        // dd(1);
+        // exec('cp -r ' . $view . ' ' . $path);
+        $this->copy($view, $path = base_path('resources/views/stisla/' . $prefix));
         $views = FacadesFile::allFiles($path);
         foreach ($views as $view) {
             $fname = $view->getRealPath();
@@ -126,7 +130,8 @@ class CreateModuleCommand extends Command
 
         Artisan::call("make:migration create_" . $pluralSnake . "_table --create=" . $pluralSnake);
 
-        exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
+        // exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
+        $this->copy(base_path('database/seeders/CrudExampleSeeder.php'), $seeder = base_path('database/seeders/' . $name . 'Seeder.php'));
         file_put_contents($seeder, str_replace('CrudExample', $name, file_get_contents($seeder)));
         file_put_contents($seeder, str_replace(
             '//columns',
@@ -174,7 +179,8 @@ class CreateModuleCommand extends Command
             file_get_contents($latestMigration)
         ));
 
-        exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
+        // exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
+        $this->copy(base_path('config/crud-example-permission.php'), $path = base_path('config/' . $slug . '-permission.php'));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
 
         // route
@@ -199,9 +205,41 @@ Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
         $this->info('Repository: ' . $name . 'Repository');
         $this->info('Request: ' . $name . 'Request');
         $this->info('Views: ' . $prefix);
-        $this->info('Migration: ' . $latestMigration);
+        $this->info('Migration: ' . $this->getPath($latestMigration));
         $this->info('Seeder: ' . $name . 'Seeder');
         $this->info('Permission Config: ' . $slug . '-permission.php');
         $this->info('Module created successfully.');
+    }
+
+    /**
+     * copy file or directory
+     *
+     * @param string $src
+     * @param string $dest
+     * @return void
+     */
+    private function copy($src, $dest)
+    {
+        if (FacadesFile::isDirectory($dest)) FacadesFile::deleteDirectory($dest);
+        FacadesFile::ensureDirectoryExists(dirname($dest));
+        if (is_dir($src)) {
+            FacadesFile::copyDirectory($src, $dest); // melempar exception kalau gagal
+            return;
+        }
+        FacadesFile::copy($src, $dest); // melempar exception kalau gagal
+    }
+
+    /**
+     * get path according to OS
+     *
+     * @param string $path
+     * @return string
+     */
+    private function getPath($path)
+    {
+        if (PHP_OS === 'Windows' || PHP_OS === 'WINNT') {
+            return str_replace('/', '\\', $path);
+        }
+        return $path;
     }
 }
