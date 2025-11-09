@@ -61,10 +61,13 @@ class AuthController extends StislaController
         if ($this->settingRepository->isActiveRegisterPage() === false)
             abort(404);
 
+        $isGoogleCaptcha = $this->settingRepository->isGoogleCaptchaRegister();
+
         if (config('stisla.app') === AppEnum::APP_CHAT) {
             $provinces = $this->regionRepository->getProvinces();
             return view('tailwind.auth.register', [
                 'provinces' => $provinces,
+                'isGoogleCaptcha' => $isGoogleCaptcha
             ]);
         }
 
@@ -76,7 +79,7 @@ class AuthController extends StislaController
         //         return view('stisla.auth.login.index-stisla');
         // }
         // return view('stisla.auth.login.index');
-        $isGoogleCaptcha = $this->settingRepository->isGoogleCaptchaRegister();
+
         if (TEMPLATE === STISLA)
             return view('stisla.auth.register.index', [
                 'isGoogleCaptcha' => $isGoogleCaptcha
@@ -146,14 +149,16 @@ class AuthController extends StislaController
         }
 
         $isGoogleCaptcha = SettingRepository::isGoogleCaptchaLogin();
+        $data     = [
+            'isGoogleCaptcha' => $isGoogleCaptcha,
+        ];
+        // dd(config('captcha.sitekey'), config('captcha.secret')); // sementara buat cek
         if (config('stisla.app') === AppEnum::APP_CHAT) {
-            return view('tailwind.auth.login');
+            return view('tailwind.auth.login', $data);
         }
         if (TEMPLATE === STISLA) {
             $template = $this->settingRepository->stislaLoginTemplate();
-            $data     = [
-                'isGoogleCaptcha' => $isGoogleCaptcha,
-            ];
+
             if ($template === 'tampilan 2' || Route::is('login2')) {
                 return view('stisla.auth.login.index2', $data);
             } else {

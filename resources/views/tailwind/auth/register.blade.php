@@ -135,6 +135,12 @@
           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required="" minlength="4">
       </div>
 
+      @if ($isGoogleCaptcha)
+        <div class="mb-4">
+          @include('stisla.auth.gcaptcha')
+        </div>
+      @endif
+
 
       {{-- <div class="mb-4 flex justify-center">
           <div>

@@ -784,8 +784,8 @@ return [
         ['key' => 'is_forgot_password_send_to_email', 'value' => '0'],
         ['key' => 'google_captcha_site_key', 'value' => 'default_site_key'],
         ['key' => 'google_captcha_secret', 'value' => 'default_secret'],
-        ['key' => 'is_google_captcha_login', 'value' => '0'],
-        ['key' => 'is_google_captcha_register', 'value' => '0'],
+        ['key' => 'is_google_captcha_login', 'value' => '1'],
+        ['key' => 'is_google_captcha_register', 'value' => '1'],
         ['key' => 'is_google_captcha_forgot_password', 'value' => '0'],
         ['key' => 'is_google_captcha_reset_password', 'value' => '0'],
 
