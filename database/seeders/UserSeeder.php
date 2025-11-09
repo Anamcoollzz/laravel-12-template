@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Role;
 use App\Repositories\RegionRepository;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -38,7 +39,8 @@ class UserSeeder extends Seeder
                 'address'              => $user['address'] ?? null,
                 'last_password_change' => date('Y-m-d H:i:s'),
                 'created_by_id'        => 1,
-                'last_updated_by_id'   => null
+                'last_updated_by_id'   => null,
+                'uuid'                 => isset($user['uuid']) ? $user['uuid'] : Str::uuid()->toString(),
             ]);
             foreach ($user['roles'] as $role)
                 if (in_array($role, $rolesArray))
@@ -72,6 +74,7 @@ class UserSeeder extends Seeder
                 'city_code'            => $city = $gs->getCities($province)->random()->code,
                 'district_code'        => $district = $gs->getDistricts($city)->random()->code,
                 'village_code'         => $gs->getVillages($district)->random()->code,
+                'uuid'                 => Str::uuid()->toString(),
             ]);
             $userObj->assignRole('user');
         }

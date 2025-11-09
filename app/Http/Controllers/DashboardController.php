@@ -185,6 +185,20 @@ class DashboardController extends StislaController
                 'icon'  => 'users',
                 'route' => route('user-management.users.index'),
             ];
+            $widgets[] = (object)[
+                'title' => 'Orang Majalengka',
+                'count' => User::where('is_majalengka', 1)->role('user')->count(),
+                'bg'    => 'danger',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
+            $widgets[] = (object)[
+                'title' => 'Orang Bukan Majalengka',
+                'count' => User::where('is_majalengka', 0)->role('user')->count(),
+                'bg'    => 'danger',
+                'icon'  => 'users',
+                'route' => route('user-management.users.index'),
+            ];
         }
         if ($user->can('Role'))
             $widgets[] = (object)[
