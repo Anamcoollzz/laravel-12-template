@@ -100,6 +100,15 @@
   ])
 </div>
 <div class="col-md-6">
+  @include('stisla.includes.forms.inputs.input-checkbox', [
+      'required' => false,
+      'id' => 'is_active',
+      'label' => 'Is Active',
+      'options' => ['1' => 'Ya'],
+      'is_boolean' => true,
+  ])
+</div>
+<div class="col-md-6">
   @include('stisla.includes.forms.inputs.input-file')
 </div>
 <div class="col-md-6">
@@ -133,5 +142,21 @@
       'name' => 'summernote',
       'label' => 'Summernote',
       'id' => 'summernote',
+  ])
+</div>
+<div class="col-md-12">
+  @include('stisla.includes.forms.editors.tinymce', [
+      'required' => true,
+      'name' => 'tinymce',
+      'label' => 'TinyMCE',
+      'id' => 'tinymce',
+  ])
+</div>
+<div class="col-md-12">
+  @include('stisla.includes.forms.editors.ckeditor', [
+      'required' => true,
+      'name' => 'ckeditor',
+      'label' => 'CKEditor 5',
+      'id' => 'ckeditor',
   ])
 </div>

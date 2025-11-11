@@ -100,8 +100,8 @@ class RolePermissionSeeder extends Seeder
     {
 
         // default permissions
-        // $permissions = $permissions ? $permissions : config('stisla.permissions');
-        $permissions = $permissions ? $permissions : config('stisla-chat.permissions');
+        $permissions = $permissions ? $permissions : config('stisla.permissions');
+        // $permissions = $permissions ? $permissions : config('stisla-chat.permissions');
         foreach ($permissions as $permission) {
             if (!in_array($permission['group'], $this->groupNames)) {
                 $this->groupNames[] = $permission['group'];

@@ -1,5 +1,5 @@
 @php
-  $file = $file ?? $item->file;
+  $file = $file ?? ($item->image ?? $item->file);
 @endphp
 @if (Str::contains($file, 'http') || Str::contains($file, 'https://'))
   <a href="{{ $file }}" onclick="showImageModal(event, '{{ $file }}')">

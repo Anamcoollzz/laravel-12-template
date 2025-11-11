@@ -64,21 +64,32 @@ class CrudExampleController extends StislaController
             'phone_number',
             'birthdate',
             'address',
+            'tinymce',
+            'ckeditor',
 
             //columns
         ]);
 
-        $data['currency']     = idr_to_double($request->currency);
-        $data['currency_idr'] = rp_to_double($request->currency_idr);
+        if ($request->filled('is_active')) {
+            $data['is_active'] = true;
+        } else {
+            $data['is_active'] = false;
+        }
+
+        if ($request->has('currency'))
+            $data['currency']     = idr_to_double($request->currency);
+
+        if ($request->has('currency_idr'))
+            $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadCrudExampleFile($request->file('file'));
+            $data['file'] = $this->fileService->uploadFileToFolder($request->file('file'), 'crud-examples/files');
 
         if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
+            $data['image'] = $this->fileService->uploadFileToFolder($request->file('image'), 'crud-examples/images');
 
         if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
+            $data['avatar'] = $this->fileService->uploadFileToFolder($request->file('avatar'), 'crud-examples/avatars');
 
         if ($request->password) {
             $data['password'] = bcrypt($request->password);

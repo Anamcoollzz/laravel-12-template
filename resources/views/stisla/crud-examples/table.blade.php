@@ -25,6 +25,7 @@
   <th>{{ __('Radio') }}</th>
   <th>{{ __('Checkbox') }}</th>
   <th>{{ __('Checkbox 2') }}</th>
+  <th>{{ __('Is Active') }}</th>
   <th>{{ __('Tags') }}</th>
   <th>{{ __('File') }}</th>
   <th>{{ __('Image') }}</th>
@@ -67,6 +68,11 @@
       <td>{{ $item->radio }}</td>
       @include('stisla.includes.others.td-array', ['arr' => $item->checkbox])
       @include('stisla.includes.others.td-array', ['arr' => $item->checkbox2])
+      @if ($item->is_active)
+        <td><span class="badge badge-success">{{ __('Ya') }}</span></td>
+      @else
+        <td><span class="badge badge-danger">{{ __('Tidak') }}</span></td>
+      @endif
       @include('stisla.includes.others.td-tags')
       @include('stisla.includes.others.td-file')
       @include('stisla.includes.others.td-image')

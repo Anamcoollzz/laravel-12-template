@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuSeeder::class);
         $this->call(ChatMessageSeeder::class);
         // $this->call(NotificationSeeder::class);
-        // $this->call(CrudExampleSeeder::class);
+        $this->call(CrudExampleSeeder::class);
         // $this->call(WorkSeeder::class);
         // $this->call(FacultySeeder::class);
         // $this->call(BankSeeder::class);

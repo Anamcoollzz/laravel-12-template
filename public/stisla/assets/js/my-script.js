@@ -370,6 +370,10 @@ function validateEmail(email) {
 $('form')
   .find('button[type="submit"]')
   .click(function (e) {
+    if (window.editorInstance) {
+      alert(1);
+      document.querySelector('.ckeditor5').value = window.editorInstance.getData();
+    }
     $('.is-invalid').removeClass('is-invalid');
     $('.invalid-feedback').remove();
     $('.input-group-text').removeClass('border-danger');

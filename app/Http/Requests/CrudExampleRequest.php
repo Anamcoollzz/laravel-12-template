@@ -51,6 +51,9 @@ class CrudExampleRequest extends FormRequest
             'address'           => 'required',
             'password'          => $this->isMethod('put') ? 'nullable|min:6' : 'required|min:6',
             'avatar'            => $this->isMethod('put') ? 'nullable|image' : 'required|image',
+            'tinymce'           => 'required',
+            'ckeditor'          => 'required',
+            'is_active'         => 'sometimes|in:0,1',
 
             // columns
         ];

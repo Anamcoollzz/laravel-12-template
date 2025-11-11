@@ -80,8 +80,8 @@ class CrudExampleSeeder extends Seeder
                 'checkbox'           => json_encode($checkbox),
                 'checkbox2'          => json_encode($checkbox2),
                 'tags'               => implode(',', $checkbox2),
-                'file'               => 'https://picsum.photos/200/300?random=' . $i,
-                'image'              => 'https://picsum.photos/200/300?random=' . $i,
+                'file'               => 'https://picsum.photos/400/200?random=' . $i,
+                'image'              => 'https://picsum.photos/400/200?random=' . $i,
                 'date'               => $faker->date('Y-m-d'),
                 'time'               => $faker->date('H:i:s'),
                 'color'              => $faker->hexColor,
@@ -99,6 +99,9 @@ class CrudExampleSeeder extends Seeder
                 'phone_number'       => $faker->phoneNumber,
                 'birthdate'          => $faker->date('Y-m-d'),
                 'address'            => $faker->address,
+                'tinymce'            => $faker->randomHtml,
+                'ckeditor'           => $faker->randomHtml,
+                'is_active'          => Arr::random([0, 1]),
 
                 //columns
             ]);

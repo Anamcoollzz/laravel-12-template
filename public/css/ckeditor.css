@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@media print {
+    body {
+        margin: 0 !important;
+    }
+}
+
+:root {
+    --ck-content-font-family: 'Lato';
+    --ck-sidebar-width: 270px;
+}
+
+.main-container {
+    font-family: var(--ck-content-font-family);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.editor-container__editor-wrapper {
+    display: flex;
+    width: fit-content;
+}
+
+.editor-container_include-outline .editor-container__editor .ck.ck-editor__editable {
+    margin-left: 0;
+}
+
+.editor-container_include-outline.editor-container_include-fullscreen .ck-fullscreen__document-outline-header {
+    display: none;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+    min-width: 795px;
+    max-width: 795px;
+}
+
+.editor-container__sidebar {
+    min-width: var(--ck-sidebar-width);
+    max-width: var(--ck-sidebar-width);
+    margin-top: 28px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* Global CSS */
+.ck-editor__editable,
+.ck-editor__editable_inline {
+    min-height: 300px; /* ubah sesuai kebutuhan */
+}

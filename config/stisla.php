@@ -27,7 +27,6 @@ return [
                     'icon' => 'fas fa-atom',
                     'permission' => 'Contoh CRUD',
                     'is_active_if_url_includes' => 'crud-examples*',
-                    'is_mockup' => true
                 ],
                 [
                     'menu_name' => 'Contoh CRUD Yajra',
@@ -35,7 +34,6 @@ return [
                     'icon' => 'fas fa-atom',
                     'permission' => 'Contoh CRUD Yajra',
                     'is_active_if_url_includes' => 'yajra-crud-examples*',
-                    'is_mockup' => true
                 ],
                 [
                     'menu_name' => 'Contoh CRUD Ajax',
@@ -43,7 +41,6 @@ return [
                     'icon' => 'fas fa-atom',
                     'permission' => 'Contoh CRUD Yajra',
                     'is_active_if_url_includes' => 'ajax-crud-examples*',
-                    'is_mockup' => true
                 ],
                 [
                     'menu_name' => 'Contoh CRUD Ajax Yajra',
@@ -51,7 +48,6 @@ return [
                     'icon' => 'fas fa-atom',
                     'permission' => 'Contoh CRUD Ajax Yajra',
                     'is_active_if_url_includes' => 'yajra-ajax-crud-examples*',
-                    'is_mockup' => true
                 ],
                 [
                     'menu_name' => 'Curhat',
@@ -695,51 +691,51 @@ return [
         ],
 
         // contoh crud
-        // [
-        //     'name' => 'Contoh CRUD',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Tambah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Impor Excel',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ubah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Detail',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Hapus',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ekspor',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
+        [
+            'name' => 'Contoh CRUD',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Tambah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Impor Excel',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ubah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Detail',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Hapus',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ekspor',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ajax Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
 
         // bank
         [

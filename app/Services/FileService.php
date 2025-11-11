@@ -104,6 +104,18 @@ class FileService
     }
 
     /**
+     * upload file
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @param string $folder
+     * @return string
+     */
+    public function uploadFileToFolder(\Illuminate\Http\UploadedFile $file, string $folder = 'files')
+    {
+        return $this->executeUpload($file, $folder);
+    }
+
+    /**
      * delete file crud example
      *
      * @param CrudExample $crudExample
