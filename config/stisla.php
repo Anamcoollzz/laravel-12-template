@@ -5,7 +5,7 @@ use App\Enums\AppEnum;
 return [
     'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
     'app' => AppEnum::APP_CHAT,
-    'email' => 'kpakmahalengka@yahoo.co.id',
+    'email' => 'kpakmajalengka@yahoo.co.id',
     'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
     'colors' => [
         'primary' => '#1d90ff'

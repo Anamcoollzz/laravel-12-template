@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         try {
             Schema::disableForeignKeyConstraints();
             $tables = (new DatabaseService)->getAllTableMySql(config('database.connections.mysql.database'));
-            foreach ($tables as $table) {
+            foreach ($tables->toArray() as $table) {
                 // DB::table($table->table)->truncate();
                 Schema::dropIfExists($table->table);
             }

@@ -204,6 +204,7 @@ return [
         'birth_date' => 'tanggal lahir',
         'gender' => 'jenis kelamin',
         'website' => 'situs web',
+        'g-recaptcha-response' => 'google captcha'
     ],
 
 ];

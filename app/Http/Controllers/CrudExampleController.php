@@ -91,9 +91,8 @@ class CrudExampleController extends StislaController
         if ($request->hasFile('avatar'))
             $data['avatar'] = $this->fileService->uploadFileToFolder($request->file('avatar'), 'crud-examples/avatars');
 
-        if ($request->password) {
+        if ($request->password)
             $data['password'] = bcrypt($request->password);
-        }
 
         return $data;
     }

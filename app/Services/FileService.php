@@ -451,7 +451,7 @@ class FileService
      * @param string $pathToSave
      * @return string
      */
-    function base64ToJpeg(String $base64_string, String $folder)
+    public function base64ToJpeg(string $base64_string, string $folder)
     {
         $pathToSave = storage_path('app/public/' . $folder . '/' . date('YmdHis_') . Str::random(20) . '.jpg');
         $pathToSave = str_replace('\\', '/', $pathToSave);
