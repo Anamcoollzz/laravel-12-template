@@ -60,12 +60,10 @@ class UserManagementController extends StislaController
             'birth_date',
             'address',
         ]);
-        if ($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar'))
             $data['avatar'] = $this->fileService->uploadAvatar($request->file('avatar'));
-        }
-        if ($request->filled('password')) {
+        if ($request->filled('password'))
             $data['password'] = bcrypt($request->password);
-        }
         return $data;
     }
 
@@ -144,6 +142,7 @@ class UserManagementController extends StislaController
     {
         $data = $this->getStoreData($request);
         $data['created_by_id'] = auth_id();
+        $data['uuid'] = uuid();
         // $data['last_updated_by_id'] = auth_id();
         $user = $this->userRepository->create($data);
         $this->userRepository->syncRolesByID($user, $request->role);

@@ -20,6 +20,7 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
+        if (!Schema::hasTable('faculties')) return;
         Schema::disableForeignKeyConstraints();
         $data = file_get_contents(database_path('seeders/data/faculties.json'));
         Faculty::truncate();

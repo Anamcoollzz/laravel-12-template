@@ -15,6 +15,7 @@ class BankSeeder extends Seeder
 {
     private function generate()
     {
+        if (!Schema::hasTable('banks')) return;
         Schema::disableForeignKeyConstraints();
         DB::table('banks')->truncate();
         DB::table('bank_deposits')->truncate();

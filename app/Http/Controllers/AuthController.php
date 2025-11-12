@@ -106,14 +106,16 @@ class AuthController extends StislaController
                     'nik',
                     'is_anonymous',
                     'is_majalengka',
+                    'gender',
                 ]
             );
             $data = array_merge([
                 'password'      => bcrypt($request->password),
-                'province_code' => $request->province,
-                'city_code'     => $request->city,
+                'province_code' => $request->is_majalengka ? '32' : $request->province,
+                'city_code'     => $request->is_majalengka ? '32.10' : $request->city,
                 'district_code' => $request->district,
                 'village_code'  => $request->village,
+                'uuid'          => Str::uuid()->toString(),
             ], $data);
             $user = $this->userRepository->create($data);
             $this->userRepository->assignRole($user, 'user');
@@ -196,7 +198,8 @@ class AuthController extends StislaController
             $this->userRepository->update([
                 'is_active'      => true,
                 'wrong_login'    => 0,
-                'blocked_reason' => null
+                'blocked_reason' => null,
+                'uuid'           => $user->uuid ? $user->uuid : uuid(),
             ], $user->id);
             $this->userRepository->login($user);
             return Helper::redirectSuccess(route('dashboard.index'), __('Berhasil masuk ke dalam sistem'));

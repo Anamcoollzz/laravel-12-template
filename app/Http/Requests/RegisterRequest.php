@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\AppEnum;
+use App\Models\User;
 use App\Repositories\SettingRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,7 @@ class RegisterRequest extends FormRequest
             'phone_number'          => 'nullable|numeric',
             'nik'                   => $isChat ? 'required|numeric|unique:users,nik' : 'nullable|numeric|unique:users,nik',
             'birth_date'            => $isChat ? 'required|date' : 'nullable|date',
-            'gender'                => $isChat ? 'required|in:Laki-laki,Perempuan' : 'nullable|in:Laki-laki,Perempuan',
+            'gender'                => $isChat ? 'required|in:' . User::GENDER_MALE . ',' . User::GENDER_FEMALE : 'nullable|in:' . User::GENDER_MALE . ',' . User::GENDER_FEMALE,
             'nik' => $isChat ? [
                 'required',
                 'digits:16',

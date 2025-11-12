@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class ChatMessageSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class ChatMessageSeeder extends Seeder
      */
     public function run(): void
     {
+        if (!Schema::hasTable('chat_messages')) return;
         $users = User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->get();
         foreach ($users as $user) {
             foreach (range(1, 50) as $i) {

@@ -85,7 +85,8 @@ class ViewShare
             $menus = $this->menuRepository->getMenus();
             view()->share('_sidebar_menus', $menus);
 
-            view()->share('_my_notifications', (new \App\Repositories\NotificationRepository)->myUnReadNotif(20));
+            if (auth_user()->can('Notifikasi'))
+                view()->share('_my_notifications', (new \App\Repositories\NotificationRepository)->myUnReadNotif(20));
 
             view()->share('_app_is_demo', config('app.is_demo'));
             view()->share('_is_superadmin', auth_user() ? auth_user()->hasRole('superadmin') : false);

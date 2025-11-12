@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\StudyProgram;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class StudyProgramSeeder extends Seeder
@@ -34,6 +35,7 @@ class StudyProgramSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('study_programs')) return;
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());
@@ -83,7 +85,7 @@ class StudyProgramSeeder extends Seeder
                 // 'last_updated_by_id' => 1,
 
                 'name' => fake()->name(),
-			'faculty_id' => fake()->word(),
+                'faculty_id' => fake()->word(),
             ]);
         }
         foreach (collect($data)->chunk(20) as $chunkData) {

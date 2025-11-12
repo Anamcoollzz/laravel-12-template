@@ -35,6 +35,7 @@ class WorkSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('works')) return;
         Schema::disableForeignKeyConstraints();
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');

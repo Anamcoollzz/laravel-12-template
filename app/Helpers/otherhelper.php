@@ -47,6 +47,7 @@ include 'FileHelper.php';
 include 'DateTimeHelper.php';
 include 'ArrayHelper.php';
 include 'NumberHelper.php';
+include 'DeviceHelper.php';
 
 if (!function_exists('encode_id')) {
     /**
@@ -204,4 +205,14 @@ function is_app_chat()
 function domain()
 {
     return parse_url(config('app.url'), PHP_URL_HOST);
+}
+
+/**
+ * generate uuid string
+ *
+ * @return string
+ */
+function uuid()
+{
+    return \Illuminate\Support\Str::uuid()->toString();
 }

@@ -98,24 +98,26 @@ class ChatController extends StislaController
      */
     public function index(Request $request, $category = null)
     {
-        $isSuperAdmin = auth_user()->hasRole('superadmin');
+        $isSuperAdmin = is_superadmin();
         if ($request->ajax()) {
             $category = $request->category ?? null;
             if ($isSuperAdmin) {
+                $to_user_id = User::where('uuid', $request->uuid)->value('id');
                 return [
                     'status' => 'success',
                     'data' => ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
-                        ->where(function ($query) use ($request) {
-                            $query->where(function ($query) use ($request) {
+                        ->where(function ($query) use ($request, $to_user_id) {
+                            $query->where(function ($query) use ($request, $to_user_id) {
                                 $query->where('from_user_id', 1)
-                                    ->where('to_user_id', $request->to_user_id);
+                                    ->where('to_user_id', $to_user_id);
                             })
-                                ->orWhere(function ($query) use ($request) {
-                                    $query->where('from_user_id', $request->to_user_id)
+                                ->orWhere(function ($query) use ($request, $to_user_id) {
+                                    $query->where('from_user_id', $to_user_id)
                                         ->where('to_user_id', 1);
                                 });
                         })
                         ->where('category', $category)
+                        ->oldest('id')
                         ->oldest('created_at')
                         ->get(),
                 ];
@@ -129,13 +131,8 @@ class ChatController extends StislaController
         if (is_user()) {
             User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
         }
-        // if ($isSuperAdmin) {
-        //     $roomId = md5(auth_user()->id);
-        // } else {
-        //     $roomId = md5('admin_chat_room');
-        // }
         $roomId = md5('1_' . auth_user()->id);
-        $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->latest('last_seen_at')->get() : [];
+        $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous', 'uuid'])->role('user')->latest('last_seen_at')->get() : [];
         // return $users;
         return view('stisla.chats.index', [
             'title'          => 'Chat',
@@ -147,20 +144,29 @@ class ChatController extends StislaController
         return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
     }
 
+    /**
+     * get chat messages
+     *
+     * @param Request $request
+     * @param string $category
+     * @param bool|null $isCountOnly
+     * @return Collection|int
+     */
     private function getChat($request, $category, ?bool $isCountOnly = false)
     {
         $query = ChatMessage::with(['toUser:id,avatar,name', 'fromUser:id,avatar,name'])
             ->whereNull('deleted_at')
             ->where(function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
-                    $query->where('from_user_id', auth_user()->id)
+                    $query->where('from_user_id', auth_id())
                         ->where('to_user_id', 1);
                 })
                     ->orWhere(function ($query) use ($request) {
                         $query->where('from_user_id', 1)
-                            ->where('to_user_id', auth_user()->id);
+                            ->where('to_user_id', auth_id());
                     });
             })
+            ->oldest('id')
             ->oldest('created_at')
             ->where('category', $category);
         $isCountOnly = $isCountOnly ?? false;
@@ -170,9 +176,14 @@ class ChatController extends StislaController
         return $query->get();
     }
 
-    public function users(Request $request)
+    /**
+     * get users list for chat
+     *
+     * @return JsonResponse
+     */
+    public function users()
     {
-        $users = User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous'])->role('user')->latest('last_seen_at')->get();
+        $users = is_superadmin() ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous', 'uuid'])->role('user')->latest('last_seen_at')->get() : [];
         return response()->json([
             'status' => 'success',
             'data'   => $users,
@@ -221,19 +232,22 @@ class ChatController extends StislaController
             $file = $request->file('file')->store('public/chat-files');
         }
         if ($isSuperAdmin) {
+            $to_user_id = $request->to_user_id;
+            if ($request->uuid) {
+                $user = User::where('uuid', $request->uuid)->first();
+                $to_user_id = $user ? $user->id : null;
+            }
             $store = ChatMessage::create([
                 'from_user_id' => auth_user()->id,
-                'to_user_id'   => $request->to_user_id,
+                'to_user_id'   => $to_user_id,
                 'message'      => $request->message,
                 'category'     => $request->category,
                 'file_path'    => $file,
             ]);
-            // User::where('id', $request->to_user_id)->update(['last_seen_at' => now()]);
         } else {
-            // ChatMessage::truncate();
             $count = $this->getChat($request, $request->category, isCountOnly: true);
             $store = ChatMessage::create([
-                'from_user_id' => auth_user()->id,
+                'from_user_id' => auth_id(),
                 'to_user_id'   => 1,
                 'message'      => $request->message,
                 'category'     => $request->category,
@@ -242,12 +256,12 @@ class ChatController extends StislaController
             if ($count === 0) {
                 ChatMessage::create([
                     'from_user_id' => 1,
-                    'to_user_id'   => auth_user()->id,
+                    'to_user_id'   => auth_id(),
                     'message'      => 'Terima kasih telah memulai percakapan. Admin akan membalas pesan anda. Ada yang bisa kami bantu?',
                     'category'     => $request->category,
                 ]);
             }
-            User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
+            User::where('id', auth_id())->update(['last_seen_at' => now()]);
         }
         return ['status' => 'success', 'data' => $store];
         return $this->executeStore($request, withUser: true);
@@ -315,10 +329,17 @@ class ChatController extends StislaController
         return $this->executeImportExcelExample();
     }
 
+    /**
+     * get room id for superadmin
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getRoomId(Request $request)
     {
-        if (auth_user()->hasRole('superadmin')) {
-            $roomId = md5('1_' . $request->to_user_id);
+        if (is_superadmin()) {
+            $userId = User::where('uuid', $request->uuid)->value('id');
+            $roomId = md5('1_' . $userId);
             return response()->json([
                 'success' => true,
                 'roomId'  => $roomId,
@@ -330,13 +351,19 @@ class ChatController extends StislaController
         ]);
     }
 
-    public function reset(Request $request, $category)
+    /**
+     * reset chat history
+     *
+     * @param string $category
+     * @return Response
+     */
+    public function reset(string $category)
     {
         if (is_user()) {
             ChatMessage::where('category', $category)
                 ->where(function ($query) {
-                    $query->where('from_user_id', auth_user()->id)
-                        ->orWhere('to_user_id', auth_user()->id);
+                    $query->where('from_user_id', auth_id())
+                        ->orWhere('to_user_id', auth_id());
                 })
                 ->whereNull('deleted_at')
                 ->update(['deleted_at' => now()]);

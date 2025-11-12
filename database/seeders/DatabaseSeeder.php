@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         try {
             Schema::disableForeignKeyConstraints();
             $tables = (new DatabaseService)->getAllTableMySql(config('database.connections.mysql.database'));
-            foreach ($tables->toArray() as $table) {
+            foreach ($tables as $table) {
                 // DB::table($table->table)->truncate();
                 Schema::dropIfExists($table->table);
             }
@@ -56,10 +56,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(MenuSeeder::class);
         $this->call(ChatMessageSeeder::class);
-        // $this->call(NotificationSeeder::class);
+        $this->call(NotificationSeeder::class);
         $this->call(CrudExampleSeeder::class);
-        // $this->call(WorkSeeder::class);
-        // $this->call(FacultySeeder::class);
-        // $this->call(BankSeeder::class);
+        $this->call(WorkSeeder::class);
+        $this->call(FacultySeeder::class);
+        $this->call(BankSeeder::class);
     }
 }

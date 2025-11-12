@@ -57,4 +57,14 @@ class GeneralService
     {
         return $this->agent->isMobile();
     }
+
+    /**
+     * check if user is using desktop device
+     *
+     * @return boolean
+     */
+    public function isDesktop()
+    {
+        return $this->agent->isDesktop();
+    }
 }

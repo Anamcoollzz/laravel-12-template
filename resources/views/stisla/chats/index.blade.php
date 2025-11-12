@@ -12,14 +12,14 @@
 @endsection
 
 @section('content')
-  <div class="section-header">
+  {{-- <div class="section-header">
     <h1>{{ $title }} ({{ $cat }})</h1>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active"><a href="{{ route('dashboard.index') }}">Dashboard</a></div>
       <div class="breadcrumb-item"><a href="#">Chat</a></div>
       <div class="breadcrumb-item">{{ $cat }}</div>
     </div>
-  </div>
+  </div> --}}
   {{-- @include('stisla.includes.breadcrumbs.breadcrumb-table')
   @include('stisla.includes.others.alert-password') --}}
   {{-- <div class="section-body">
@@ -91,6 +91,10 @@
     @endif
 
     @if (is_user() && config('app.is_mobile'))
+      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Beranda</a>
+      <a href="#" onclick="if(confirm('Anda yakin?')) { location.href='{{ route('chatting-yuk-delete', $category) }}'; }" class="btn btn-danger btn-icon mb-3"><i class="fa fa-trash"></i> Hapus
+        Riwayat Chat</a>
+    @elseif(is_user() && is_desktop())
       <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Beranda</a>
       <a href="#" onclick="if(confirm('Anda yakin?')) { location.href='{{ route('chatting-yuk-delete', $category) }}'; }" class="btn btn-danger btn-icon mb-3"><i class="fa fa-trash"></i> Hapus
         Riwayat Chat</a>
@@ -295,7 +299,8 @@
             // });
             // this.message = '';
             axios.post('{{ url('chats') }}', {
-              to_user_id: self.user.id, // for demo purpose, send to user id 1
+              //   to_user_id: self.user.id, // for demo purpose, send to user id 1
+              uuid: self.user.uuid,
               message: this.message || $('#message-chat').val(),
               category: self.category
             }, {
@@ -325,7 +330,8 @@
               'X-Requested-With': 'XMLHttpRequest'
             },
             params: {
-              to_user_id: self.user.id,
+              //   to_user_id: self.user.id,
+              uuid: self.user.uuid,
               category: self.category
             }
           }).then(function(response) {
@@ -363,7 +369,8 @@
               'X-Requested-With': 'XMLHttpRequest'
             },
             params: {
-              to_user_id: self.user.id
+              //   to_user_id: self.user.id
+              uuid: self.user.uuid
             }
           }).then(function(response) {
             if (response.data.success) {
@@ -399,7 +406,8 @@
           var file = event.target.files[0];
           if (file) {
             var formData = new FormData();
-            formData.append('to_user_id', self.user.id);
+            // formData.append('to_user_id', self.user.id);
+            formData.append('uuid', self.user.uuid);
             formData.append('category', self.category);
             formData.append('file', file);
 
