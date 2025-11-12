@@ -968,6 +968,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1066,6 +1087,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',

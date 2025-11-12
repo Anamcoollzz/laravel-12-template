@@ -642,6 +642,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Pojok LAJUR PESAT'],
+        ['key' => 'meta_og_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo2.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Pojok LAJUR PESAT'],
+        ['key' => 'meta_twitter_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo2.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo2.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -742,6 +763,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Pojok LAJUR PESAT'],
+        ['key' => 'meta_og_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo2.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Pojok LAJUR PESAT'],
+        ['key' => 'meta_twitter_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo2.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Ruang aman bagi remaja untuk berbagi cerita, menemukan dukungan dan belajar peduli terhadap isue HIV/Aids secara positif dan menyenangkan'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo2.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',

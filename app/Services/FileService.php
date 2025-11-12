@@ -196,6 +196,18 @@ class FileService
     }
 
     /**
+     * upload to specific folder
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @param string $folder
+     * @return string
+     */
+    public function uploadToFolder(\Illuminate\Http\UploadedFile $file, string $folder)
+    {
+        return $this->executeUpload($file, $folder);
+    }
+
+    /**
      * upload stisla bg login file
      *
      * @param \Illuminate\Http\UploadedFile $file

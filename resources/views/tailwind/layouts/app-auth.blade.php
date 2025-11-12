@@ -3,13 +3,15 @@
 <html lang="id">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  {{-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="origin-trial"
     content="A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgwODAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
-  <title>{{ $title }} - {{ $_application_name }}</title>
+  <title>{{ $title }} - {{ $_application_name }}</title> --}}
+
+  @include('stisla.includes.others.meta-title')
 
   <link rel="stylesheet" href="{{ url('assets/disdik') }}/all.min.css">
 
@@ -733,9 +735,6 @@
     }
   </style>
 </head>
-
-
-
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 

@@ -10,7 +10,13 @@
   array_push($props, isset($max) ? 'max="' . $max . '"' : '');
   array_push($props, isset($disabled) && $disabled === true ? 'disabled' : '');
   array_push($props, isset($readonly) ? 'readonly' : '');
-  $required = $required ?? false;
+  if (isset($required)) {
+      if ($required == false) {
+          $required = false;
+      }
+  } else {
+      $required = $required ?? false;
+  }
   array_push($props, $required ? 'required' : '');
   array_push($props, isset($type) ? 'type="' . $type . '"' : 'type="text"');
   $has_error = $errors->has($name ?? $id);

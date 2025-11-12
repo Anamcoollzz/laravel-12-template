@@ -1,5 +1,7 @@
 @extends('tailwind.layouts.app-auth', ['title' => 'Masuk'])
 
+@section('title', 'Masuk')
+
 @section('content')
   <div class="w-full md:w-1/2 p-10 md:p-20 flex flex-col justify-center">
 

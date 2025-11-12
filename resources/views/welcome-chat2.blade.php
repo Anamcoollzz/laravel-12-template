@@ -2,41 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="language" content="id">
-  <meta name="geo.country" content="ID">
-  <meta name="geo.placename" content="Indonesia">
-  <meta name="author" content="{{ $_company_name }}">
-  <meta name="description" content="{{ $_app_desc }}">
-  <meta name="keywords" content="Manajemen Data, Manajemen Informasi, Sekolah Dasar, Kabupaten Majalengka, Metafora">
-
-  <title>{{ $_application_name }}</title>
-
-  {{-- <link rel="icon" type="image/png" href="{{ url('') }}/images/metafora-m.webp"> --}}
-  <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
-
-  <meta property="og:locale" content="id_ID">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ url('') }}">
-  <meta property="og:title" content="{{ $_app_name }} {{ $_company_name }}">
-  <meta property="og:description" content="{{ $_app_desc }}">
-  <meta property="og:image" content="{{ $homeleft = asset('assets/images/aids12.png') }}">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:domain" content="{{ domain() }}">
-  <meta name="twitter:url" content="{{ url('') }}">
-  <meta name="twitter:title" content="{{ $_app_name }} {{ $_company_name }}">
-  <meta name="twitter:description" content="{{ $_app_desc }}">
-  <meta name="twitter:image" content="{{ $homeleft }}">
-
-  <meta itemprop="url" content="{{ url('') }}">
-  <meta itemprop="headline" content="{{ $_app_name }} {{ $_company_name }}">
-  <meta itemprop="description" content="{{ $_app_desc }}">
-  <meta itemprop="thumbnailUrl" content="{{ $homeleft }}">
-
-  <meta name="alternate" hreflang="id" href="{{ url('') }}">
+  @include('stisla.includes.others.meta-title')
 
   <link href="{{ asset('assets/disdik2') }}/bootstrap.min.css" rel="stylesheet">
   <link href="{{ asset('assets/disdik2') }}/bootstrap-icons.css" rel="stylesheet">
@@ -146,7 +112,7 @@
 
           <div class="col-lg-6 col-12 mb-5 mb-lg-0 px-0 d-flex justify-content-center">
             {{-- <img src="{{ asset('assets/disdik2') }}/anak-sd.webp" class="img-fluid" width="70%" alt=""> --}}
-            <img src="{{ $homeleft }}" class="img-fluid" width="70%" alt="">
+            <img src="{{ $homeleft = asset('assets/images/aids12.png') }}" class="img-fluid" width="70%" alt="">
           </div>
 
           <div class="col-lg-6 col-12">

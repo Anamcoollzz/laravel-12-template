@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingRequest;
 use App\Repositories\SettingRepository;
-use App\Services\FileService;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Artisan;
@@ -146,6 +145,8 @@ class SettingController extends StislaController
                 $value = $this->fileService->uploadFavicon($request->file('favicon'));
             } else if ($key === 'logo') {
                 $value = $this->fileService->uploadLogo($request->file('logo'));
+            } else if ($key === 'meta_og_image' || $key === 'meta_twitter_image' || $key === 'meta_itemprop_thumbnailUrl') {
+                $value = $this->fileService->uploadToFolder($request->file($key), 'files');
             } else if ($key === 'stisla_bg_login') {
                 $value = $this->fileService->uploadStislaBgLogin($request->file('stisla_bg_login'));
             } else if ($key === 'stisla_bg_home') {
