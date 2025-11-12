@@ -38,12 +38,12 @@ class ChatController extends StislaController
     /**
      * prepare store data
      *
-     * @param CrudExampleRequest $request
      * @return array
      */
-    public function getStoreData(CrudExampleRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'text',
             'email',
             "number",

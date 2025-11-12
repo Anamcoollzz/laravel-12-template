@@ -34,12 +34,12 @@ class FacultyController extends StislaController
     /**
      * prepare store data
      *
-     * @param FacultyRequest $request
      * @return array
      */
-    public function getStoreData(FacultyRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
 
             'name',
         ]);

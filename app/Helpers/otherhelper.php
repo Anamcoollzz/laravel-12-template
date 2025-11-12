@@ -11,3 +11,4 @@ include 'DeviceHelper.php';
 include 'AuthHelper.php';
 include 'StringHelper2.php';
 include 'StringHelper.php';
+include 'SettingHelper.php';

@@ -34,12 +34,12 @@ class OrmawaController extends StislaController
     /**
      * prepare store data
      *
-     * @param OrmawaRequest $request
      * @return array
      */
-    public function getStoreData(OrmawaRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
         ]);
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
 use App\Http\Requests\ImportExcelRequest;
 use App\Http\Requests\UserRequest;
 use App\Imports\UserImport;
@@ -28,6 +27,8 @@ class UserManagementController extends StislaController
 
         $this->icon           = 'fa fa-users';
         $this->viewFolder     = 'user-management';
+        $this->prefix         = 'user-management.users';
+        $this->paperSize      = 'A3';
     }
 
     /**
@@ -48,12 +49,12 @@ class UserManagementController extends StislaController
     /**
      * get store data
      *
-     * @param UserRequest $request
      * @return array
      */
-    private function getStoreData(UserRequest $request): array
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'email',
             'phone_number',
@@ -217,7 +218,7 @@ class UserManagementController extends StislaController
     public function forceLogin(User $user)
     {
         $this->userRepository->login($user);
-        return Helper::redirectSuccess(route('dashboard.index'), __('Berhasil masuk ke dalam sistem'));
+        return redirectSuccess(route('dashboard.index'), 'Berhasil masuk ke dalam sistem');
     }
 
     /**
@@ -280,49 +281,5 @@ class UserManagementController extends StislaController
         $this->fileService->importExcel(new UserImport, $request->file('import_file'));
         $successMessage = successMessageImportExcel("Pengguna");
         return backSuccess($successMessage);
-    }
-
-    /**
-     * download export data as json
-     *
-     * @return BinaryFileResponse
-     */
-    public function json(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadJson($data['data'], $data['json_name']);
-    }
-
-    /**
-     * download export data as xlsx
-     *
-     * @return Response
-     */
-    public function excel(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadExcelGeneral('stisla.user-management.users.table', $data, $data['excel_name']);
-    }
-
-    /**
-     * download export data as csv
-     *
-     * @return Response
-     */
-    public function csv(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadCsvGeneral('stisla.user-management.users.table', $data, $data['csv_name']);
-    }
-
-    /**
-     * download export data as pdf
-     *
-     * @return Response
-     */
-    public function pdf(): Response
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadPdfA3('stisla.includes.others.export-pdf', $data, $data['pdf_name']);
     }
 }

@@ -37,10 +37,9 @@ class FacultyLeaderController extends StislaController
     /**
      * prepare store data
      *
-     * @param FacultyLeaderRequest $request
      * @return array
      */
-    public function getStoreData(FacultyLeaderRequest $request)
+    protected function getStoreData()
     {
         $user = $request->only([
             'name',
@@ -57,7 +56,8 @@ class FacultyLeaderController extends StislaController
             $user = $this->userRepository->create($user);
         }
         $user->assignRole('pimpinan fakultas');
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             // 'name',
             'faculty_id',
         ]);

@@ -55,7 +55,8 @@ class ProfileController extends StislaController
      */
     public function update(ProfileRequest $request)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'email',
             'phone_number',

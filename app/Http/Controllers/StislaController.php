@@ -312,6 +312,7 @@ class StislaController extends Controller implements HasMiddleware
             'isExport'          => false,
             'folder'            => $routePrefix,
             'viewFolder'        => $this->viewFolder,
+            'prefix'            => $this->prefix ?? null,
         ];
     }
 
@@ -445,12 +446,29 @@ class StislaController extends Controller implements HasMiddleware
     /**
      * download export data as xlsx
      *
+     * @param bool $isXlsx
+     * @return Response
+     */
+    private function execExcel($isXlsx = true)
+    {
+        $data  = $this->getExportData();
+        $path = 'stisla.' . $this->viewFolder . '.table';
+        if (!file_exists(resource_path('views/' . $path . '.blade.php'))) {
+            $path = 'stisla.' . $this->prefix . '.table';
+        }
+        if ($isXlsx)
+            return $this->fileService->downloadExcelGeneral($path, $data, $data['excel_name']);
+        return $this->fileService->downloadCsvGeneral($path, $data, $data['csv_name']);
+    }
+
+    /**
+     * download export data as xlsx
+     *
      * @return Response
      */
     public function excel(): BinaryFileResponse
     {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadExcelGeneral('stisla.' . $this->viewFolder . '.table', $data, $data['excel_name']);
+        return $this->execExcel(true);
     }
 
     /**
@@ -460,8 +478,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function csv(): BinaryFileResponse
     {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadCsvGeneral('stisla.' . $this->viewFolder . '.table', $data, $data['csv_name']);
+        return $this->execExcel(false);
     }
 
     /**
@@ -653,6 +670,16 @@ class StislaController extends Controller implements HasMiddleware
         }
 
         return backSuccess($successMessage);
+    }
+
+    /**
+     * get store data
+     *
+     * @return array
+     */
+    protected function getStoreData()
+    {
+        return request()->all();
     }
 
     /**

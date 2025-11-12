@@ -36,12 +36,12 @@ class StudentController extends StislaController
     /**
      * prepare store data
      *
-     * @param StudentRequest $request
      * @return array
      */
-    public function getStoreData(StudentRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             "name",
             "nim",
             // "birth_date",
@@ -53,7 +53,8 @@ class StudentController extends StislaController
         ]);
 
         if (is_mahasiswa()) {
-            $data = $request->only([
+            $request = request();
+            $data = request()->only([
                 "name",
             ]);
         }

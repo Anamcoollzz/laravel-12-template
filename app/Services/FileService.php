@@ -104,18 +104,6 @@ class FileService
     }
 
     /**
-     * upload file
-     *
-     * @param \Illuminate\Http\UploadedFile $file
-     * @param string $folder
-     * @return string
-     */
-    public function uploadFileToFolder(\Illuminate\Http\UploadedFile $file, string $folder = 'files')
-    {
-        return $this->executeUpload($file, $folder);
-    }
-
-    /**
      * delete file crud example
      *
      * @param CrudExample $crudExample
@@ -451,7 +439,7 @@ class FileService
      * @param string $pathToSave
      * @return string
      */
-    public function base64ToJpeg(string $base64_string, string $folder)
+    function base64ToJpeg(String $base64_string, String $folder)
     {
         $pathToSave = storage_path('app/public/' . $folder . '/' . date('YmdHis_') . Str::random(20) . '.jpg');
         $pathToSave = str_replace('\\', '/', $pathToSave);

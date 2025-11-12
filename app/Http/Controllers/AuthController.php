@@ -124,18 +124,18 @@ class AuthController extends StislaController
                 $this->emailService->verifyAccount($user);
                 logRegister($user);
                 DB::commit();
-                return redirect()->route('login')->with('successMessage', __('Cek inbox email anda untuk memverifikasi akun terlebih dahulu'));
+                return redirectSuccess(route('login'), 'Cek inbox email anda untuk memverifikasi akun terlebih dahulu');
             }
             logRegister($user);
             $this->userRepository->login($user);
             DB::commit();
-            return redirect()->route('dashboard.index')->with('successMessage', __('Berhasil mendaftar dan masuk ke dalam sistem'));
+            return redirectSuccess(route('dashboard.index'), 'Berhasil mendaftar dan masuk ke dalam sistem');
         } catch (Exception $e) {
             DB::rollBack();
             if (Str::contains($e->getMessage(), 'SMTP')) {
-                return back()->withInput()->with('errorMessage', __('Gagal mengirim email verifikasi, silahkan coba lagi nanti'));
+                return backError('Gagal mengirim email verifikasi, silahkan coba lagi nanti');
             }
-            return back()->with('errorMessage', __($e->getMessage()));
+            return backError($e->getMessage());
         }
     }
 
@@ -277,11 +277,11 @@ class AuthController extends StislaController
             $this->emailService->forgotPassword($userNew);
             logForgotPassword($user, $userNew);
             DB::commit();
-            return back()->withInput()->with('successMessage', __('Berhasil mengirim ke ' . $request->email));
+            return backSuccess('Berhasil mengirim ke ' . $request->email);
         } catch (Exception $e) {
             DB::rollBack();
             // if (Str::contains($e->getMessage(), 'Connection could not be established')) {
-            return back()->withInput()->with('errorMessage', __('Gagal mengirim email, server email sedang gangguan'));
+            return backError('Gagal mengirim email, server email sedang gangguan');
             // }
             // return $e->getMessage();
         }
@@ -335,16 +335,16 @@ class AuthController extends StislaController
         try {
             $user = $this->userRepository->findByEmailToken($token);
             if ($user === null) {
-                return back()->withInput()->with('errorMessage', __('Gagal memperbarui kata sandi'));
+                return backError('Gagal memperbarui kata sandi');
             }
 
             $userNew = $this->userRepository->update(['password' => bcrypt($request->new_password), 'email_token' => null], $user->id);
 
             logExecute(__('Reset Kata Sandi'), UPDATE, $user->password, $userNew->password);
             DB::commit();
-            return redirect()->route('login')->withInput()->with('successMessage', __('Berhasil memperbarui kata sandi'));
+            return redirectSuccess(route('login'), 'Berhasil memperbarui kata sandi');
         } catch (Exception $e) {
-            return back()->withInput()->with('errorMessage', __('Gagal memperbarui kata sandi'));
+            return backError('Gagal memperbarui kata sandi');
         }
     }
 
@@ -384,11 +384,11 @@ class AuthController extends StislaController
             $this->emailService->verifyAccount($userNew);
             logExecute(__('Email Verifikasi'), UPDATE, null, null);
             DB::commit();
-            return back()->withInput()->with('successMessage', __('Berhasil mengirim link verifikasi ke ' . $request->email));
+            return backSuccess('Berhasil mengirim link verifikasi ke ' . $request->email);
         } catch (Exception $e) {
             DB::rollBack();
             // if (Str::contains($e->getMessage(), 'Connection could not be established')) {
-            return back()->withInput()->with('errorMessage', __('Gagal mengirim email, server email sedang gangguan'));
+            return backError('Gagal mengirim email, server email sedang gangguan');
             // }
             // return $e->getMessage();
         }
@@ -411,7 +411,7 @@ class AuthController extends StislaController
             'verification_code' => null
         ], $user->id);
         logExecute(__('Verifikasi Akun'), UPDATE, $user, $userNew);
-        return redirect()->route('login')->with('successMessage', __('Berhasil memverifikasi akun, silakan masuk menggunakan akun anda'));
+        return redirectSuccess(route('login'), 'Berhasil memverifikasi akun, silakan masuk menggunakan akun anda');
     }
 
     /**
@@ -461,7 +461,7 @@ class AuthController extends StislaController
 
             if ($user->getEmail() || $provider === 'twitter') {
 
-                $successMsg = __('Berhasil masuk ke dalam sistem');
+                $successMsg = 'Berhasil masuk ke dalam sistem';
 
                 if ($provider === 'twitter') {
                     $userModel = $this->userRepository->findByTwitterId($user->getId());
@@ -489,23 +489,23 @@ class AuthController extends StislaController
                     $userModel = $this->userRepository->create($data);
                     $userModel->syncRoles(['admin']);
 
-                    $successMsg = __('Berhasil mendaftar dan masuk ke dalam sistem');
+                    $successMsg = 'Berhasil mendaftar dan masuk ke dalam sistem';
                 }
 
                 if ($userModel === null) {
-                    $msg = $provider === 'twitter' ? __('Akun anda belum terdaftar') : __('Akun ' . $email . ' belum terdaftar');
-                    return redirect()->route('login')->with('errorMessage', $msg);
+                    $msg = $provider === 'twitter' ? 'Akun anda belum terdaftar' : 'Akun ' . $email . ' belum terdaftar';
+                    return redirectError(route('login'), $msg);
                 }
 
                 $this->userRepository->login($userModel);
-                return Helper::redirectSuccess(route('dashboard.index'), $successMsg);
+                return redirectSuccess(route('dashboard.index'), $successMsg);
             }
             return redirect()->route('login')->with('errorMessage', __('Akun tidak ditemukan'));
         } catch (Exception $e) {
             if (config('app.debug')) {
                 throw $e;
             }
-            return redirect()->route('login')->with('errorMessage', __('Ada error'));
+            return redirectError(route('login'), 'Ada error');
         }
     }
 

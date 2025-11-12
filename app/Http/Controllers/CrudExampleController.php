@@ -36,12 +36,12 @@ class CrudExampleController extends StislaController
     /**
      * prepare store data
      *
-     * @param CrudExampleRequest $request
      * @return array
      */
-    public function getStoreData(CrudExampleRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'text',
             'email',
             "number",
@@ -64,35 +64,25 @@ class CrudExampleController extends StislaController
             'phone_number',
             'birthdate',
             'address',
-            'tinymce',
-            'ckeditor',
 
             //columns
         ]);
 
-        if ($request->filled('is_active')) {
-            $data['is_active'] = true;
-        } else {
-            $data['is_active'] = false;
-        }
-
-        if ($request->has('currency'))
-            $data['currency']     = idr_to_double($request->currency);
-
-        if ($request->has('currency_idr'))
-            $data['currency_idr'] = rp_to_double($request->currency_idr);
+        $data['currency']     = idr_to_double($request->currency);
+        $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadFileToFolder($request->file('file'), 'crud-examples/files');
+            $data['file'] = $this->fileService->uploadCrudExampleFile($request->file('file'));
 
         if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadFileToFolder($request->file('image'), 'crud-examples/images');
+            $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
 
         if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadFileToFolder($request->file('avatar'), 'crud-examples/avatars');
+            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
 
-        if ($request->password)
+        if ($request->password) {
             $data['password'] = bcrypt($request->password);
+        }
 
         return $data;
     }
