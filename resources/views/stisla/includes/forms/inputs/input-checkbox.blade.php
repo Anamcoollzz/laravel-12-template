@@ -2,6 +2,7 @@
   $value = old($name ?? $id) ?? ($value ?? ($d[$name ?? $id] ?? []));
   $name = $name ?? $id;
   $required = $required ?? false;
+  $is_boolean = $is_boolean ?? false;
 @endphp
 <div class="form-group" data-required="{{ $required }}">
   <label class="form-label">
@@ -10,6 +11,11 @@
       <span class="text-danger">*</span>
     @endif
   </label>
+  @if ($is_boolean)
+    @php
+      $value = $value ? ['1'] : [];
+    @endphp
+  @endif
   @foreach ($options as $opValue => $opLabel)
     <div class="row gutters-xs">
       <div class="col-auto">

@@ -50,12 +50,12 @@ class PermissionGroupController extends StislaController
     /**
      * get store data
      *
-     * @param PermissionGroupRequest $request
      * @return array
      */
-    private function getStoreData(PermissionGroupRequest $request): array
+    protected function getStoreData()
     {
-        $data = $request->only(['group_name']);
+        $request = request();
+        $data = request()->only(['group_name']);
         return $data;
     }
 

@@ -1,5 +1,5 @@
 @include('stisla.includes.forms.inputs.input', [
-    'required' => isset($d) ? false : true,
+    'required' => $required ?? (isset($d) ? false : true),
     'id' => $id ?? 'image',
     'type' => 'file',
     'label' => $label ?? 'Image',

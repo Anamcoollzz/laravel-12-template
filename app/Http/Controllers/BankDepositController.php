@@ -43,12 +43,12 @@ class BankDepositController extends StislaController
     /**
      * prepare store data
      *
-     * @param BankDepositRequest $request
      * @return array
      */
-    public function getStoreData(BankDepositRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'bank_id',
             'per_anum',
             // 'amount',

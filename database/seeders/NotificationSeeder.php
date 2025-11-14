@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class NotificationSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class NotificationSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('notifications')) return;
         $userId = User::whereEmail('superadmin@laravel12template.com')->first()->id ?? 1;
         foreach (range(1, 20) as $i) {
             Notification::create([

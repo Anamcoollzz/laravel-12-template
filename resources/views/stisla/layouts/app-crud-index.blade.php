@@ -6,7 +6,11 @@
 @extends('stisla.layouts.app-datatable')
 
 @section('table')
-  @include('stisla.' . $prefix . '.table')
+  @include('stisla.' . $prefix . '.table', ['data' => $data, 'isTrashed' => false])
+@endsection
+
+@section('table-deleted')
+  @include('stisla.' . $prefix . '.table', ['data' => $deletedData, 'isTrashed' => true])
 @endsection
 
 @if ($canFilterData)

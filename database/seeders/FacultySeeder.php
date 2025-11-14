@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Repositories\StudentRepository;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class FacultySeeder extends Seeder
@@ -20,6 +21,7 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
+        if (!Schema::hasTable('faculties')) return;
         Schema::disableForeignKeyConstraints();
         $data = file_get_contents(database_path('seeders/data/faculties.json'));
         Faculty::truncate();
@@ -66,7 +68,7 @@ class FacultySeeder extends Seeder
                     'study_program_id' => Arr::random($studyProgramIds),
                 ]);
             } catch (\Exception $e) {
-                \Log::error("Error creating student : {$e->getMessage()}");
+                Log::error("Error creating student : {$e->getMessage()}");
             }
         }
 

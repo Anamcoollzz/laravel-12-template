@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Ormawa;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class OrmawaSeeder extends Seeder
@@ -34,6 +35,7 @@ class OrmawaSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('ormawas')) return;
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());

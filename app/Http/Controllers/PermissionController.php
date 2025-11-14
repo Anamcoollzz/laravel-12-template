@@ -47,12 +47,12 @@ class PermissionController extends StislaController
     /**
      * get store data
      *
-     * @param PermissionRequest $request
      * @return array
      */
-    private function getStoreData(PermissionRequest $request): array
+    protected function getStoreData()
     {
-        $data = $request->only(['name', 'permission_group_id']);
+        $request = request();
+        $data = request()->only(['name', 'permission_group_id']);
         return $data;
     }
 

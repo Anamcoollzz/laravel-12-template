@@ -32,6 +32,8 @@ class RolePermissionSeeder extends Seeder
         Permission::truncate();
 
         $roles = config('stisla.roles');
+        if (is_app_chat())
+            $roles = config('stisla-chat.roles');
         $rolesData = [];
         foreach ($roles as $role) {
             // $roleObj = Role::create([
@@ -95,11 +97,21 @@ class RolePermissionSeeder extends Seeder
         // dd(DB::getQueryLog()[1859], DB::getQueryLog()[1858], DB::getQueryLog()[1857]);
     }
 
+    /**
+     * generate permission
+     *
+     * @param boolean $permissions
+     * @return void
+     */
     private function generatePermission($permissions = false)
     {
 
         // default permissions
-        $permissions = $permissions ? $permissions : config('stisla.permissions');
+        if (is_app_chat()) {
+            $permissions = $permissions ? $permissions : config('stisla-chat.permissions');
+        } else {
+            $permissions = $permissions ? $permissions : config('stisla.permissions');
+        }
         foreach ($permissions as $permission) {
             if (!in_array($permission['group'], $this->groupNames)) {
                 $this->groupNames[] = $permission['group'];
@@ -116,24 +128,30 @@ class RolePermissionSeeder extends Seeder
                 // dd($permission['roles']);
             }
             $perm = Permission::create([
-                'name'                => $permission['name'],
+                'name'                => $name = $permission['name'],
                 'permission_group_id' => $group->id
             ]);
             // foreach ($permission['roles'] as $role) {
             //     if (in_array($role, $this->rolesArray))
             //         $perm->assignRole($role);
             // }
+            // if ($name === 'Profil Hapus Akun') {
+            //     dd($permission['roles'], $roles->toArray());
+            // }
+            $roles = Role::whereIn('name', $permission['roles'])->get();
             $perm->syncRoles($roles);
         }
     }
 
     private function perModule()
     {
+        if (is_app_chat())
+            return;
         $files = File::allFiles(base_path('config'));
         foreach ($files as $file) {
             if (
                 Str::contains($file->getFilename(), '-permission.php')
-                // && !Str::contains($file->getFilename(), 'example-crud-permission.php')
+                && !Str::contains($file->getFilename(), 'crud-example-permission.php')
             ) {
                 $this->generatePermission(config(str_replace('.php', '', $file->getFilename())));
             }

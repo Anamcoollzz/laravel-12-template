@@ -1,6 +1,17 @@
 <?php
 
+use App\Enums\AppEnum;
+
 return [
+    'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
+    // 'app' => AppEnum::APP_CHAT,
+    'app' => AppEnum::APP_DEFAULT,
+    'table_excludes' => is_app_chat() ? ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'noticiations'] : [],
+    'email' => 'kpakmajalengka@yahoo.co.id',
+    'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
+    'colors' => [
+        'primary' => '#1d90ff'
+    ],
     'menus' => [
         [
             'group_name' => 'Navigasi',
@@ -43,6 +54,30 @@ return [
                     'permission' => 'Contoh CRUD Ajax Yajra',
                     'is_active_if_url_includes' => 'yajra-ajax-crud-examples*',
                     'is_mockup' => true
+                ],
+                [
+                    'menu_name' => 'Curhat',
+                    'route_name' => null,
+                    'uri' => 'chatting-yuk/curhat',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Curhat',
+                    'is_active_if_url_includes' => 'chatting-yuk/curhat*',
+                ],
+                [
+                    'menu_name' => 'Keluhan Penyakit',
+                    'route_name' => null,
+                    'uri' => 'chatting-yuk/keluhan-penyakit',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Keluhan Penyakit',
+                    'is_active_if_url_includes' => 'chatting-yuk/keluhan-penyakit*',
+                ],
+                [
+                    'menu_name' => 'Pertanyaan Lainnya',
+                    'route_name' => null,
+                    'uri' => 'chatting-yuk/pertanyaan-lainnya',
+                    'icon' => 'fas fa-message',
+                    'permission' => 'Pertanyaan Lainnya',
+                    'is_active_if_url_includes' => 'chatting-yuk/pertanyaan-lainnya*',
                 ],
                 [
                     'menu_name' => 'Bank',
@@ -662,51 +697,56 @@ return [
         ],
 
         // contoh crud
-        // [
-        //     'name' => 'Contoh CRUD',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Tambah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Impor Excel',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ubah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Detail',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Hapus',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ekspor',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
+        [
+            'name' => 'Contoh CRUD',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Terhapus',
+            'roles' => ['superadmin'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Tambah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Impor Excel',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ubah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Detail',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Hapus',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ekspor',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ajax Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
 
         // bank
         [
@@ -934,6 +974,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1032,6 +1093,27 @@ return [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
         ],
+        // new
+        ['key' => 'meta_language', 'value' => 'id'],
+        ['key' => 'meta_geo_country', 'value' => 'ID'],
+        ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
+        ['key' => 'meta_og_locale', 'value' => 'id_ID'],
+        ['key' => 'meta_og_type', 'value' => 'website'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_og_url', 'value' => env('APP_URL')],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        // twitter
+        ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_domain', 'value' => domain()],
+        ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
+        // itemprop
+        ['key' => 'meta_itemprop_headline', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1130,6 +1212,16 @@ return [
         [
             'name'              => 'Hairul Anam User',
             'email'             => 'user@laravel12template.com',
+            'password'          => 'user',
+            'roles'             => ['user'],
+            'email_verified_at' => '2021-04-06 04:06:00',
+            'phone_number'      => '6285322778935',
+            'birth_date'        => '1998-04-08',
+            'address'           => 'Jember'
+        ],
+        [
+            'name'              => 'Ahfa User',
+            'email'             => 'ahfauser@laravel12template.com',
             'password'          => 'user',
             'roles'             => ['user'],
             'email_verified_at' => '2021-04-06 04:06:00',

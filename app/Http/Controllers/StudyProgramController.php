@@ -35,12 +35,12 @@ class StudyProgramController extends StislaController
     /**
      * prepare store data
      *
-     * @param StudyProgramRequest $request
      * @return array
      */
-    public function getStoreData(StudyProgramRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'faculty_id',
         ]);

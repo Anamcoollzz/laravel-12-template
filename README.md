@@ -78,6 +78,7 @@ Beberapa fitur atau komponen yang ada
 ## How to install and run
 
 -   `composer install`
+-   `cp .env.example .env`
 -   setup your DB in `.env`
 -   `php artisan jwt:secret`
 -   `php artisan migrate --seed`

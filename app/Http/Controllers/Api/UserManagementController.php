@@ -88,7 +88,8 @@ class UserManagementController extends StislaController
     public function update(UserRequest $request, mixed $userId)
     {
         $user = $this->userRepository->findOrFail($userId);
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'email',
             'phone_number',

@@ -30,6 +30,9 @@ function successMessageUpdate($nextTitle = '')
  */
 function successMessageDelete($nextTitle = '')
 {
+    if (request()->input('variant') === 'warning') {
+        return __('Berhasil Memindahkan Data ' . ($nextTitle) . ' Ke Tempat Sampah');
+    }
     return __('Berhasil Menghapus Data ' . ($nextTitle));
 }
 
@@ -103,4 +106,26 @@ function failedMessageDelete($nextTitle = '')
 function failedMessageLoadData($nextTitle = '')
 {
     return __('Gagal Mengambil Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageRestore
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageRestore($nextTitle = '')
+{
+    return __('Berhasil Mengembalikan Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageForceDelete
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageForceDelete($nextTitle = '')
+{
+    return __('Berhasil Menghapus Secara Permanen Data ' . ($nextTitle));
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\FacultyLeader;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class FacultyLeaderSeeder extends Seeder
@@ -34,6 +35,7 @@ class FacultyLeaderSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('faculty_leaders')) return;
         $data         = [];
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());
@@ -88,7 +90,7 @@ class FacultyLeaderSeeder extends Seeder
                 'address'            => $faker->address,
 
                 'name' => fake()->name(),
-			'faculty_id' => fake()->word(),
+                'faculty_id' => fake()->word(),
             ]);
         }
 

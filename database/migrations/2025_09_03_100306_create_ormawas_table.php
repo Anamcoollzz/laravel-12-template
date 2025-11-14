@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ormawas', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50);
+        if (!in_array('ormawas', config('stisla.table_excludes')))
+            Schema::create('ormawas', function (Blueprint $table) {
+                $table->id();
+                $table->string('name', 50);
 
-            // wajib
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->unsignedBigInteger('last_updated_by_id')->nullable();
-            $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-        
-        });
+                // wajib
+                $table->timestamps();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('last_updated_by_id')->nullable();
+                $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+                $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            });
     }
 
     /**

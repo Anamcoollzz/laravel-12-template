@@ -27,8 +27,9 @@ class RoleController extends StislaController
 
         $this->defaultMiddleware('Role');
 
-        $this->icon = 'fas fa-user-tag';
+        $this->icon       = 'fas fa-user-tag';
         $this->viewFolder = 'user-management.roles';
+        $this->prefix     = 'user-management.roles';
     }
 
     /**
@@ -47,12 +48,12 @@ class RoleController extends StislaController
     /**
      * get store data
      *
-     * @param RoleRequest $request
      * @return array
      */
-    private function getStoreData(RoleRequest $request): array
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'permissions',
             'name',
         ]);
@@ -244,49 +245,5 @@ class RoleController extends StislaController
             DB::rollBack();
             return back()->with('errorMessage', $exception->getMessage());
         }
-    }
-
-    /**
-     * download export data as json
-     *
-     * @return BinaryFileResponse
-     */
-    public function json(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadJson($data['data'], $data['json_name']);
-    }
-
-    /**
-     * download export data as xlsx
-     *
-     * @return Response
-     */
-    public function excel(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadExcelGeneral('stisla.user-management.roles.table', $data, $data['excel_name']);
-    }
-
-    /**
-     * download export data as csv
-     *
-     * @return Response
-     */
-    public function csv(): BinaryFileResponse
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadCsvGeneral('stisla.user-management.roles.table', $data, $data['csv_name']);
-    }
-
-    /**
-     * download export data as pdf
-     *
-     * @return Response
-     */
-    public function pdf(): Response
-    {
-        $data  = $this->getExportData();
-        return $this->fileService->downloadPdfLetter('stisla.includes.others.export-pdf', $data, $data['pdf_name'], 'portrait');
     }
 }

@@ -34,12 +34,12 @@ class AlumniController extends StislaController
     /**
      * prepare store data
      *
-     * @param AlumniRequest $request
      * @return array
      */
-    public function getStoreData(AlumniRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'work_id',
         ]);
 

@@ -317,7 +317,8 @@ class AuthController extends StislaController
      */
     public function updateProfile(ProfileRequest $request)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'email'
         ]);
