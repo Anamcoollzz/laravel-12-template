@@ -48,6 +48,7 @@ class CreateCrudExamplesTable extends Migration
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->softDeletes();
         });
     }
 

@@ -187,3 +187,36 @@ function logDelete(string $nextTextTitle, $before)
     $after        = null;
     return logExecute($title, $activityType, $before, $after);
 }
+
+/**
+ * logRestore
+ *
+ * @param string $nextTextTitle
+ * @param mixed $before
+ * @param mixed $after
+ * @return ActivityLog
+ */
+function logRestore(string $nextTextTitle, $before, $after)
+{
+    $title        = __('Pulihkan ' . $nextTextTitle);
+    $activityType = RESTORE;
+    $before       = $before;
+    $after        = $after;
+    return logExecute($title, $activityType, $before, $after);
+}
+
+/**
+ * logForceDelete
+ *
+ * @param string $nextTextTitle
+ * @param mixed $before
+ * @return ActivityLog
+ */
+function logForceDelete(string $nextTextTitle, $before)
+{
+    $title        = __('Hapus Permanen ' . $nextTextTitle);
+    $activityType = FORCE_DELETE;
+    $before       = $before;
+    $after        = null;
+    return logExecute($title, $activityType, $before, $after);
+}

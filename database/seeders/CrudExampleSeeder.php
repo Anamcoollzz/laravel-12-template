@@ -99,6 +99,8 @@ class CrudExampleSeeder extends Seeder
                 'phone_number'       => $faker->phoneNumber,
                 'birthdate'          => $faker->date('Y-m-d'),
                 'address'            => $faker->address,
+                // 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
+                'deleted_at' => null,
 
                 //columns
             ]);

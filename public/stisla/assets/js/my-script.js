@@ -16,30 +16,31 @@ function unique(array) {
 
 function initDataTables() {
   // datatable
-  if ($('#datatable').length > 0) {
-    var $dtTbl = $('#datatable');
-    var options = {
-      language: {
-        lengthMenu: 'Menampilkan _MENU_ baris data per halaman',
-        zeroRecords: 'Tidak ada data',
-        info: 'Menampilkan halaman _PAGE_ dari _PAGES_, total data sebanyak _TOTAL_',
-        infoFiltered: '(difilter dari _MAX_ total data)',
-        search: 'Pencarian',
-        paginate: {
-          previous: 'Sebelumnya',
-          next: 'Selanjutnya',
-        },
-        buttons: {
-          copySuccess: {
-            1: '1 baris disalin ke papanklip',
-            _: '%d baris disalin ke papanklip',
-          },
-          copyTitle: 'Salin ke papanklip',
-        },
+  var options = {
+    language: {
+      lengthMenu: 'Menampilkan _MENU_ baris data per halaman',
+      zeroRecords: 'Tidak ada data',
+      info: 'Menampilkan halaman _PAGE_ dari _PAGES_, total data sebanyak _TOTAL_',
+      infoFiltered: '(difilter dari _MAX_ total data)',
+      search: 'Pencarian',
+      paginate: {
+        previous: 'Sebelumnya',
+        next: 'Selanjutnya',
       },
-    };
+      buttons: {
+        copySuccess: {
+          1: '1 baris disalin ke papanklip',
+          _: '%d baris disalin ke papanklip',
+        },
+        copyTitle: 'Salin ke papanklip',
+      },
+    },
+  };
+  if ($('#datatable').length > 0 || $('#datatable-trashed').length > 0) {
+    var $dtTbl = $('#datatable');
+    var $dtTblTrashed = $('#datatable-trashed');
 
-    if ($dtTbl.data('export') === true) {
+    if ($dtTbl.data('export') === true || $dtTblTrashed.data('export') === true) {
       var title = $dtTbl.data('title') && $dtTbl.data('title').replace(' ', '_').toLowerCase();
       title = title ? title + '_export' : document.title;
       options['dom'] = 'lBfrtip';
@@ -106,6 +107,7 @@ function initDataTables() {
       ];
     }
     $dtTbl.DataTable(options);
+    if ($dtTblTrashed.length > 0) $dtTblTrashed.DataTable(options);
   }
 
   // datatable yajra
@@ -699,7 +701,54 @@ if ($('#sessionSuccessMessage').val()) swal('Sukses', $('#sessionSuccessMessage'
 
 if ($('#sessionErrorMessage').val()) swal('Gagal', $('#sessionErrorMessage').val(), 'error');
 
-function deleteGlobal(e, action_url) {
+function deleteGlobal(e, action_url, variant = 'danger') {
+  e.preventDefault();
+  swal({
+    title: 'Anda yakin?',
+    text: variant === 'danger' ? 'Sekali dihapus, data tidak akan kembali lagi!' : 'Data akan dipindahkan ke tempat sampah!',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+    buttons: {
+      cancel: {
+        text: 'Batal',
+        value: null,
+        visible: true,
+        className: '',
+        closeModal: true,
+      },
+      confirm: {
+        text: 'Lanjutkan',
+      },
+    },
+  }).then(function (willDelete) {
+    if (willDelete) {
+      if ($('#isAjax').val() == 1 || $('#isAjaxYajra').val() == 1) {
+        swal('Info', 'Sedang memproses...', 'info');
+        window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.axios
+          .delete(action_url)
+          .then(function (response) {
+            if ($('#isAjaxYajra').val() == 1) {
+              reloadDataTable();
+            } else {
+              getData();
+            }
+            successMsg(response.data.message).then(function () {});
+          })
+          .catch(function (error) {});
+      } else {
+        $('#formDeleteGlobal').attr('action', action_url);
+        $('#formDeleteGlobal').find('input[name="variant"]').val(variant);
+        document.getElementById('formDeleteGlobal').submit();
+      }
+    } else {
+      swal('Info', 'Okay, tidak jadi', 'info');
+    }
+  });
+}
+
+function forceDeleteGlobal(e, action_url, variant = 'danger') {
   e.preventDefault();
   swal({
     title: 'Anda yakin?',
@@ -736,8 +785,55 @@ function deleteGlobal(e, action_url) {
           })
           .catch(function (error) {});
       } else {
-        $('#formDeleteGlobal').attr('action', action_url);
-        document.getElementById('formDeleteGlobal').submit();
+        $('#formForceDeleteGlobal').attr('action', action_url);
+        // $('#formForceDeleteGlobal').find('input[name="variant"]').val(variant);
+        document.getElementById('formForceDeleteGlobal').submit();
+      }
+    } else {
+      swal('Info', 'Okay, tidak jadi', 'info');
+    }
+  });
+}
+
+function restoreGlobal(e, action_url) {
+  e.preventDefault();
+  swal({
+    title: 'Anda yakin?',
+    text: 'Data akan dipulihkan ke data utama!',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+    buttons: {
+      cancel: {
+        text: 'Batal',
+        value: null,
+        visible: true,
+        className: '',
+        closeModal: true,
+      },
+      confirm: {
+        text: 'Lanjutkan',
+      },
+    },
+  }).then(function (willDelete) {
+    if (willDelete) {
+      if ($('#isAjax').val() == 1 || $('#isAjaxYajra').val() == 1) {
+        swal('Info', 'Sedang memproses...', 'info');
+        window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.axios
+          .delete(action_url)
+          .then(function (response) {
+            if ($('#isAjaxYajra').val() == 1) {
+              reloadDataTable();
+            } else {
+              getData();
+            }
+            successMsg(response.data.message).then(function () {});
+          })
+          .catch(function (error) {});
+      } else {
+        $('#formRestoreGlobal').attr('action', action_url);
+        document.getElementById('formRestoreGlobal').submit();
       }
     } else {
       swal('Info', 'Okay, tidak jadi', 'info');

@@ -62,6 +62,7 @@ class ViewShare
             view()->share('_country', "Indonesia");
             view()->share('_stisla_bg_home', asset('stisla/assets/img/unsplash/andre-benz-1214056-unsplash.jpg'));
             view()->share('_app_description', "Ini hanyalah sistem biasa");
+            view()->share('_app_desc', "Ini hanyalah sistem biasa");
             view()->share('_stisla_sidebar_mini', "0");
 
             view()->share('isYajra', false);

@@ -181,6 +181,8 @@ Route::get('crud-examples/excel', [CrudExampleController::class, 'exportExcel'])
 Route::get('crud-examples/json', [CrudExampleController::class, 'exportJson'])->name('crud-examples.json');
 Route::get('crud-examples/import-excel-example', [CrudExampleController::class, 'importExcelExample'])->name('crud-examples.import-excel-example');
 Route::post('crud-examples/import-excel', [CrudExampleController::class, 'importExcel'])->name('crud-examples.import-excel');
+Route::put('crud-examples/restore/{crudExample}', [CrudExampleController::class, 'restore'])->name('crud-examples.restore');
+Route::delete('crud-examples/force-delete/{crud_example}', [CrudExampleController::class, 'forceDelete'])->name('crud-examples.force-delete');
 Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK

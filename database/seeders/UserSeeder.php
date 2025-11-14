@@ -26,7 +26,8 @@ class UserSeeder extends Seeder
         User::truncate();
 
         $users = config('stisla.users');
-        $users = config('stisla-chat.users');
+        if (is_app_chat())
+            $users = config('stisla-chat.users');
         foreach ($users as $user) {
             $userObj = User::create([
                 'name'                 => $user['name'],

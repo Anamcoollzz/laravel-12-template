@@ -21,6 +21,8 @@ class CrudExampleController extends StislaController
      */
     public function __construct()
     {
+        $this->title = 'Contoh CRUD';
+
         parent::__construct();
 
         $this->icon       = 'fa fa-atom';
@@ -30,7 +32,7 @@ class CrudExampleController extends StislaController
         $this->isCrud     = true;
         // $this->import     = new CrudExampleImport;
 
-        $this->defaultMiddleware($this->title = 'Contoh CRUD');
+        $this->defaultMiddleware($this->title);
     }
 
     /**
@@ -72,13 +74,13 @@ class CrudExampleController extends StislaController
         $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadCrudExampleFile($request->file('file'));
+            $data['file'] = $this->fileUtil->uploadCrudExampleFile($request->file('file'));
 
         if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
+            $data['image'] = $this->fileUtil->uploadCrudExampleFile($request->file('image'));
 
         if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
+            $data['avatar'] = $this->fileUtil->uploadCrudExampleFile($request->file('avatar'));
 
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
@@ -95,7 +97,10 @@ class CrudExampleController extends StislaController
      */
     public function index(Request $request)
     {
-        return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
+        return $this->prepareIndex($request, [
+            'data'        => $this->getIndexData(),
+            'deletedData' => $this->canShowDeleted() ? $this->getIndexData(deleted: true) : collect([]),
+        ]);
     }
 
     /**
@@ -103,7 +108,7 @@ class CrudExampleController extends StislaController
      *
      * @return Collection|null
      */
-    public function getIndexData()
+    public function getIndexData(?bool $deleted = false)
     {
         return $this->repository->getFullDataWith(
             [
@@ -111,7 +116,8 @@ class CrudExampleController extends StislaController
                 'lastUpdatedBy',
             ],
             where: [],
-            whereHas: []
+            whereHas: [],
+            deleted: $deleted
         );
     }
 
@@ -181,8 +187,33 @@ class CrudExampleController extends StislaController
      */
     public function destroy(CrudExample $crudExample)
     {
-        $this->fileService->deleteCrudExampleFile($crudExample);
+        // $this->fileUtil->deleteCrudExampleFile($crudExample);
         return $this->executeDestroy($crudExample);
+    }
+
+    /**
+     * restore deleted data
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function restore(string $id)
+    {
+        $crudExample = $this->repository->find($id, deleted: true);
+        return $this->executeRestore($crudExample);
+    }
+
+    /**
+     * force delete data from db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function forceDelete(string $id)
+    {
+        $crudExample = $this->repository->find($id, deleted: true);
+        $this->fileUtil->deleteCrudExampleFile($crudExample);
+        return $this->executeForceDelete($crudExample);
     }
 
     /**

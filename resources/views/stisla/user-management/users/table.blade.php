@@ -83,7 +83,7 @@
 
         {{-- wajib --}}
         @include('stisla.includes.others.td-created-updated-at')
-        @include('stisla.includes.others.td-deleted-at')
+        {{-- @include('stisla.includes.others.td-deleted-at') --}}
         @include('stisla.includes.others.td-created-updated-by')
         <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)

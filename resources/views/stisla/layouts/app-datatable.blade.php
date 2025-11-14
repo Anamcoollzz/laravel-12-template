@@ -66,6 +66,42 @@
               </div>
             </div>
           </div>
+
+          @if (isset($canShowDeleted) && $canShowDeleted)
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="{{ $moduleIcon }}"></i> Data {{ $title }} Yang Sudah Dihapus</h4>
+
+                {{-- <div class="card-header-action">
+                  @if ($canImportExcel)
+                    @include('stisla.includes.forms.buttons.btn-import-excel')
+                  @endif
+                  @if ($canCreate)
+                    @include('stisla.includes.forms.buttons.btn-add', ['link' => $route_create])
+                  @endif
+                  @yield('btn-action-header')
+                </div> --}}
+              </div>
+              <div class="card-body">
+                @if ($deletedData->count() > 0)
+                  @include('stisla.includes.forms.buttons.btn-datatable')
+                  <div class="table-responsive" id="datatable-view-deleted">
+                    {{-- <input type="hidden" id="isYajra" value="{{ $isYajra }}">
+                  <input type="hidden" id="isAjax" value="{{ $isAjax }}">
+                  <input type="hidden" id="isAjaxYajra" value="{{ $isAjaxYajra }}"> --}}
+                    {{-- @if ($isYajra || $isAjaxYajra)
+                    <textarea name="yajraColumns" id="yajraColumnsDeleted" cols="30" rows="10" style="display: none;">{!! $yajraColumns !!}</textarea>
+                  @endif --}}
+                    @yield('table-deleted')
+                  </div>
+                @else
+                  <div class="alert alert-info">
+                    <strong>Info!</strong> Tidak ada data {{ $title }} yang sudah dihapus.
+                  </div>
+                @endif
+              </div>
+            </div>
+          @endif
         @else
           @include('stisla.includes.others.empty-state', ['title' => 'Data ' . $title, 'icon' => $moduleIcon, 'link' => $route_create])
         @endif

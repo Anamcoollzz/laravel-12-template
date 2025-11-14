@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CrudExample extends Model
 {
-    use HasFactory, UserTrait;
+    use HasFactory, UserTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +49,7 @@ class CrudExample extends Model
         //columns
         "created_by_id",
         "last_updated_by_id",
+        'deleted_at',
     ];
 
     /**

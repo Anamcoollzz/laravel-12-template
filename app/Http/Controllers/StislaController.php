@@ -14,6 +14,7 @@ use App\Services\DropBoxService;
 use App\Services\EmailService;
 use App\Services\FileService;
 use App\Services\PDFService;
+use App\Utils\FileUtil;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -188,6 +189,13 @@ class StislaController extends Controller implements HasMiddleware
     protected bool $isCrud = false;
 
     /**
+     * file util
+     *
+     * @var FileUtil
+     */
+    protected FileUtil $fileUtil;
+
+    /**
      * constructor method
      *
      * @return void
@@ -204,6 +212,17 @@ class StislaController extends Controller implements HasMiddleware
         $this->dropBoxService        = new DropBoxService;
         $this->settingRepository     = new SettingRepository;
         $this->import                = new GeneralImport;
+        $this->fileUtil              = new FileUtil;
+    }
+
+    /**
+     * determine can show deleted data
+     *
+     * @return boolean
+     */
+    protected function canShowDeleted()
+    {
+        return can($this->title . ' Terhapus');
     }
 
     /**
@@ -275,17 +294,16 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function getDefaultDataIndex(string $title, string $permissionPrefix, string $routePrefix)
     {
-        $user = auth_user();
-
-        $canCreate      = $user->can($permissionPrefix . ' Tambah');
-        $canUpdate      = $user->can($permissionPrefix . ' Ubah');
-        $canDetail      = $user->can($permissionPrefix . ' Detail');
-        $canDelete      = $user->can($permissionPrefix . ' Hapus');
-        $canImportExcel = $user->can($permissionPrefix . ' Impor Excel');
-        $canExport      = $user->can($permissionPrefix . ' Ekspor');
-        $canForceLogin  = $user->can($permissionPrefix . ' Force Login');
-        $canBlock       = $user->can($permissionPrefix . ' Blokir');
-        $canFilterData  = $user->can($permissionPrefix . ' Filter Data');
+        $canCreate      = can($permissionPrefix . ' Tambah');
+        $canUpdate      = can($permissionPrefix . ' Ubah');
+        $canDetail      = can($permissionPrefix . ' Detail');
+        $canDelete      = can($permissionPrefix . ' Hapus');
+        $canImportExcel = can($permissionPrefix . ' Impor Excel');
+        $canExport      = can($permissionPrefix . ' Ekspor');
+        $canForceLogin  = can($permissionPrefix . ' Force Login');
+        $canBlock       = can($permissionPrefix . ' Blokir');
+        $canFilterData  = can($permissionPrefix . ' Filter Data');
+        $this->canShowDeleted = $canShowDeleted = can($permissionPrefix . ' Terhapus');
 
         return [
             'canCreate'         => $canCreate,
@@ -297,6 +315,7 @@ class StislaController extends Controller implements HasMiddleware
             'canForceLogin'     => $canForceLogin,
             'canBlock'          => $canBlock,
             'canFilterData'     => $canFilterData,
+            'canShowDeleted'    => $canShowDeleted,
             'title'             => $title,
             'moduleIcon'        => $this->icon,
             'route_create'      => $canCreate ? route($routePrefix . '.create') : null,
@@ -440,7 +459,7 @@ class StislaController extends Controller implements HasMiddleware
     public function json(): BinaryFileResponse
     {
         $data  = $this->getExportData();
-        return $this->fileService->downloadJson($data['data'], $data['json_name']);
+        return $this->fileUtil->downloadJson($data['data'], $data['json_name']);
     }
 
     /**
@@ -457,8 +476,8 @@ class StislaController extends Controller implements HasMiddleware
             $path = 'stisla.' . $this->prefix . '.table';
         }
         if ($isXlsx)
-            return $this->fileService->downloadExcelGeneral($path, $data, $data['excel_name']);
-        return $this->fileService->downloadCsvGeneral($path, $data, $data['csv_name']);
+            return $this->fileUtil->downloadExcelGeneral($path, $data, $data['excel_name']);
+        return $this->fileUtil->downloadCsvGeneral($path, $data, $data['csv_name']);
     }
 
     /**
@@ -466,7 +485,7 @@ class StislaController extends Controller implements HasMiddleware
      *
      * @return Response
      */
-    public function excel(): BinaryFileResponse
+    public function excel()
     {
         return $this->execExcel(true);
     }
@@ -476,7 +495,7 @@ class StislaController extends Controller implements HasMiddleware
      *
      * @return Response
      */
-    public function csv(): BinaryFileResponse
+    public function csv()
     {
         return $this->execExcel(false);
     }
@@ -489,7 +508,7 @@ class StislaController extends Controller implements HasMiddleware
     public function pdf(): Response
     {
         $data  = $this->getExportData();
-        return $this->fileService->downloadPdf('stisla.includes.others.export-pdf', $data, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
+        return $this->fileUtil->downloadPdf('stisla.includes.others.export-pdf', $data, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
     }
 
     /**
@@ -552,7 +571,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function importExcel(ImportExcelRequest $request)
     {
-        $this->fileService->importExcel($this->import, $request->file('import_file'));
+        $this->fileUtil->importExcel($this->import, $request->file('import_file'));
         $successMessage = successMessageImportExcel($this->title);
 
         return backSuccess($successMessage);
@@ -568,7 +587,7 @@ class StislaController extends Controller implements HasMiddleware
         $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.json';
         $data     = $this->getIndexData() ?? $this->repository->getLatest();
 
-        return $this->fileService->downloadJson($data, $filename);
+        return $this->fileUtil->downloadJson($data, $filename);
     }
 
     /**
@@ -579,7 +598,7 @@ class StislaController extends Controller implements HasMiddleware
     public function exportExcel()
     {
         $data  = $this->getExportData();
-        return $this->fileService->downloadExcelGeneral('stisla.' . $this->prefix . '.table', $data, $data['excel_name']);
+        return $this->fileUtil->downloadExcelGeneral('stisla.' . $this->prefix . '.table', $data, $data['excel_name']);
     }
 
     /**
@@ -590,7 +609,7 @@ class StislaController extends Controller implements HasMiddleware
     public function exportCsv()
     {
         $data  = $this->getExportData();
-        return $this->fileService->downloadCsvGeneral('stisla.' . $this->prefix . '.table', $data, $data['csv_name']);
+        return $this->fileUtil->downloadCsvGeneral('stisla.' . $this->prefix . '.table', $data, $data['csv_name']);
     }
 
     /**
@@ -647,7 +666,7 @@ class StislaController extends Controller implements HasMiddleware
             'data' => $this->repository->getFullData(),
             'isExport' => true,
         ]);
-        return $this->fileService->downloadExcel($excelInstance, Str::snake($this->prefix) . '_import.xlsx');
+        return $this->fileUtil->downloadExcel($excelInstance, Str::snake($this->prefix) . '_import.xlsx');
     }
 
     /**
@@ -800,8 +819,10 @@ class StislaController extends Controller implements HasMiddleware
             ]);
         }
 
-        if ($this->isCrud)
+        if ($this->isCrud) {
             return view('stisla.layouts.app-crud-index', $data);
+        }
+
         return view('stisla.' . $this->prefix . '.index', $data);
     }
 
@@ -877,5 +898,49 @@ class StislaController extends Controller implements HasMiddleware
                 abort(403, 'Dalam versi demo, fitur ini tidak tersedia.');
             }
         }
+    }
+
+    /**
+     * execute restore
+     *
+     * @param Model $model
+     * @return Response
+     */
+    protected function executeRestore(Model $model)
+    {
+        $this->repository->restore($model->id);
+        logRestore($this->title, $model, $model);
+        $successMessage = successMessageRestore($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * execute force delete
+     *
+     * @param Model $model
+     * @return Response
+     */
+    protected function executeForceDelete(Model $model)
+    {
+        $this->repository->forceDelete($model->id);
+        logForceDelete($this->title, $model);
+        $successMessage = successMessageForceDelete($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
     }
 }

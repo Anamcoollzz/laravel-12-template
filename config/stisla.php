@@ -4,8 +4,9 @@ use App\Enums\AppEnum;
 
 return [
     'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
-    'app' => AppEnum::APP_CHAT,
-    'table_excludes' => AppEnum::APP_CHAT ? ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'noticiations'] : [],
+    // 'app' => AppEnum::APP_CHAT,
+    'app' => AppEnum::APP_DEFAULT,
+    'table_excludes' => is_app_chat() ? ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'noticiations'] : [],
     'email' => 'kpakmajalengka@yahoo.co.id',
     'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
     'colors' => [
@@ -696,51 +697,56 @@ return [
         ],
 
         // contoh crud
-        // [
-        //     'name' => 'Contoh CRUD',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Tambah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Impor Excel',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ubah',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Detail',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Hapus',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ekspor',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
-        // [
-        //     'name' => 'Contoh CRUD Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'user'],
-        //     'group' => 'Contoh CRUD'
-        // ],
+        [
+            'name' => 'Contoh CRUD',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Terhapus',
+            'roles' => ['superadmin'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Tambah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Impor Excel',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ubah',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Detail',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Hapus',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ekspor',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
+        [
+            'name' => 'Contoh CRUD Ajax Yajra',
+            'roles' => ['superadmin', 'admin', 'user'],
+            'group' => 'Contoh CRUD'
+        ],
 
         // bank
         [

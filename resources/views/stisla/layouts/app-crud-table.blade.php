@@ -10,7 +10,8 @@
 @endphp
 
 <table class="table table-striped @if ($isYajra || $isAjaxYajra) yajra-datatable @endif"
-  @if ($isYajra || $isAjaxYajra) data-ajax-url="{{ $routeYajra }}?isAjaxYajra={{ $isAjaxYajra }}" @else  id="datatable" @endif
+  @if ($isYajra || $isAjaxYajra) data-ajax-url="{{ $routeYajra }}?isAjaxYajra={{ $isAjaxYajra }}" @else  @if ($isTrashed) id="datatable-trashed" @else id="datatable" @endif
+  @endif
   @if ($isExport === false && $canExport) data-export="true" data-title="{{ $title }}" @endif>
   <thead>
     <tr>
