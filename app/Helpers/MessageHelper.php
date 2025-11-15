@@ -140,3 +140,25 @@ function successMessageForceDelete($nextTitle = '')
 {
     return __('Berhasil Menghapus Secara Permanen Data ' . ($nextTitle));
 }
+
+/**
+ * successMessageForceDeleteAll
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageForceDeleteAll($nextTitle = '')
+{
+    return __('Berhasil Menghapus Secara Permanen Data ' . ($nextTitle) . ' Yang Ada Di Tempat Sampah');
+}
+
+/**
+ * successMessageRestoreAll
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageRestoreAll($nextTitle = '')
+{
+    return __('Berhasil Mengembalikan Semua Data ' . ($nextTitle) . ' Yang Ada Di Tempat Sampah');
+}

@@ -183,7 +183,9 @@ Route::get('crud-examples/import-excel-example', [CrudExampleController::class, 
 Route::post('crud-examples/import-excel', [CrudExampleController::class, 'importExcel'])->name('crud-examples.import-excel');
 Route::post('crud-examples/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('crud-examples.duplicate');
 Route::put('crud-examples/restore/{crudExample}', [CrudExampleController::class, 'restore'])->name('crud-examples.restore');
+Route::put('crud-examples/restore-all', [CrudExampleController::class, 'restoreAll'])->name('crud-examples.restore-all');
 Route::delete('crud-examples/force-delete/{crud_example}', [CrudExampleController::class, 'forceDelete'])->name('crud-examples.force-delete');
+Route::delete('crud-examples/force-delete-all', [CrudExampleController::class, 'forceDeleteAll'])->name('crud-examples.force-delete-all');
 Route::get('crud-examples', [CrudExampleController::class, 'indexData'])->name('crud-examples.index');
 Route::get('crud-examples/create', [CrudExampleController::class, 'createData'])->name('crud-examples.create');
 Route::post('crud-examples', [CrudExampleController::class, 'storeData'])->name('crud-examples.store');

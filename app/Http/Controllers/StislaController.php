@@ -324,33 +324,35 @@ class StislaController extends Controller implements HasMiddleware
         $canShowDeleted = can($permissionPrefix . ' Terhapus');
 
         return [
-            'canCreate'         => $canCreate,
-            'canUpdate'         => $canUpdate,
-            'canDetail'         => $canDetail,
-            'canDelete'         => $canDelete,
-            'canImportExcel'    => $canImportExcel,
-            'canExport'         => $canExport,
-            'canForceLogin'     => $canForceLogin,
-            'canBlock'          => $canBlock,
-            'canFilterData'     => $canFilterData,
-            'canShowDeleted'    => $canShowDeleted,
-            'canDuplicate'      => $canDuplicate,
-            'title'             => $title,
-            'moduleIcon'        => $this->icon,
-            'route_create'      => $canCreate ? route($routePrefix . '.create') : null,
-            'routeImportExcel'  => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
-            'routeExampleExcel' => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
-            'routePdf'          => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
-            'routeExcel'        => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
-            'routeCsv'          => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
-            'routeJson'         => $canExport && Route::has($routePrefix . '.json') ? route($routePrefix . '.json') : null,
-            'routeYajra'        => Route::has($routePrefix . '.ajax-yajra') ? route($routePrefix . '.ajax-yajra') : null,
-            'routeStore'        => Route::has($routePrefix . '.store') ? route($routePrefix . '.store') : null,
-            'routePrefix'       => $routePrefix,
-            'isExport'          => false,
-            'folder'            => $routePrefix,
-            'viewFolder'        => $this->viewFolder,
-            'prefix'            => $this->prefix ?? null,
+            'canCreate'              => $canCreate,
+            'canUpdate'              => $canUpdate,
+            'canDetail'              => $canDetail,
+            'canDelete'              => $canDelete,
+            'canImportExcel'         => $canImportExcel,
+            'canExport'              => $canExport,
+            'canForceLogin'          => $canForceLogin,
+            'canBlock'               => $canBlock,
+            'canFilterData'          => $canFilterData,
+            'canShowDeleted'         => $canShowDeleted,
+            'canDuplicate'           => $canDuplicate,
+            'title'                  => $title,
+            'moduleIcon'             => $this->icon,
+            'route_create'           => $canCreate ? route($routePrefix . '.create') : null,
+            'route_restore_all'      => $canShowDeleted && Route::has($routePrefix . '.restore-all') ? route($routePrefix . '.restore-all') : null,
+            'route_force_delete_all' => $canShowDeleted && Route::has($routePrefix . '.force-delete-all') ? route($routePrefix . '.force-delete-all') : null,
+            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
+            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
+            'routePdf'               => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
+            'routeExcel'             => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
+            'routeCsv'               => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
+            'routeJson'              => $canExport && Route::has($routePrefix . '.json') ? route($routePrefix . '.json') : null,
+            'routeYajra'             => Route::has($routePrefix . '.ajax-yajra') ? route($routePrefix . '.ajax-yajra') : null,
+            'routeStore'             => Route::has($routePrefix . '.store') ? route($routePrefix . '.store') : null,
+            'routePrefix'            => $routePrefix,
+            'isExport'               => false,
+            'folder'                 => $routePrefix,
+            'viewFolder'             => $this->viewFolder,
+            'prefix'                 => $this->prefix ?? null,
         ];
     }
 
@@ -1135,5 +1137,54 @@ class StislaController extends Controller implements HasMiddleware
             whereHas: [],
             deleted: $deleted
         );
+    }
+
+    /**
+     * force delete all deleted data from db
+     *
+     * @return Response
+     */
+    public function forceDeleteAll()
+    {
+        $models = $this->getIndexData2(deleted: true);
+        foreach ($models as $model) {
+            $this->fileUtil->deleteFiles($model, $this->fileColumns);
+            $this->repository->forceDelete($model->id);
+            logForceDelete($this->title, $model);
+        }
+        $successMessage = successMessageForceDeleteAll($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * restore all deleted data
+     *
+     * @return Response
+     */
+    public function restoreAll()
+    {
+        $models = $this->getIndexData2(deleted: true);
+        foreach ($models as $model) {
+            $this->repository->restore($model->id);
+            logRestore($this->title, $model, $model);
+        }
+        $successMessage = successMessageRestoreAll($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
     }
 }
