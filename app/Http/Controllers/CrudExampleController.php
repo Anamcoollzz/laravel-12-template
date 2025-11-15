@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CrudExampleRequest;
-use App\Imports\CrudExampleImport;
-use App\Models\CrudExample;
 use App\Repositories\CrudExampleRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CrudExampleController extends StislaController
@@ -25,11 +20,17 @@ class CrudExampleController extends StislaController
 
         parent::__construct();
 
-        $this->icon       = 'fa fa-atom';
-        $this->repository = new CrudExampleRepository;
-        $this->prefix     = $this->viewFolder            = 'crud-examples';
+        $this->icon         = 'fa fa-atom';
+        $this->repository   = new CrudExampleRepository;
+        $this->prefix       = $this->viewFolder = 'crud-examples';
         $this->pdfPaperSize = 'A2';
-        $this->isCrud     = true;
+        $this->isCrud       = true;
+        $this->request      = new CrudExampleRequest;
+        $this->fileColumns = [
+            'file',
+            'image',
+            'avatar',
+        ];
         // $this->import     = new CrudExampleImport;
 
         $this->defaultMiddleware($this->title);
@@ -66,165 +67,34 @@ class CrudExampleController extends StislaController
             'phone_number',
             'birthdate',
             'address',
+            'tinymce',
+            'ckeditor',
 
             //columns
         ]);
 
-        $data['currency']     = idr_to_double($request->currency);
-        $data['currency_idr'] = rp_to_double($request->currency_idr);
+        $data['is_active'] = $request->filled('is_active');
+
+        if ($request->has('currency'))
+            $data['currency']     = idr_to_double($request->currency);
+
+        if ($request->has('currency_idr'))
+            $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file'))
-            $data['file'] = $this->fileUtil->uploadCrudExampleFile($request->file('file'));
+            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'crud-examples/files');
 
         if ($request->hasFile('image'))
-            $data['image'] = $this->fileUtil->uploadCrudExampleFile($request->file('image'));
+            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'crud-examples/images');
 
         if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileUtil->uploadCrudExampleFile($request->file('avatar'));
+            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
 
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         }
 
         return $data;
-    }
-
-    /**
-     * showing data page
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function index(Request $request)
-    {
-        return $this->prepareIndex($request, [
-            'data'        => $this->getIndexData(),
-            'deletedData' => $this->canShowDeleted() ? $this->getIndexData(deleted: true) : collect([]),
-        ]);
-    }
-
-    /**
-     * get data for index page
-     *
-     * @return Collection|null
-     */
-    public function getIndexData(?bool $deleted = false)
-    {
-        return $this->repository->getFullDataWith(
-            [
-                'createdBy',
-                'lastUpdatedBy',
-            ],
-            where: [],
-            whereHas: [],
-            deleted: $deleted
-        );
-    }
-
-    /**
-     * showing add new data page
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function create(Request $request)
-    {
-        return $this->prepareCreateForm($request);
-    }
-
-    /**
-     * save new data to db
-     *
-     * @param CrudExampleRequest $request
-     * @return Response
-     */
-    public function store(CrudExampleRequest $request)
-    {
-        return $this->executeStore($request, withUser: true);
-    }
-
-    /**
-     * showing edit data page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function edit(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample);
-    }
-
-    /**
-     * update data to db
-     *
-     * @param CrudExampleRequest $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function update(CrudExampleRequest $request, CrudExample $crudExample)
-    {
-        return $this->executeUpdate($request, $crudExample, withUser: true);
-    }
-
-    /**
-     * duplicate data in db
-     *
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function duplicate(CrudExample $crudExample)
-    {
-        return $this->executeDuplicate($crudExample);
-    }
-
-    /**
-     * show detail page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function show(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample, true);
-    }
-
-    /**
-     * delete data from db
-     *
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function destroy(CrudExample $crudExample)
-    {
-        // $this->fileUtil->deleteCrudExampleFile($crudExample);
-        return $this->executeDestroy($crudExample);
-    }
-
-    /**
-     * restore deleted data
-     *
-     * @param string $id
-     * @return Response
-     */
-    public function restore(string $id)
-    {
-        $crudExample = $this->repository->find($id, deleted: true);
-        return $this->executeRestore($crudExample);
-    }
-
-    /**
-     * force delete data from db
-     *
-     * @param string $id
-     * @return Response
-     */
-    public function forceDelete(string $id)
-    {
-        $crudExample = $this->repository->find($id, deleted: true);
-        $this->fileUtil->deleteCrudExampleFile($crudExample);
-        return $this->executeForceDelete($crudExample);
     }
 
     /**

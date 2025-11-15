@@ -138,11 +138,15 @@ class Repository extends RepositoryAbstract
      * find or fail data by id
      *
      * @param mixed $id
+     * @param array $columns
+     * @param bool|null $deleted
      * @return Model
      */
-    public function findOrFail($id)
+    public function findOrFail($id, array $columns = ['*'], ?bool $deleted = false)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->when($deleted, function ($query) {
+            $query->withTrashed();
+        })->findOrFail($id, $columns);
     }
 
     /**

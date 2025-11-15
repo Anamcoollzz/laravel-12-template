@@ -1,4 +1,5 @@
 @php
+  $isTrashed = $isTrashed ?? false;
   $isExport = $isExport ?? false;
   $isAjax = $isAjax ?? false;
   $isYajra = $isYajra ?? false;

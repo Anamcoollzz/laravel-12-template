@@ -17,6 +17,7 @@ use App\Services\PDFService;
 use App\Utils\FileUtil;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\Middleware;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Schema;
 
 class StislaController extends Controller implements HasMiddleware
 {
@@ -196,6 +198,20 @@ class StislaController extends Controller implements HasMiddleware
     protected FileUtil $fileUtil;
 
     /**
+     * form request
+     *
+     * @var FormRequest
+     */
+    protected FormRequest $request;
+
+    /**
+     * file columns
+     *
+     * @var array
+     */
+    protected array $fileColumns = [];
+
+    /**
      * constructor method
      *
      * @return void
@@ -213,6 +229,7 @@ class StislaController extends Controller implements HasMiddleware
         $this->settingRepository     = new SettingRepository;
         $this->import                = new GeneralImport;
         $this->fileUtil              = new FileUtil;
+        $this->request               = new FormRequest;
     }
 
     /**
@@ -971,5 +988,152 @@ class StislaController extends Controller implements HasMiddleware
         }
 
         return backSuccess($successMessage);
+    }
+
+    /**
+     * restore deleted data
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function restore(string $id)
+    {
+        $model = $this->repository->find($id, deleted: true);
+        return $this->executeRestore($model);
+    }
+
+    /**
+     * duplicate data in db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function duplicate(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        return $this->executeDuplicate($model);
+    }
+
+    /**
+     * show detail page
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function showData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        return $this->prepareDetailForm($request, $model, true);
+    }
+
+    /**
+     * showing edit data page
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function editData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        // return $model;
+        return $this->prepareDetailForm($request, $model);
+    }
+
+    /**
+     * showing add new data page
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function createData(Request $request)
+    {
+        return $this->prepareCreateForm($request);
+    }
+
+    /**
+     * update data to db
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function updateData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        $request->validate($this->request->rules(isMethodPut: true));
+        return $this->executeUpdate($request, $model, withUser: true);
+    }
+
+    /**
+     * save new data to db
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function storeData(Request $request)
+    {
+        $request->validate($this->request->rules());
+        return $this->executeStore($request, withUser: true);
+    }
+
+    /**
+     * force delete data from db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function forceDelete(string $id)
+    {
+        $model = $this->repository->find($id, deleted: true);
+        $this->fileUtil->deleteFiles($model, $this->fileColumns);
+        return $this->executeForceDelete($model);
+    }
+
+    /**
+     * delete data from db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function destroyData(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        if (!Schema::hasColumn($model->getTable(), 'deleted_at'))
+            $this->fileUtil->deleteFiles($model, $this->fileColumns);
+        return $this->executeDestroy($model);
+    }
+
+    /**
+     * showing data page
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function indexData(Request $request)
+    {
+        return $this->prepareIndex($request, [
+            'data'        => $this->getIndexData2(),
+            'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+        ]);
+    }
+
+    /**
+     * get data for index page
+     *
+     * @return Collection|null
+     */
+    public function getIndexData2(?bool $deleted = false)
+    {
+        return $this->repository->getFullDataWith(
+            [
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            where: [],
+            whereHas: [],
+            deleted: $deleted
+        );
     }
 }

@@ -43,6 +43,9 @@ class CreateCrudExamplesTable extends Migration
             $table->string('color', 10);
             $table->text('summernote_simple')->nullable();
             $table->longText('summernote')->nullable();
+            $table->longText('tinymce')->nullable();
+            $table->longText('ckeditor')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');

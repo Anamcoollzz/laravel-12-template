@@ -45,6 +45,9 @@ class CrudExample extends Model
         'address',
         'avatar',
         'password',
+        'tinymce',
+        'ckeditor',
+        'is_active',
 
         //columns
         "created_by_id",
