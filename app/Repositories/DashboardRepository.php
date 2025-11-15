@@ -19,6 +19,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\Role;
 use App\Models\Student;
 use App\Models\StudyProgram;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardRepository
 {
@@ -27,7 +28,7 @@ class DashboardRepository
         $widgets = [];
         $user = auth_user();
 
-        if ($user->can('Contoh CRUD'))
+        if (can('Contoh CRUD'))
             $widgets[] = (object)[
                 'title' => 'Contoh CRUD',
                 'count' => CrudExample::count(),
@@ -35,7 +36,7 @@ class DashboardRepository
                 'icon'  => 'atom',
                 'route' => route('crud-examples.index'),
             ];
-        if ($user->can('Bank'))
+        if (can('Bank') && Schema::hasTable('banks'))
             $widgets[] = (object)[
                 'title' => 'Bank',
                 'count' => Bank::count(),
@@ -44,7 +45,7 @@ class DashboardRepository
                 'route' => route('banks.index'),
                 'bg_color' => 'lightblue'
             ];
-        if ($user->can('Deposito Bank'))
+        if (can('Deposito Bank') && Schema::hasTable('bank_deposits'))
             $widgets[] = (object)[
                 'title' => 'Deposito Bank',
                 'count' => BankDeposit::count(),
@@ -53,7 +54,7 @@ class DashboardRepository
                 'route' => route('bank-deposits.index'),
                 'bg_color' => 'lightgreen'
             ];
-        if ($user->can('Riwayat Deposito Bank'))
+        if (can('Riwayat Deposito Bank') && Schema::hasTable('bank_deposit_histories'))
             $widgets[] = (object)[
                 'title' => 'Riwayat Deposito Bank',
                 'count' => BankDepositHistory::count(),
@@ -62,7 +63,7 @@ class DashboardRepository
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => 'cyan'
             ];
-        if ($user->can('Riwayat Deposito Bank'))
+        if (can('Riwayat Deposito Bank') && Schema::hasTable('bank_deposit_histories'))
             $widgets[] = (object)[
                 'title' => 'Keuntungan Deposito',
                 'count' => rp(BankDepositHistory::sum('realization')),
@@ -71,7 +72,7 @@ class DashboardRepository
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => '#8b743f'
             ];
-        if ($user->can('Mahasiswa') && !is_mahasiswa())
+        if (can('Mahasiswa') && !is_mahasiswa() && Schema::hasTable('students'))
             $widgets[] = (object)[
                 'title' => 'Mahasiswa',
                 'count' => is_pimpinan_fakultas() ? Student::query()->whereHas('studyProgram.faculty', function ($q) {
@@ -82,7 +83,7 @@ class DashboardRepository
                 'route' => route('students.index'),
                 'bg_color' => '#3f6e8bff'
             ];
-        if ($user->can('Alumni') && !is_mahasiswa())
+        if (can('Alumni') && !is_mahasiswa() && Schema::hasTable('students'))
             $widgets[] = (object)[
                 'title' => 'Alumni',
                 'count' => is_pimpinan_fakultas() ? Student::query()->whereHas('studyProgram.faculty', function ($q) {
@@ -95,7 +96,7 @@ class DashboardRepository
                 'route' => route('alumnis.index'),
                 'bg_color' => '#3f8b8bff'
             ];
-        if ($user->can('Program Studi'))
+        if (can('Program Studi') && Schema::hasTable('study_programs'))
             $widgets[] = (object)[
                 'title' => 'Program Studi',
                 'count' => StudyProgram::count(),
@@ -104,7 +105,7 @@ class DashboardRepository
                 'route' => route('study-programs.index'),
                 'bg_color' => '#3f8b44ff'
             ];
-        if ($user->can('Fakultas'))
+        if (can('Fakultas') && Schema::hasTable('faculties'))
             $widgets[] = (object)[
                 'title' => 'Fakultas',
                 'count' => Faculty::count(),
@@ -113,7 +114,7 @@ class DashboardRepository
                 'route' => route('faculties.index'),
                 'bg_color' => '#8b3f64ff'
             ];
-        if ($user->can('Pengguna')) {
+        if (can('Pengguna')) {
             $widgets[] = (object)[
                 'title' => 'Pengguna',
                 'count' => is_app_chat() ? User::role('user')->count() : User::count(),
@@ -180,7 +181,7 @@ class DashboardRepository
                 ];
             }
         }
-        if ($user->can('Role'))
+        if (can('Role'))
             $widgets[] = (object)[
                 'title' => 'Role',
                 'count' => Role::count(),
@@ -188,7 +189,7 @@ class DashboardRepository
                 'icon'  => 'lock',
                 'route' => route('user-management.roles.index')
             ];
-        if ($user->can('Permission'))
+        if (can('Permission'))
             $widgets[] = (object)[
                 'title' => 'Permission',
                 'count' => Permission::count(),
@@ -196,7 +197,7 @@ class DashboardRepository
                 'icon'  => 'key',
                 'route' => route('user-management.permissions.index')
             ];
-        if ($user->can('Group Permission'))
+        if (can('Group Permission'))
             $widgets[] = (object)[
                 'title' => 'Group Permission',
                 'count' => PermissionGroup::count(),
@@ -205,7 +206,7 @@ class DashboardRepository
                 'route' => route('user-management.permission-groups.index'),
                 'bg_color' => 'brown'
             ];
-        if ($user->can('Menu'))
+        if (can('Menu'))
             $widgets[] = (object)[
                 'title' => 'Menu',
                 'count' => Menu::count(),
@@ -214,7 +215,7 @@ class DashboardRepository
                 'route' => route('menu-managements.index'),
                 'bg_color' => 'pink'
             ];
-        if ($user->can('Grup Menu'))
+        if (can('Grup Menu'))
             $widgets[] = (object)[
                 'title' => 'Grup Menu',
                 'count' => MenuGroup::count(),
@@ -223,7 +224,7 @@ class DashboardRepository
                 'route' => route('menu-managements.index'),
                 'bg_color' => 'orange'
             ];
-        if ($user->can('Notifikasi')) {
+        if (can('Notifikasi') && Schema::hasTable('notifications')) {
             $widgets[] = (object)[
                 'title' => 'Notifikasi',
                 'count' => Notification::where('user_id', $user->id)->count(),
@@ -233,7 +234,7 @@ class DashboardRepository
                 'bg_color' => 'navy'
             ];
         }
-        if ($user->can('Log Aktivitas'))
+        if (can('Log Aktivitas'))
             $widgets[] = (object)[
                 'title' => 'Log Aktivitas',
                 'count' => ActivityLog::count(),
@@ -242,7 +243,7 @@ class DashboardRepository
                 'route' => route('activity-logs.index'),
                 'bg_color' => 'black'
             ];
-        if ($user->can('Log Request'))
+        if (can('Log Request'))
             $widgets[] = (object)[
                 'title' => 'Log Request',
                 'count' => LogRequest::count(),
@@ -251,7 +252,7 @@ class DashboardRepository
                 'route' => route('request-logs.index'),
                 'bg_color' => '#C88A65',
             ];
-        if ($user->can('Pengaturan'))
+        if (can('Pengaturan'))
             $widgets[] = (object)[
                 'title' => 'Pengaturan',
                 'count' => '6',
@@ -260,7 +261,7 @@ class DashboardRepository
                 'route' => route('settings.all'),
                 'bg_color' => '#E9D66B',
             ];
-        if ($user->can('Backup Database')) {
+        if (can('Backup Database')) {
             $widgets[] = (object)[
                 'title' => 'Backup Database',
                 'count' => count((new DatabaseService)->getAllBackupMysql()),

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Region;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RegionRepository extends Repository
 {
@@ -25,6 +26,9 @@ class RegionRepository extends Repository
      */
     public function getProvinces()
     {
+        if (!Schema::hasTable('regions')) {
+            return collect([]);
+        }
         return $this->model->query()->whereRaw('LENGTH(code) = 2')->get();
     }
 

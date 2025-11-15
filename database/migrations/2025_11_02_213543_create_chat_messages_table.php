@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_messages', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('from_user_id');
-            $table->foreign('from_user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('to_user_id');
-            $table->foreign('to_user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('message')->nullable();
-            $table->string('category')->nullable();
-            $table->string('file_path')->nullable();
-            $table->boolean('is_read')->default(false);
-            $table->dateTime('read_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
-        });
+        if (!in_array('chat_messages', config('stisla.table_excludes')))
+            Schema::create('chat_messages', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('from_user_id');
+                $table->foreign('from_user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->unsignedBigInteger('to_user_id');
+                $table->foreign('to_user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->text('message')->nullable();
+                $table->string('category')->nullable();
+                $table->string('file_path')->nullable();
+                $table->boolean('is_read')->default(false);
+                $table->dateTime('read_at')->nullable();
+                $table->dateTime('deleted_at')->nullable();
+                $table->timestamps();
+            });
     }
 
     /**

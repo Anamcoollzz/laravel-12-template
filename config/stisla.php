@@ -2,11 +2,57 @@
 
 use App\Enums\AppEnum;
 
+$app = AppEnum::APP_BLANK;
+$table_excludes = [];
+$roles = [
+    'superadmin',
+    'admin',
+    'banker',
+    'user',
+    'admin pendidikan',
+    'mahasiswa',
+    'ormawa',
+    'pimpinan fakultas',
+];
+
+if (is_app_chat($app)) {
+    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $roles = [
+        'superadmin',
+        'user',
+    ];
+} else if (is_app_bank($app)) {
+    $table_excludes = ['faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $roles = [
+        'superadmin',
+        'admin',
+        'banker',
+    ];
+} else if (is_app_education($app)) {
+    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'notifications'];
+    $roles = [
+        'superadmin',
+        'admin',
+        'admin pendidikan',
+        'mahasiswa',
+        'ormawa',
+        'pimpinan fakultas',
+    ];
+} else if (is_app_blank($app)) {
+    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'chat_messages', 'chat_rooms', 'regions'];
+    $roles = [
+        'superadmin',
+        'admin',
+        'user',
+    ];
+}
+
 return [
     'chat_base_url' => env('STISLA_CHAT_BASE_URL', 'http://localhost:4000'),
     // 'app' => AppEnum::APP_CHAT,
-    'app' => AppEnum::APP_DEFAULT,
-    'table_excludes' => is_app_chat() ? ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'noticiations'] : [],
+    // 'app' => AppEnum::APP_DEFAULT,
+    'app' => $app,
+    'table_excludes' => $table_excludes,
     'email' => 'kpakmajalengka@yahoo.co.id',
     'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
     'colors' => [
@@ -748,205 +794,10 @@ return [
             'group' => 'Contoh CRUD'
         ],
 
-        // bank
-        [
-            'name' => 'Bank',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Tambah',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Impor Excel',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Ubah',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Detail',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Hapus',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        [
-            'name' => 'Bank Ekspor',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Bank'
-        ],
-        // [
-        //     'name' => 'Bank Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ],
-        // [
-        //     'name' => 'Bank Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ]
 
-        // deposito bank
-        [
-            'name' => 'Deposito Bank',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Tambah',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Impor Excel',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Ubah',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Detail',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Hapus',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        [
-            'name' => 'Deposito Bank Ekspor',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Deposito Bank'
-        ],
-        // [
-        //     'name' => 'Deposito Bank Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ],
-        // [
-        //     'name' => 'Deposito Bank Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ]
-
-        // riwayat deposito bank
-        [
-            'name' => 'Riwayat Deposito Bank',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Riwayat Deposito Bank'
-        ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Tambah',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Riwayat Deposito Bank'
-        // ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Impor Excel',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Riwayat Deposito Bank'
-        // ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Ubah',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Riwayat Deposito Bank'
-        // ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Detail',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Riwayat Deposito Bank'
-        // ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Hapus',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Riwayat Deposito Bank'
-        // ],
-        [
-            'name' => 'Riwayat Deposito Bank Ekspor',
-            'roles' => ['superadmin', 'admin', 'banker'],
-            'group' => 'Riwayat Deposito Bank'
-        ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ],
-        // [
-        //     'name' => 'Riwayat Deposito Bank Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Bank'
-        // ]
-
-        // mahasiswa
-        [
-            'name' => 'Mahasiswa',
-            'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Tambah',
-            'roles' => ['superadmin', 'admin'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Impor Excel',
-            'roles' => ['superadmin', 'admin'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Ubah',
-            'roles' => ['superadmin', 'admin', 'mahasiswa'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Detail',
-            'roles' => ['superadmin', 'admin', 'mahasiswa', 'pimpinan fakultas'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Hapus',
-            'roles' => ['superadmin', 'admin'],
-            'group' => 'Mahasiswa'
-        ],
-        [
-            'name' => 'Mahasiswa Ekspor',
-            'roles' => ['superadmin', 'admin', 'pimpinan fakultas'],
-            'group' => 'Mahasiswa'
-        ],
-        // [
-        //     'name' => 'Mahasiswa Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Mahasiswa'
-        // ],
-        // [
-        //     'name' => 'Mahasiswa Ajax Yajra',
-        //     'roles' => ['superadmin', 'admin', 'banker'],
-        //     'group' => 'Mahasiswa'
-        // ]
     ],
 
-    'roles' => [
-        'superadmin',
-        'admin',
-        'banker',
-        'user',
-        'admin pendidikan',
-        'mahasiswa',
-        'ormawa',
-        'pimpinan fakultas',
-    ],
+    'roles' => $roles,
 
     'use_setting' => env('STISLA_USE_SETTING', '2'),
 

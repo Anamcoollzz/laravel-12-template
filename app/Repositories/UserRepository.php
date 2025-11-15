@@ -134,7 +134,7 @@ class UserRepository extends Repository
      */
     public function getRoles()
     {
-        $roles = Role::with(['permissions'])->withCount(['permissions'])->latest()->get();
+        $roles = Role::with(['permissions'])->withCount(['permissions', 'users'])->latest()->get();
         return $roles;
     }
 

@@ -53,7 +53,7 @@ class CrudExampleSeeder extends Seeder
         //         'last_updated_by_id' => null,
         //     ];
         // }
-        foreach (range(1, 100) as $i) {
+        foreach (range(1, 20) as $i) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
                 array_push($selectMultiple, $options[$j - 1]);
@@ -99,8 +99,8 @@ class CrudExampleSeeder extends Seeder
                 'phone_number'       => $faker->phoneNumber,
                 'birthdate'          => $faker->date('Y-m-d'),
                 'address'            => $faker->address,
-                // 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
-                'deleted_at' => null,
+                'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
+                // 'deleted_at' => null,
 
                 //columns
             ]);
