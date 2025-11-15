@@ -19,10 +19,12 @@
       <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
       <th>{{ __('Email') }}</th>
-      <th>{{ __('Provinsi') }}</th>
-      <th>{{ __('Kota/Kabupaten') }}</th>
-      <th>{{ __('Kecamatan') }}</th>
-      <th>{{ __('Desa/Kelurahan') }}</th>
+      @if ($isRegionExists)
+        <th>{{ __('Provinsi') }}</th>
+        <th>{{ __('Kota/Kabupaten') }}</th>
+        <th>{{ __('Kecamatan') }}</th>
+        <th>{{ __('Desa/Kelurahan') }}</th>
+      @endif
       @if ($roleCount > 1)
         <th>{{ __('Role') }}</th>
       @endif
@@ -57,10 +59,12 @@
         <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
         @include('stisla.includes.others.td-email')
-        <td>{{ $item->province?->name }}</td>
-        <td>{{ $item->city?->name }}</td>
-        <td>{{ $item->district?->name }}</td>
-        <td>{{ $item->village?->name }}</td>
+        @if ($isRegionExists)
+          <td>{{ $item->province?->name }}</td>
+          <td>{{ $item->city?->name }}</td>
+          <td>{{ $item->district?->name }}</td>
+          <td>{{ $item->village?->name }}</td>
+        @endif
         @if ($roleCount > 1)
           <td>
             @foreach ($item->roles as $role)
@@ -72,8 +76,10 @@
             @endforeach
           </td>
         @endif
-        <td><span
-            class="badge badge-{{ $item->deleted_at !== null ? 'danger' : ($item->is_active == 1 ? 'success' : 'warning') }}">{{ $item->deleted_at !== null ? 'Dihapus' : ($item->is_active == 1 ? 'Aktif' : 'Tidak Aktif') }}</span>
+        <td>
+          <span class="badge badge-{{ $item->deleted_at !== null ? 'danger' : ($item->is_active == 1 ? 'success' : 'warning') }}">
+            {{ $item->deleted_at !== null ? 'Dihapus' : ($item->is_active == 1 ? 'Aktif' : 'Tidak Aktif') }}
+          </span>
         </td>
         <td>{{ $item->blocked_reason }}</td>
         @include('stisla.includes.others.td-datetime', ['DateTime' => $item->last_login])

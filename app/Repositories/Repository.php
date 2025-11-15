@@ -420,6 +420,9 @@ class Repository extends RepositoryAbstract
                     $query->where('id', request('filter_role'));
                 });
             })
+            ->when(request('gender'), function (Builder $query) {
+                $query->where('gender', request('gender'));
+            })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();

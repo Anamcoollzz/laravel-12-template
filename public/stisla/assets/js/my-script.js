@@ -701,6 +701,53 @@ if ($('#sessionSuccessMessage').val()) swal('Sukses', $('#sessionSuccessMessage'
 
 if ($('#sessionErrorMessage').val()) swal('Gagal', $('#sessionErrorMessage').val(), 'error');
 
+function duplicateGlobal(e, action_url, variant = 'success') {
+  e.preventDefault();
+  swal({
+    title: 'Anda yakin?',
+    text: variant === 'danger' ? 'Sekali dihapus, data tidak akan kembali lagi!' : 'Data akan digandakan!',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true,
+    buttons: {
+      cancel: {
+        text: 'Batal',
+        value: null,
+        visible: true,
+        className: '',
+        closeModal: true,
+      },
+      confirm: {
+        text: 'Lanjutkan',
+      },
+    },
+  }).then(function (willDelete) {
+    if (willDelete) {
+      if ($('#isAjax').val() == 1 || $('#isAjaxYajra').val() == 1) {
+        swal('Info', 'Sedang memproses...', 'info');
+        window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.axios
+          .delete(action_url)
+          .then(function (response) {
+            if ($('#isAjaxYajra').val() == 1) {
+              reloadDataTable();
+            } else {
+              getData();
+            }
+            successMsg(response.data.message).then(function () {});
+          })
+          .catch(function (error) {});
+      } else {
+        $('#formDuplicateGlobal').attr('action', action_url);
+        $('#formDuplicateGlobal').find('input[name="variant"]').val(variant);
+        document.getElementById('formDuplicateGlobal').submit();
+      }
+    } else {
+      swal('Info', 'Okay, tidak jadi', 'info');
+    }
+  });
+}
+
 function deleteGlobal(e, action_url, variant = 'danger') {
   e.preventDefault();
   swal({

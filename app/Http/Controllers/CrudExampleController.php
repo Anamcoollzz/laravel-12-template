@@ -168,6 +168,17 @@ class CrudExampleController extends StislaController
     }
 
     /**
+     * duplicate data in db
+     *
+     * @param CrudExample $crudExample
+     * @return Response
+     */
+    public function duplicate(CrudExample $crudExample)
+    {
+        return $this->executeDuplicate($crudExample);
+    }
+
+    /**
      * show detail page
      *
      * @param Request $request

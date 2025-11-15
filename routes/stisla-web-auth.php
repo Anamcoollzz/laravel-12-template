@@ -125,7 +125,7 @@ Route::get('notifications', [NotificationController::class, 'index'])->name('not
 Route::resource('backup-databases', BackupDatabaseController::class);
 
 # FILE MANAGER
-Route::group(['prefix' => 'file-managers', 'middleware' => [FileManagerPermission::class]], function () {
+Route::group(['prefix' => 'unisharp-files', 'middleware' => [FileManagerPermission::class]], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -181,6 +181,7 @@ Route::get('crud-examples/excel', [CrudExampleController::class, 'exportExcel'])
 Route::get('crud-examples/json', [CrudExampleController::class, 'exportJson'])->name('crud-examples.json');
 Route::get('crud-examples/import-excel-example', [CrudExampleController::class, 'importExcelExample'])->name('crud-examples.import-excel-example');
 Route::post('crud-examples/import-excel', [CrudExampleController::class, 'importExcel'])->name('crud-examples.import-excel');
+Route::post('crud-examples/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('crud-examples.duplicate');
 Route::put('crud-examples/restore/{crudExample}', [CrudExampleController::class, 'restore'])->name('crud-examples.restore');
 Route::delete('crud-examples/force-delete/{crud_example}', [CrudExampleController::class, 'forceDelete'])->name('crud-examples.force-delete');
 Route::resource('crud-examples', CrudExampleController::class);

@@ -3,6 +3,7 @@
 use App\Enums\AppEnum;
 
 $app = AppEnum::APP_BLANK;
+// $app = AppEnum::APP_DEFAULT;
 $table_excludes = [];
 $roles = [
     'superadmin',
@@ -39,7 +40,20 @@ if (is_app_chat($app)) {
         'pimpinan fakultas',
     ];
 } else if (is_app_blank($app)) {
-    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'chat_messages', 'chat_rooms', 'regions'];
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'regions'
+    ];
     $roles = [
         'superadmin',
         'admin',
@@ -102,28 +116,37 @@ return [
                     'is_mockup' => true
                 ],
                 [
-                    'menu_name' => 'Curhat',
+                    'menu_name' => 'Chat',
                     'route_name' => null,
-                    'uri' => 'chatting-yuk/curhat',
                     'icon' => 'fas fa-message',
-                    'permission' => 'Curhat',
-                    'is_active_if_url_includes' => 'chatting-yuk/curhat*',
-                ],
-                [
-                    'menu_name' => 'Keluhan Penyakit',
-                    'route_name' => null,
-                    'uri' => 'chatting-yuk/keluhan-penyakit',
-                    'icon' => 'fas fa-message',
-                    'permission' => 'Keluhan Penyakit',
-                    'is_active_if_url_includes' => 'chatting-yuk/keluhan-penyakit*',
-                ],
-                [
-                    'menu_name' => 'Pertanyaan Lainnya',
-                    'route_name' => null,
-                    'uri' => 'chatting-yuk/pertanyaan-lainnya',
-                    'icon' => 'fas fa-message',
-                    'permission' => 'Pertanyaan Lainnya',
-                    'is_active_if_url_includes' => 'chatting-yuk/pertanyaan-lainnya*',
+                    'permission' => 'Chat',
+                    'is_active_if_url_includes' => 'chatting*',
+                    'childs' => [
+                        [
+                            'menu_name' => 'Curhat',
+                            'route_name' => null,
+                            'uri' => 'chatting-yuk/curhat',
+                            'icon' => 'fas fa-message',
+                            'permission' => 'Curhat',
+                            'is_active_if_url_includes' => 'chatting-yuk/curhat*',
+                        ],
+                        [
+                            'menu_name' => 'Keluhan Penyakit',
+                            'route_name' => null,
+                            'uri' => 'chatting-yuk/keluhan-penyakit',
+                            'icon' => 'fas fa-message',
+                            'permission' => 'Keluhan Penyakit',
+                            'is_active_if_url_includes' => 'chatting-yuk/keluhan-penyakit*',
+                        ],
+                        [
+                            'menu_name' => 'Pertanyaan Lainnya',
+                            'route_name' => null,
+                            'uri' => 'chatting-yuk/pertanyaan-lainnya',
+                            'icon' => 'fas fa-message',
+                            'permission' => 'Pertanyaan Lainnya',
+                            'is_active_if_url_includes' => 'chatting-yuk/pertanyaan-lainnya*',
+                        ],
+                    ]
                 ],
                 [
                     'menu_name' => 'Bank',
@@ -332,12 +355,12 @@ return [
                     ]
                 ],
                 [
-                    'menu_name' => 'Manajemen File',
-                    'uri' => 'file-managers',
+                    'menu_name' => 'Unisharp File',
+                    'uri' => 'unisharp-files',
                     'icon' => 'fas fa-folder',
-                    'permission' => 'Manajemen File',
+                    'permission' => 'Unisharp File',
                     'is_blank' => true,
-                    'is_active_if_url_includes' => 'file-managers*'
+                    'is_active_if_url_includes' => 'unisharp-files*'
                 ],
                 [
                     'menu_name' => 'Notifikasi',
@@ -393,25 +416,34 @@ return [
                     'is_active_if_url_includes' => 'settings*'
                 ],
                 [
-                    'menu_name' => 'Ubuntu',
-                    'route_name' => 'ubuntu.index',
-                    'icon' => 'fab fa-ubuntu',
-                    'permission' => 'Ubuntu',
-                    'is_active_if_url_includes' => 'ubuntu*'
-                ],
-                [
-                    'menu_name' => 'MySql',
-                    'route_name' => 'ubuntu.mysql-all',
-                    'icon' => 'fas fa-database',
-                    'permission' => 'MySql',
-                    'is_active_if_url_includes' => 'mysql-all'
-                ],
-                [
-                    'menu_name' => 'Backup Database',
-                    'route_name' => 'backup-databases.index',
-                    'icon' => 'fas fa-database',
-                    'permission' => 'Backup Database',
-                    'is_active_if_url_includes' => 'backup-databases*'
+                    'menu_name' => 'Server',
+                    'route_name' => '#',
+                    'icon' => 'fab fa-linux',
+                    'permission' => null,
+                    'is_active_if_url_includes' => null,
+                    'childs' => [
+                        [
+                            'menu_name' => 'Ubuntu',
+                            'route_name' => 'ubuntu.index',
+                            'icon' => 'fab fa-ubuntu',
+                            'permission' => 'Ubuntu',
+                            'is_active_if_url_includes' => 'ubuntu*'
+                        ],
+                        [
+                            'menu_name' => 'MySql',
+                            'route_name' => 'ubuntu.mysql-all',
+                            'icon' => 'fas fa-database',
+                            'permission' => 'MySql',
+                            'is_active_if_url_includes' => 'mysql-all'
+                        ],
+                        [
+                            'menu_name' => 'Backup Database',
+                            'route_name' => 'backup-databases.index',
+                            'icon' => 'fas fa-database',
+                            'permission' => 'Backup Database',
+                            'is_active_if_url_includes' => 'backup-databases*'
+                        ],
+                    ]
                 ],
                 [
                     'menu_name' => 'Keluar',
@@ -425,6 +457,26 @@ return [
     ],
 
     'permissions' => [
+        // chat
+        [
+            'name' => 'Curhat',
+            'roles' => ['superadmin', 'user'],
+            'group' => 'Chatting',
+            'table' => 'chat_messages',
+        ],
+        [
+            'name' => 'Keluhan Penyakit',
+            'roles' => ['superadmin', 'user'],
+            'group' => 'Chatting',
+            'table' => 'chat_messages',
+        ],
+        [
+            'name' => 'Pertanyaan Lainnya',
+            'roles' => ['superadmin', 'user'],
+            'group' => 'Chatting',
+            'table' => 'chat_messages',
+        ],
+
         [
             'name' => 'Profil',
             'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
@@ -646,9 +698,9 @@ return [
         ],
 
         [
-            'name' => 'Manajemen File',
+            'name' => 'Unisharp File',
             'roles' => ['superadmin', 'admin'],
-            'group' => 'Manajemen File'
+            'group' => 'Unisharp File'
         ],
 
         [
@@ -741,60 +793,6 @@ return [
             'roles' => ['superadmin'],
             'group' => 'Grup Menu'
         ],
-
-        // contoh crud
-        [
-            'name' => 'Contoh CRUD',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Terhapus',
-            'roles' => ['superadmin'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Tambah',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Impor Excel',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Ubah',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Detail',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Hapus',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Ekspor',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Yajra',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-        [
-            'name' => 'Contoh CRUD Ajax Yajra',
-            'roles' => ['superadmin', 'admin', 'user'],
-            'group' => 'Contoh CRUD'
-        ],
-
-
     ],
 
     'roles' => $roles,

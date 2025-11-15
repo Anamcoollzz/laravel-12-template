@@ -11,3 +11,6 @@ define('DELETE', 'DELETE');
 define('DETAIL', 'DETAIL');
 define('RESTORE', 'RESTORE');
 define('FORCE_DELETE', 'FORCE_DELETE');
+define('IMPORT', 'IMPORT');
+define('EXPORT', 'EXPORT');
+define('DUPLICATE', 'DUPLICATE');

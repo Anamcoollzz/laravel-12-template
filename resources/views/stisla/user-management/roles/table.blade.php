@@ -7,7 +7,9 @@
       <th class="text-center">#</th>
       <th>{{ __('Role') }}</th>
       <th>{{ __('Total Permission') }}</th>
-      <th>{{ __('Total User') }}</th>
+      <th>{{ __('Total Pengguna') }}</th>
+      <th>{{ __('Pengguna Laki-laki') }}</th>
+      <th>{{ __('Pengguna Perempuan') }}</th>
       <th>{{ __('Created At') }}</th>
       <th>{{ __('Updated At') }}</th>
       <th>{{ __('Created By') }}</th>
@@ -24,6 +26,8 @@
         <td>{{ $item->name }}</td>
         <td>{{ $item->permissions_count }}</td>
         <td>{{ $item->users_count }}</td>
+        <td>{{ $item->male_users_count }}</td>
+        <td>{{ $item->female_users_count }}</td>
         @include('stisla.includes.others.td-created-updated-at')
         <td>{{ $item->createdBy->name ?? '-' }}</td>
         <td>{{ $item->lastUpdatedBy->name ?? '-' }}</td>

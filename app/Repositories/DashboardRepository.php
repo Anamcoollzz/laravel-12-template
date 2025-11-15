@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use App\Models\Bank;
 use App\Models\BankDeposit;
 use App\Models\BankDepositHistory;
+use App\Models\ChatMessage;
 use App\Models\CrudExample;
 use App\Models\Faculty;
 use App\Models\LogRequest;
@@ -28,6 +29,14 @@ class DashboardRepository
         $widgets = [];
         $user = auth_user();
 
+        if (can('Curhat'))
+            $widgets[] = (object)[
+                'title' => 'Chat',
+                'count' => ChatMessage::count(),
+                'bg'    => 'success',
+                'icon'  => 'message',
+                'route' => route('chatting-yuk', ['curhat']),
+            ];
         if (can('Contoh CRUD'))
             $widgets[] = (object)[
                 'title' => 'Contoh CRUD',
@@ -122,21 +131,21 @@ class DashboardRepository
                 'icon'  => 'users',
                 'route' => route('user-management.users.index'),
             ];
+            $widgets[] = (object)[
+                'title' => User::GENDER_MALE,
+                'count' => User::isMale()->role('user')->count(),
+                'bg'    => 'info',
+                'icon'  => 'mars',
+                'route' => route('user-management.users.index', ['gender' => User::GENDER_MALE]),
+            ];
+            $widgets[] = (object)[
+                'title' => User::GENDER_FEMALE,
+                'count' => User::isFemale()->role('user')->count(),
+                'bg'    => 'primary',
+                'icon'  => 'venus',
+                'route' => route('user-management.users.index', ['gender' => User::GENDER_FEMALE]),
+            ];
             if (is_app_chat()) {
-                $widgets[] = (object)[
-                    'title' => User::GENDER_MALE,
-                    'count' => User::where('gender', User::GENDER_MALE)->role('user')->count(),
-                    'bg'    => 'info',
-                    'icon'  => 'mars',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => User::GENDER_FEMALE,
-                    'count' => User::where('gender', User::GENDER_FEMALE)->role('user')->count(),
-                    'bg'    => 'primary',
-                    'icon'  => 'venus',
-                    'route' => route('user-management.users.index'),
-                ];
                 $widgets[] = (object)[
                     'title' => 'Usia 10-18 Tahun',
                     'count' => User::age1018()->role('user')->count(),

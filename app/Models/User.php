@@ -96,11 +96,33 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Get the user's age.
      *
-     * @return int
+     * @return int|null
      */
-    public function getAgeAttribute(): int
+    public function getAgeAttribute(): int|null
     {
-        return $this->birth_date ? (new \Carbon\Carbon($this->birth_date))->age : 0;
+        return $this->birth_date ? (new \Carbon\Carbon($this->birth_date))->age : null;
+    }
+
+    /**
+     * Scope a query to only include female users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsFemale($query)
+    {
+        return $query->where('gender', self::GENDER_FEMALE);
+    }
+
+    /**
+     * Scope a query to only include male users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsMale($query)
+    {
+        return $query->where('gender', self::GENDER_MALE);
     }
 
     /**

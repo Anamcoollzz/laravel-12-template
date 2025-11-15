@@ -26,6 +26,12 @@ return [
         'table' => 'crud_examples',
     ],
     [
+        'name' => 'Contoh CRUD Duplikat',
+        'roles' => ['superadmin', 'admin', 'user'],
+        'group' => 'Contoh CRUD',
+        'table' => 'crud_examples',
+    ],
+    [
         'name' => 'Contoh CRUD Detail',
         'roles' => ['superadmin', 'admin', 'user'],
         'group' => 'Contoh CRUD',
@@ -36,6 +42,11 @@ return [
         'roles' => ['superadmin', 'admin', 'user'],
         'group' => 'Contoh CRUD',
         'table' => 'crud_examples',
+    ],
+    [
+        'name' => 'Contoh CRUD Terhapus',
+        'roles' => ['superadmin'],
+        'group' => 'Contoh CRUD'
     ],
     [
         'name' => 'Contoh CRUD Filter Data',

@@ -10,6 +10,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -30,6 +31,7 @@ class RolePermissionSeeder extends Seeder
         Role::truncate();
         PermissionGroup::truncate();
         Permission::truncate();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $roles = config('stisla.roles');
         if (is_app_chat())
@@ -144,16 +146,26 @@ class RolePermissionSeeder extends Seeder
                     $perm->syncRoles($roles);
                 }
             } else {
-                $perm = Permission::create([
-                    'name'                => $name = $permission['name'],
-                    'permission_group_id' => $group->id
-                ]);
-                $roles = Role::whereIn('name', $permission['roles'])->get();
-                $perm->syncRoles($roles);
+                try {
+                    $perm = Permission::create([
+                        'name'                => $name = $permission['name'],
+                        'permission_group_id' => $group->id
+                    ]);
+                    $roles = Role::whereIn('name', $permission['roles'])->get();
+                    $perm->syncRoles($roles);
+                } catch (\Exception $e) {
+                    $permissions = Permission::all();
+                    dd($e->getMessage(), $permissions);
+                }
             }
         }
     }
 
+    /**
+     * per module permission
+     *
+     * @return void
+     */
     private function perModule()
     {
         if (is_app_chat())
@@ -162,7 +174,7 @@ class RolePermissionSeeder extends Seeder
         foreach ($files as $file) {
             if (
                 Str::contains($file->getFilename(), '-permission.php')
-                && !Str::contains($file->getFilename(), 'crud-example-permission.php')
+                // && !Str::contains($file->getFilename(), 'crud-example-permission.php')
             ) {
                 $this->generatePermission(config(str_replace('.php', '', $file->getFilename())));
             }

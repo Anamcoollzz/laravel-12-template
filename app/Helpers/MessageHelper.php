@@ -23,6 +23,17 @@ function successMessageUpdate($nextTitle = '')
 }
 
 /**
+ * successMessageDuplicate
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageDuplicate($nextTitle = '')
+{
+    return __('Berhasil Menggandakan Data ' . ($nextTitle));
+}
+
+/**
  * successMessageDelete
  *
  * @param string $nextTitle

@@ -296,6 +296,7 @@ class StislaController extends Controller implements HasMiddleware
     {
         $canCreate      = can($permissionPrefix . ' Tambah');
         $canUpdate      = can($permissionPrefix . ' Ubah');
+        $canDuplicate   = can($permissionPrefix . ' Duplikat');
         $canDetail      = can($permissionPrefix . ' Detail');
         $canDelete      = can($permissionPrefix . ' Hapus');
         $canImportExcel = can($permissionPrefix . ' Impor Excel');
@@ -303,7 +304,7 @@ class StislaController extends Controller implements HasMiddleware
         $canForceLogin  = can($permissionPrefix . ' Force Login');
         $canBlock       = can($permissionPrefix . ' Blokir');
         $canFilterData  = can($permissionPrefix . ' Filter Data');
-        $this->canShowDeleted = $canShowDeleted = can($permissionPrefix . ' Terhapus');
+        $canShowDeleted = can($permissionPrefix . ' Terhapus');
 
         return [
             'canCreate'         => $canCreate,
@@ -316,6 +317,7 @@ class StislaController extends Controller implements HasMiddleware
             'canBlock'          => $canBlock,
             'canFilterData'     => $canFilterData,
             'canShowDeleted'    => $canShowDeleted,
+            'canDuplicate'      => $canDuplicate,
             'title'             => $title,
             'moduleIcon'        => $this->icon,
             'route_create'      => $canCreate ? route($routePrefix . '.create') : null,
@@ -720,6 +722,33 @@ class StislaController extends Controller implements HasMiddleware
             return response()->json([
                 'success' => true,
                 'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * execute duplicate
+     *
+     * @param Request $request
+     * @param Model $model
+     * @param bool|null $withUser
+     * @return Response
+     */
+    protected function executeDuplicate(Model $model, ?bool $withUser = false)
+    {
+        $data    = $model->toArray();
+        unset($data['id']);
+        $newData = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
+        logDuplicate($this->title, $newData);
+        $successMessage = successMessageDuplicate($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+                'data'    => $newData,
             ]);
         }
 

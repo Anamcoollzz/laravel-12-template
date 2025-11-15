@@ -16,7 +16,7 @@ class FileManagerPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth_user()->can('Manajemen File')) {
+        if (can('Unisharp File')) {
             return $next($request);
         }
         abort(403);
