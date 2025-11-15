@@ -21,6 +21,11 @@
       @else
         <th>{{ __('No') }}</th>
       @endif
+
+      {{-- ini adalah hasil dari make:module --}}
+      {{-- columns --}}
+
+      {{-- yang ini boleh dikomen --}}
       <th>{{ __('Nama') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Alamat') }}</th>
@@ -58,6 +63,8 @@
       @endif
       <th>{{ __('Created By') }}</th>
       <th>{{ __('Last Updated By') }}</th>
+
+      {{-- wajib --}}
       @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
         <th>{{ __('Aksi') }}</th>
       @endif
@@ -68,6 +75,11 @@
       @foreach ($data as $item)
         <tr>
           <td>{{ $loop->iteration }}</td>
+
+          {{-- ini adalah hasil dari make:module --}}
+          {{-- columnstd --}}
+
+          {{-- yang ini boleh dikomen --}}
           <td>{{ $item->name }}</td>
           @include('stisla.includes.others.td-phone-number')
           @include('stisla.includes.others.td-address')

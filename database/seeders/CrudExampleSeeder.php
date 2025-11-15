@@ -67,6 +67,7 @@ class CrudExampleSeeder extends Seeder
                 array_push($checkbox2, $options[$j - 1]);
             }
             array_push($data, [
+                // ini boleh dikomen nanti ya kalau tidak digunakan
                 'text'               => Str::random(10),
                 'email'              => $email = $faker->email,
                 'number'             => $faker->numberBetween(1, 1000),
@@ -105,6 +106,7 @@ class CrudExampleSeeder extends Seeder
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 // 'deleted_at' => null,
 
+                // ini hasil generate dari make:module command
                 //columns
             ]);
         }

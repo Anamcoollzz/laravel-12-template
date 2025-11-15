@@ -41,6 +41,11 @@ class CrudExampleRequest extends FormRequest
     public function rules(?bool $isMethodPut = false)
     {
         // dd($this);
+
+        // aa// columns
+        // bb
+
+        // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas
         return [
             'text'              => 'required',
             'email'             => 'required|email',
@@ -70,8 +75,6 @@ class CrudExampleRequest extends FormRequest
             'password'          => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|min:6' : 'required|min:6',
             'avatar'            => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : 'required|image',
             // 'nik' => 'required|string|max:16',
-
-            // columns
         ];
     }
 }

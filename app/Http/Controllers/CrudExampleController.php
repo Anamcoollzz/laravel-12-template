@@ -44,6 +44,8 @@ class CrudExampleController extends StislaController
     protected function getStoreData()
     {
         $request = request();
+
+        // ini bisa dikomen nanti
         $data = request()->only([
             'text',
             'email',
@@ -69,14 +71,15 @@ class CrudExampleController extends StislaController
             'address',
             'tinymce',
             'ckeditor',
-
-            //columns
         ]);
+
+        //rostart//columns
+        //roend
 
         $data['is_active'] = $request->filled('is_active');
 
         if ($request->has('currency'))
-            $data['currency']     = idr_to_double($request->currency);
+            $data['currency'] = idr_to_double($request->currency);
 
         if ($request->has('currency_idr'))
             $data['currency_idr'] = rp_to_double($request->currency_idr);
@@ -90,9 +93,8 @@ class CrudExampleController extends StislaController
         if ($request->hasFile('avatar'))
             $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
 
-        if ($request->password) {
+        if ($request->password)
             $data['password'] = bcrypt($request->password);
-        }
 
         return $data;
     }

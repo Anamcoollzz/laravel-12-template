@@ -1,3 +1,8 @@
+{{-- ini adalah hasil dari make:module --}}
+{{-- formcolumns --}}
+
+
+{{-- yang ini boleh dicopy yang dibutuhin --}}
 <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input-name')
 </div>
