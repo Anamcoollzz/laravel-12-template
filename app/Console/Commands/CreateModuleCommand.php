@@ -346,17 +346,6 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
         file_put_contents($path, $content);
     }
 
-        $this->info('Controller: ' . $name . 'Controller');
-        $this->info('Model: ' . $name);
-        $this->info('Repository: ' . $name . 'Repository');
-        $this->info('Request: ' . $name . 'Request');
-        $this->info('Views: ' . $prefix);
-        $this->info('Migration: ' . $this->getPath($latestMigration));
-        $this->info('Seeder: ' . $name . 'Seeder');
-        $this->info('Permission Config: ' . $slug . '-permission.php');
-        $this->info('Module created successfully.');
-    }
-
     /**
      * copy file or directory
      *
