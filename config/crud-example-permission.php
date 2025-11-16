@@ -60,16 +60,16 @@ return [
         'group' => 'Contoh CRUD',
         'table' => 'crud_examples',
     ],
-    [
-        'name' => 'Contoh CRUD Yajra',
-        'roles' => ['superadmin', 'admin', 'user'],
-        'group' => 'Contoh CRUD',
-        'table' => 'crud_examples',
-    ],
-    [
-        'name' => 'Contoh CRUD Ajax Yajra',
-        'roles' => ['superadmin', 'admin', 'user'],
-        'group' => 'Contoh CRUD',
-        'table' => 'crud_examples',
-    ]
+    // [
+    //     'name' => 'Contoh CRUD Yajra',
+    //     'roles' => ['superadmin', 'admin', 'user'],
+    //     'group' => 'Contoh CRUD',
+    //     'table' => 'crud_examples',
+    // ],
+    // [
+    //     'name' => 'Contoh CRUD Ajax Yajra',
+    //     'roles' => ['superadmin', 'admin', 'user'],
+    //     'group' => 'Contoh CRUD',
+    //     'table' => 'crud_examples',
+    // ]
 ];
