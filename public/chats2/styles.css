@@ -1,0 +1,114 @@
+/* AnamChat Landing Styles */
+:root{
+  --bg:#0b0d12;
+  --card:#0f1219;
+  --muted:#a7b0c0;
+  --text:#e8ecf2;
+  --primary:#7c5cff;
+  --primary-2:#4dd5ff;
+  --glass: rgba(255,255,255,0.06);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,0.20), transparent 70%),
+    radial-gradient(900px 500px at 100% 10%, rgba(77,213,255,0.15), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+img{max-width:100%; display:block}
+.container{width:min(1120px, 92%); margin-inline:auto}
+a{color:inherit; text-decoration:none}
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background:linear-gradient(to bottom, rgba(11,13,18,.85), rgba(11,13,18,.55) 40%, transparent);
+  backdrop-filter: blur(8px);
+}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0}
+.brand{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
+.logo{width:28px; height:28px}
+.nav-links{display:flex; gap:20px; align-items:center}
+.nav-links a{opacity:.9}
+.nav-links .btn.small{padding:8px 12px; font-size:14px}
+.hamburger{display:none; background:none; border:0; cursor:pointer}
+.hamburger span{display:block; width:22px; height:2px; background:var(--text); margin:5px 0; border-radius:2px}
+
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; padding:12px 18px; border:1px solid transparent; font-weight:700}
+.btn.primary{background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#0b0d12; box-shadow:0 10px 30px rgba(124,92,255,.3), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn.ghost{background:transparent; border-color:rgba(255,255,255,.15); color:var(--text)}
+.btn.small{padding:8px 12px; font-size:14px}
+
+.hero{position:relative; padding:72px 0 48px}
+.hero-inner{display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center}
+.hero h1{font-size:clamp(32px, 5vw, 56px); line-height:1.1; margin:0 0 12px}
+.gradient{background:linear-gradient(90deg, var(--primary), var(--primary-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+.hero p{color:var(--muted); max-width:56ch}
+.cta{display:flex; gap:12px; margin:18px 0 8px}
+.trust{display:flex; gap:16px; opacity:.7; margin-top:12px}
+.hero-art{position:relative}
+.hero-img{width:100%; border-radius:20px; border:1px solid rgba(255,255,255,.1); box-shadow:0 20px 80px rgba(0,0,0,.5)}
+.glass{background:var(--glass); border:1px solid rgba(255,255,255,.12); border-radius:16px; backdrop-filter: blur(8px)}
+.stats{position:absolute; right:-10px; bottom:-12px; display:flex; gap:16px; padding:12px 16px}
+.stats div{display:grid}
+.stats strong{font-size:18px}
+.stats span{font-size:12px; color:var(--muted)}
+.blur{position:absolute; filter: blur(60px); opacity:.55; z-index:-1}
+.blob-1{width:360px; height:360px; background:radial-gradient(circle, var(--primary), transparent 60%); top:-80px; left:-80px}
+.blob-2{width:360px; height:360px; background:radial-gradient(circle, var(--primary-2), transparent 60%); bottom:-80px; right:-80px}
+
+.features{padding:56px 0}
+.features h2,.screens h2,.pricing h2,.faq h2,.download h2{font-size:32px; margin:0 0 8px}
+.lead{color:var(--muted); margin:0 0 24px}
+.grid{display:grid; gap:18px}
+.features-grid{grid-template-columns: repeat(3, 1fr)}
+.card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px}
+.card.feature img{width:36px; height:36px; opacity:.95}
+.card.feature h3{margin:12px 0 6px}
+
+.screens{padding:24px 0 56px}
+.screenshots{grid-template-columns: repeat(3, 1fr)}
+.screenshots img{border-radius:16px; border:1px solid rgba(255,255,255,.08)}
+
+.pricing{padding:56px 0}
+.pricing-grid{grid-template-columns: repeat(3, 1fr)}
+.price .price-tag{font-size:28px; font-weight:800}
+.price .price-tag span{font-size:14px; color:var(--muted); font-weight:600}
+.price ul{list-style:none; padding:0; margin:12px 0 16px}
+.price ul li{padding:6px 0; color:var(--muted)}
+.price.highlight{position:relative; outline:2px solid rgba(124,92,255,.3)}
+.price .badge{position:absolute; top:-12px; right:12px; background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#0b0d12; font-weight:800; padding:6px 10px; border-radius:999px; font-size:12px}
+
+.social-proof{padding:24px 0}
+.logos{display:grid; grid-template-columns: repeat(5, 1fr); gap:20px; align-items:center; opacity:.6}
+.logos img{width:100%; filter: grayscale(100%) brightness(1.2)}
+
+.faq{padding:56px 0}
+.accordion details{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:14px 16px; margin:10px 0}
+.accordion summary{cursor:pointer; font-weight:700}
+.accordion p{color:var(--muted); margin:8px 0 0}
+
+.download{padding:56px 0}
+.dl-grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center}
+.dl-form{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:18px}
+.input-row{display:flex; gap:10px; margin-top:6px}
+input[type="email"]{flex:1; padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--text); outline:none}
+.form-msg{margin-top:8px; font-size:14px; color:var(--muted)}
+
+.site-footer{padding:28px 0 40px; border-top:1px solid rgba(255,255,255,.06)}
+.foot{display:grid; grid-template-columns: 1.2fr 1fr .6fr; align-items:center}
+.foot .links, .foot .sns{display:flex; gap:16px; justify-content:flex-end}
+.foot p{color:var(--muted)}
+
+@media (max-width: 900px){
+  .hero-inner, .dl-grid{grid-template-columns:1fr}
+  .features-grid,.screenshots,.pricing-grid{grid-template-columns:1fr}
+  .logos{grid-template-columns: repeat(3, 1fr)}
+  .foot{grid-template-columns:1fr; gap:12px}
+  .nav-links{display:none; position:absolute; right:4%; top:64px; background:var(--card); border:1px solid rgba(255,255,255,.12); padding:12px; border-radius:12px; width:200px}
+  .nav-links.open{display:flex; flex-direction:column}
+  .hamburger{display:block}
+}

@@ -77,12 +77,12 @@ class BankController extends StislaController
     /**
      * prepare store data
      *
-     * @param BankRequest $request
      * @return array
      */
-    private function getStoreData(BankRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'name',
             'bank_type',
         ]);

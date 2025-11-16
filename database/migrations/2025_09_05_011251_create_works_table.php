@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('works', function (Blueprint $table) {
-            $table->id();
-            $table->string('job_name', 50);
-            $table->string('department', 50)->nullable();
+        if (!in_array('works', config('stisla.table_excludes')))
+            Schema::create('works', function (Blueprint $table) {
+                $table->id();
+                $table->string('job_name', 50);
+                $table->string('department', 50)->nullable();
 
-            // wajib
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->unsignedBigInteger('last_updated_by_id')->nullable();
-            $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-        });
+                // wajib
+                $table->timestamps();
+                $table->unsignedBigInteger('created_by_id')->nullable();
+                $table->unsignedBigInteger('last_updated_by_id')->nullable();
+                $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+                $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            });
     }
 
     /**

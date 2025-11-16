@@ -73,7 +73,8 @@ class GroupMenuController extends StislaController
      */
     public function store(GroupMenuRequest $request)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'group_name',
         ]);
 
@@ -122,7 +123,8 @@ class GroupMenuController extends StislaController
      */
     public function update(GroupMenuRequest $request, MenuGroup $groupMenu)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'group_name',
         ]);
 

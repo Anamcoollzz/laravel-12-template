@@ -99,7 +99,7 @@ class UserRepository extends Repository
      */
     public function getUsers()
     {
-        $users = $this->queryFullData()->with(['roles', 'createdBy', 'lastUpdatedBy'])->get();
+        $users = $this->queryFullData()->with(['roles', 'createdBy', 'lastUpdatedBy', 'province', 'city', 'district', 'village'])->get();
         return $users;
     }
 
@@ -134,7 +134,16 @@ class UserRepository extends Repository
      */
     public function getRoles()
     {
-        $roles = Role::with(['permissions'])->withCount(['permissions'])->latest()->get();
+        $roles = Role::with(['permissions'])->withCount([
+            'permissions',
+            'users',
+            'users as male_users_count' => function ($q) {
+                $q->where('gender', User::GENDER_MALE); // sesuaikan value di DB
+            },
+            'users as female_users_count' => function ($q) {
+                $q->where('gender', User::GENDER_FEMALE); // sesuaikan value di DB
+            }
+        ])->latest()->get();
         return $roles;
     }
 
@@ -469,5 +478,19 @@ class UserRepository extends Repository
             return $user;
         }
         return null;
+    }
+
+    /**
+     * set last seen to now
+     *
+     * @param int|null $userId
+     * @return int
+     */
+    public function setLastSeenToNow(?int $userId = null)
+    {
+        if (!$userId) {
+            $userId = $this->getUserIdLogin();
+        }
+        return $this->model->where('id', $userId)->update(['last_seen_at' => now()]);
     }
 }

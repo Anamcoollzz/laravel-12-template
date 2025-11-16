@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Setting;
 use App\Repositories\SettingRepository;
+use App\Services\GeneralService;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Closure;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class OverrideConfig
      */
     public function handle(Request $request, Closure $next)
     {
+        $isMobile = (new GeneralService)->isMobile();
+        config(['app.is_mobile' => $isMobile]);
         // config(['app.debug' => false]);
         // config(['debugbar.enabled' => null]);
         // config(['app.is_demo' => Setting::firstOrCreate(['key' => 'app_is_demo'], ['value' => false])->value === '1']);

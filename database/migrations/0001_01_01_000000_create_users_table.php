@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name', 191);
@@ -30,8 +31,22 @@ return new class extends Migration
             $table->text('file_upload')->nullable();
             $table->tinyInteger('wrong_login')->default(0);
             $table->boolean('is_active')->default(1);
+            $table->boolean('is_majalengka')->default(0);
+            $table->string('province_code', 20)->nullable();
+            $table->string('city_code', 20)->nullable();
+            $table->string('district_code', 20)->nullable();
+            $table->string('village_code', 20)->nullable();
+            // $table->foreign('province_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('city_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('district_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            // $table->foreign('village_code')->references('code')->on('regions')->onUpdate('cascade')->onDelete('set null');
             $table->string('blocked_reason')->nullable();
             $table->dateTime('deleted_at')->nullable();
+            $table->dateTime('last_seen_at')->nullable();
+            $table->boolean('is_anonymous')->default(0);
+            $table->string('gender', 30)->nullable();
+            $table->string('nik', 50)->nullable()->unique();
+            $table->uuid()->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();
@@ -63,6 +78,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

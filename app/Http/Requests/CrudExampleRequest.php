@@ -7,6 +7,22 @@ use Illuminate\Foundation\Http\FormRequest;
 class CrudExampleRequest extends FormRequest
 {
     /**
+     * @var bool|null
+     */
+    private $isMethodPut;
+
+    /**
+     * constructor method
+     *
+     * @return void
+     */
+    public function __construct(?bool $isMethodPut = false)
+    {
+        parent::__construct();
+        $this->isMethodPut = $isMethodPut;
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -19,13 +35,21 @@ class CrudExampleRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param bool $isMethodPut
+     * @param string|null $id
      * @return array
      */
-    public function rules()
+    public function rules(?bool $isMethodPut = false, ?string $id = null)
     {
+        // dd($this);
+
+        // aa// columns
+        // bb
+
+        // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas
         return [
             'text'              => 'required',
-            'email'             => 'required|email',
+            'email'             =>  $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'required|email|unique:crud_examples,email,' . $id . ',id|max:100' : 'required|email|unique:crud_examples,email|max:100',
             "number"            => "required|numeric",
             "currency"          => "required",
             "currency_idr"      => "required",
@@ -36,8 +60,8 @@ class CrudExampleRequest extends FormRequest
             "checkbox"          => "required|array",
             "checkbox2"         => "required|array",
             "radio"             => "required",
-            "file"              => $this->isMethod('put') ? 'nullable|file' : "required|file",
-            "image"             => $this->isMethod('put') ? 'nullable|image' : "required|image",
+            "file"              => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|file' : "required|file",
+            "image"             => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "required|image",
             "date"              => "required|date",
             "time"              => "required",
             "color"             => "required",
@@ -49,10 +73,9 @@ class CrudExampleRequest extends FormRequest
             'phone_number'      => 'required',
             'birthdate'         => 'required|date',
             'address'           => 'required',
-            'password'          => $this->isMethod('put') ? 'nullable|min:6' : 'required|min:6',
-            'avatar'            => $this->isMethod('put') ? 'nullable|image' : 'required|image',
-
-            // columns
+            'password'          => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|min:6' : 'required|min:6',
+            'avatar'            => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : 'required|image',
+            // 'nik' => 'required|string|max:16',
         ];
     }
 }

@@ -168,6 +168,150 @@
                         'required' => true,
                     ])
                   </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_language',
+                        'label' => __('Meta Language'),
+                        'value' => $_meta_language,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_geo_country',
+                        'label' => __('Meta Geo Country'),
+                        'value' => $_meta_geo_country,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_geo_placename',
+                        'label' => __('Meta Geo Placename'),
+                        'value' => $_meta_geo_placename,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_og_locale',
+                        'label' => __('Meta OG Locale'),
+                        'value' => $_meta_og_locale,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_og_type',
+                        'label' => __('Meta OG Type'),
+                        'value' => old('meta_og_type') ?? $_meta_og_type,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_og_title',
+                        'label' => __('Meta OG Title'),
+                        'value' => old('meta_og_title') ?? $_meta_og_title,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_og_description',
+                        'label' => __('Meta OG Description'),
+                        'value' => old('meta_og_description') ?? $_meta_og_description,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_og_url',
+                        'label' => __('Meta OG URL'),
+                        'value' => old('meta_og_url') ?? $_meta_og_url,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input-image', [
+                        'id' => 'meta_og_image',
+                        'label' => __('Meta OG Image'),
+                        'required' => false,
+                    ])
+                  </div>
+
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_twitter_card',
+                        'label' => __('Meta Twitter Card'),
+                        'value' => old('meta_twitter_card') ?? $_meta_twitter_card,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_twitter_title',
+                        'label' => __('Meta Twitter Title'),
+                        'value' => old('meta_twitter_title') ?? $_meta_twitter_title,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_twitter_description',
+                        'label' => __('Meta Twitter Description'),
+                        'value' => old('meta_twitter_description') ?? $_meta_twitter_description,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input-image', [
+                        'id' => 'meta_twitter_image',
+                        'label' => __('Meta Twitter Image'),
+                        'required' => false,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_twitter_domain',
+                        'label' => __('Meta Twitter Domain'),
+                        'value' => old('meta_twitter_domain') ?? $_meta_twitter_domain,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_twitter_url',
+                        'label' => __('Meta Twitter URL'),
+                        'value' => old('meta_twitter_url') ?? $_meta_twitter_url,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_itemprop_headline',
+                        'label' => __('Meta Itemprop Headline'),
+                        'value' => old('meta_itemprop_headline') ?? $_meta_itemprop_headline,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input', [
+                        'id' => 'meta_itemprop_description',
+                        'label' => __('Meta Itemprop Description'),
+                        'value' => old('meta_itemprop_description') ?? $_meta_itemprop_description,
+                        'required' => true,
+                    ])
+                  </div>
+                  <div class="col-sm-6">
+                    @include('stisla.includes.forms.inputs.input-image', [
+                        'id' => 'meta_itemprop_thumbnailUrl',
+                        'label' => __('Meta Itemprop Thumbnail URL'),
+                        'value' => old('meta_itemprop_thumbnailUrl') ?? $_meta_itemprop_thumbnailUrl,
+                        'required' => false,
+                    ])
+                  </div>
+
 
                   <div class="col-md-12">
                     @include('stisla.includes.forms.buttons.btn-save')

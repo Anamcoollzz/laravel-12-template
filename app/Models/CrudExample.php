@@ -5,10 +5,21 @@ namespace App\Models;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CrudExample extends Model
 {
-    use HasFactory, UserTrait;
+    use HasFactory, UserTrait, SoftDeletes;
+
+    //softdeletes
+
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'crud_examples';
 
     /**
      * The attributes that are mass assignable.
@@ -16,6 +27,7 @@ class CrudExample extends Model
      * @var array
      */
     protected $fillable = [
+        // ini bisa dicomment kalau gak dipakai
         "text",
         "email",
         "number",
@@ -44,10 +56,17 @@ class CrudExample extends Model
         'address',
         'avatar',
         'password',
+        'tinymce',
+        'ckeditor',
+        'is_active',
 
+
+
+        // ini hasil generate dari create:module command
         //columns
         "created_by_id",
         "last_updated_by_id",
+        'deleted_at',
     ];
 
     /**

@@ -32,6 +32,10 @@ class CrudExampleRepository extends Repository
         })
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
+            // columns
+
+
+            // yang ini bisa dikomen aja kalau gak dipakai
             'currency'         => fn(CrudExample $item) => dollar($item->currency),
             'currency_idr'     => fn(CrudExample $item) => rp($item->currency_idr),
             'select2_multiple' => '{{implode(", ", $select2_multiple)}}',
@@ -51,6 +55,8 @@ class CrudExampleRepository extends Repository
             'updated_at'       => '{{\Carbon\Carbon::parse($updated_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             // 'created_by'       => fn(CrudExample $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
             // 'last_updated_by'  => fn(CrudExample $crudExample) => $crudExample->lastUpdatedBy ? $crudExample->lastUpdatedBy->name : '-',
+
+            // yang ini butuh action
             'action'           => function (CrudExample $crudExample) use ($additionalParams) {
                 $isAjaxYajra = Route::is('crud-examples.index-ajax-yajra') || request('isAjaxYajra') == 1;
                 $data = array_merge($additionalParams ? $additionalParams : [], [
@@ -91,6 +97,7 @@ class CrudExampleRepository extends Repository
             ],
             //columns
 
+            // ini bisa dikomen nanti ya kalau tidak digunakan
             ['data' => 'name', 'name' => 'name'],
             ['data' => 'phone_number', 'name' => 'phone_number'],
             ['data' => 'address', 'name' => 'address'],
@@ -121,6 +128,7 @@ class CrudExampleRepository extends Repository
             ['data' => 'created_by', 'name' => 'createdBy.name'],
             ['data' => 'last_updated_by', 'name' => 'lastUpdatedBy.name'],
 
+            // yang ini butuh action
             [
                 'data' => 'action',
                 'name' => 'action',

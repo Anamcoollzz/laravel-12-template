@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Database\Eloquent\Model;
 
 class FileService
 {
@@ -193,6 +194,18 @@ class FileService
     public function uploadLogo(\Illuminate\Http\UploadedFile $file)
     {
         return $this->executeUpload($file, 'logo');
+    }
+
+    /**
+     * upload to specific folder
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @param string $folder
+     * @return string
+     */
+    public function uploadToFolder(\Illuminate\Http\UploadedFile $file, string $folder)
+    {
+        return $this->executeUpload($file, $folder);
     }
 
     /**
@@ -464,5 +477,23 @@ class FileService
         $link = 'storage/' . str_replace(storage_path('app/public/'), '', $pathToSave);
 
         return asset($link);
+    }
+
+    /**
+     * delete files from storage
+     *
+     * @param Model $model
+     * @param array $columns
+     * @return void
+     */
+    public function deleteFiles(Model $model, array $columns)
+    {
+        foreach ($columns as $column) {
+            $storageUrl = config('app.url') . '/storage';
+            $filepath = str_replace($storageUrl, '', $model->$column);
+            $filepath = str_replace('http://127.0.0.1:8000/storage', '', $filepath);
+            $filepath = str_replace('http://localhost:8000/storage', '', $filepath);
+            $this->executeDeleteFromStorage('public' . $filepath);
+        }
     }
 }

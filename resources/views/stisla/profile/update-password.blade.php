@@ -46,7 +46,7 @@
     </form>
   @endif
 
-  @if (user_can('Profil Hapus Akun'))
+  @can('Profil Hapus Akun')
     <form action="{{ route('profile.delete-account') }}" method="post" class="needs-validation" id="formDeleteAccount">
 
       <div class="alert alert-warning alert-has-icon">
@@ -81,6 +81,6 @@
       </div>
 
     </form>
-  @endif
+  @endcan
 
 </div>

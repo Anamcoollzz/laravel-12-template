@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CrudExampleRequest;
-use App\Imports\CrudExampleImport;
-use App\Models\CrudExample;
 use App\Repositories\CrudExampleRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CrudExampleController extends StislaController
@@ -21,27 +16,41 @@ class CrudExampleController extends StislaController
      */
     public function __construct()
     {
+        $this->title = 'Contoh CRUD';
+
         parent::__construct();
 
-        $this->icon       = 'fa fa-atom';
-        $this->repository = new CrudExampleRepository;
-        $this->prefix     = $this->viewFolder            = 'crud-examples';
+        $this->icon         = 'fa fa-atom';
+        $this->repository   = new CrudExampleRepository;
+        $this->prefix       = $this->viewFolder = 'crud-examples';
         $this->pdfPaperSize = 'A2';
-        $this->isCrud     = true;
+        $this->isCrud       = true;
+        $this->request      = new CrudExampleRequest;
+        $this->fileColumns = [
+            'file',
+            'image',
+            'avatar',
+        ];
         // $this->import     = new CrudExampleImport;
 
-        $this->defaultMiddleware($this->title = 'Contoh CRUD');
+        $this->defaultMiddleware($this->title);
     }
 
     /**
      * prepare store data
      *
-     * @param CrudExampleRequest $request
      * @return array
      */
-    public function getStoreData(CrudExampleRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+
+        $columns = $this->repository->getColumns();
+
+        // ini bisa dikomen nanti
+        $data = [];
+
+        $formColumns = [
             'text',
             'email',
             "number",
@@ -64,125 +73,42 @@ class CrudExampleController extends StislaController
             'phone_number',
             'birthdate',
             'address',
+            'tinymce',
+            'ckeditor',
+        ];
 
-            //columns
-        ]);
-
-        $data['currency']     = idr_to_double($request->currency);
-        $data['currency_idr'] = rp_to_double($request->currency_idr);
-
-        if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadCrudExampleFile($request->file('file'));
-
-        if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
-
-        if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
-
-        if ($request->password) {
-            $data['password'] = bcrypt($request->password);
+        foreach ($formColumns as $column) {
+            if (in_array($column, $columns) && $request->has($column)) {
+                $data[$column] = $request->input($column);
+            }
         }
 
+        if (in_array('is_active', $columns)) {
+            $data['is_active'] = $request->filled('is_active');
+        }
+
+        //rostart//columns
+        //roend
+
+        if ($request->has('currency') && in_array('currency', $columns))
+            $data['currency'] = idr_to_double($request->currency);
+
+        if ($request->has('currency_idr') && in_array('currency_idr', $columns))
+            $data['currency_idr'] = rp_to_double($request->currency_idr);
+
+        if ($request->hasFile('file') && in_array('file', $columns))
+            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'crud-examples/files');
+
+        if ($request->hasFile('image') && in_array('image', $columns))
+            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'crud-examples/images');
+
+        if ($request->hasFile('avatar') && in_array('avatar', $columns))
+            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
+
+        if ($request->password  && in_array('password', $columns))
+            $data['password'] = bcrypt($request->password);
+
         return $data;
-    }
-
-    /**
-     * showing data page
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function index(Request $request)
-    {
-        return $this->prepareIndex($request, ['data' => $this->getIndexData()]);
-    }
-
-    /**
-     * get data for index page
-     *
-     * @return Collection|null
-     */
-    public function getIndexData()
-    {
-        return $this->repository->getFullDataWith(
-            [
-                'createdBy',
-                'lastUpdatedBy',
-            ],
-            where: [],
-            whereHas: []
-        );
-    }
-
-    /**
-     * showing add new data page
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function create(Request $request)
-    {
-        return $this->prepareCreateForm($request);
-    }
-
-    /**
-     * save new data to db
-     *
-     * @param CrudExampleRequest $request
-     * @return Response
-     */
-    public function store(CrudExampleRequest $request)
-    {
-        return $this->executeStore($request, withUser: true);
-    }
-
-    /**
-     * showing edit data page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function edit(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample);
-    }
-
-    /**
-     * update data to db
-     *
-     * @param CrudExampleRequest $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function update(CrudExampleRequest $request, CrudExample $crudExample)
-    {
-        return $this->executeUpdate($request, $crudExample, withUser: true);
-    }
-
-    /**
-     * show detail page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function show(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample, true);
-    }
-
-    /**
-     * delete data from db
-     *
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function destroy(CrudExample $crudExample)
-    {
-        $this->fileService->deleteCrudExampleFile($crudExample);
-        return $this->executeDestroy($crudExample);
     }
 
     /**

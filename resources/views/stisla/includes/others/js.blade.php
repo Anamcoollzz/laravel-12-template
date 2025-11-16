@@ -32,7 +32,23 @@
 @endif
 
 <form action="" method="post" id="formDeleteGlobal">
+  <input type="hidden" name="variant">
   @method('DELETE')
+  @csrf
+</form>
+
+<form action="" method="post" id="formRestoreGlobal">
+  @method('PUT')
+  @csrf
+</form>
+
+<form action="" method="post" id="formForceDeleteGlobal">
+  @method('DELETE')
+  @csrf
+</form>
+
+<form action="" method="post" id="formDuplicateGlobal">
+  {{-- @method('POST') --}}
   @csrf
 </form>
 

@@ -13,6 +13,7 @@ class CreateCrudExamplesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('crud_examples');
         Schema::create('crud_examples', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
@@ -43,11 +44,15 @@ class CreateCrudExamplesTable extends Migration
             $table->string('color', 10);
             $table->text('summernote_simple')->nullable();
             $table->longText('summernote')->nullable();
+            $table->longText('tinymce')->nullable();
+            $table->longText('ckeditor')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('last_updated_by_id')->nullable();
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->softDeletes();
         });
     }
 

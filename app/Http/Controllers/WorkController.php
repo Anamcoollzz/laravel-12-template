@@ -34,12 +34,12 @@ class WorkController extends StislaController
     /**
      * prepare store data
      *
-     * @param WorkRequest $request
      * @return array
      */
-    public function getStoreData(WorkRequest $request)
+    protected function getStoreData()
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'job_name',
             'department',
         ]);

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Yajra\DataTables\Facades\DataTables;
 
 class Repository extends RepositoryAbstract
@@ -23,6 +24,16 @@ class Repository extends RepositoryAbstract
     public function all()
     {
         return $this->model->all();
+    }
+
+    /**
+     * get model
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -120,11 +131,15 @@ class Repository extends RepositoryAbstract
      *
      * @param mixed $id
      * @param array $columns
+     * @param bool|null $deleted
      * @return Model
      */
-    public function find($id, array $columns = ['*'])
+    public function find($id, array $columns = ['*'], ?bool $deleted = false)
     {
         return $this->model->query()
+            ->when($deleted, function ($query) {
+                $query->withTrashed();
+            })
             ->where('id', $id)
             ->select($columns)
             ->first();
@@ -134,11 +149,15 @@ class Repository extends RepositoryAbstract
      * find or fail data by id
      *
      * @param mixed $id
+     * @param array $columns
+     * @param bool|null $deleted
      * @return Model
      */
-    public function findOrFail($id)
+    public function findOrFail($id, array $columns = ['*'], ?bool $deleted = false)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->when($deleted, function ($query) {
+            $query->withTrashed();
+        })->findOrFail($id, $columns);
     }
 
     /**
@@ -416,6 +435,9 @@ class Repository extends RepositoryAbstract
                     $query->where('id', request('filter_role'));
                 });
             })
+            ->when(request('gender'), function (Builder $query) {
+                $query->where('gender', request('gender'));
+            })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();
@@ -441,7 +463,7 @@ class Repository extends RepositoryAbstract
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [])
+    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [], ?bool $deleted = false)
     {
         if (count($where) > 0) {
             $where = array_filter($where);
@@ -460,6 +482,10 @@ class Repository extends RepositoryAbstract
             })
             ->when(count($orderBy) === 0, function ($query) {
                 $query->latest();
+            })
+            ->when($deleted, function ($query) {
+                if (method_exists($query, 'onlyTrashed'))
+                    $query?->onlyTrashed();
             })
             ->get();
     }
@@ -601,5 +627,43 @@ class Repository extends RepositoryAbstract
         $result = DB::table($table = request('table'))->where('id', $id)->delete();
 
         return $result;
+    }
+
+    /**
+     * restore soft deleted data by id
+     *
+     * @param string $id
+     * @return Model
+     */
+    public function restore(string $id)
+    {
+        $model = $this->model->withTrashed()->where('id', $id)->firstOrFail();
+        if ($model)
+            return $model->restore();
+        return 0;
+    }
+
+    /**
+     * force delete data by id
+     *
+     * @param string $id
+     * @return Model
+     */
+    public function forceDelete(string $id)
+    {
+        $model = $this->model->withTrashed()->where('id', $id)->firstOrFail();
+        if ($model)
+            return $model->forceDelete();
+        return 0;
+    }
+
+    /**
+     * get columns of the model table
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return Schema::getColumnListing($this->model->getTable());
     }
 }

@@ -173,6 +173,22 @@ function logUpdate(string $nextTextTitle, $before, $after)
 }
 
 /**
+ * logDuplicate
+ *
+ * @param string $nextTextTitle
+ * @param mixed $after
+ * @return ActivityLog
+ */
+function logDuplicate(string $nextTextTitle, $after)
+{
+    $title        = __('Duplikat ' . $nextTextTitle);
+    $activityType = DUPLICATE;
+    $before       = null;
+    $after        = $after;
+    return logExecute($title, $activityType, $before, $after);
+}
+
+/**
  * logDelete
  *
  * @param string $nextTextTitle
@@ -183,6 +199,39 @@ function logDelete(string $nextTextTitle, $before)
 {
     $title        = __('Hapus ' . $nextTextTitle);
     $activityType = DELETE;
+    $before       = $before;
+    $after        = null;
+    return logExecute($title, $activityType, $before, $after);
+}
+
+/**
+ * logRestore
+ *
+ * @param string $nextTextTitle
+ * @param mixed $before
+ * @param mixed $after
+ * @return ActivityLog
+ */
+function logRestore(string $nextTextTitle, $before, $after)
+{
+    $title        = __('Pulihkan ' . $nextTextTitle);
+    $activityType = RESTORE;
+    $before       = $before;
+    $after        = $after;
+    return logExecute($title, $activityType, $before, $after);
+}
+
+/**
+ * logForceDelete
+ *
+ * @param string $nextTextTitle
+ * @param mixed $before
+ * @return ActivityLog
+ */
+function logForceDelete(string $nextTextTitle, $before)
+{
+    $title        = __('Hapus Permanen ' . $nextTextTitle);
+    $activityType = FORCE_DELETE;
     $before       = $before;
     $after        = null;
     return logExecute($title, $activityType, $before, $after);

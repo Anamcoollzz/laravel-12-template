@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * successMessageCreate
  *
@@ -15,11 +17,30 @@ function successMessageCreate($nextTitle = '')
  * successMessageUpdate
  *
  * @param string $nextTitle
+ * @param Model|null $model
  * @return string
  */
-function successMessageUpdate($nextTitle = '')
+function successMessageUpdate($nextTitle = '', ?Model $model = null)
 {
+    if ($model && $model->email) {
+        return __('Berhasil Memperbarui Data ' . ($nextTitle) . ' Dengan Email ' . $model->email);
+    }
     return __('Berhasil Memperbarui Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageDuplicate
+ *
+ * @param string $nextTitle
+ * @param Model|null $model
+ * @return string
+ */
+function successMessageDuplicate($nextTitle = '', ?Model $model = null)
+{
+    if ($model && $model->email) {
+        return __('Berhasil Menggandakan Data ' . ($nextTitle) . ' Dengan Email Baru ' . $model->email);
+    }
+    return __('Berhasil Menggandakan Data ' . ($nextTitle));
 }
 
 /**
@@ -30,6 +51,9 @@ function successMessageUpdate($nextTitle = '')
  */
 function successMessageDelete($nextTitle = '')
 {
+    if (request()->input('variant') === 'warning') {
+        return __('Berhasil Memindahkan Data ' . ($nextTitle) . ' Ke Tempat Sampah');
+    }
     return __('Berhasil Menghapus Data ' . ($nextTitle));
 }
 
@@ -103,4 +127,48 @@ function failedMessageDelete($nextTitle = '')
 function failedMessageLoadData($nextTitle = '')
 {
     return __('Gagal Mengambil Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageRestore
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageRestore($nextTitle = '')
+{
+    return __('Berhasil Mengembalikan Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageForceDelete
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageForceDelete($nextTitle = '')
+{
+    return __('Berhasil Menghapus Secara Permanen Data ' . ($nextTitle));
+}
+
+/**
+ * successMessageForceDeleteAll
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageForceDeleteAll($nextTitle = '')
+{
+    return __('Berhasil Menghapus Secara Permanen Data ' . ($nextTitle) . ' Yang Ada Di Tempat Sampah');
+}
+
+/**
+ * successMessageRestoreAll
+ *
+ * @param string $nextTitle
+ * @return string
+ */
+function successMessageRestoreAll($nextTitle = '')
+{
+    return __('Berhasil Mengembalikan Semua Data ' . ($nextTitle) . ' Yang Ada Di Tempat Sampah');
 }

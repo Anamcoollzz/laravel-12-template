@@ -5,6 +5,7 @@ use App\Http\Controllers\BackupDatabaseController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankDepositController;
 use App\Http\Controllers\BankDepositHistoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CrudExampleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropboxController;
@@ -51,6 +52,7 @@ Route::view('form', 'stisla.examples.form.index')->name('form.index');
 Route::view('chart-js', 'stisla.examples.chart-js.index')->name('chart-js.index');
 Route::view('pricing', 'stisla.examples.pricing.index')->name('pricing.index');
 Route::view('invoice', 'stisla.examples.invoice.index')->name('invoice.index');
+Route::view('topnav', 'stisla.examples.topnav.index')->name('topnav.index');
 
 # PENDUDUK
 // Route::resource('persons', PersonController::class);
@@ -123,7 +125,7 @@ Route::get('notifications', [NotificationController::class, 'index'])->name('not
 Route::resource('backup-databases', BackupDatabaseController::class);
 
 # FILE MANAGER
-Route::group(['prefix' => 'file-managers', 'middleware' => [FileManagerPermission::class]], function () {
+Route::group(['prefix' => 'unisharp-files', 'middleware' => [FileManagerPermission::class]], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -179,7 +181,19 @@ Route::get('crud-examples/excel', [CrudExampleController::class, 'exportExcel'])
 Route::get('crud-examples/json', [CrudExampleController::class, 'exportJson'])->name('crud-examples.json');
 Route::get('crud-examples/import-excel-example', [CrudExampleController::class, 'importExcelExample'])->name('crud-examples.import-excel-example');
 Route::post('crud-examples/import-excel', [CrudExampleController::class, 'importExcel'])->name('crud-examples.import-excel');
-Route::resource('crud-examples', CrudExampleController::class);
+Route::post('crud-examples/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('crud-examples.duplicate');
+Route::put('crud-examples/restore/{crudExample}', [CrudExampleController::class, 'restore'])->name('crud-examples.restore');
+Route::put('crud-examples/restore-all', [CrudExampleController::class, 'restoreAll'])->name('crud-examples.restore-all');
+Route::delete('crud-examples/force-delete/{crud_example}', [CrudExampleController::class, 'forceDelete'])->name('crud-examples.force-delete');
+Route::delete('crud-examples/force-delete-all', [CrudExampleController::class, 'forceDeleteAll'])->name('crud-examples.force-delete-all');
+Route::get('crud-examples', [CrudExampleController::class, 'indexData'])->name('crud-examples.index');
+Route::get('crud-examples/create', [CrudExampleController::class, 'createData'])->name('crud-examples.create');
+Route::post('crud-examples', [CrudExampleController::class, 'storeData'])->name('crud-examples.store');
+Route::get('crud-examples/{crudExample}', [CrudExampleController::class, 'showData'])->name('crud-examples.show');
+Route::get('crud-examples/{crudExample}/edit', [CrudExampleController::class, 'editData'])->name('crud-examples.edit');
+Route::put('crud-examples/{crudExample}', [CrudExampleController::class, 'updateData'])->name('crud-examples.update');
+Route::delete('crud-examples/{crudExample}', [CrudExampleController::class, 'destroyData'])->name('crud-examples.destroy');
+// Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK
 Route::get('yajra-banks', [BankController::class, 'index'])->name('banks.index-yajra');
@@ -327,3 +341,20 @@ Route::delete('dropboxs', [DropboxController::class, 'destroy'])->name('dropboxs
 # RESET
 Route::get('reset', [SettingController::class, 'reset'])->name('reset');
 Route::get('reset2', [SettingController::class, 'reset2'])->name('reset2');
+
+# CHATS
+Route::get('yajra-chats', [ChatController::class, 'index'])->name('chats.index-yajra');
+Route::get('yajra-chats/ajax', [ChatController::class, 'yajraAjax'])->name('chats.ajax-yajra');
+Route::get('ajax-chats', [ChatController::class, 'index'])->name('chats.index-ajax');
+Route::get('yajra-ajax-chats', [ChatController::class, 'index'])->name('chats.index-ajax-yajra');
+Route::get('chats/pdf', [ChatController::class, 'exportPdf'])->name('chats.pdf');
+Route::get('chats/csv', [ChatController::class, 'exportCsv'])->name('chats.csv');
+Route::get('chats/excel', [ChatController::class, 'exportExcel'])->name('chats.excel');
+Route::get('chats/json', [ChatController::class, 'exportJson'])->name('chats.json');
+Route::get('chats/import-excel-example', [ChatController::class, 'importExcelExample'])->name('chats.import-excel-example');
+Route::post('chats/import-excel', [ChatController::class, 'importExcel'])->name('chats.import-excel');
+Route::get('chats/get-room-id', [ChatController::class, 'getRoomId'])->name('chats.get-room-id');
+Route::get('chatting-yuk/{category}', [ChatController::class, 'index'])->name('chatting-yuk');
+Route::get('chatting-yuk-delete/{category}', [ChatController::class, 'reset'])->name('chatting-yuk-delete');
+Route::get('chatting-yuk-users', [ChatController::class, 'users'])->name('chatting-yuk-users');
+Route::resource('chats', ChatController::class);

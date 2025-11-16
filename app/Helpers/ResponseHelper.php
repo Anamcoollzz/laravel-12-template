@@ -72,9 +72,20 @@ function response500($data = null, string $message = null)
  * @param string $successMessage
  * @return RedirectResponse
  */
-function backSuccess($successMessage)
+function backSuccess(string $successMessage)
 {
     return back()->with('successMessage', __($successMessage));
+}
+
+/**
+ * back error
+ *
+ * @param string $errorMessage
+ * @return RedirectResponse
+ */
+function backError(string $errorMessage)
+{
+    return back()->withInput()->with('errorMessage', __($errorMessage));
 }
 
 /**
@@ -87,4 +98,16 @@ function backSuccess($successMessage)
 function redirectSuccess($routeInstance, $successMessage)
 {
     return redirect($routeInstance)->with('successMessage', __($successMessage));
+}
+
+/**
+ * redirect error
+ *
+ * @param string $routeInstance
+ * @param string $errorMessage
+ * @return RedirectResponse
+ */
+function redirectError($routeInstance, string $errorMessage)
+{
+    return redirect($routeInstance)->with('errorMessage', __($errorMessage));
 }

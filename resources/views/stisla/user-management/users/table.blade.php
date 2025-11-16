@@ -12,10 +12,19 @@
     <tr>
       <th class="text-center">#</th>
       <th>{{ __('Nama') }}</th>
+      <th>{{ __('NIK') }}</th>
+      <th>{{ __('Jenis Kelamin') }}</th>
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Tanggal Lahir') }}</th>
+      <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
       <th>{{ __('Email') }}</th>
+      @if ($isRegionExists)
+        <th>{{ __('Provinsi') }}</th>
+        <th>{{ __('Kota/Kabupaten') }}</th>
+        <th>{{ __('Kecamatan') }}</th>
+        <th>{{ __('Desa/Kelurahan') }}</th>
+      @endif
       @if ($roleCount > 1)
         <th>{{ __('Role') }}</th>
       @endif
@@ -43,10 +52,19 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
+        <td>{{ $item->nik }}</td>
+        <td>{{ $item->gender }}</td>
         @include('stisla.includes.others.td-phone-number')
-        @include('stisla.includes.others.td-dob')
+        @include('stisla.includes.others.td-dob', ['DateTime' => $item->birth_date])
+        <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
         @include('stisla.includes.others.td-email')
+        @if ($isRegionExists)
+          <td>{{ $item->province?->name }}</td>
+          <td>{{ $item->city?->name }}</td>
+          <td>{{ $item->district?->name }}</td>
+          <td>{{ $item->village?->name }}</td>
+        @endif
         @if ($roleCount > 1)
           <td>
             @foreach ($item->roles as $role)
@@ -58,8 +76,10 @@
             @endforeach
           </td>
         @endif
-        <td><span
-            class="badge badge-{{ $item->deleted_at !== null ? 'danger' : ($item->is_active == 1 ? 'success' : 'warning') }}">{{ $item->deleted_at !== null ? 'Dihapus' : ($item->is_active == 1 ? 'Aktif' : 'Tidak Aktif') }}</span>
+        <td>
+          <span class="badge badge-{{ $item->deleted_at !== null ? 'danger' : ($item->is_active == 1 ? 'success' : 'warning') }}">
+            {{ $item->deleted_at !== null ? 'Dihapus' : ($item->is_active == 1 ? 'Aktif' : 'Tidak Aktif') }}
+          </span>
         </td>
         <td>{{ $item->blocked_reason }}</td>
         @include('stisla.includes.others.td-datetime', ['DateTime' => $item->last_login])
@@ -69,7 +89,7 @@
 
         {{-- wajib --}}
         @include('stisla.includes.others.td-created-updated-at')
-        @include('stisla.includes.others.td-deleted-at')
+        {{-- @include('stisla.includes.others.td-deleted-at') --}}
         @include('stisla.includes.others.td-created-updated-by')
         <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)

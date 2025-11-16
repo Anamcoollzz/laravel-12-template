@@ -101,7 +101,8 @@ class MenuManagementController extends StislaController
      */
     public function store(MenuRequest $request)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'menu_name',
             'route_name',
             'icon',
@@ -164,7 +165,8 @@ class MenuManagementController extends StislaController
      */
     public function update(MenuRequest $request, Menu $menuManagement)
     {
-        $data = $request->only([
+        $request = request();
+        $data = request()->only([
             'menu_name',
             'route_name',
             'icon',

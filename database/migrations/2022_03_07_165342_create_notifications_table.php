@@ -13,18 +13,19 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->longText('content');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
-            $table->boolean('is_read');
-            $table->string('notification_type');
-            $table->string('bg_color')->default('primary');
-            $table->string('icon')->default('bell');
-            $table->timestamps();
-        });
+        if (!in_array('notifications', config('stisla.table_excludes')))
+            Schema::create('notifications', function (Blueprint $table) {
+                $table->id();
+                $table->string('title');
+                $table->longText('content');
+                $table->unsignedBigInteger('user_id');
+                $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
+                $table->boolean('is_read');
+                $table->string('notification_type');
+                $table->string('bg_color')->default('primary');
+                $table->string('icon')->default('bell');
+                $table->timestamps();
+            });
     }
 
     /**

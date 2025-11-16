@@ -6,7 +6,7 @@
 @extends('stisla.layouts.app-datatable')
 
 @section('table')
-  @include('stisla.user-management.users.table')
+  @include('stisla.user-management.users.table', ['isTrashed' => true])
 @endsection
 
 @section('filter_top')

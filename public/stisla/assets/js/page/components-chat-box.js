@@ -1,45 +1,47 @@
-"use strict";
+'use strict';
+
+var stisla_base_url = $('#stisla_asset').val();
 
 var chats = [
   {
     text: 'Hi, dude!',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'Wat?',
-    position: 'right'
+    position: 'right',
   },
   {
     text: 'You wanna know?',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'Wat?!',
-    position: 'right'
+    position: 'right',
   },
   {
     typing: true,
-    position: 'left'
-  }
+    position: 'left',
+  },
 ];
-for(var i = 0; i < chats.length; i++) {
+for (var i = 0; i < chats.length; i++) {
   var type = 'text';
-  if(chats[i].typing != undefined) type = 'typing';
+  if (chats[i].typing != undefined) type = 'typing';
   $.chatCtrl('#mychatbox', {
-    text: (chats[i].text != undefined ? chats[i].text : ''),
-    picture: (chats[i].position == 'left' ? '../assets/img/avatar/avatar-1.png' : '../assets/img/avatar/avatar-2.png'),
-    position: 'chat-'+chats[i].position,
-    type: type
+    text: chats[i].text != undefined ? chats[i].text : '',
+    picture: chats[i].position == 'left' ? stisla_base_url + '/assets/img/avatar/avatar-1.png' : stisla_base_url + '/assets/img/avatar/avatar-2.png',
+    position: 'chat-' + chats[i].position,
+    type: type,
   });
 }
 
-$("#chat-form").submit(function() {
+$('#chat-form').submit(function () {
   var me = $(this);
 
-  if(me.find('input').val().trim().length > 0) {
+  if (me.find('input').val().trim().length > 0) {
     $.chatCtrl('#mychatbox', {
       text: me.find('input').val(),
-      picture: '../assets/img/avatar/avatar-2.png',
+      picture: stisla_base_url + '/assets/img/avatar/avatar-2.png',
     });
     me.find('input').val('');
   }
@@ -49,70 +51,70 @@ $("#chat-form").submit(function() {
 var chats = [
   {
     text: 'Wake up!',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'Yes, already',
-    position: 'right'
+    position: 'right',
   },
   {
     text: 'Grab a brush and put a little make-up',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'What do you mean?',
-    position: 'right'
+    position: 'right',
   },
   {
     text: 'Hide the scars to fade away the shake-up',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'WTF?!',
-    position: 'right'
+    position: 'right',
   },
   {
-    text: 'Why\'d you leave the keys upon the table?',
-    position: 'left'
+    text: "Why'd you leave the keys upon the table?",
+    position: 'left',
   },
   {
     text: '-__________________-',
-    position: 'right'
+    position: 'right',
   },
   {
     text: 'Here you go create another fable',
-    position: 'left'
+    position: 'left',
   },
   {
     text: 'You wanted do!',
-    position: 'right'
+    position: 'right',
   },
   {
     text: 'FXCK!',
-    position: 'right'
+    position: 'right',
   },
   {
     text: '<i>You have blocked Ryan</i>',
-    position: 'right'
+    position: 'right',
   },
 ];
-for(var i = 0; i < chats.length; i++) {
+for (var i = 0; i < chats.length; i++) {
   var type = 'text';
-  if(chats[i].typing != undefined) type = 'typing';
+  if (chats[i].typing != undefined) type = 'typing';
   $.chatCtrl('#mychatbox2', {
-    text: (chats[i].text != undefined ? chats[i].text : ''),
-    picture: (chats[i].position == 'left' ? '../assets/img/avatar/avatar-5.png' : '../assets/img/avatar/avatar-2.png'),
-    position: 'chat-'+chats[i].position,
-    type: type
+    text: chats[i].text != undefined ? chats[i].text : '',
+    picture: chats[i].position == 'left' ? stisla_base_url + '/assets/img/avatar/avatar-5.png' : stisla_base_url + '/assets/img/avatar/avatar-2.png',
+    position: 'chat-' + chats[i].position,
+    type: type,
   });
 }
-$("#chat-form2").submit(function() {
+$('#chat-form2').submit(function () {
   var me = $(this);
 
-  if(me.find('input').val().trim().length > 0) {
+  if (me.find('input').val().trim().length > 0) {
     $.chatCtrl('#mychatbox2', {
       text: me.find('input').val(),
-      picture: '../assets/img/avatar/avatar-2.png',
+      picture: stisla_base_url + '/assets/img/avatar/avatar-2.png',
     });
     me.find('input').val('');
   }
