@@ -102,7 +102,6 @@ class CreateModuleCommand extends Command
         file_put_contents($path, str_replace('crud_examples', $pluralSnake, file_get_contents($path)));
 
         $repository = base_path('app/Repositories/CrudExampleRepository.php');
-        // exec('cp ' . $repository . ' ' . ($path = base_path('app/Repositories/' . $name . 'Repository.php')));
         $this->copy($repository, $path = base_path('app/Repositories/' . $name . 'Repository.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
@@ -115,7 +114,6 @@ class CreateModuleCommand extends Command
         }, $columnsArray, array_keys($columnsArray))), file_get_contents($path)));
 
         $request = base_path('app/Http/Requests/CrudExampleRequest.php');
-        // exec('cp ' . $request . ' ' . ($path = base_path('app/Http/Requests/' . $name . 'Request.php')));
         $this->copy($request, $path = base_path('app/Http/Requests/' . $name . 'Request.php'));
         file_put_contents($path, str_replace('CrudExample', $name, file_get_contents($path)));
         file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(function ($col) use ($pluralSnake) {
@@ -130,12 +128,8 @@ class CreateModuleCommand extends Command
             } else if ($col === 'nik') {
                 return "'$col' => 'required|unique:$pluralSnake,$col|digits:16',";
             }
-
-            return "'$col' => 'required',";
-        }, $columnsArray)), file_get_contents($path)));
-        file_put_contents($path, str_replace('// aa', 'return [', file_get_contents($path)));
-        file_put_contents($path, str_replace('// bb', '];', file_get_contents($path)));
-
+            return "'$col'\t\t=> 'required',";
+        }, $columns)), file_get_contents($path)));
         $view = base_path('resources/views/stisla/crud-examples');
         // exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
         FacadesFile::deleteDirectory($path = base_path('resources/views/stisla/' . $prefix));
@@ -202,6 +196,27 @@ class CreateModuleCommand extends Command
             file_put_contents($fname, str_replace('crud-examples', $prefix, file_get_contents($fname)));
         }
 
+        Artisan::call("make:migration create_" . $pluralSnake . "_table --create=" . $pluralSnake);
+
+        // exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
+        $this->copy(base_path('database/seeders/CrudExampleSeeder.php'), $seeder = base_path('database/seeders/' . $name . 'Seeder.php'));
+        file_put_contents($seeder, str_replace('CrudExample', $name, file_get_contents($seeder)));
+        file_put_contents($seeder, str_replace(
+            '//columns',
+            implode("\n\t\t\t", array_map(function ($col) {
+                if (Str::endsWith($col, '_id')) {
+                    return "'$col' => fake()->word(),";
+                } else if ($col == 'name') {
+                    return "'$col' => fake()->name(),";
+                } else if ($col == 'email') {
+                    return "'$col' => fake()->email(),";
+                } else {
+                    return "'$col' => fake()->sentence(),";
+                }
+            }, $columns)),
+            file_get_contents($seeder)
+        ));
+
         // get latest migration files
 
         // if ()
@@ -251,37 +266,6 @@ class CreateModuleCommand extends Command
         ",
             file_get_contents($latestMigration)
         ));
-
-        // start seeder
-        // exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
-        $this->copy(base_path('database/seeders/CrudExampleSeeder.php'), $seeder = base_path('database/seeders/' . $name . 'Seeder.php'));
-        file_put_contents($seeder, str_replace('CrudExample', $name, file_get_contents($seeder)));
-        file_put_contents($seeder, str_replace(
-            '//columns',
-            implode("\n\t\t\t", array_map(function ($col) {
-                if (Str::endsWith($col, '_id')) {
-                    return "'$col' => fake()->word(),";
-                } else if ($col == 'name') {
-                    return "'$col' => fake()->name(),";
-                } else if ($col == 'email') {
-                    return "'$col' => fake()->email(),";
-                } else if ($col == 'birthdate' || Str::endsWith($col, '_date') || $col == 'date') {
-                    return "'$col' => fake()->date(),";
-                }
-
-                return "'$col' => fake()->word(),";
-            }, $columnsArray)),
-            file_get_contents($seeder)
-        ));
-
-        if (Str::contains($file = file_get_contents(database_path('seeders/DatabaseSeeder.php')), '$this->call(' . $name . 'Seeder::class);') === false) {
-            file_put_contents(database_path('seeders/DatabaseSeeder.php'), str_replace(
-                '// seeders',
-                "\$this->call(" . $name . "Seeder::class);\n        // seeders ",
-                file_get_contents(database_path('seeders/DatabaseSeeder.php'))
-            ));
-        }
-
 
         // exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
         $this->copy(base_path('config/crud-example-permission.php'), $path = base_path('config/' . $slug . '-permission.php'));
@@ -360,6 +344,17 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
         $path = base_path('routes/modules/' . $prefix . '-web-auth.php');
         // file_put_contents($path, str_replace('//route', $content, @file_get_contents($path)));
         file_put_contents($path, $content);
+    }
+
+        $this->info('Controller: ' . $name . 'Controller');
+        $this->info('Model: ' . $name);
+        $this->info('Repository: ' . $name . 'Repository');
+        $this->info('Request: ' . $name . 'Request');
+        $this->info('Views: ' . $prefix);
+        $this->info('Migration: ' . $this->getPath($latestMigration));
+        $this->info('Seeder: ' . $name . 'Seeder');
+        $this->info('Permission Config: ' . $slug . '-permission.php');
+        $this->info('Module created successfully.');
     }
 
     /**
