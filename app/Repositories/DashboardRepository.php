@@ -31,27 +31,30 @@ class DashboardRepository
 
         if (can('Curhat'))
             $widgets[] = (object)[
-                'title' => 'Chat',
-                'count' => ChatMessage::count(),
-                'bg'    => 'success',
-                'icon'  => 'message',
-                'route' => route('chatting-yuk', ['curhat']),
+                'title'   => 'Chat',
+                'count'   => ChatMessage::count(),
+                'bg'      => 'success',
+                'icon'    => 'message',
+                'fi_icon' => 'fas-atom',
+                'route'   => route('chatting-yuk', ['curhat']),
             ];
         if (can('Contoh CRUD'))
             $widgets[] = (object)[
-                'title' => 'Contoh CRUD',
-                'count' => CrudExample::count(),
-                'bg'    => 'primary',
-                'icon'  => 'atom',
-                'route' => route('crud-examples.index'),
+                'title'   => 'Contoh CRUD',
+                'count'   => CrudExample::count(),
+                'bg'      => 'primary',
+                'icon'    => 'atom',
+                'fi_icon' => 'fas-atom',
+                'route'   => route('crud-examples.index'),
             ];
         if (can('Bank') && Schema::hasTable('banks'))
             $widgets[] = (object)[
-                'title' => 'Bank',
-                'count' => Bank::count(),
-                'bg'    => 'primary',
-                'icon'  => 'university',
-                'route' => route('banks.index'),
+                'title'    => 'Bank',
+                'count'    => Bank::count(),
+                'bg'       => 'primary',
+                'icon'     => 'university',
+                'fi_icon'  => 'fas-university',
+                'route'    => route('banks.index'),
                 'bg_color' => 'lightblue'
             ];
         if (can('Deposito Bank') && Schema::hasTable('bank_deposits'))
@@ -60,6 +63,7 @@ class DashboardRepository
                 'count' => BankDeposit::count(),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
+                'fi_icon' => 'fas-dollar',
                 'route' => route('bank-deposits.index'),
                 'bg_color' => 'lightgreen'
             ];
@@ -69,6 +73,7 @@ class DashboardRepository
                 'count' => BankDepositHistory::count(),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
+                'fi_icon' => 'fas-dollar',
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => 'cyan'
             ];
@@ -78,6 +83,7 @@ class DashboardRepository
                 'count' => rp(BankDepositHistory::sum('realization')),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
+                'fi_icon' => 'fas-dollar',
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => '#8b743f'
             ];
@@ -89,6 +95,7 @@ class DashboardRepository
                 })->count() : Student::count(),
                 'bg'    => 'primary',
                 'icon'  => 'users',
+                'fi_icon' => 'fas-users',
                 'route' => route('students.index'),
                 'bg_color' => '#3f6e8bff'
             ];
@@ -102,6 +109,7 @@ class DashboardRepository
                     ->count() : Student::where('student_status', 'lulus')->count(),
                 'bg'    => 'primary',
                 'icon'  => 'users',
+                'fi_icon' => 'fas-users',
                 'route' => route('alumnis.index'),
                 'bg_color' => '#3f8b8bff'
             ];
@@ -111,6 +119,7 @@ class DashboardRepository
                 'count' => StudyProgram::count(),
                 'bg'    => 'primary',
                 'icon'  => 'book',
+                'fi_icon' => 'fas-book',
                 'route' => route('study-programs.index'),
                 'bg_color' => '#3f8b44ff'
             ];
@@ -120,6 +129,7 @@ class DashboardRepository
                 'count' => Faculty::count(),
                 'bg'    => 'primary',
                 'icon'  => 'university',
+                'fi_icon' => 'fas-university',
                 'route' => route('faculties.index'),
                 'bg_color' => '#8b3f64ff'
             ];
@@ -129,6 +139,7 @@ class DashboardRepository
                 'count' => is_app_chat() ? User::role('user')->count() : User::count(),
                 'bg'    => 'danger',
                 'icon'  => 'users',
+                'fi_icon' => 'fas-users',
                 'route' => route('user-management.users.index'),
             ];
             $widgets[] = (object)[
@@ -136,6 +147,7 @@ class DashboardRepository
                 'count' => User::isMale()->role('user')->count(),
                 'bg'    => 'info',
                 'icon'  => 'mars',
+                'fi_icon' => 'fas-mars',
                 'route' => route('user-management.users.index', ['gender' => User::GENDER_MALE]),
             ];
             $widgets[] = (object)[
@@ -143,6 +155,7 @@ class DashboardRepository
                 'count' => User::isFemale()->role('user')->count(),
                 'bg'    => 'primary',
                 'icon'  => 'venus',
+                'fi_icon' => 'fas-venus',
                 'route' => route('user-management.users.index', ['gender' => User::GENDER_FEMALE]),
             ];
             if (is_app_chat()) {
@@ -151,6 +164,7 @@ class DashboardRepository
                     'count' => User::age1018()->role('user')->count(),
                     'bg'    => 'warning',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
                 $widgets[] = (object)[
@@ -158,6 +172,7 @@ class DashboardRepository
                     'count' => User::age1925()->role('user')->count(),
                     'bg'    => 'warning',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
                 $widgets[] = (object)[
@@ -165,6 +180,7 @@ class DashboardRepository
                     'count' => User::age2650()->role('user')->count(),
                     'bg'    => 'warning',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
                 $widgets[] = (object)[
@@ -172,6 +188,7 @@ class DashboardRepository
                     'count' => User::age511000()->role('user')->count(),
                     'bg'    => 'warning',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
                 $widgets[] = (object)[
@@ -179,6 +196,7 @@ class DashboardRepository
                     'count' => User::where('is_majalengka', 1)->role('user')->count(),
                     'bg'    => 'danger',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
                 $widgets[] = (object)[
@@ -186,6 +204,7 @@ class DashboardRepository
                     'count' => User::where('is_majalengka', 0)->role('user')->count(),
                     'bg'    => 'danger',
                     'icon'  => 'users',
+                    'fi_icon' => 'fas-users',
                     'route' => route('user-management.users.index'),
                 ];
             }
@@ -196,6 +215,7 @@ class DashboardRepository
                 'count' => Role::count(),
                 'bg'    => 'success',
                 'icon'  => 'lock',
+                'fi_icon' => 'fas-lock',
                 'route' => route('user-management.roles.index')
             ];
         if (can('Permission'))
@@ -204,6 +224,7 @@ class DashboardRepository
                 'count' => Permission::count(),
                 'bg'    => 'info',
                 'icon'  => 'key',
+                'fi_icon' => 'fas-key',
                 'route' => route('user-management.permissions.index')
             ];
         if (can('Group Permission'))
@@ -212,6 +233,7 @@ class DashboardRepository
                 'count' => PermissionGroup::count(),
                 'bg'    => 'info',
                 'icon'  => 'key',
+                'fi_icon' => 'fas-key',
                 'route' => route('user-management.permission-groups.index'),
                 'bg_color' => 'brown'
             ];
@@ -221,6 +243,7 @@ class DashboardRepository
                 'count' => Menu::count(),
                 'bg'    => 'primary',
                 'icon'  => 'bars',
+                'fi_icon' => 'fas-bars',
                 'route' => route('menu-managements.index'),
                 'bg_color' => 'pink'
             ];
@@ -230,6 +253,7 @@ class DashboardRepository
                 'count' => MenuGroup::count(),
                 'bg'    => 'danger',
                 'icon'  => 'bars',
+                'fi_icon' => 'fas-bars',
                 'route' => route('menu-managements.index'),
                 'bg_color' => 'orange'
             ];
@@ -239,6 +263,7 @@ class DashboardRepository
                 'count' => Notification::where('user_id', $user->id)->count(),
                 'bg'    => 'info',
                 'icon'  => 'bell',
+                'fi_icon' => 'fas-bell',
                 'route' => route('notifications.index'),
                 'bg_color' => 'navy'
             ];
@@ -249,6 +274,7 @@ class DashboardRepository
                 'count' => ActivityLog::count(),
                 'bg'    => 'success',
                 'icon'  => 'clock-rotate-left',
+                'fi_icon' => 'fas-clock-rotate-left',
                 'route' => route('activity-logs.index'),
                 'bg_color' => 'black'
             ];
@@ -258,6 +284,7 @@ class DashboardRepository
                 'count' => LogRequest::count(),
                 'bg'    => 'success',
                 'icon'  => 'clock-rotate-left',
+                'fi_icon' => 'fas-clock-rotate-left',
                 'route' => route('request-logs.index'),
                 'bg_color' => '#C88A65',
             ];
@@ -267,6 +294,7 @@ class DashboardRepository
                 'count' => '6',
                 'bg'    => 'success',
                 'icon'  => 'cogs',
+                'fi_icon' => 'fas-cogs',
                 'route' => route('settings.all'),
                 'bg_color' => '#E9D66B',
             ];
@@ -276,6 +304,7 @@ class DashboardRepository
                 'count' => count((new DatabaseService)->getAllBackupMysql()),
                 'bg'    => 'primary',
                 'icon'  => 'database',
+                'fi_icon' => 'fas-database',
                 'route' => route('backup-databases.index'),
                 'bg_color' => 'purple',
             ];
