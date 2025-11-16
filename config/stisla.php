@@ -2,8 +2,8 @@
 
 use App\Enums\AppEnum;
 
-$app = AppEnum::APP_BLANK;
-// $app = AppEnum::APP_DEFAULT;
+// $app = AppEnum::APP_BLANK;
+$app = AppEnum::APP_DEFAULT;
 $table_excludes = [];
 $roles = [
     'superadmin',
@@ -284,6 +284,14 @@ return [
                             'permission' => 'Stisla Example',
                             'is_active_if_url_includes' => 'invoice*',
                             'is_mockup' => true
+                        ],
+                        [
+                            'menu_name' => 'Galeri',
+                            'route_name' => 'gallery-blade.index',
+                            'icon' => 'fas fa-image',
+                            'permission' => 'Stisla Example',
+                            'is_active_if_url_includes' => 'gallery-blade*',
+                            'is_mockup' => true
                         ]
                     ]
                 ]
@@ -362,6 +370,15 @@ return [
                     'permission' => 'Unisharp File',
                     'is_blank' => true,
                     'is_active_if_url_includes' => 'unisharp-files*'
+                ],
+                [
+                    'menu_name' => 'Galeri',
+                    'uri' => 'galleries',
+                    'icon' => 'fas fa-image',
+                    'permission' => 'Galeri',
+                    'is_blank' => false,
+                    'route_name' => 'galleries.index',
+                    'is_active_if_url_includes' => 'galleries*'
                 ],
                 [
                     'menu_name' => 'Notifikasi',
@@ -701,7 +718,12 @@ return [
         [
             'name' => 'Unisharp File',
             'roles' => ['superadmin', 'admin'],
-            'group' => 'Unisharp File'
+            'group' => 'Manajemen File'
+        ],
+        [
+            'name' => 'Galeri',
+            'roles' => ['superadmin', 'admin'],
+            'group' => 'Manajemen File'
         ],
 
         [
