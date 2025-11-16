@@ -17,6 +17,7 @@ Beberapa fitur atau komponen yang ada
     -   Perbarui email
     -   Perbarui password
     -   Hapus akun
+-   Chatting sederhana (Curhat, Keluhan Penyakit, Pertanyaan Lainnya)
 -   Contoh Modul CRUD (Create, Read, Update, Delete) dan Import Excel serta Export (PDF, JSON, Excel)
     -   CRUD
     -   Export
@@ -35,6 +36,7 @@ Beberapa fitur atau komponen yang ada
 -   Log
     -   Log Aktivitas
     -   Laravel Log Viewer
+    -   Log Request
 -   User dan role
     -   Manjemen Role dan permission menggunakan [spatie](https://spatie.be/docs/laravel-permission/v6/introduction)
         -   CRUD
@@ -51,8 +53,7 @@ Beberapa fitur atau komponen yang ada
         -   Export
         -   Import
 -   Notifikasi
--   Ubuntu
--   MySql
+-   Server (Ubuntu, MySQL, Backup Database)
 -   Manajemen file menggunakan [Unisharp](https://unisharp.github.io/laravel-filemanager/)
 -   Pengaturan
     -   Umum
@@ -64,7 +65,6 @@ Beberapa fitur atau komponen yang ada
     -   Lainnya
         -   Google captcha
         -   Setting page
--   Backup database
 -   Dropbox
 -   Manajemen Menu
     -   Menu (CRUD)
@@ -72,7 +72,6 @@ Beberapa fitur atau komponen yang ada
 -   CRUD Generator (menu nya tersembunyi akses via url saja)
 -   Server side export file
 -   Service dan repository pattern
--   Log Request
 -   Command untuk generate module CRUD
 
 ## How to install and run
@@ -84,7 +83,7 @@ Beberapa fitur atau komponen yang ada
 -   `php artisan migrate --seed`
 -   `php artisan storage:link`
 -   [optional] setup google captcha, google login, facebook login, github login, twitter login in `.env`
--   [optional] untuk membuat modul crud baru, contoh `php artisan make:module Student --columns=name,nim,birthdate --icon="fa fa-users" --title="Mahasiswa"`
+-   [optional] untuk membuat modul CRUD baru, contoh `php artisan make:module Student --columns="name:Nama,nim:NIM,birthdate:Tanggal Lahir,email:Email,password:Password" --icon="fa fa-users" --title="Mahasiswa"`
 
 ## Libraries dan Link Penting
 
@@ -103,6 +102,7 @@ Beberapa fitur atau komponen yang ada
 -   https://github.com/yajra/laravel-datatables
 -   https://github.com/tymondesigns/jwt-auth
 -   https://github.com/milon/barcode
+-   https://v2.vuejs.org
 
 Terima kasih, bisa distar ataupun difork ya guys. Kalau ada request module atau apapun itu, bisa tulis di issue.
 

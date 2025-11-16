@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('regions', function (Blueprint $table) {
-            $table->string('code', 13)->primary();
-            $table->string('name', 100);
-        });
+        if (!in_array('regions', config('stisla.table_excludes')))
+            Schema::create('regions', function (Blueprint $table) {
+                $table->string('code', 13)->primary();
+                $table->string('name', 100);
+            });
     }
 
     /**

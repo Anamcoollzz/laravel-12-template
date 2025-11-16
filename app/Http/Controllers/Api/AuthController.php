@@ -29,28 +29,28 @@ class AuthController extends StislaController
      *
      * @var UserRepository
      */
-    private UserRepository $userRepository;
+    protected UserRepository $userRepository;
 
     /**
      * setting repository
      *
      * @var SettingRepository
      */
-    private SettingRepository $settingRepository;
+    protected SettingRepository $settingRepository;
 
     /**
      * emailservice
      *
      * @var EmailService
      */
-    private EmailService $emailService;
+    protected EmailService $emailService;
 
     /**
      * file service
      *
      * @var FileService
      */
-    private FileService $fileService;
+    protected FileService $fileService;
 
     /**
      * constructor method

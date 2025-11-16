@@ -16,6 +16,8 @@ class RegionSeeder extends Seeder
      */
     public function run()
     {
+        if (!Schema::hasTable('regions')) return;
+
         Schema::disableForeignKeyConstraints();
         Region::truncate();
 

@@ -7,6 +7,7 @@ use App\Http\Middleware\ViewShare;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,14 +17,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         using: function () {
             Route::prefix('api')
-                ->middleware([OverrideConfig::class, 'api', LogRequestMiddleware::class,  EnsureAppKey::class,])
-                ->group(base_path('routes/api.php'));
+                ->middleware([OverrideConfig::class, 'api', LogRequestMiddleware::class,  EnsureAppKey::class])->group(base_path('routes/api.php'));
 
-            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class,  ViewShare::class,])
-                ->group(base_path('routes/stisla-web.php'));
+            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class,  ViewShare::class])->group(base_path('routes/stisla-web.php'));
 
-            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class, ViewShare::class, 'auth',])
-                ->group(base_path('routes/stisla-web-auth.php'));
+            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class, ViewShare::class, 'auth'])->group(base_path('routes/stisla-web-auth.php'));
+
+            $files = File::files(base_path('routes/modules'));
+            foreach ($files as $file) {
+                Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class, ViewShare::class, 'auth'])->group(base_path('routes/modules/' . $file->getBasename()));
+            }
         }
     )
     ->withMiddleware(function (Middleware $middleware) {

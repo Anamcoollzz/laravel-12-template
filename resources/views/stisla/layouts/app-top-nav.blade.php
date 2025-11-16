@@ -190,11 +190,13 @@
                     $_menu_condition = $_menu->permission === null || $_user->can($_menu->permission);
                   @endphp
                   @if ($_menu_condition)
-                    <li @if (Request::is($_menu->is_active_if_url_includes)) class="nav-item active " @else class="nav-item" @endif>
-                      <a @if ($_menu->is_blank) target="_blank" @endif href="{{ $_menu->fix_url }}" class="nav-link @if ($_menu->menu_name === 'Keluar') text-danger @endif">
-                        <i class="{{ $_menu->icon }}"></i><span>{{ __($_menu->menu_name) }}</span>
-                      </a>
-                    </li>
+                    @if (Str::contains('Keluar', $_menu->menu_name) || Str::contains('Profil', $_menu->menu_name) || Str::contains('Beranda', $_menu->menu_name))
+                      <li @if (Request::is($_menu->is_active_if_url_includes)) class="nav-item active " @else class="nav-item" @endif>
+                        <a @if ($_menu->is_blank) target="_blank" @endif href="{{ $_menu->fix_url }}" class="nav-link @if ($_menu->menu_name === 'Keluar') text-danger @endif">
+                          <i class="{{ $_menu->icon }}"></i><span>{{ __($_menu->menu_name) }}</span>
+                        </a>
+                      </li>
+                    @endif
                   @endif
 
                   {{-- else with child dropdown menu --}}
@@ -213,7 +215,7 @@
                         })
                         ->count();
                   @endphp
-                  @if ($_menu_condition)
+                  {{-- @if ($_menu_condition)
                     <li class="nav-item dropdown @if ($_is_active) active @endif">
                       <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
                         <i class="{{ $_menu->icon }}"></i>
@@ -234,7 +236,7 @@
                         @endforeach
                       </ul>
                     </li>
-                  @endif
+                  @endif --}}
                 @endif
               @endforeach
             @endforeach

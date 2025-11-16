@@ -10,6 +10,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -30,6 +31,7 @@ class RolePermissionSeeder extends Seeder
         Role::truncate();
         PermissionGroup::truncate();
         Permission::truncate();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $roles = config('stisla.roles');
         if (is_app_chat())
@@ -113,7 +115,7 @@ class RolePermissionSeeder extends Seeder
             $permissions = $permissions ? $permissions : config('stisla.permissions');
         }
         foreach ($permissions as $permission) {
-            if (!in_array($permission['group'], $this->groupNames)) {
+            if (!in_array($permission['group'], $this->groupNames) && (!isset($permission['table']) || (isset($permission['table']) && Schema::hasTable($permission['table'])))) {
                 $this->groupNames[] = $permission['group'];
                 $group = PermissionGroup::create([
                     'group_name' => $permission['group']
@@ -121,28 +123,49 @@ class RolePermissionSeeder extends Seeder
                 $this->groups[$permission['group']] = $group;
                 $roles = $this->rolesArray[$permission['group']] = Role::whereIn('name', $permission['roles'])->get();
             } else {
-                $group = $this->groups[$permission['group']];
-                $roles = $this->rolesArray[$permission['group']];
+                $group = $this->groups[$permission['group']] ?? null;
+                // $roles = $this->rolesArray[$permission['group']]??null;
             }
             if ($permission['name'] === 'Reset Sistem') {
                 // dd($permission['roles']);
             }
-            $perm = Permission::create([
-                'name'                => $name = $permission['name'],
-                'permission_group_id' => $group->id
-            ]);
-            // foreach ($permission['roles'] as $role) {
-            //     if (in_array($role, $this->rolesArray))
-            //         $perm->assignRole($role);
-            // }
-            // if ($name === 'Profil Hapus Akun') {
-            //     dd($permission['roles'], $roles->toArray());
-            // }
-            $roles = Role::whereIn('name', $permission['roles'])->get();
-            $perm->syncRoles($roles);
+            if (isset($permission['table'])) {
+                if (Schema::hasTable($permission['table'])) {
+                    $perm = Permission::create([
+                        'name'                => $name = $permission['name'],
+                        'permission_group_id' => $group->id
+                    ]);
+                    // foreach ($permission['roles'] as $role) {
+                    //     if (in_array($role, $this->rolesArray))
+                    //         $perm->assignRole($role);
+                    // }
+                    // if ($name === 'Profil Hapus Akun') {
+                    //     dd($permission['roles'], $roles->toArray());
+                    // }
+                    $roles = Role::whereIn('name', $permission['roles'])->get();
+                    $perm->syncRoles($roles);
+                }
+            } else {
+                try {
+                    $perm = Permission::create([
+                        'name'                => $name = $permission['name'],
+                        'permission_group_id' => $group->id
+                    ]);
+                    $roles = Role::whereIn('name', $permission['roles'])->get();
+                    $perm->syncRoles($roles);
+                } catch (\Exception $e) {
+                    $permissions = Permission::all();
+                    dd($e->getMessage(), $permissions);
+                }
+            }
         }
     }
 
+    /**
+     * per module permission
+     *
+     * @return void
+     */
     private function perModule()
     {
         if (is_app_chat())
@@ -151,7 +174,7 @@ class RolePermissionSeeder extends Seeder
         foreach ($files as $file) {
             if (
                 Str::contains($file->getFilename(), '-permission.php')
-                && !Str::contains($file->getFilename(), 'crud-example-permission.php')
+                // && !Str::contains($file->getFilename(), 'crud-example-permission.php')
             ) {
                 $this->generatePermission(config(str_replace('.php', '', $file->getFilename())));
             }

@@ -17,6 +17,7 @@ use App\Services\PDFService;
 use App\Utils\FileUtil;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\Middleware;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Schema;
 
 class StislaController extends Controller implements HasMiddleware
 {
@@ -196,6 +198,20 @@ class StislaController extends Controller implements HasMiddleware
     protected FileUtil $fileUtil;
 
     /**
+     * form request
+     *
+     * @var FormRequest
+     */
+    protected FormRequest $request;
+
+    /**
+     * file columns
+     *
+     * @var array
+     */
+    protected array $fileColumns = [];
+
+    /**
      * constructor method
      *
      * @return void
@@ -213,6 +229,7 @@ class StislaController extends Controller implements HasMiddleware
         $this->settingRepository     = new SettingRepository;
         $this->import                = new GeneralImport;
         $this->fileUtil              = new FileUtil;
+        $this->request               = new FormRequest;
     }
 
     /**
@@ -222,7 +239,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function canShowDeleted()
     {
-        return can($this->title . ' Terhapus');
+        return can($this->title . ' Terhapus') && method_exists($this->repository->getModel(), 'trashed');
     }
 
     /**
@@ -262,6 +279,7 @@ class StislaController extends Controller implements HasMiddleware
             new Middleware('permission:' . $moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']),
             new Middleware('permission:' . $moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']),
             new Middleware('permission:' . $moduleName . ' Force Login', only: ['forceLogin']),
+            new Middleware('permission:' . $moduleName . ' Terhapus', only: ['restore', 'restoreAll', 'forceDelete', 'forceDeleteAll']),
         ], $middlewares);
     }
 
@@ -296,6 +314,7 @@ class StislaController extends Controller implements HasMiddleware
     {
         $canCreate      = can($permissionPrefix . ' Tambah');
         $canUpdate      = can($permissionPrefix . ' Ubah');
+        $canDuplicate   = can($permissionPrefix . ' Duplikat');
         $canDetail      = can($permissionPrefix . ' Detail');
         $canDelete      = can($permissionPrefix . ' Hapus');
         $canImportExcel = can($permissionPrefix . ' Impor Excel');
@@ -303,35 +322,38 @@ class StislaController extends Controller implements HasMiddleware
         $canForceLogin  = can($permissionPrefix . ' Force Login');
         $canBlock       = can($permissionPrefix . ' Blokir');
         $canFilterData  = can($permissionPrefix . ' Filter Data');
-        $this->canShowDeleted = $canShowDeleted = can($permissionPrefix . ' Terhapus');
+        $canShowDeleted = can($permissionPrefix . ' Terhapus') && method_exists($this->repository->getModel(), 'trashed');
 
         return [
-            'canCreate'         => $canCreate,
-            'canUpdate'         => $canUpdate,
-            'canDetail'         => $canDetail,
-            'canDelete'         => $canDelete,
-            'canImportExcel'    => $canImportExcel,
-            'canExport'         => $canExport,
-            'canForceLogin'     => $canForceLogin,
-            'canBlock'          => $canBlock,
-            'canFilterData'     => $canFilterData,
-            'canShowDeleted'    => $canShowDeleted,
-            'title'             => $title,
-            'moduleIcon'        => $this->icon,
-            'route_create'      => $canCreate ? route($routePrefix . '.create') : null,
-            'routeImportExcel'  => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
-            'routeExampleExcel' => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
-            'routePdf'          => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
-            'routeExcel'        => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
-            'routeCsv'          => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
-            'routeJson'         => $canExport && Route::has($routePrefix . '.json') ? route($routePrefix . '.json') : null,
-            'routeYajra'        => Route::has($routePrefix . '.ajax-yajra') ? route($routePrefix . '.ajax-yajra') : null,
-            'routeStore'        => Route::has($routePrefix . '.store') ? route($routePrefix . '.store') : null,
-            'routePrefix'       => $routePrefix,
-            'isExport'          => false,
-            'folder'            => $routePrefix,
-            'viewFolder'        => $this->viewFolder,
-            'prefix'            => $this->prefix ?? null,
+            'canCreate'              => $canCreate,
+            'canUpdate'              => $canUpdate,
+            'canDetail'              => $canDetail,
+            'canDelete'              => $canDelete,
+            'canImportExcel'         => $canImportExcel,
+            'canExport'              => $canExport,
+            'canForceLogin'          => $canForceLogin,
+            'canBlock'               => $canBlock,
+            'canFilterData'          => $canFilterData,
+            'canShowDeleted'         => $canShowDeleted,
+            'canDuplicate'           => $canDuplicate,
+            'title'                  => $title,
+            'moduleIcon'             => $this->icon,
+            'route_create'           => $canCreate ? route($routePrefix . '.create') : null,
+            'route_restore_all'      => $canShowDeleted && Route::has($routePrefix . '.restore-all') ? route($routePrefix . '.restore-all') : null,
+            'route_force_delete_all' => $canShowDeleted && Route::has($routePrefix . '.force-delete-all') ? route($routePrefix . '.force-delete-all') : null,
+            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
+            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
+            'routePdf'               => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
+            'routeExcel'             => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
+            'routeCsv'               => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
+            'routeJson'              => $canExport && Route::has($routePrefix . '.json') ? route($routePrefix . '.json') : null,
+            'routeYajra'             => Route::has($routePrefix . '.ajax-yajra') ? route($routePrefix . '.ajax-yajra') : null,
+            'routeStore'             => Route::has($routePrefix . '.store') ? route($routePrefix . '.store') : null,
+            'routePrefix'            => $routePrefix,
+            'isExport'               => false,
+            'folder'                 => $routePrefix,
+            'viewFolder'             => $this->viewFolder,
+            'prefix'                 => $this->prefix ?? null,
         ];
     }
 
@@ -560,7 +582,7 @@ class StislaController extends Controller implements HasMiddleware
             'json_name'    => $filename . '.json',
             'moduleIcon'   => $this->icon,
             'canExport'    => $this->canExport ?? $defaultData['canExport'],
-        ]);
+        ], $this->getHasColumns());
     }
 
     /**
@@ -727,6 +749,50 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
+     * execute duplicate
+     *
+     * @param Request $request
+     * @param Model $model
+     * @param bool|null $withUser
+     * @return Response
+     */
+    protected function executeDuplicate(Model $model, ?bool $withUser = false)
+    {
+        $data    = $model->toArray();
+        unset($data['id']);
+        if ($data['email'] ?? false) {
+            $data['email'] = 'copy_' . $data['email'];
+        } else if ($data['username'] ?? false) {
+            $data['username'] = 'copy_' . $data['username'];
+        } else if ($data['slug'] ?? false) {
+            $data['slug'] = 'copy-' . $data['slug'];
+        } else if ($data['code'] ?? false) {
+            $data['code'] = 'copy-' . $data['code'];
+        } else if ($data['number'] ?? false) {
+            $data['number'] = 'copy-' . $data['number'];
+        } else if ($data['title'] ?? false) {
+            $data['title'] = 'Copy of ' . $data['title'];
+        } else if ($data['name'] ?? false) {
+            $data['name'] = 'Copy of ' . $data['name'];
+        } else if ($data['nik'] ?? false) {
+            $data['nik'] = 'copy_' . $data['nik'];
+        }
+        $newData = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
+        logDuplicate($this->title, $newData);
+        $successMessage = successMessageDuplicate($this->title, model: $newData);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+                'data'    => $newData,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
      * save data to db
      *
      * @param Request $request
@@ -771,7 +837,7 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $fullTitle,
-        ]);
+        ], $this->getHasColumns());
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -799,7 +865,7 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $isDetail ? __('Detail ' . $this->title) : __('Ubah ' . $this->title),
-        ], $data);
+        ], $data, $this->getHasColumns());
     }
 
     /**
@@ -933,6 +999,220 @@ class StislaController extends Controller implements HasMiddleware
         $this->repository->forceDelete($model->id);
         logForceDelete($this->title, $model);
         $successMessage = successMessageForceDelete($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * restore deleted data
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function restore(string $id)
+    {
+        $model = $this->repository->find($id, deleted: true);
+        return $this->executeRestore($model);
+    }
+
+    /**
+     * duplicate data in db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function duplicate(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        return $this->executeDuplicate($model);
+    }
+
+    /**
+     * show detail page
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function showData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        return $this->prepareDetailForm($request, $model, true);
+    }
+
+    /**
+     * showing edit data page
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function editData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        // return $model;
+        return $this->prepareDetailForm($request, $model);
+    }
+
+    /**
+     * showing add new data page
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function createData(Request $request)
+    {
+        return $this->prepareCreateForm($request);
+    }
+
+    /**
+     * update data to db
+     *
+     * @param Request $request
+     * @param string $id
+     * @return Response
+     */
+    public function updateData(Request $request, string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        $request->validate($this->request->rules(isMethodPut: true, id: $id));
+        return $this->executeUpdate($request, $model, withUser: true);
+    }
+
+    /**
+     * save new data to db
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function storeData(Request $request)
+    {
+        $request->validate($this->request->rules());
+        return $this->executeStore($request, withUser: true);
+    }
+
+    /**
+     * force delete data from db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function forceDelete(string $id)
+    {
+        $model = $this->repository->find($id, deleted: true);
+        $this->fileUtil->deleteFiles($model, $this->fileColumns);
+        return $this->executeForceDelete($model);
+    }
+
+    /**
+     * delete data from db
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function destroyData(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        if (!Schema::hasColumn($model->getTable(), 'deleted_at'))
+            $this->fileUtil->deleteFiles($model, $this->fileColumns);
+        return $this->executeDestroy($model);
+    }
+
+    /**
+     * get has columns
+     *
+     * @return array
+     */
+    private function getHasColumns(): array
+    {
+        $columns = $this->repository->getColumns();
+        $data = [];
+        foreach ($columns as $column) {
+            $data['is_has_' . $column] = true;
+        }
+        return array_merge([
+            'columns' => $columns,
+        ], $data);
+    }
+
+    /**
+     * showing data page
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function indexData(Request $request)
+    {
+        $columns = $this->getHasColumns();
+        return $this->prepareIndex($request, array_merge([
+            'data'        => $this->getIndexData2(),
+            'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+        ], $columns));
+    }
+
+    /**
+     * get data for index page
+     *
+     * @return Collection|null
+     */
+    public function getIndexData2(?bool $deleted = false)
+    {
+        return $this->repository->getFullDataWith(
+            [
+                'createdBy',
+                'lastUpdatedBy',
+            ],
+            where: [],
+            whereHas: [],
+            deleted: $deleted
+        );
+    }
+
+    /**
+     * force delete all deleted data from db
+     *
+     * @return Response
+     */
+    public function forceDeleteAll()
+    {
+        $models = $this->getIndexData2(deleted: true);
+        foreach ($models as $model) {
+            $this->fileUtil->deleteFiles($model, $this->fileColumns);
+            $this->repository->forceDelete($model->id);
+            logForceDelete($this->title, $model);
+        }
+        $successMessage = successMessageForceDeleteAll($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * restore all deleted data
+     *
+     * @return Response
+     */
+    public function restoreAll()
+    {
+        $models = $this->getIndexData2(deleted: true);
+        foreach ($models as $model) {
+            $this->repository->restore($model->id);
+            logRestore($this->title, $model, $model);
+        }
+        $successMessage = successMessageRestoreAll($this->title);
 
         if (request()->ajax()) {
             return response()->json([

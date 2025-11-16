@@ -173,6 +173,22 @@ function logUpdate(string $nextTextTitle, $before, $after)
 }
 
 /**
+ * logDuplicate
+ *
+ * @param string $nextTextTitle
+ * @param mixed $after
+ * @return ActivityLog
+ */
+function logDuplicate(string $nextTextTitle, $after)
+{
+    $title        = __('Duplikat ' . $nextTextTitle);
+    $activityType = DUPLICATE;
+    $before       = null;
+    $after        = $after;
+    return logExecute($title, $activityType, $before, $after);
+}
+
+/**
  * logDelete
  *
  * @param string $nextTextTitle

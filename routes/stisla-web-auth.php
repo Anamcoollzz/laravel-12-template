@@ -125,7 +125,7 @@ Route::get('notifications', [NotificationController::class, 'index'])->name('not
 Route::resource('backup-databases', BackupDatabaseController::class);
 
 # FILE MANAGER
-Route::group(['prefix' => 'file-managers', 'middleware' => [FileManagerPermission::class]], function () {
+Route::group(['prefix' => 'unisharp-files', 'middleware' => [FileManagerPermission::class]], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
@@ -181,9 +181,19 @@ Route::get('crud-examples/excel', [CrudExampleController::class, 'exportExcel'])
 Route::get('crud-examples/json', [CrudExampleController::class, 'exportJson'])->name('crud-examples.json');
 Route::get('crud-examples/import-excel-example', [CrudExampleController::class, 'importExcelExample'])->name('crud-examples.import-excel-example');
 Route::post('crud-examples/import-excel', [CrudExampleController::class, 'importExcel'])->name('crud-examples.import-excel');
+Route::post('crud-examples/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('crud-examples.duplicate');
 Route::put('crud-examples/restore/{crudExample}', [CrudExampleController::class, 'restore'])->name('crud-examples.restore');
+Route::put('crud-examples/restore-all', [CrudExampleController::class, 'restoreAll'])->name('crud-examples.restore-all');
 Route::delete('crud-examples/force-delete/{crud_example}', [CrudExampleController::class, 'forceDelete'])->name('crud-examples.force-delete');
-Route::resource('crud-examples', CrudExampleController::class);
+Route::delete('crud-examples/force-delete-all', [CrudExampleController::class, 'forceDeleteAll'])->name('crud-examples.force-delete-all');
+Route::get('crud-examples', [CrudExampleController::class, 'indexData'])->name('crud-examples.index');
+Route::get('crud-examples/create', [CrudExampleController::class, 'createData'])->name('crud-examples.create');
+Route::post('crud-examples', [CrudExampleController::class, 'storeData'])->name('crud-examples.store');
+Route::get('crud-examples/{crudExample}', [CrudExampleController::class, 'showData'])->name('crud-examples.show');
+Route::get('crud-examples/{crudExample}/edit', [CrudExampleController::class, 'editData'])->name('crud-examples.edit');
+Route::put('crud-examples/{crudExample}', [CrudExampleController::class, 'updateData'])->name('crud-examples.update');
+Route::delete('crud-examples/{crudExample}', [CrudExampleController::class, 'destroyData'])->name('crud-examples.destroy');
+// Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK
 Route::get('yajra-banks', [BankController::class, 'index'])->name('banks.index-yajra');

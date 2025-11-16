@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Yajra\DataTables\Facades\DataTables;
 
 class Repository extends RepositoryAbstract
@@ -23,6 +24,16 @@ class Repository extends RepositoryAbstract
     public function all()
     {
         return $this->model->all();
+    }
+
+    /**
+     * get model
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -138,11 +149,15 @@ class Repository extends RepositoryAbstract
      * find or fail data by id
      *
      * @param mixed $id
+     * @param array $columns
+     * @param bool|null $deleted
      * @return Model
      */
-    public function findOrFail($id)
+    public function findOrFail($id, array $columns = ['*'], ?bool $deleted = false)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->when($deleted, function ($query) {
+            $query->withTrashed();
+        })->findOrFail($id, $columns);
     }
 
     /**
@@ -420,6 +435,9 @@ class Repository extends RepositoryAbstract
                     $query->where('id', request('filter_role'));
                 });
             })
+            ->when(request('gender'), function (Builder $query) {
+                $query->where('gender', request('gender'));
+            })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();
@@ -466,7 +484,8 @@ class Repository extends RepositoryAbstract
                 $query->latest();
             })
             ->when($deleted, function ($query) {
-                $query->onlyTrashed();
+                if (method_exists($query, 'onlyTrashed'))
+                    $query?->onlyTrashed();
             })
             ->get();
     }
@@ -636,5 +655,15 @@ class Repository extends RepositoryAbstract
         if ($model)
             return $model->forceDelete();
         return 0;
+    }
+
+    /**
+     * get columns of the model table
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return Schema::getColumnListing($this->model->getTable());
     }
 }

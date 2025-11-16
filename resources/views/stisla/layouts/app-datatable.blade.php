@@ -72,15 +72,16 @@
               <div class="card-header">
                 <h4><i class="{{ $moduleIcon }}"></i> Data {{ $title }} Yang Sudah Dihapus</h4>
 
-                {{-- <div class="card-header-action">
-                  @if ($canImportExcel)
+                <div class="card-header-action">
+                  {{-- @if ($canImportExcel)
                     @include('stisla.includes.forms.buttons.btn-import-excel')
+                  @endif --}}
+                  @if ($deletedData->count() > 0)
+                    @include('stisla.includes.forms.buttons.btn-restore', ['link' => $route_restore_all, 'label' => 'Pulihkan Semua'])
+                    @include('stisla.includes.forms.buttons.btn-force-delete', ['link' => $route_force_delete_all, 'label' => 'Hapus Permanen Semua'])
                   @endif
-                  @if ($canCreate)
-                    @include('stisla.includes.forms.buttons.btn-add', ['link' => $route_create])
-                  @endif
-                  @yield('btn-action-header')
-                </div> --}}
+                  {{-- @yield('btn-action-header') --}}
+                </div>
               </div>
               <div class="card-body">
                 @if ($deletedData->count() > 0)

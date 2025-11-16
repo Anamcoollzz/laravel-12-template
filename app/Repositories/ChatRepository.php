@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Models\CrudExample;
+use App\Models\BankDepositHistory;
+use App\Models\ChatMessage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
-class CrudExampleRepository extends Repository
+class ChatRepository extends Repository
 {
 
     /**
@@ -16,7 +17,7 @@ class CrudExampleRepository extends Repository
      */
     public function __construct()
     {
-        $this->model = new CrudExample();
+        $this->model = new ChatMessage();
     }
 
     /**
@@ -32,32 +33,22 @@ class CrudExampleRepository extends Repository
         })
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
-            // columns
-
-
-            // yang ini bisa dikomen aja kalau gak dipakai
-            'currency'         => fn(CrudExample $item) => dollar($item->currency),
-            'currency_idr'     => fn(CrudExample $item) => rp($item->currency_idr),
+            'currency'         => fn(BankDepositHistory $item) => dollar($item->currency),
+            'currency_idr'     => fn(BankDepositHistory $item) => rp($item->currency_idr),
             'select2_multiple' => '{{implode(", ", $select2_multiple)}}',
             'checkbox'         => '{{implode(", ", $checkbox)}}',
             'checkbox2'        => '{{implode(", ", $checkbox2)}}',
-            'tags'             => 'stisla.includes.others.item-tags',
-            'file'             => 'stisla.includes.others.item-file',
-            'birthdate'        => fn(CrudExample $item) => view('stisla.includes.others.item-datetime', ['item' => $item]),
-            'email'            => fn(CrudExample $item) => view('stisla.includes.others.item-email', ['item' => $item]),
-            'phone_number'     => fn(CrudExample $item) => view('stisla.includes.others.item-phonenumber', ['item' => $item]),
-            'avatar'           => fn(CrudExample $item) => view('stisla.includes.others.item-image', ['file' => $item->avatar, 'item' => $item]),
-            'image'            => fn(CrudExample $item) => view('stisla.includes.others.item-image', ['file' => $item->image, 'item' => $item]),
-            'barcode'          => fn(CrudExample $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
-            'qr_code'          => fn(CrudExample $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
-            'color'            => 'stisla.includes.others.item-color',
+            'tags'             => 'stisla.crud-examples.tags',
+            'file'             => 'stisla.crud-examples.file',
+            'image'            => fn(BankDepositHistory $item) => view('stisla.crud-examples.image', ['file' => $item->image, 'item' => $item]),
+            'barcode'          => fn(BankDepositHistory $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
+            'qr_code'          => fn(BankDepositHistory $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
+            'color'            => 'stisla.crud-examples.color',
             'created_at'       => '{{\Carbon\Carbon::parse($created_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             'updated_at'       => '{{\Carbon\Carbon::parse($updated_at)->addHour(7)->format("Y-m-d H:i:s")}}',
-            // 'created_by'       => fn(CrudExample $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
-            // 'last_updated_by'  => fn(CrudExample $crudExample) => $crudExample->lastUpdatedBy ? $crudExample->lastUpdatedBy->name : '-',
-
-            // yang ini butuh action
-            'action'           => function (CrudExample $crudExample) use ($additionalParams) {
+            // 'created_by'       => fn(BankDepositHistory $crudExample) => $crudExample->createdBy ? $crudExample->createdBy->name : '-',
+            // 'last_updated_by'  => fn(BankDepositHistory $crudExample) => $crudExample->lastUpdatedBy ? $crudExample->lastUpdatedBy->name : '-',
+            'action'           => function (BankDepositHistory $crudExample) use ($additionalParams) {
                 $isAjaxYajra = Route::is('crud-examples.index-ajax-yajra') || request('isAjaxYajra') == 1;
                 $data = array_merge($additionalParams ? $additionalParams : [], [
                     'item'        => $crudExample,
@@ -68,12 +59,12 @@ class CrudExampleRepository extends Repository
         ];
         $params = [
             'editColumns' => $editColumns,
-            'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code', 'avatar', 'phone_number', 'email', 'birthdate'],
+            'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code'],
             'addColumns'  => [
-                'created_by' => function (CrudExample $item) {
+                'created_by' => function (BankDepositHistory $item) {
                     return $item->createdBy ? $item->createdBy->name : '-';
                 },
-                'last_updated_by' => function (CrudExample $item) {
+                'last_updated_by' => function (BankDepositHistory $item) {
                     return $item->lastUpdatedBy ? $item->lastUpdatedBy->name : '-';
                 }
             ]
@@ -95,14 +86,6 @@ class CrudExampleRepository extends Repository
                 'searchable' => false,
                 'orderable'  => false
             ],
-            //columns
-
-            // ini bisa dikomen nanti ya kalau tidak digunakan
-            ['data' => 'name', 'name' => 'name'],
-            ['data' => 'phone_number', 'name' => 'phone_number'],
-            ['data' => 'address', 'name' => 'address'],
-            ['data' => 'birthdate', 'name' => 'birthdate'],
-            ['data' => 'avatar', 'name' => 'avatar'],
             ['data' => 'text', 'name' => 'text'],
             ['data' => 'barcode', 'name' => 'barcode'],
             ['data' => 'qr_code', 'name' => 'qr_code'],
@@ -127,8 +110,6 @@ class CrudExampleRepository extends Repository
             ['data' => 'updated_at', 'name' => 'updated_at'],
             ['data' => 'created_by', 'name' => 'createdBy.name'],
             ['data' => 'last_updated_by', 'name' => 'lastUpdatedBy.name'],
-
-            // yang ini butuh action
             [
                 'data' => 'action',
                 'name' => 'action',
@@ -139,12 +120,21 @@ class CrudExampleRepository extends Repository
     }
 
     /**
-     * get full data with relations
+     * reset chat by category
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param string $category
+     * @return int
      */
-    public function getFullData()
+    public function resetChat($category)
     {
-        return $this->queryFullData()->with(['createdBy', 'lastUpdatedBy'])->latest()->get();
+        if (is_user())
+            return $this->model->where('category', $category)
+                ->where(function ($query) {
+                    $query->where('from_user_id', auth_id())
+                        ->orWhere('to_user_id', auth_id());
+                })
+                ->whereNull('deleted_at')
+                ->update(['deleted_at' => now()]);
+        return 0;
     }
 }

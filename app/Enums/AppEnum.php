@@ -9,4 +9,7 @@ enum AppEnum: string
 
     case APP_DEFAULT = 'default';
     case APP_CHAT = 'chat';
+    case APP_BANK = 'bank';
+    case APP_EDUCATION = 'education';
+    case APP_BLANK = 'blank';
 }

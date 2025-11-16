@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserManagementController extends StislaController
@@ -41,8 +42,9 @@ class UserManagementController extends StislaController
         $roleOptions = $this->userRepository->getRoleOptions();
         $defaultData = $this->getDefaultDataIndex(__('Pengguna'), 'Pengguna', 'user-management.users');
         return array_merge($defaultData, [
-            'data'      => $this->userRepository->getUsers(),
-            'roleCount' => count($roleOptions),
+            'data'           => $this->userRepository->getUsers(),
+            'roleCount'      => count($roleOptions),
+            'isRegionExists' => Schema::hasTable('regions'),
         ]);
     }
 

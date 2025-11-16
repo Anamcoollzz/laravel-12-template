@@ -11,12 +11,23 @@ class CrudExample extends Model
 {
     use HasFactory, UserTrait, SoftDeletes;
 
+    //softdeletes
+
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'crud_examples';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        // ini bisa dicomment kalau gak dipakai
         "text",
         "email",
         "number",
@@ -45,7 +56,13 @@ class CrudExample extends Model
         'address',
         'avatar',
         'password',
+        'tinymce',
+        'ckeditor',
+        'is_active',
 
+
+
+        // ini hasil generate dari create:module command
         //columns
         "created_by_id",
         "last_updated_by_id",

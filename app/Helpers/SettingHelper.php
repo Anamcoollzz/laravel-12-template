@@ -76,11 +76,71 @@ function developer_whatsapp()
 /**
  * check if app type is chat
  *
+ * @param AppEnum|null $app
  * @return boolean
  */
-function is_app_chat()
+function is_app_chat($app = null)
 {
+    if ($app) {
+        return $app === AppEnum::APP_CHAT;
+    }
     return config('stisla.app') === AppEnum::APP_CHAT;
+}
+
+/**
+ * check if app type is bank
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_bank($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_BANK;
+    }
+    return config('stisla.app') === AppEnum::APP_BANK;
+}
+
+/**
+ * check if app type is education
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_education($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_EDUCATION;
+    }
+    return config('stisla.app') === AppEnum::APP_EDUCATION;
+}
+
+/**
+ * check if app type is blank
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_blank($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_BLANK;
+    }
+    return config('stisla.app') === AppEnum::APP_BLANK;
+}
+
+/**
+ * check if app type is default
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_default($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_DEFAULT;
+    }
+    return config('stisla.app') === AppEnum::APP_DEFAULT;
 }
 
 /**
