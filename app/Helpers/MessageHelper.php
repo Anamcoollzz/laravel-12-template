@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * successMessageCreate
  *
@@ -15,10 +17,14 @@ function successMessageCreate($nextTitle = '')
  * successMessageUpdate
  *
  * @param string $nextTitle
+ * @param Model|null $model
  * @return string
  */
-function successMessageUpdate($nextTitle = '')
+function successMessageUpdate($nextTitle = '', ?Model $model = null)
 {
+    if ($model && $model->email) {
+        return __('Berhasil Memperbarui Data ' . ($nextTitle) . ' Dengan Email ' . $model->email);
+    }
     return __('Berhasil Memperbarui Data ' . ($nextTitle));
 }
 
@@ -26,10 +32,14 @@ function successMessageUpdate($nextTitle = '')
  * successMessageDuplicate
  *
  * @param string $nextTitle
+ * @param Model|null $model
  * @return string
  */
-function successMessageDuplicate($nextTitle = '')
+function successMessageDuplicate($nextTitle = '', ?Model $model = null)
 {
+    if ($model && $model->email) {
+        return __('Berhasil Menggandakan Data ' . ($nextTitle) . ' Dengan Email Baru ' . $model->email);
+    }
     return __('Berhasil Menggandakan Data ' . ($nextTitle));
 }
 

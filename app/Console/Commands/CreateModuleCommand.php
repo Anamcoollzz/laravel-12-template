@@ -63,6 +63,9 @@ class CreateModuleCommand extends Command
         $columnsArray = collect($columns)->transform(function ($item) {
             return explode(':', $item)[0];
         })->toArray();
+        $columnsArrayWithoutPassword = array_filter($columnsArray, function ($item) {
+            return $item !== 'password';
+        });
         $labelsArray = collect($columns)->transform(function ($item) {
             $parts = explode(':', $item);
             return $parts[1] ?? $parts[0];
@@ -81,7 +84,7 @@ class CreateModuleCommand extends Command
         file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
         file_put_contents($path, str_replace('crud example', $slug, file_get_contents($path)));
-        file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col',", $columnsArray)), file_get_contents($path)));
+        file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(fn($col) => "'$col',", $columnsArrayWithoutPassword)), file_get_contents($path)));
         file_put_contents($path, str_replace('//rostart', '$data = request()->only([', file_get_contents($path)));
         file_put_contents($path, str_replace('//roend', ']);', file_get_contents($path)));
         file_put_contents($path, str_replace('fa fa-atom', $icon, file_get_contents($path)));
@@ -119,7 +122,7 @@ class CreateModuleCommand extends Command
             if ($col === 'name') {
                 return "'$col' => 'required|string|regex:/^[\\pL\\s.,]+$/u|max:50',";
             } else if ($col === 'email') {
-                return "'$col' => 'required|email|unique:$pluralSnake,$col|max:100',";
+                return "'$col' => \$this->isMethod('put') || \$this->isMethodPut || \$isMethodPut ? 'required|email|unique:$pluralSnake,$col,'.\$id.',id|max:100' : 'required|email|unique:$pluralSnake,$col|max:100',";
             } else if ($col === 'password') {
                 return "'$col' => \$this->isMethod('put') || \$this->isMethodPut || \$isMethodPut ? 'nullable|string|min:6|max:50' : 'required|string|min:6|max:50',";
             } else if ($col === 'birthdate' || $col === 'date' || Str::endsWith($col, '_date')) {
@@ -143,9 +146,31 @@ class CreateModuleCommand extends Command
         foreach ($views as $view) {
             $fname = $view->getRealPath();
             file_put_contents($fname, str_replace('{{-- columns --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
+                if ($col === 'password') {
+                    return "{{-- <th>{{ __('" . $labelsArray[$index] . "') }}</th> --}}";
+                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || Str::contains($col, 'name')) {
+                    return '';
+                }
                 return "<th>{{ __('" . $labelsArray[$index] . "') }}</th>";
             }, $columnsArray, array_keys($columnsArray))), file_get_contents($fname)));
             file_put_contents($fname, str_replace('{{-- columnstd --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
+                if ($col === 'deleted_at') {
+                    return "@include('stisla.includes.others.td-deleted-at')";
+                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || Str::contains($col, 'name')) {
+                    return '';
+                    return "@include('stisla.includes.others.td-email')";
+                } else if (Str::endsWith($col, '_date') || $col === 'date' || $col === 'birthdate') {
+                    return "@include('stisla.includes.others.td-datetime', ['DateTime' => \$item->$col])";
+                } else if (Str::contains($col, 'image') || Str::contains($col, 'avatar') || Str::contains($col, 'photo')) {
+                    return "@include('stisla.includes.others.td-image', ['file' => \$item->$col])";
+                } else if (Str::contains($col, 'address')) {
+                    return "@include('stisla.includes.others.td-address')";
+                } else if (Str::contains($col, 'phone')) {
+                    return "@include('stisla.includes.others.td-phone-number')";
+                } else if ($col === 'password') {
+                    return "{{-- <td>********</td> --}}";
+                }
+
                 return "<td>{{ \$item->$col }}</td>";
             }, $columnsArray, array_keys($columnsArray))), file_get_contents($fname)));
             file_put_contents($fname, str_replace(
@@ -154,13 +179,20 @@ class CreateModuleCommand extends Command
                     function ($col, $index) use ($labelsArray) {
                         if (Str::endsWith($col, '_id')) {
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.selects.select', ['id' => '$col','name' => '$col','options' => '{$col}_options','label' => __('" . $labelsArray[$index] . "'),'required' => true,])\n\t</div>";
-                        } elseif ($col === 'name') {
+                        } elseif ($col === 'name' || $col === 'birthdate' || $col === 'phone_number' || $col === 'address' || $col === 'birth_date') {
+                            return '';
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-name')\n\t</div>";
                         } elseif ($col === 'email') {
+                            return '';
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-email')\n\t</div>";
-                        } else {
-                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => __('" . $labelsArray[$index] . "')])\n\t</div>";
+                        } elseif ($col === 'password') {
+                            return '';
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-password')\n\t</div>";
                         }
+
+
+
+                        return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => __('" . $labelsArray[$index] . "')])\n\t</div>";
                     },
                     $columnsArray,
                     array_keys($columnsArray)
@@ -197,9 +229,16 @@ class CreateModuleCommand extends Command
                 if (Str::endsWith($col, '_id')) {
                     $table = Str::plural(Str::snake(substr($col, 0, -3)));
                     return "\$table->unsignedBigInteger('$col')->nullable()->comment('" . $labelsArray[$index] . "');\n\t\t\t\$table->foreign('$col')->references('id')->on('" . $table . "')->onUpdate('set null')->onDelete('set null');";
-                } else {
-                    return "\$table->string('$col', 50)->comment('" . $labelsArray[$index] . "');";
+                } else if ($col === 'password') {
+                    return "\$table->string('$col', 191)->comment('" . $labelsArray[$index] . "');";
+                } else if ($col === 'email') {
+                    return "\$table->string('$col', 191)->unique()->comment('" . $labelsArray[$index] . "');";
+                } else if ($col === 'birthdate' || Str::endsWith($col, '_date') || $col === 'date') {
+                    return "\$table->date('$col')->comment('" . $labelsArray[$index] . "');";
                 }
+
+
+                return "\$table->string('$col', 50)->comment('" . $labelsArray[$index] . "');";
             }, $columnsArray, array_keys($columnsArray))) . "
 
             // wajib
@@ -226,9 +265,11 @@ class CreateModuleCommand extends Command
                     return "'$col' => fake()->name(),";
                 } else if ($col == 'email') {
                     return "'$col' => fake()->email(),";
-                } else {
-                    return "'$col' => fake()->sentence(),";
+                } else if ($col == 'birthdate' || Str::endsWith($col, '_date') || $col == 'date') {
+                    return "'$col' => fake()->date(),";
                 }
+
+                return "'$col' => fake()->word(),";
             }, $columnsArray)),
             file_get_contents($seeder)
         ));

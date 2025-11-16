@@ -45,8 +45,12 @@ class CrudExampleController extends StislaController
     {
         $request = request();
 
+        $columns = $this->repository->getColumns();
+
         // ini bisa dikomen nanti
-        $data = request()->only([
+        $data = [];
+
+        $formColumns = [
             'text',
             'email',
             "number",
@@ -71,29 +75,37 @@ class CrudExampleController extends StislaController
             'address',
             'tinymce',
             'ckeditor',
-        ]);
+        ];
+
+        foreach ($formColumns as $column) {
+            if (in_array($column, $columns) && $request->has($column)) {
+                $data[$column] = $request->input($column);
+            }
+        }
+
+        if (in_array('is_active', $columns)) {
+            $data['is_active'] = $request->filled('is_active');
+        }
 
         //rostart//columns
         //roend
 
-        $data['is_active'] = $request->filled('is_active');
-
-        if ($request->has('currency'))
+        if ($request->has('currency') && in_array('currency', $columns))
             $data['currency'] = idr_to_double($request->currency);
 
-        if ($request->has('currency_idr'))
+        if ($request->has('currency_idr') && in_array('currency_idr', $columns))
             $data['currency_idr'] = rp_to_double($request->currency_idr);
 
-        if ($request->hasFile('file'))
+        if ($request->hasFile('file') && in_array('file', $columns))
             $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'crud-examples/files');
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image') && in_array('image', $columns))
             $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'crud-examples/images');
 
-        if ($request->hasFile('avatar'))
+        if ($request->hasFile('avatar') && in_array('avatar', $columns))
             $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
 
-        if ($request->password)
+        if ($request->password  && in_array('password', $columns))
             $data['password'] = bcrypt($request->password);
 
         return $data;

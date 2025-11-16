@@ -13,6 +13,7 @@ class CreateCrudExamplesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('crud_examples');
         Schema::create('crud_examples', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);

@@ -55,7 +55,7 @@
         <td>{{ $item->nik }}</td>
         <td>{{ $item->gender }}</td>
         @include('stisla.includes.others.td-phone-number')
-        @include('stisla.includes.others.td-dob')
+        @include('stisla.includes.others.td-dob', ['DateTime' => $item->birth_date])
         <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
         @include('stisla.includes.others.td-email')

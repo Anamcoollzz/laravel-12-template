@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Yajra\DataTables\Facades\DataTables;
 
 class Repository extends RepositoryAbstract
@@ -23,6 +24,16 @@ class Repository extends RepositoryAbstract
     public function all()
     {
         return $this->model->all();
+    }
+
+    /**
+     * get model
+     *
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -473,7 +484,8 @@ class Repository extends RepositoryAbstract
                 $query->latest();
             })
             ->when($deleted, function ($query) {
-                $query->onlyTrashed();
+                if (method_exists($query, 'onlyTrashed'))
+                    $query?->onlyTrashed();
             })
             ->get();
     }
@@ -643,5 +655,15 @@ class Repository extends RepositoryAbstract
         if ($model)
             return $model->forceDelete();
         return 0;
+    }
+
+    /**
+     * get columns of the model table
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return Schema::getColumnListing($this->model->getTable());
     }
 }

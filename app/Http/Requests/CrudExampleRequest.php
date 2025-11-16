@@ -36,9 +36,10 @@ class CrudExampleRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @param bool $isMethodPut
+     * @param string|null $id
      * @return array
      */
-    public function rules(?bool $isMethodPut = false)
+    public function rules(?bool $isMethodPut = false, ?string $id = null)
     {
         // dd($this);
 
@@ -48,7 +49,7 @@ class CrudExampleRequest extends FormRequest
         // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas
         return [
             'text'              => 'required',
-            'email'             => 'required|email',
+            'email'             =>  $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'required|email|unique:crud_examples,email,' . $id . ',id|max:100' : 'required|email|unique:crud_examples,email|max:100',
             "number"            => "required|numeric",
             "currency"          => "required",
             "currency_idr"      => "required",

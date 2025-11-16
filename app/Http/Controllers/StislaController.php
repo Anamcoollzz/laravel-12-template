@@ -239,7 +239,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function canShowDeleted()
     {
-        return can($this->title . ' Terhapus');
+        return can($this->title . ' Terhapus') && method_exists($this->repository->getModel(), 'trashed');
     }
 
     /**
@@ -322,7 +322,7 @@ class StislaController extends Controller implements HasMiddleware
         $canForceLogin  = can($permissionPrefix . ' Force Login');
         $canBlock       = can($permissionPrefix . ' Blokir');
         $canFilterData  = can($permissionPrefix . ' Filter Data');
-        $canShowDeleted = can($permissionPrefix . ' Terhapus');
+        $canShowDeleted = can($permissionPrefix . ' Terhapus') && method_exists($this->repository->getModel(), 'trashed');
 
         return [
             'canCreate'              => $canCreate,
@@ -582,7 +582,7 @@ class StislaController extends Controller implements HasMiddleware
             'json_name'    => $filename . '.json',
             'moduleIcon'   => $this->icon,
             'canExport'    => $this->canExport ?? $defaultData['canExport'],
-        ]);
+        ], $this->getHasColumns());
     }
 
     /**
@@ -760,9 +760,26 @@ class StislaController extends Controller implements HasMiddleware
     {
         $data    = $model->toArray();
         unset($data['id']);
+        if ($data['email'] ?? false) {
+            $data['email'] = 'copy_' . $data['email'];
+        } else if ($data['username'] ?? false) {
+            $data['username'] = 'copy_' . $data['username'];
+        } else if ($data['slug'] ?? false) {
+            $data['slug'] = 'copy-' . $data['slug'];
+        } else if ($data['code'] ?? false) {
+            $data['code'] = 'copy-' . $data['code'];
+        } else if ($data['number'] ?? false) {
+            $data['number'] = 'copy-' . $data['number'];
+        } else if ($data['title'] ?? false) {
+            $data['title'] = 'Copy of ' . $data['title'];
+        } else if ($data['name'] ?? false) {
+            $data['name'] = 'Copy of ' . $data['name'];
+        } else if ($data['nik'] ?? false) {
+            $data['nik'] = 'copy_' . $data['nik'];
+        }
         $newData = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
         logDuplicate($this->title, $newData);
-        $successMessage = successMessageDuplicate($this->title);
+        $successMessage = successMessageDuplicate($this->title, model: $newData);
 
         if (request()->ajax()) {
             return response()->json([
@@ -820,7 +837,7 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $fullTitle,
-        ]);
+        ], $this->getHasColumns());
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -848,7 +865,7 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $isDetail ? __('Detail ' . $this->title) : __('Ubah ' . $this->title),
-        ], $data);
+        ], $data, $this->getHasColumns());
     }
 
     /**
@@ -1065,7 +1082,7 @@ class StislaController extends Controller implements HasMiddleware
     public function updateData(Request $request, string $id)
     {
         $model = $this->repository->findOrFail($id);
-        $request->validate($this->request->rules(isMethodPut: true));
+        $request->validate($this->request->rules(isMethodPut: true, id: $id));
         return $this->executeUpdate($request, $model, withUser: true);
     }
 
@@ -1109,6 +1126,23 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
+     * get has columns
+     *
+     * @return array
+     */
+    private function getHasColumns(): array
+    {
+        $columns = $this->repository->getColumns();
+        $data = [];
+        foreach ($columns as $column) {
+            $data['is_has_' . $column] = true;
+        }
+        return array_merge([
+            'columns' => $columns,
+        ], $data);
+    }
+
+    /**
      * showing data page
      *
      * @param Request $request
@@ -1116,10 +1150,11 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function indexData(Request $request)
     {
-        return $this->prepareIndex($request, [
+        $columns = $this->getHasColumns();
+        return $this->prepareIndex($request, array_merge([
             'data'        => $this->getIndexData2(),
             'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
-        ]);
+        ], $columns));
     }
 
     /**
