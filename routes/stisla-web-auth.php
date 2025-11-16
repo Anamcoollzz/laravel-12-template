@@ -53,6 +53,10 @@ Route::view('chart-js', 'stisla.examples.chart-js.index')->name('chart-js.index'
 Route::view('pricing', 'stisla.examples.pricing.index')->name('pricing.index');
 Route::view('invoice', 'stisla.examples.invoice.index')->name('invoice.index');
 Route::view('topnav', 'stisla.examples.topnav.index')->name('topnav.index');
+Route::view('gallery-blade', 'stisla.examples.gallery-blade.index')->name('gallery-blade.index');
+
+# GALLERY
+Route::view('galleries', 'stisla.coming-soon.index')->name('galleries.index');
 
 # PENDUDUK
 // Route::resource('persons', PersonController::class);
