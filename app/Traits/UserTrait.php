@@ -27,6 +27,26 @@ trait UserTrait
     }
 
     /**
+     * Get the user that created
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by_id')->select(['id', 'name', 'email']);
+    }
+
+    /**
+     * Get the user that updated
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function editor()
+    {
+        return $this->belongsTo(User::class, 'last_updated_by_id')->select(['id', 'name', 'email']);
+    }
+
+    /**
      * Get the user id
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

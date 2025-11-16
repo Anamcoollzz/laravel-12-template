@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\ActivityLogTable;
+use Filafly\Icons\FontAwesome\FontAwesomeIcons;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -29,6 +31,9 @@ class FilamentAdminPanelProvider extends PanelProvider
             ->id('filament-admin')
             ->path('filament-admin')
             ->login()
+            ->plugins([
+                FontAwesomeIcons::make(),
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -36,13 +41,12 @@ class FilamentAdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
-                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
                 StatsOverviewWidget::class,
-                // FilamentInfoWidget::class,
+                ActivityLogTable::class,
                 // FilamentInfoWidget::class,
             ])
             ->middleware([

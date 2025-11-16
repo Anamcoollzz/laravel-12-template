@@ -35,7 +35,7 @@ class DashboardRepository
                 'count'   => ChatMessage::count(),
                 'bg'      => 'success',
                 'icon'    => 'message',
-                'fi_icon' => 'fas-atom',
+                'fi_icon' => 'fas-message',
                 'route'   => route('chatting-yuk', ['curhat']),
             ];
         if (can('Contoh CRUD'))
@@ -63,7 +63,7 @@ class DashboardRepository
                 'count' => BankDeposit::count(),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
-                'fi_icon' => 'fas-dollar',
+                'fi_icon' => 'fas-money-bill',
                 'route' => route('bank-deposits.index'),
                 'bg_color' => 'lightgreen'
             ];
@@ -73,7 +73,7 @@ class DashboardRepository
                 'count' => BankDepositHistory::count(),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
-                'fi_icon' => 'fas-dollar',
+                'fi_icon' => 'fas-money-bill',
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => 'cyan'
             ];
@@ -83,7 +83,7 @@ class DashboardRepository
                 'count' => rp(BankDepositHistory::sum('realization')),
                 'bg'    => 'primary',
                 'icon'  => 'dollar',
-                'fi_icon' => 'fas-dollar',
+                'fi_icon' => 'fas-money-bill',
                 'route' => route('bank-deposit-histories.index'),
                 'bg_color' => '#8b743f'
             ];

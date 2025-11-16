@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10ab4ee86852484eeb8ced9c93930577",
+    "content-hash": "9ea74cfda2c2f3436000192282b9b96a",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1691,6 +1691,118 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.18.0"
             },
             "time": "2024-11-01T03:51:45+00:00"
+        },
+        {
+            "name": "filafly/filament-font-awesome-icons",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filafly/filament-font-awesome-icons.git",
+                "reference": "2564871a67e70deb498315cb424f81a55a095afb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filafly/filament-font-awesome-icons/zipball/2564871a67e70deb498315cb424f81a55a095afb",
+                "reference": "2564871a67e70deb498315cb424f81a55a095afb",
+                "shasum": ""
+            },
+            "require": {
+                "filafly/filament-icons": "^1.0",
+                "owenvoke/blade-fontawesome": "^2.9",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.22"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Filafly\\Icons\\FontAwesome\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nolan Nordlund",
+                    "email": "nolan@filafly.com",
+                    "homepage": "https://www.filafly.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Font Awesome icon pack for Filament Icons",
+            "homepage": "https://filafly.com/packages/filament-icons",
+            "keywords": [
+                "filament",
+                "font awesome",
+                "icons",
+                "laravel",
+                "replace",
+                "swap"
+            ],
+            "support": {
+                "issues": "https://github.com/filafly/filament-font-awesome-icons/issues",
+                "source": "https://github.com/filafly/filament-font-awesome-icons/tree/v1.0"
+            },
+            "time": "2025-05-25T10:50:03+00:00"
+        },
+        {
+            "name": "filafly/filament-icons",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filafly/filament-icons.git",
+                "reference": "a0327d3d54c4e0acbed5b627c6e26646de4ab7ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filafly/filament-icons/zipball/a0327d3d54c4e0acbed5b627c6e26646de4ab7ca",
+                "reference": "a0327d3d54c4e0acbed5b627c6e26646de4ab7ca",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.2.3|^4.0@beta",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.20"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Filafly\\Icons\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nolan Nordlund",
+                    "email": "nolan@filafly.com",
+                    "homepage": "https://www.filafly.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Core package for managing Filament icon drivers via a common interface.",
+            "homepage": "https://filafly.com/plugins/filament-icons",
+            "keywords": [
+                "Phosphor",
+                "filament",
+                "font awesome",
+                "icons",
+                "laravel",
+                "replace",
+                "swap"
+            ],
+            "support": {
+                "issues": "https://github.com/filafly/filament-icons/issues",
+                "source": "https://github.com/filafly/filament-icons/tree/v1.0.3"
+            },
+            "time": "2025-06-13T16:07:29+00:00"
         },
         {
             "name": "filament/actions",
@@ -5879,6 +5991,66 @@
                 }
             ],
             "time": "2025-01-30T13:51:11+00:00"
+        },
+        {
+            "name": "owenvoke/blade-fontawesome",
+            "version": "v2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/owenvoke/blade-fontawesome.git",
+                "reference": "94dcd0c78f43f8234b0d9c76c903ecd288b8b0d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/owenvoke/blade-fontawesome/zipball/94dcd0c78f43f8234b0d9c76c903ecd288b8b0d1",
+                "reference": "94dcd0c78f43f8234b0d9c76c903ecd288b8b0d1",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.5",
+                "illuminate/support": "^10.34|^11.0|^12.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.13",
+                "orchestra/testbench": "^8.12|^9.0|^10.0",
+                "pestphp/pest": "^2.26|^3.7",
+                "phpstan/phpstan": "^1.10|^2.1",
+                "symfony/var-dumper": "^6.3|^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "OwenVoke\\BladeFontAwesome\\BladeFontAwesomeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OwenVoke\\BladeFontAwesome\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A package to easily make use of Font Awesome in your Laravel Blade views",
+            "support": {
+                "issues": "https://github.com/owenvoke/blade-fontawesome/issues",
+                "source": "https://github.com/owenvoke/blade-fontawesome/tree/v2.9.1"
+            },
+            "funding": [
+                {
+                    "url": "https://ecologi.com/owenvoke?gift-trees",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/owenvoke",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-28T16:03:42+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
