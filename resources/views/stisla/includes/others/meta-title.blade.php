@@ -19,7 +19,7 @@
 <meta property="og:type" content="{{ $_meta_og_type }}">
 <meta property="og:url" content="{{ url()->current() }}">
 <meta property="og:title" content="{{ $_meta_og_title }}">
-<meta property="og:description" content="{{ $_app_desc }}">
+<meta property="og:description" content="{{ $_app_description }}">
 <meta property="og:image" content="{{ is_app_chat() ? ($homeleft = asset('assets/images/aids12.png')) : $_meta_og_image }}">
 
 <meta name="twitter:card" content="{{ $_meta_twitter_card }}">
