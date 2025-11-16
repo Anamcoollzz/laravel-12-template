@@ -26,16 +26,18 @@ class CreateModuleCommand extends Command
     --- Note: --columns is required, --icon is required, --title is required, --soft-deletes is optional`
     ';
 
+    private $prefix, $modelName, $snake, $camel, $slug, $pluralSnake, $title;
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $columns     = $this->option('columns');
-        $icon        = $this->option('icon');
-        $title       = $this->option('title');
-        $modelName = $name        = $this->argument('name');
-        $softDeletes = $this->option('soft-deletes');
+        $columns         = $this->option('columns');
+        $icon            = $this->option('icon');
+        $this->title = $title           = $this->option('title');
+        $this->modelName = $modelName = $name = $this->argument('name');
+        $softDeletes     = $this->option('soft-deletes');
 
         if ($name === null || $name === '') {
             $this->error('Name is required');
@@ -66,11 +68,11 @@ class CreateModuleCommand extends Command
             return $parts[1] ?? $parts[0];
         })->toArray();
 
-        $snake       = Str::snake($name);
-        $pluralSnake = Str::plural($snake);
-        $prefix      = Str::kebab(Str::plural($name));
-        $camel       = Str::camel($name);
-        $slug        = Str::slug($name);
+        $this->snake       = $snake       = Str::snake($name);
+        $this->pluralSnake = $pluralSnake = Str::plural($snake);
+        $this->prefix      = $prefix      = Str::kebab(Str::plural($name));
+        $this->camel       = $camel       = Str::camel($name);
+        $this->slug        = $slug        = Str::slug($name);
 
         $controller = base_path('app/Http/Controllers/CrudExampleController.php');
         // exec('cp ' . $controller . ' ' . ($path = base_path('app/Http/Controllers/' . $name . 'Controller.php')));
@@ -168,28 +170,15 @@ class CreateModuleCommand extends Command
             file_put_contents($fname, str_replace('crud-examples', $prefix, file_get_contents($fname)));
         }
 
-        Artisan::call("make:migration create_" . $pluralSnake . "_table --create=" . $pluralSnake);
-
-        // exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
-        $this->copy(base_path('database/seeders/CrudExampleSeeder.php'), $seeder = base_path('database/seeders/' . $name . 'Seeder.php'));
-        file_put_contents($seeder, str_replace('CrudExample', $name, file_get_contents($seeder)));
-        file_put_contents($seeder, str_replace(
-            '//columns',
-            implode("\n\t\t\t", array_map(function ($col) {
-                if (Str::endsWith($col, '_id')) {
-                    return "'$col' => fake()->word(),";
-                } else if ($col == 'name') {
-                    return "'$col' => fake()->name(),";
-                } else if ($col == 'email') {
-                    return "'$col' => fake()->email(),";
-                } else {
-                    return "'$col' => fake()->sentence(),";
-                }
-            }, $columnsArray)),
-            file_get_contents($seeder)
-        ));
-
         // get latest migration files
+
+        // if ()
+        // Artisan::call("make:migration create_" . $pluralSnake . "_table --create=" . $pluralSnake);
+        $migrations = glob(database_path('migrations/*_create_' . $pluralSnake . '_table.php'));
+        if (count($migrations) > 0) {
+            FacadesFile::delete($migrations);
+        }
+        Artisan::call("make:migration create_" . $pluralSnake . "_table --create=" . $pluralSnake);
         $migrations = glob(database_path('migrations/*_create_' . $pluralSnake . '_table.php'));
         if ($migrations) {
             $latestMigration = array_reduce($migrations, function ($a, $b) {
@@ -197,7 +186,6 @@ class CreateModuleCommand extends Command
             });
             // $this->info('Latest migration created: ' . $latestMigration);
         }
-
         $soft = "";
         if ($softDeletes) {
             $soft = "\$table->softDeletes();";
@@ -225,15 +213,83 @@ class CreateModuleCommand extends Command
             file_get_contents($latestMigration)
         ));
 
+        // start seeder
+        // exec('cp ' . base_path('database/seeders/CrudExampleSeeder.php') . ' ' . ($seeder = base_path('database/seeders/' . $name . 'Seeder.php')));
+        $this->copy(base_path('database/seeders/CrudExampleSeeder.php'), $seeder = base_path('database/seeders/' . $name . 'Seeder.php'));
+        file_put_contents($seeder, str_replace('CrudExample', $name, file_get_contents($seeder)));
+        file_put_contents($seeder, str_replace(
+            '//columns',
+            implode("\n\t\t\t", array_map(function ($col) {
+                if (Str::endsWith($col, '_id')) {
+                    return "'$col' => fake()->word(),";
+                } else if ($col == 'name') {
+                    return "'$col' => fake()->name(),";
+                } else if ($col == 'email') {
+                    return "'$col' => fake()->email(),";
+                } else {
+                    return "'$col' => fake()->sentence(),";
+                }
+            }, $columnsArray)),
+            file_get_contents($seeder)
+        ));
+
+        if (Str::contains($file = file_get_contents(database_path('seeders/DatabaseSeeder.php')), '$this->call(' . $name . 'Seeder::class);') === false) {
+            file_put_contents(database_path('seeders/DatabaseSeeder.php'), str_replace(
+                '// seeders',
+                "\$this->call(" . $name . "Seeder::class);\n        // seeders ",
+                file_get_contents(database_path('seeders/DatabaseSeeder.php'))
+            ));
+        }
+
+
         // exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
         $this->copy(base_path('config/crud-example-permission.php'), $path = base_path('config/' . $slug . '-permission.php'));
         file_put_contents($path, str_replace('Contoh CRUD', $title, file_get_contents($path)));
         file_put_contents($path, str_replace('crud_examples', $pluralSnake, file_get_contents($path)));
 
         // route
-        $path = base_path('routes/stisla-web-auth.php');
-        file_put_contents($path, str_replace('//route', "
-# $name
+        $this->generateRoute();
+
+        if (Str::contains($file = file_get_contents(config_path('stisla.php')), "'permission' => '$title',") === false) {
+            file_put_contents(config_path('stisla.php'), str_replace('// additionalmenus', "
+                [
+                    'menu_name' => '$title',
+                    'route_name' => '$prefix.index',
+                    'icon' => '$icon',
+                    'permission' => '$title',
+                    'is_active_if_url_includes' => '$prefix*'
+                ],
+                // additionalmenus", file_get_contents(config_path('stisla.php'))));
+        }
+
+        $this->info('Controller: ' . $name . 'Controller');
+        $this->info('Model: ' . $name);
+        $this->info('Repository: ' . $name . 'Repository');
+        $this->info('Request: ' . $name . 'Request');
+        $this->info('Views: ' . $prefix);
+        $this->info('Migration: ' . $latestMigration);
+        $this->info('Seeder: ' . $name . 'Seeder');
+        $this->info('Permission Config: ' . $slug . '-permission.php');
+        $this->info('Module created successfully.');
+    }
+
+    /**
+     * generate route file
+     *
+     * @return void
+     */
+    private function generateRoute()
+    {
+        $name       = $this->modelName;
+        $prefix     = $this->prefix;
+        $snake      = $this->snake;
+        $title = $this->title;
+        $content = "
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+# $title Module Routes
 Route::get('yajra-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-yajra');
 Route::get('yajra-$prefix/ajax', [\App\Http\Controllers\\{$name}Controller::class, 'yajraAjax'])->name('$prefix.ajax-yajra');
 Route::get('ajax-$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'index'])->name('$prefix.index-ajax');
@@ -257,17 +313,12 @@ Route::get('$prefix/{{$snake}}/edit', [\App\Http\Controllers\\{$name}Controller:
 Route::put('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'updateData'])->name('$prefix.update');
 Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'destroyData'])->name('$prefix.destroy');
 // Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
-//route", file_get_contents($path)));
-
-        $this->info('Controller: ' . $name . 'Controller');
-        $this->info('Model: ' . $name);
-        $this->info('Repository: ' . $name . 'Repository');
-        $this->info('Request: ' . $name . 'Request');
-        $this->info('Views: ' . $prefix);
-        $this->info('Migration: ' . $latestMigration);
-        $this->info('Seeder: ' . $name . 'Seeder');
-        $this->info('Permission Config: ' . $slug . '-permission.php');
-        $this->info('Module created successfully.');
+//route
+        ";
+        // $path = base_path('routes/stisla-web-auth.php');
+        $path = base_path('routes/modules/' . $prefix . '-web-auth.php');
+        // file_put_contents($path, str_replace('//route', $content, @file_get_contents($path)));
+        file_put_contents($path, $content);
     }
 
     /**

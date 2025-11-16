@@ -83,6 +83,7 @@ return [
                     'permission' => null,
                     'is_active_if_url_includes' => 'dashboard*'
                 ],
+                // additionalmenus
                 [
                     'menu_name' => 'Contoh CRUD',
                     'route_name' => 'crud-examples.index',

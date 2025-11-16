@@ -279,6 +279,7 @@ class StislaController extends Controller implements HasMiddleware
             new Middleware('permission:' . $moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']),
             new Middleware('permission:' . $moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']),
             new Middleware('permission:' . $moduleName . ' Force Login', only: ['forceLogin']),
+            new Middleware('permission:' . $moduleName . ' Terhapus', only: ['restore', 'restoreAll', 'forceDelete', 'forceDeleteAll']),
         ], $middlewares);
     }
 
