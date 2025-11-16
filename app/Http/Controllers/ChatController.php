@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CrudExampleRequest;
-use App\Imports\CrudExampleImport;
 use App\Models\ChatMessage;
-use App\Models\CrudExample;
 use App\Models\User;
-use App\Repositories\CrudExampleRepository;
+use App\Repositories\ChatRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ChatController extends StislaController
 {
@@ -26,67 +22,13 @@ class ChatController extends StislaController
         parent::__construct();
 
         $this->icon       = 'fa fa-message';
-        // $this->repository = new ChatRepository;
+        $this->repository = new ChatRepository;
         $this->prefix     = $this->viewFolder            = 'chats';
         $this->pdfPaperSize = 'A2';
         $this->isCrud     = true;
         // $this->import     = new CrudExampleImport;
 
         // $this->defaultMiddleware($this->title = 'Chat');
-    }
-
-    /**
-     * prepare store data
-     *
-     * @return array
-     */
-    protected function getStoreData()
-    {
-        $request = request();
-        $data = request()->only([
-            'text',
-            'email',
-            "number",
-            "select",
-            "textarea",
-            "radio",
-            "date",
-            'checkbox',
-            'checkbox2',
-            "time",
-            'tags',
-            "color",
-            'select2',
-            'select2_multiple',
-            'summernote',
-            'summernote_simple',
-            'barcode',
-            'qr_code',
-            'name',
-            'phone_number',
-            'birthdate',
-            'address',
-
-            //columns
-        ]);
-
-        $data['currency']     = idr_to_double($request->currency);
-        $data['currency_idr'] = rp_to_double($request->currency_idr);
-
-        if ($request->hasFile('file'))
-            $data['file'] = $this->fileService->uploadCrudExampleFile($request->file('file'));
-
-        if ($request->hasFile('image'))
-            $data['image'] = $this->fileService->uploadCrudExampleFile($request->file('image'));
-
-        if ($request->hasFile('avatar'))
-            $data['avatar'] = $this->fileService->uploadCrudExampleFile($request->file('avatar'));
-
-        if ($request->password) {
-            $data['password'] = bcrypt($request->password);
-        }
-
-        return $data;
     }
 
     /**
@@ -129,7 +71,7 @@ class ChatController extends StislaController
             }
         }
         if (is_user()) {
-            User::where('id', auth_user()->id)->update(['last_seen_at' => now()]);
+            $this->userRepository->setLastSeenToNow(auth_id());
         }
         $roomId = md5('1_' . auth_user()->id);
         $users = $isSuperAdmin ? User::select(['id', 'name', 'avatar', 'last_seen_at', 'is_anonymous', 'uuid'])->role('user')->latest('last_seen_at')->get() : [];
@@ -191,34 +133,6 @@ class ChatController extends StislaController
     }
 
     /**
-     * get data for index page
-     *
-     * @return Collection|null
-     */
-    public function getIndexData()
-    {
-        return $this->repository->getFullDataWith(
-            [
-                'createdBy',
-                'lastUpdatedBy',
-            ],
-            where: [],
-            whereHas: []
-        );
-    }
-
-    /**
-     * showing add new data page
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function create(Request $request)
-    {
-        return $this->prepareCreateForm($request);
-    }
-
-    /**
      * save new data to db
      *
      * @param Request $request
@@ -268,68 +182,6 @@ class ChatController extends StislaController
     }
 
     /**
-     * showing edit data page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function edit(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample);
-    }
-
-    /**
-     * update data to db
-     *
-     * @param CrudExampleRequest $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function update(CrudExampleRequest $request, CrudExample $crudExample)
-    {
-        return $this->executeUpdate($request, $crudExample, withUser: true);
-    }
-
-    /**
-     * show detail page
-     *
-     * @param Request $request
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function show(Request $request, CrudExample $crudExample)
-    {
-        return $this->prepareDetailForm($request, $crudExample, true);
-    }
-
-    /**
-     * delete data from db
-     *
-     * @param CrudExample $crudExample
-     * @return Response
-     */
-    public function destroy(CrudExample $crudExample)
-    {
-        $this->fileService->deleteCrudExampleFile($crudExample);
-        return $this->executeDestroy($crudExample);
-    }
-
-    /**
-     * download import example
-     *
-     * @return BinaryFileResponse
-     */
-    public function importExcelExample(): BinaryFileResponse
-    {
-        // bisa gunakan file excel langsung sebagai contoh
-        // $filepath = public_path('example.xlsx');
-        // return response()->download($filepath);
-
-        return $this->executeImportExcelExample();
-    }
-
-    /**
      * get room id for superadmin
      *
      * @param Request $request
@@ -360,14 +212,8 @@ class ChatController extends StislaController
     public function reset(string $category)
     {
         if (is_user()) {
-            ChatMessage::where('category', $category)
-                ->where(function ($query) {
-                    $query->where('from_user_id', auth_id())
-                        ->orWhere('to_user_id', auth_id());
-                })
-                ->whereNull('deleted_at')
-                ->update(['deleted_at' => now()]);
-            return back()->with('successMessage', 'Riwayat chat berhasil dihapus.');
+            $this->repository->resetChat($category);
+            return backSuccess('Riwayat chat berhasil dihapus.');
         }
         abort(403);
     }

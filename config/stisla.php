@@ -2,8 +2,8 @@
 
 use App\Enums\AppEnum;
 
-$app = AppEnum::APP_BLANK;
-// $app = AppEnum::APP_DEFAULT;
+// $app = AppEnum::APP_BLANK;
+$app = AppEnum::APP_DEFAULT;
 $table_excludes = [];
 $roles = [
     'superadmin',

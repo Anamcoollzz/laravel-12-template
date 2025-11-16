@@ -130,6 +130,20 @@ function is_app_blank($app = null)
 }
 
 /**
+ * check if app type is default
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_default($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_DEFAULT;
+    }
+    return config('stisla.app') === AppEnum::APP_DEFAULT;
+}
+
+/**
  * get domain from app url
  *
  * @return string

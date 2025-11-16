@@ -479,4 +479,18 @@ class UserRepository extends Repository
         }
         return null;
     }
+
+    /**
+     * set last seen to now
+     *
+     * @param int|null $userId
+     * @return int
+     */
+    public function setLastSeenToNow(?int $userId = null)
+    {
+        if (!$userId) {
+            $userId = $this->getUserIdLogin();
+        }
+        return $this->model->where('id', $userId)->update(['last_seen_at' => now()]);
+    }
 }
