@@ -158,6 +158,13 @@ if (is_app_chat($app)) {
                 'permission' => 'Pekerjaan',
                 'is_active_if_url_includes' => 'works*',
             ],
+            [
+                'menu_name' => 'Tahun Pelajaran',
+                'route_name' => 'school-years.index',
+                'icon' => 'fa fa-calendar',
+                'permission' => 'Tahun Pelajaran',
+                'is_active_if_url_includes' => 'school-years*'
+            ],
         ]
     ];
     $superadminEmail = 'superadmin@dataku.com';
@@ -182,7 +189,6 @@ return [
             'group_name' => 'Navigasi',
             'menus' => [
                 $dashboard,
-
                 // additionalmenus
                 $additionalMenus,
                 [
