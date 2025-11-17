@@ -138,6 +138,13 @@ if (is_app_chat($app)) {
                 'permission' => 'Agama',
                 'is_active_if_url_includes' => 'religions*',
             ],
+            [
+                'menu_name' => 'Kelas',
+                'route_name' => 'school-classes.index',
+                'icon' => 'fas fa-chalkboard',
+                'permission' => 'Kelas',
+                'is_active_if_url_includes' => 'school-classes*',
+            ]
         ]
     ];
     $superadminEmail = 'superadmin@dataku.com';
