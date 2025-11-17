@@ -8,6 +8,7 @@ $app = AppEnum::APP_DATAKU;
 $table_excludes = [];
 $permissionExcludes = [];
 $additionalMenus = [];
+$superadminEmail = 'superadmin@laravel12template.com';
 $dashboard = [
     'menu_name' => 'Beranda',
     'route_name' => 'dashboard.index',
@@ -137,6 +138,7 @@ if (is_app_chat($app)) {
             ],
         ]
     ];
+    $superadminEmail = 'superadmin@dataku.com';
 }
 
 return [
@@ -1137,7 +1139,7 @@ return [
     'users' => [
         [
             'name'              => 'Hairul Anam Superadmin',
-            'email'             => 'superadmin@laravel12template.com',
+            'email'             => $superadminEmail,
             'password'          => 'superadmin',
             'roles'             => ['superadmin'],
             'email_verified_at' => '2021-04-06 04:06:00',

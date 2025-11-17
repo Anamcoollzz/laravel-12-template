@@ -92,7 +92,17 @@ class ReligionSeeder extends Seeder
         $isHasAvatar           = Schema::hasColumn($table, 'avatar');
         $isHasDeletedAt        = Schema::hasColumn($table, 'deleted_at');
 
-        foreach (range(1, 20) as $i) {
+        $religions = [
+            'Islam',
+            'Kristen Protestan',
+            'Katolik',
+            'Hindu',
+            'Buddha',
+            'Konghucu',
+            'Lainnya',
+        ];
+
+        foreach ($religions as $i => $religion) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
                 array_push($selectMultiple, $options[$j - 1]);
@@ -141,7 +151,7 @@ class ReligionSeeder extends Seeder
                 // 'deleted_at' => null,
 
                 // ini hasil generate dari make:module command
-                'religion_name' => fake()->sentence(),
+                'religion_name' => $religion,
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
