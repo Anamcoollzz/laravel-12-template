@@ -25,6 +25,8 @@ class UserSeeder extends Seeder
 
         User::truncate();
 
+        $isRoleUsersExists = Role::whereIn('name', ['user'])->exists();
+
         $users = config('stisla.users');
         if (is_app_chat())
             $users = config('stisla-chat.users');
@@ -80,7 +82,8 @@ class UserSeeder extends Seeder
                 'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
                 'uuid'                 => Str::uuid()->toString(),
             ]);
-            $userObj->assignRole('user');
+            if ($isRoleUsersExists)
+                $userObj->assignRole('user');
         }
     }
 }

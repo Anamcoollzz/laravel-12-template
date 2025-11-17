@@ -4,6 +4,7 @@ use App\Enums\AppEnum;
 
 // $app = AppEnum::APP_BLANK;
 $app = AppEnum::APP_DEFAULT;
+$app = AppEnum::APP_DATAKU;
 $table_excludes = [];
 $roles = [
     'superadmin',
@@ -17,13 +18,32 @@ $roles = [
 ];
 
 if (is_app_chat($app)) {
-    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'notifications'
+    ];
     $roles = [
         'superadmin',
         'user',
     ];
 } else if (is_app_bank($app)) {
-    $table_excludes = ['faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $table_excludes = [
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'notifications'
+    ];
     $roles = [
         'superadmin',
         'admin',
@@ -52,12 +72,34 @@ if (is_app_chat($app)) {
         'students',
         'chat_messages',
         'chat_rooms',
-        'regions'
+        'regions',
     ];
     $roles = [
         'superadmin',
         'admin',
         'user',
+    ];
+} else if (is_app_dataku($app)) {
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'regions',
+        'notifications',
+        'crud_examples',
+    ];
+    $roles = [
+        'superadmin',
+        'kepala sekolah',
+        'guru',
     ];
 }
 
@@ -752,7 +794,8 @@ return [
         [
             'name' => 'Notifikasi',
             'roles' => ['superadmin', 'admin'],
-            'group' => 'Notifikasi'
+            'group' => 'Notifikasi',
+            'table' => 'notifications',
         ],
 
         [

@@ -12,4 +12,6 @@ enum AppEnum: string
     case APP_BANK = 'bank';
     case APP_EDUCATION = 'education';
     case APP_BLANK = 'blank';
+    case APP_ECOMMERCE = 'ecommerce';
+    case APP_DATAKU = 'dataku';
 }

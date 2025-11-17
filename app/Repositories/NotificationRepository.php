@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Notification;
+use Illuminate\Support\Facades\Schema;
 
 class NotificationRepository extends Repository
 {
@@ -25,6 +26,9 @@ class NotificationRepository extends Repository
      */
     public function myUnReadNotif($limit = 1000)
     {
+        if (Schema::hasTable('notifications') === false) {
+            return [];
+        }
         return $this->model->query()->where('is_read', 0)
             ->limit($limit)->latest()->where('user_id', auth_id())->get();
     }

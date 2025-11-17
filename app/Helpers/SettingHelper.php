@@ -144,6 +144,34 @@ function is_app_default($app = null)
 }
 
 /**
+ * check if app type is ecommerce
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_ecommerce($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_ECOMMERCE;
+    }
+    return config('stisla.app') === AppEnum::APP_ECOMMERCE;
+}
+
+/**
+ * check if app type is dataku
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_dataku($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_DATAKU;
+    }
+    return config('stisla.app') === AppEnum::APP_DATAKU;
+}
+
+/**
  * get domain from app url
  *
  * @return string

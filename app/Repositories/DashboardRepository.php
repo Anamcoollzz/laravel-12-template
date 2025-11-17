@@ -131,63 +131,71 @@ class DashboardRepository
                 'icon'  => 'users',
                 'route' => route('user-management.users.index'),
             ];
-            $widgets[] = (object)[
-                'title' => User::GENDER_MALE,
-                'count' => User::isMale()->role('user')->count(),
-                'bg'    => 'info',
-                'icon'  => 'mars',
-                'route' => route('user-management.users.index', ['gender' => User::GENDER_MALE]),
-            ];
-            $widgets[] = (object)[
-                'title' => User::GENDER_FEMALE,
-                'count' => User::isFemale()->role('user')->count(),
-                'bg'    => 'primary',
-                'icon'  => 'venus',
-                'route' => route('user-management.users.index', ['gender' => User::GENDER_FEMALE]),
-            ];
+            if ($exists = Role::where('name', 'user')->exists())
+                $widgets[] = (object)[
+                    'title' => User::GENDER_MALE,
+                    'count' => User::isMale()->role('user')->count(),
+                    'bg'    => 'info',
+                    'icon'  => 'mars',
+                    'route' => route('user-management.users.index', ['gender' => User::GENDER_MALE]),
+                ];
+            if ($exists)
+                $widgets[] = (object)[
+                    'title' => User::GENDER_FEMALE,
+                    'count' => User::isFemale()->role('user')->count(),
+                    'bg'    => 'primary',
+                    'icon'  => 'venus',
+                    'route' => route('user-management.users.index', ['gender' => User::GENDER_FEMALE]),
+                ];
             if (is_app_chat()) {
-                $widgets[] = (object)[
-                    'title' => 'Usia 10-18 Tahun',
-                    'count' => User::age1018()->role('user')->count(),
-                    'bg'    => 'warning',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => 'Usia 19-25 Tahun',
-                    'count' => User::age1925()->role('user')->count(),
-                    'bg'    => 'warning',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => 'Usia 26-50 Tahun',
-                    'count' => User::age2650()->role('user')->count(),
-                    'bg'    => 'warning',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => 'Usia > 51 Tahun',
-                    'count' => User::age511000()->role('user')->count(),
-                    'bg'    => 'warning',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => 'Orang Majalengka',
-                    'count' => User::where('is_majalengka', 1)->role('user')->count(),
-                    'bg'    => 'danger',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
-                $widgets[] = (object)[
-                    'title' => 'Orang Bukan Majalengka',
-                    'count' => User::where('is_majalengka', 0)->role('user')->count(),
-                    'bg'    => 'danger',
-                    'icon'  => 'users',
-                    'route' => route('user-management.users.index'),
-                ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Usia 10-18 Tahun',
+                        'count' => User::age1018()->role('user')->count(),
+                        'bg'    => 'warning',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Usia 19-25 Tahun',
+                        'count' => User::age1925()->role('user')->count(),
+                        'bg'    => 'warning',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Usia 26-50 Tahun',
+                        'count' => User::age2650()->role('user')->count(),
+                        'bg'    => 'warning',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Usia > 51 Tahun',
+                        'count' => User::age511000()->role('user')->count(),
+                        'bg'    => 'warning',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Orang Majalengka',
+                        'count' => User::where('is_majalengka', 1)->role('user')->count(),
+                        'bg'    => 'danger',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
+                if ($exists)
+                    $widgets[] = (object)[
+                        'title' => 'Orang Bukan Majalengka',
+                        'count' => User::where('is_majalengka', 0)->role('user')->count(),
+                        'bg'    => 'danger',
+                        'icon'  => 'users',
+                        'route' => route('user-management.users.index'),
+                    ];
             }
         }
         if (can('Role'))
