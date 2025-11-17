@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('verification_code', 6)->nullable();
             $table->boolean('is_locked')->default(0);
             $table->string('phone_number', 50)->nullable();
+            $table->string('birth_place', 100)->nullable();
             $table->date('birth_date')->nullable();
             $table->text('address')->nullable();
             $table->dateTime('last_password_change')->nullable();
@@ -45,7 +46,7 @@ return new class extends Migration
             $table->dateTime('last_seen_at')->nullable();
             $table->boolean('is_anonymous')->default(0);
             $table->string('gender', 30)->nullable();
-            $table->string('nik', 50)->nullable()->unique();
+            $table->string('nik', 50)->nullable();
             $table->uuid()->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -55,6 +56,50 @@ return new class extends Migration
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('deleted_by_id')->nullable();
             $table->foreign('deleted_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+
+            // student
+            $table->string('nis')->nullable();
+            $table->string('nisn')->nullable();
+            $table->unsignedBigInteger('religion_id')->nullable();
+            $table->foreign('religion_id')->references('id')->on('religions')->onUpdate('cascade')->onDelete('set null');
+            $table->string('rt', 3)->nullable();
+            $table->string('rw', 3)->nullable();
+            $table->string('postal_code', 10)->nullable();
+            $table->unsignedBigInteger('school_class_id')->nullable();
+            $table->foreign('school_class_id')->references('id')->on('school_classes')->onUpdate('cascade')->onDelete('set null');
+            $table->string('room', 50)->nullable();
+
+            $table->string('father_nik', 50)->nullable();
+            $table->string('father_name')->nullable();
+            $table->date('father_birth_date')->nullable();
+            $table->string('father_education', 100)->nullable();
+            $table->unsignedBigInteger('father_work_id')->nullable();
+            $table->foreign('father_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+            $table->double('father_income')->nullable();
+
+            $table->string('mother_nik', 50)->nullable();
+            $table->string('mother_name')->nullable();
+            $table->date('mother_birth_date')->nullable();
+            $table->string('mother_education', 100)->nullable();
+            $table->unsignedBigInteger('mother_work_id')->nullable();
+            $table->foreign('mother_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+            $table->double('mother_income')->nullable();
+
+            $table->string('guardian_nik', 50)->nullable();
+            $table->string('guardian_name')->nullable();
+            $table->date('guardian_birth_date')->nullable();
+            $table->string('guardian_education', 100)->nullable();
+            $table->unsignedBigInteger('guardian_work_id')->nullable();
+            $table->foreign('guardian_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+            $table->double('guardian_income')->nullable();
+            // end student
+
+            // start teacher
+            $table->string('teacher_nuptk')->nullable();
+            $table->string('teacher_mother_name')->nullable();
+            $table->string('teacher_employee_status', 100)->nullable();
+            $table->string('teacher_gtk_type', 100)->nullable();
+            $table->string('teacher_position', 100)->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

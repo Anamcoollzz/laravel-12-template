@@ -10,6 +10,7 @@ $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stis
 $table_excludes = [];
 $permissionExcludes = [];
 $additionalMenus = [];
+$additionalUser = [];
 $superadminEmail = 'superadmin@laravel12template.com';
 $dashboard = [
     'menu_name' => 'Beranda',
@@ -111,6 +112,7 @@ if (is_app_chat($app)) {
         'superadmin',
         'kepala sekolah',
         'guru',
+        'siswa',
     ];
     $permissionExcludes = [
         'Galeri',
@@ -165,7 +167,24 @@ if (is_app_chat($app)) {
                 'permission' => 'Tahun Pelajaran',
                 'is_active_if_url_includes' => 'school-years*'
             ],
+            [
+                'menu_name' => 'Semester',
+                'route_name' => 'semesters.index',
+                'icon' => 'fa fa-clock',
+                'permission' => 'Semester',
+                'is_active_if_url_includes' => 'semesters*'
+            ],
         ]
+    ];
+    $additionalUser = [
+        'name'              => 'Hairul Anam Admin Kepala Sekolah',
+        'email'             => 'kepalasekolah@dataku.com',
+        'password'          => 'kepalasekolah',
+        'roles'             => ['kepala sekolah'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
     ];
     $superadminEmail = 'superadmin@dataku.com';
     $appName = 'DataKu';
@@ -191,6 +210,30 @@ return [
                 $dashboard,
                 // additionalmenus
                 $additionalMenus,
+                [
+                    'menu_name' => 'Siswa',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=4',
+                    'icon' => 'fas fa-users',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=4',
+                ],
+                [
+                    'menu_name' => 'Kepala Sekolah',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=2',
+                    'icon' => 'fas fa-user-tie',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=2',
+                ],
+                [
+                    'menu_name' => 'Guru',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=3',
+                    'icon' => 'fas fa-chalkboard-teacher',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=2',
+                ],
                 [
                     'menu_name' => 'Contoh CRUD',
                     'route_name' => 'crud-examples.index',
@@ -1228,7 +1271,8 @@ return [
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',
             'address'           => 'Jember'
-        ]
+        ],
+        $additionalUser,
     ]
 
 

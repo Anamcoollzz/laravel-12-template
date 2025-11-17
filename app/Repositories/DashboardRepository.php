@@ -131,6 +131,30 @@ class DashboardRepository
                 'icon'  => 'users',
                 'route' => route('user-management.users.index'),
             ];
+            if ($exists = Role::where('name', 'siswa')->exists())
+                $widgets[] = (object)[
+                    'title' => 'Siswa',
+                    'count' => User::role('siswa')->count(),
+                    'bg'    => 'info',
+                    'icon'  => 'users',
+                    'route' => route('user-management.users.index', ['filter_role' => 4]),
+                ];
+            if ($exists = Role::where('name', 'guru')->exists())
+                $widgets[] = (object)[
+                    'title' => 'Guru',
+                    'count' => User::role('guru')->count(),
+                    'bg'    => 'success',
+                    'icon'  => 'chalkboard-teacher',
+                    'route' => route('user-management.users.index', ['filter_role' => 3]),
+                ];
+            if ($exists = Role::where('name', 'kepala sekolah')->exists())
+                $widgets[] = (object)[
+                    'title' => 'Kepala Sekolah',
+                    'count' => User::role('kepala sekolah')->count(),
+                    'bg'    => 'primary',
+                    'icon'  => 'user-tie',
+                    'route' => route('user-management.users.index', ['filter_role' => 2]),
+                ];
             if ($exists = Role::where('name', 'user')->exists())
                 $widgets[] = (object)[
                     'title' => User::GENDER_MALE,

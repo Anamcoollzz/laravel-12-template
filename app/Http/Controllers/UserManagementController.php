@@ -45,6 +45,7 @@ class UserManagementController extends StislaController
             'data'           => $this->userRepository->getUsers(),
             'roleCount'      => count($roleOptions),
             'isRegionExists' => Schema::hasTable('regions'),
+            'roleOptions'    => $roleOptions,
         ]);
     }
 
@@ -116,7 +117,11 @@ class UserManagementController extends StislaController
      */
     public function index()
     {
+        if (is_app_dataku() && request('filter_role') === null) {
+            return redirect()->route('user-management.users.index', ['filter_role' => '1']);
+        }
         $data = $this->getIndexData();
+        // return $data;
         return view('stisla.user-management.users.index', $data);
     }
 

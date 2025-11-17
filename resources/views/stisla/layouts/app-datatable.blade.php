@@ -20,6 +20,8 @@
       <div class="col-12">
 
         @yield('filter_top')
+        @yield('panel11')
+        @yield('panel12')
 
         @if ($data->count() > 0 || $isYajra || $isAjaxYajra)
           @if ($canExport)

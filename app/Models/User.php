@@ -53,10 +53,51 @@ class User extends Authenticatable implements JWTSubject
         'city_code',
         'district_code',
         'village_code',
+
+        // student
+        'nis',
+        'nisn',
+        'religion_id',
+        'religion_id',
+        'rt',
+        'rw',
+        'postal_code',
+        'school_class_id',
+        'school_class_id',
+        'room',
+        'father_nik',
+        'father_name',
+        'father_birth_date',
+        'father_education',
+        'father_work_id',
+        'father_work_id',
+        'father_income',
+        'mother_nik',
+        'mother_name',
+        'mother_birth_date',
+        'mother_education',
+        'mother_work_id',
+        'mother_work_id',
+        'mother_income',
+        'guardian_nik',
+        'guardian_name',
+        'guardian_birth_date',
+        'guardian_education',
+        'guardian_work_id',
+        'guardian_work_id',
+        'guardian_income',
+
+        // teacher
+        'teacher_nuptk',
+        'teacher_mother_name',
+        'teacher_employee_status',
+        'teacher_gtk_type',
+        'teacher_position',
     ];
 
-    const GENDER_MALE = 'Laki-laki';
+    const GENDER_MALE   = 'Laki-laki';
     const GENDER_FEMALE = 'Perempuan';
+    const GENDER_OTHER  = 'Tidak Mau Menyebutkan';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -326,5 +367,55 @@ class User extends Authenticatable implements JWTSubject
     public function village()
     {
         return $this->belongsTo(Region::class, 'village_code', 'code');
+    }
+
+    /**
+     * Get the religion associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class);
+    }
+
+    /**
+     * Get the school class associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function schoolclass()
+    {
+        return $this->belongsTo(SchoolClass::class);
+    }
+
+    /**
+     * Get the father's work associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function fatherwork()
+    {
+        return $this->belongsTo(Work::class, 'father_work_id');
+    }
+
+    /**
+     * Get the mother's work associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function motherwork()
+    {
+        return $this->belongsTo(Work::class, 'mother_work_id');
+    }
+
+    /**
+     * Get the guardian's work associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function guardianwork()
+    {
+        return $this->belongsTo(Work::class, 'guardian_work_id');
     }
 }

@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('school_classes', function (Blueprint $table) {
+        Schema::create('semesters', function (Blueprint $table) {
             $table->id();
-            $table->string('class_name', 50)->comment('Nama Kelas');
+            $table->string('semester', 50)->comment('Semester');
 
             // wajib
             $table->timestamps();
-
+            
             $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
             $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
             $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+        
         });
     }
 
@@ -30,7 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('school_classes');
+        Schema::dropIfExists('semesters');
     }
 };

@@ -35,6 +35,47 @@
         <th>{{ __('Waktu Verifikasi') }}</th>
       @endif
 
+      @if (is_app_dataku())
+        @if (request('filter_role') === '4')
+          <th>{{ __('validation.attributes.nis') }}</th>
+          <th>{{ __('validation.attributes.nisn') }}</th>
+          <th>{{ __('validation.attributes.religion_id') }}</th>
+          <th>{{ __('validation.attributes.religion_id') }}</th>
+          <th>{{ __('validation.attributes.rt') }}</th>
+          <th>{{ __('validation.attributes.rw') }}</th>
+          <th>{{ __('validation.attributes.postal_code') }}</th>
+          <th>{{ __('validation.attributes.school_class_id') }}</th>
+          <th>{{ __('validation.attributes.room') }}</th>
+          <th>{{ __('validation.attributes.father_nik') }}</th>
+          <th>{{ __('validation.attributes.father_name') }}</th>
+          <th>{{ __('validation.attributes.father_birth_date') }}</th>
+          <th>{{ __('validation.attributes.father_education') }}</th>
+          <th>{{ __('validation.attributes.father_work_id') }}</th>
+          <th>{{ __('validation.attributes.father_income') }}</th>
+          <th>{{ __('validation.attributes.mother_nik') }}</th>
+          <th>{{ __('validation.attributes.mother_name') }}</th>
+          <th>{{ __('validation.attributes.mother_birth_date') }}</th>
+          <th>{{ __('validation.attributes.mother_education') }}</th>
+          <th>{{ __('validation.attributes.mother_work_id') }}</th>
+          <th>{{ __('validation.attributes.mother_income') }}</th>
+          <th>{{ __('validation.attributes.guardian_nik') }}</th>
+          <th>{{ __('validation.attributes.guardian_name') }}</th>
+          <th>{{ __('validation.attributes.guardian_birth_date') }}</th>
+          <th>{{ __('validation.attributes.guardian_education') }}</th>
+          <th>{{ __('validation.attributes.guardian_work_id') }}</th>
+          <th>{{ __('validation.attributes.guardian_income') }}</th>
+        @endif
+
+        @if (request('filter_role') === '3')
+          {{-- // teacher --}}
+          <th>{{ __('validation.attributes.teacher_nuptk') }}</th>
+          <th>{{ __('validation.attributes.teacher_mother_name') }}</th>
+          <th>{{ __('validation.attributes.teacher_employee_status') }}</th>
+          <th>{{ __('validation.attributes.teacher_gtk_type') }}</th>
+          <th>{{ __('validation.attributes.teacher_position') }}</th>
+        @endif
+      @endif
+
       {{-- wajib --}}
       <th>{{ __('Created At') }}</th>
       <th>{{ __('Updated At') }}</th>
@@ -85,6 +126,47 @@
         @include('stisla.includes.others.td-datetime', ['DateTime' => $item->last_login])
         @if ($_is_login_must_verified)
           @include('stisla.includes.others.td-datetime', ['DateTime' => $item->email_verified_at])
+        @endif
+
+        @if (is_app_dataku())
+          @if (request('filter_role') === '4')
+            <td>{{ $item->nis }}</td>
+            <td>{{ $item->nisn }}</td>
+            <td>{{ $item->religion_id }}</td>
+            <td>{{ $item->religion_id }}</td>
+            <td>{{ $item->rt }}</td>
+            <td>{{ $item->rw }}</td>
+            <td>{{ $item->postal_code }}</td>
+            <td>{{ $item->schoolclass?->class_name }}</td>
+            <td>{{ $item->room }}</td>
+            <td>{{ $item->father_nik }}</td>
+            <td>{{ $item->father_name }}</td>
+            <td>{{ $item->father_birth_date }}</td>
+            <td>{{ $item->father_education }}</td>
+            <td>{{ $item->fatherwork?->job_name }}</td>
+            <td>{{ $item->father_income }}</td>
+            <td>{{ $item->mother_nik }}</td>
+            <td>{{ $item->mother_name }}</td>
+            <td>{{ $item->mother_birth_date }}</td>
+            <td>{{ $item->mother_education }}</td>
+            <td>{{ $item->motherwork?->job_name }}</td>
+            <td>{{ $item->mother_income }}</td>
+            <td>{{ $item->guardian_nik }}</td>
+            <td>{{ $item->guardian_name }}</td>
+            <td>{{ $item->guardian_birth_date }}</td>
+            <td>{{ $item->guardian_education }}</td>
+            <td>{{ $item->guardianwork?->job_name }}</td>
+            <td>{{ $item->guardian_income }}</td>
+          @endif
+
+          @if (request('filter_role') === '3')
+            {{-- // teacher --}}
+            <td>{{ $item->teacher_nuptk }}</td>
+            <td>{{ $item->teacher_mother_name }}</td>
+            <td>{{ $item->teacher_employee_status }}</td>
+            <td>{{ $item->teacher_gtk_type }}</td>
+            <td>{{ $item->teacher_position }}</td>
+          @endif
         @endif
 
         {{-- wajib --}}

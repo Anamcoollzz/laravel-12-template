@@ -53,7 +53,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(RolePermissionSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(MenuSeeder::class);
         $this->call(ChatMessageSeeder::class);
         $this->call(NotificationSeeder::class);
@@ -65,6 +64,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SchoolClassSeeder::class);
         $this->call(ClassLevelSeeder::class);
         $this->call(SchoolYearSeeder::class);
-        // seeders    
+        $this->call(SemesterSeeder::class);
+        $this->call(UserSeeder::class);
+        // seeders
     }
 }

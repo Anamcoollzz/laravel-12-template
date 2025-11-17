@@ -99,7 +99,20 @@ class UserRepository extends Repository
      */
     public function getUsers()
     {
-        $users = $this->queryFullData()->with(['roles', 'createdBy', 'lastUpdatedBy', 'province', 'city', 'district', 'village'])->get();
+        $users = $this->queryFullData()->with([
+            'roles',
+            'createdBy',
+            'lastUpdatedBy',
+            'province',
+            'city',
+            'district',
+            'village',
+            'fatherwork',
+            'motherwork',
+            'guardianwork',
+            'religion',
+            'schoolclass',
+        ])->get();
         return $users;
     }
 
