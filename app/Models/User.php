@@ -420,4 +420,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Work::class, 'guardian_work_id');
     }
+
+    /**
+     * Get the education level associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function educationlevel()
+    {
+        return $this->belongsTo(EducationLevel::class, 'education_level_id');
+    }
 }

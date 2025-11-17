@@ -143,31 +143,37 @@ class UserRepository extends Repository
     /**
      * get all role data
      *
+     * @param array $names
      * @return Collection
      */
-    public function getRoles()
+    public function getRoles(array $names = [])
     {
-        $roles = Role::with(['permissions'])->withCount([
-            'permissions',
-            'users',
-            'users as male_users_count' => function ($q) {
-                $q->where('gender', User::GENDER_MALE); // sesuaikan value di DB
-            },
-            'users as female_users_count' => function ($q) {
-                $q->where('gender', User::GENDER_FEMALE); // sesuaikan value di DB
-            }
-        ])->latest()->get();
+        $roles = Role::with(['permissions'])
+            ->when(!empty($names), function ($query) use ($names) {
+                $query->whereIn('name', $names);
+            })
+            ->withCount([
+                'permissions',
+                'users',
+                'users as male_users_count' => function ($q) {
+                    $q->where('gender', User::GENDER_MALE); // sesuaikan value di DB
+                },
+                'users as female_users_count' => function ($q) {
+                    $q->where('gender', User::GENDER_FEMALE); // sesuaikan value di DB
+                }
+            ])->latest()->get();
         return $roles;
     }
 
     /**
      * get role as option dropdown
      *
+     * @param array $names
      * @return array
      */
-    public function getRoleOptions()
+    public function getRoleOptions(array $names = [])
     {
-        return $this->getRoles()
+        return $this->getRoles($names)
             ->pluck('name', 'id')
             ->toArray();
     }

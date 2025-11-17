@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -61,7 +62,7 @@ class UserManagementController extends StislaController
      */
     protected function getIndexData()
     {
-        $roleOptions = $this->userRepository->getRoleOptions();
+        $roleOptions = $this->userRepository->getRoleOptions(is_kepala_sekolah() ? ['siswa', 'guru'] : []);
         $defaultData = $this->getDefaultDataIndex(__('Pengguna'), 'Pengguna', 'user-management.users');
         return array_merge($defaultData, [
             'data'               => $this->userRepository->getUsers(),
@@ -170,13 +171,14 @@ class UserManagementController extends StislaController
             $user->role = $user->roles->first()->id ?? null;
         $defaultData = $this->getDefaultDataDetail(__('Pengguna'), 'user-management.users', $user, $isDetail);
         return array_merge($defaultData, [
-            'roleOptions' => $roleOptions,
-            'fullTitle'   => $isDetail ? __('Detail Pengguna') : __('Ubah Pengguna'),
+            'roleOptions'        => $roleOptions,
+            'fullTitle'          => $isDetail ? __('Detail Pengguna') : __('Ubah Pengguna'),
             'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
             'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
             'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
             'provinces'          => $this->regionRepository->getProvinces(),
             'roleName'           => $user->roles->first()->name ?? null,
+            'roleId'             => $user->roles->first()->id ?? null,
         ]);
     }
 
@@ -208,8 +210,15 @@ class UserManagementController extends StislaController
     public function index()
     {
         if (is_app_dataku() && request('filter_role') === null) {
-            return redirect()->route('user-management.users.index', ['filter_role' => '1']);
+            return redirect()->route('user-management.users.index', ['filter_role' => is_kepala_sekolah() ? '3' : '1']);
         }
+
+        if (is_kepala_sekolah()) {
+            if (request('filter_role') && !in_array(request('filter_role'), ['3', '4'])) {
+                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            }
+        }
+
         $data = $this->getIndexData();
         // return $data;
         return view('stisla.user-management.users.index', $data);
@@ -269,6 +278,12 @@ class UserManagementController extends StislaController
      */
     public function edit(User $user)
     {
+        $roleId = $user->roles->first()->id ?? null;
+        if (is_kepala_sekolah()) {
+            if ($roleId && !in_array($roleId, ['3', '4'])) {
+                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            }
+        }
         $data = $this->getDetailDataOld($user, false);
         $isSiswa = $user->hasRole('siswa');
         $data = array_merge($data, [
@@ -330,6 +345,7 @@ class UserManagementController extends StislaController
      */
     public function forceLogin(User $user)
     {
+        Session::flush();
         $this->userRepository->login($user);
         return redirectSuccess(route('dashboard.index'), 'Berhasil masuk ke dalam sistem');
     }

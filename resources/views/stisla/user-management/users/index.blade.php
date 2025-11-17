@@ -15,7 +15,7 @@
   @endif
 @endsection
 
-@if (is_superadmin())
+@if (is_superadmin() || is_kepala_sekolah())
   @section('panel11')
     <div class="mb-3">
       @foreach ($roleOptions as $item => $role)

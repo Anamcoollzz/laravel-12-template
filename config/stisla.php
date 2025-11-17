@@ -654,27 +654,27 @@ return [
 
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Email',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Password',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Hapus Akun',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
 
@@ -816,37 +816,37 @@ return [
 
         [
             'name' => 'Pengguna',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Tambah',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Impor Excel',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Ubah',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Detail',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Hapus',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Ekspor',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [

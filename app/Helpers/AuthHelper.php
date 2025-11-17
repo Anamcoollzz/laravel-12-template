@@ -33,6 +33,26 @@ function is_pimpinan_fakultas()
 }
 
 /**
+ * check if user has role kepala sekolah
+ *
+ * @return bool
+ */
+function is_kepala_sekolah()
+{
+    return auth_user()->hasRole('kepala sekolah');
+}
+
+/**
+ * check if user has role guru
+ *
+ * @return bool
+ */
+function is_guru()
+{
+    return auth_user()->hasRole('guru');
+}
+
+/**
  * check if user has role user
  *
  * @return bool
