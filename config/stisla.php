@@ -98,7 +98,6 @@ if (is_app_chat($app)) {
         'bank_deposit_histories',
         'faculty_leaders',
         'ormawas',
-        'works',
         'faculties',
         'study_programs',
         'students',
@@ -151,6 +150,13 @@ if (is_app_chat($app)) {
                 'icon' => 'fa fa-arrow-turn-down',
                 'permission' => 'Level Kelas',
                 'is_active_if_url_includes' => 'class-levels*'
+            ],
+            [
+                'menu_name' => 'Pekerjaan',
+                'route_name' => 'works.index',
+                'icon' => 'fas fa-bag',
+                'permission' => 'Pekerjaan',
+                'is_active_if_url_includes' => 'works*',
             ],
         ]
     ];
@@ -323,13 +329,13 @@ return [
                             'permission' => 'Ormawa',
                             'is_active_if_url_includes' => 'ormawas*',
                         ],
-                        [
-                            'menu_name' => 'Pekerjaan',
-                            'route_name' => 'works.index',
-                            'icon' => 'fas fa-bag',
-                            'permission' => 'Pekerjaan',
-                            'is_active_if_url_includes' => 'works*',
-                        ],
+                        // [
+                        //     'menu_name' => 'Pekerjaan',
+                        //     'route_name' => 'works.index',
+                        //     'icon' => 'fas fa-bag',
+                        //     'permission' => 'Pekerjaan',
+                        //     'is_active_if_url_includes' => 'works*',
+                        // ],
                     ]
                 ],
                 [
