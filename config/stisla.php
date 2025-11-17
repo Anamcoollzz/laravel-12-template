@@ -5,6 +5,8 @@ use App\Enums\AppEnum;
 // $app = AppEnum::APP_BLANK;
 $app = AppEnum::APP_DEFAULT;
 $app = AppEnum::APP_DATAKU;
+$appName = 'Laravel 12 Template';
+$appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
 $permissionExcludes = [];
 $additionalMenus = [];
@@ -139,6 +141,8 @@ if (is_app_chat($app)) {
         ]
     ];
     $superadminEmail = 'superadmin@dataku.com';
+    $appName = 'DataKu';
+    $appDesc = 'Web Dataku adalah aplikasi pengelolaan data siswa dan guru yang mencakup input data, validasi, pencarian, filter, serta manajemen kelas dan jenjang. Sistem dilengkapi dashboard, grafik, import/export Excel, cetak PDF, dan pengaturan role seperti Super Admin, Kepala Sekolah, dan Guru. Fokus pada kemudahan penggunaan, akurasi data, dan workflow administrasi sekolah.';
 }
 
 return [
@@ -900,9 +904,9 @@ return [
     'use_setting' => env('STISLA_USE_SETTING', '2'),
 
     'settings' => [
-        ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
+        ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'PT Anam Developer'],
         ['key' => 'country', 'value' => 'Indonesia'],
@@ -930,19 +934,19 @@ return [
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_og_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
         ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_twitter_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_twitter_description', 'value' => $appDesc],
         ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
-        ['key' => 'meta_itemprop_headline', 'value' => 'Deskripsi sistem tulis disini'],
-        ['key' => 'meta_itemprop_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
+        ['key' => 'meta_itemprop_description', 'value' => $appDesc],
         ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
 
         [
@@ -1018,9 +1022,9 @@ return [
     ],
 
     'settings2' => [
-        ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
+        ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'CV AnamTechno'],
         ['key' => 'country', 'value' => 'Indonesia'],
@@ -1049,19 +1053,19 @@ return [
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_og_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
         ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_twitter_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_twitter_description', 'value' => $appDesc],
         ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
-        ['key' => 'meta_itemprop_headline', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
-        ['key' => 'meta_itemprop_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
+        ['key' => 'meta_itemprop_description', 'value' => $appDesc],
         ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
 
         [
