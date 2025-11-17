@@ -6,6 +6,7 @@ use App\Enums\AppEnum;
 $app = AppEnum::APP_DEFAULT;
 $app = AppEnum::APP_DATAKU;
 $table_excludes = [];
+$permissionExcludes = [];
 $roles = [
     'superadmin',
     'admin',
@@ -101,6 +102,17 @@ if (is_app_chat($app)) {
         'kepala sekolah',
         'guru',
     ];
+    $permissionExcludes = [
+        'Galeri',
+        'Log Aktivitas',
+        'Log Request',
+        'Laravel Log Viewer',
+        'Ubuntu',
+        'MySql',
+        'Backup Database',
+        'Unisharp File',
+        'Stisla Example',
+    ];
 }
 
 return [
@@ -109,6 +121,7 @@ return [
     // 'app' => AppEnum::APP_DEFAULT,
     'app' => $app,
     'table_excludes' => $table_excludes,
+    'permission_excludes' => $permissionExcludes,
     'email' => 'kpakmajalengka@yahoo.co.id',
     'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
     'colors' => [

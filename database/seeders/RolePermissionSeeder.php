@@ -27,6 +27,7 @@ class RolePermissionSeeder extends Seeder
     {
         DB::enableQueryLog();
         Schema::disableForeignKeyConstraints();
+        // dd(config('stisla.permission_excludes'));
 
         Role::truncate();
         PermissionGroup::truncate();
@@ -83,14 +84,16 @@ class RolePermissionSeeder extends Seeder
                         $roles = $this->rolesArray[$permission['group']];
                     }
 
-                    $perm = Permission::create([
-                        'name'                => $permission['name'],
-                        'permission_group_id' => $group->id
-                    ]);
-                    // foreach ($permission['roles'] as $role)
-                    //     if (in_array($role, $this->rolesArray))
-                    // $perm->assignRole($role);
-                    $perm->syncRoles($roles);
+                    if (!in_array($permission['name'], config('stisla.permission_excludes'))) {
+                        $perm = Permission::create([
+                            'name'                => $permission['name'],
+                            'permission_group_id' => $group->id
+                        ]);
+                        // foreach ($permission['roles'] as $role)
+                        //     if (in_array($role, $this->rolesArray))
+                        // $perm->assignRole($role);
+                        $perm->syncRoles($roles);
+                    }
                 }
             }
         }
@@ -147,12 +150,14 @@ class RolePermissionSeeder extends Seeder
                 }
             } else {
                 try {
-                    $perm = Permission::create([
-                        'name'                => $name = $permission['name'],
-                        'permission_group_id' => $group->id
-                    ]);
-                    $roles = Role::whereIn('name', $permission['roles'])->get();
-                    $perm->syncRoles($roles);
+                    if (!in_array($permission['name'], config('stisla.permission_excludes'))) {
+                        $perm = Permission::create([
+                            'name'                => $name = $permission['name'],
+                            'permission_group_id' => $group->id
+                        ]);
+                        $roles = Role::whereIn('name', $permission['roles'])->get();
+                        $perm->syncRoles($roles);
+                    }
                 } catch (\Exception $e) {
                     $permissions = Permission::all();
                     dd($e->getMessage(), $permissions);
