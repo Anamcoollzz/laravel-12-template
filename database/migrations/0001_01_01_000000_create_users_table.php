@@ -100,6 +100,9 @@ return new class extends Migration
             $table->string('teacher_employee_status', 100)->nullable();
             $table->string('teacher_gtk_type', 100)->nullable();
             $table->string('teacher_position', 100)->nullable();
+
+            $table->unsignedBigInteger('education_level_id')->nullable();
+            $table->foreign('education_level_id')->references('id')->on('education_levels')->onUpdate('cascade')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

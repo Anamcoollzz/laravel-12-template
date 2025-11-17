@@ -104,7 +104,6 @@ if (is_app_chat($app)) {
         'students',
         'chat_messages',
         'chat_rooms',
-        'regions',
         'notifications',
         'crud_examples',
     ];
@@ -208,6 +207,14 @@ return [
             'group_name' => 'Navigasi',
             'menus' => [
                 $dashboard,
+
+                // [
+                //     'menu_name' => 'Jenjang Pendidikan',
+                //     'route_name' => 'education-levels.index',
+                //     'icon' => 'fa fa-graduation-cap',
+                //     'permission' => 'Jenjang Pendidikan',
+                //     'is_active_if_url_includes' => 'education-levels*'
+                // ],
                 // additionalmenus
                 $additionalMenus,
                 [

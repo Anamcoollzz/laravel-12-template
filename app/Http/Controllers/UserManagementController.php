@@ -5,15 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImportExcelRequest;
 use App\Http\Requests\UserRequest;
 use App\Imports\UserImport;
+use App\Models\Role;
 use App\Models\User;
+use App\Repositories\RegionRepository;
+use App\Repositories\ReligionRepository;
+use App\Repositories\SchoolClassRepository;
+use App\Repositories\WorkRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class UserManagementController extends StislaController
 {
+
+    private ReligionRepository $religionRepository;
+    private SchoolClassRepository $schoolClassRepository;
+    private WorkRepository $workRepository;
+    private RegionRepository $regionRepository;
+    private Role|null $role;
 
     /**
      * constructor method
@@ -26,10 +38,20 @@ class UserManagementController extends StislaController
 
         $this->defaultMiddleware('Pengguna');
 
-        $this->icon           = 'fa fa-users';
-        $this->viewFolder     = 'user-management';
-        $this->prefix         = 'user-management.users';
-        $this->paperSize      = 'A3';
+        $this->icon       = 'fa fa-users';
+        $this->viewFolder = 'user-management';
+        $this->prefix     = 'user-management.users';
+        $this->paperSize  = 'A3';
+
+        $this->religionRepository    = new ReligionRepository;
+        $this->schoolClassRepository = new SchoolClassRepository;
+        $this->workRepository        = new WorkRepository;
+        $this->regionRepository      = new RegionRepository;
+
+        if (is_app_dataku() && request('filter_role')) {
+            $this->role        = $this->userRepository->findRole(request('filter_role'));
+            $this->exportTitle = is_app_dataku() && $this->role ? ucfirst($this->role->name) : 'Pengguna';
+        }
     }
 
     /**
@@ -42,10 +64,10 @@ class UserManagementController extends StislaController
         $roleOptions = $this->userRepository->getRoleOptions();
         $defaultData = $this->getDefaultDataIndex(__('Pengguna'), 'Pengguna', 'user-management.users');
         return array_merge($defaultData, [
-            'data'           => $this->userRepository->getUsers(),
-            'roleCount'      => count($roleOptions),
-            'isRegionExists' => Schema::hasTable('regions'),
-            'roleOptions'    => $roleOptions,
+            'data'               => $this->userRepository->getUsers(),
+            'roleCount'          => count($roleOptions),
+            'isRegionExists'     => Schema::hasTable('regions'),
+            'roleOptions'        => $roleOptions,
         ]);
     }
 
@@ -64,6 +86,67 @@ class UserManagementController extends StislaController
             'birth_date',
             'address',
         ]);
+
+        if (is_app_dataku()) {
+            $data = array_merge($data, request()->only([
+                'nis',
+                'nisn',
+                'religion_id',
+                'religion_id',
+                'rt',
+                'rw',
+                'postal_code',
+                'school_class_id',
+                'school_class_id',
+                'room',
+                'father_nik',
+                'father_name',
+                'father_birth_date',
+                'father_education',
+                'father_work_id',
+                'father_work_id',
+                'father_income',
+                'mother_nik',
+                'mother_name',
+                'mother_birth_date',
+                'mother_education',
+                'mother_work_id',
+                'mother_work_id',
+                'mother_income',
+                'guardian_nik',
+                'guardian_name',
+                'guardian_birth_date',
+                'guardian_education',
+                'guardian_work_id',
+                'guardian_work_id',
+                'guardian_income',
+                'province_code',
+                'city_code',
+                'district_code',
+                'village_code',
+
+                // teacher data
+                'teacher_nuptk',
+                'teacher_mother_name',
+                'teacher_employee_status',
+                'teacher_gtk_type',
+                'teacher_position',
+            ]));
+        }
+
+        $numberColumns = [
+            'father_income',
+            'mother_income',
+            'guardian_income',
+        ];
+
+        foreach ($numberColumns as $column) {
+            if ($request->has($column))
+                $data[$column] = rp_to_double($request->$column);
+        }
+
+        $data['education_level_id'] = session('education_level_id');
+
         if ($request->hasFile('avatar'))
             $data['avatar'] = $this->fileService->uploadAvatar($request->file('avatar'));
         if ($request->filled('password'))
@@ -89,6 +172,11 @@ class UserManagementController extends StislaController
         return array_merge($defaultData, [
             'roleOptions' => $roleOptions,
             'fullTitle'   => $isDetail ? __('Detail Pengguna') : __('Ubah Pengguna'),
+            'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
+            'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
+            'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
+            'provinces'          => $this->regionRepository->getProvinces(),
+            'roleName'           => $user->roles->first()->name ?? null,
         ]);
     }
 
@@ -100,12 +188,14 @@ class UserManagementController extends StislaController
     protected function getExportData(): array
     {
         $times = date('Y-m-d_H-i-s');
+        $role = $this->userRepository->findRole(request('filter_role'));
+        $suffix = is_app_dataku() ? '_dataku_' . Str::snake($role->name) : '';
         $data = [
             'isExport'   => true,
-            'pdf_name'   => $times . '_users.pdf',
-            'excel_name' => $times . '_users.xlsx',
-            'csv_name'   => $times . '_users.csv',
-            'json_name'  => $times . '_users.json',
+            'pdf_name'   => $times . '_users' . $suffix . '.pdf',
+            'excel_name' => $times . '_users' . $suffix . '.xlsx',
+            'csv_name'   => $times . '_users' . $suffix . '.csv',
+            'json_name'  => $times . '_users' . $suffix . '.json',
         ];
         return array_merge($this->getIndexData(), $data);
     }
@@ -133,11 +223,22 @@ class UserManagementController extends StislaController
     public function create()
     {
         $roleOptions = $this->userRepository->getRoleOptions();
+        $role = $this->userRepository->findRole(request('filter_role'));
+        $isSiswa = $role ? $role->name === 'siswa' : false;
         $defaultData = $this->getDefaultDataCreate(__('Pengguna'), 'user-management.users');
-        return view('stisla.user-management.users.form', array_merge($defaultData, [
-            'roleOptions' => $roleOptions,
-            'fullTitle'   => __('Tambah Pengguna'),
-        ]));
+        $data = array_merge($defaultData, [
+            'roleOptions'        => $roleOptions,
+            'fullTitle'          => __('Tambah Pengguna'),
+            'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
+            'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
+            'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
+            'provinces'          => $this->regionRepository->getProvinces(),
+            'isSiswa'            => $isSiswa,
+            'roleName'           => $role->name,
+            'roleId'             => $role->id ?? null,
+        ]);
+        // return $data;
+        return view('stisla.user-management.users.form', $data);
     }
 
     /**
@@ -153,7 +254,8 @@ class UserManagementController extends StislaController
         $data['uuid'] = uuid();
         // $data['last_updated_by_id'] = auth_id();
         $user = $this->userRepository->create($data);
-        $this->userRepository->syncRolesByID($user, $request->role);
+        $roles = is_numeric($request->role) ? [$request->role] : $request->role;
+        $this->userRepository->syncRolesByID($user, $roles);
         logCreate('Pengguna', $user);
         $successMessage = successMessageCreate('Pengguna');
         return redirect()->back()->with('successMessage', $successMessage);
@@ -168,6 +270,10 @@ class UserManagementController extends StislaController
     public function edit(User $user)
     {
         $data = $this->getDetailDataOld($user, false);
+        $isSiswa = $user->hasRole('siswa');
+        $data = array_merge($data, [
+            'isSiswa' => $isSiswa,
+        ]);
         return view('stisla.user-management.users.form', $data);
     }
 

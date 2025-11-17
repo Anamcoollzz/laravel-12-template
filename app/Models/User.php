@@ -93,6 +93,8 @@ class User extends Authenticatable implements JWTSubject
         'teacher_employee_status',
         'teacher_gtk_type',
         'teacher_position',
+
+        'education_level_id',
     ];
 
     const GENDER_MALE   = 'Laki-laki';

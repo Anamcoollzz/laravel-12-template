@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Repositories\EducationLevelRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\SettingRepository;
 use Closure;
@@ -92,6 +93,10 @@ class ViewShare
             view()->share('_app_is_demo', config('app.is_demo'));
             view()->share('_is_superadmin', auth_user() ? is_superadmin() : false);
             view()->share('_email', config('stisla.email'));
+
+            if (is_app_dataku()) {
+                view()->share('_education_levels', (new EducationLevelRepository)->all());
+            }
         }
         return $next($request);
     }

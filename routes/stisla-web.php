@@ -40,3 +40,6 @@ Route::get('youtube/view-sync', [YoutubeController::class, 'viewSync'])->name('y
 
 # TEST
 Route::get('test', [TestingController::class, 'test'])->name('test');
+
+Route::get('select-education-level', [\App\Http\Controllers\EducationLevelController::class, 'select'])->name('select-education-level.index');
+Route::get('set-education-level/{education_level_id}', [\App\Http\Controllers\EducationLevelController::class, 'set'])->name('set-education-level');

@@ -88,12 +88,14 @@ class UserSeeder extends Seeder
         }
 
         if (is_app_dataku()) {
-            $religions      = \App\Models\Religion::all();
-            $schoolClasses  = \App\Models\SchoolClass::all();
-            $works          = \App\Models\Work::all();
-            $religionIds    = $religions->pluck('id')->toArray();
-            $schoolClassIds = $schoolClasses->pluck('id')->toArray();
-            $workIds        = $works->pluck('id')->toArray();
+            $religions         = \App\Models\Religion::all();
+            $schoolClasses     = \App\Models\SchoolClass::all();
+            $works             = \App\Models\Work::all();
+            $educationLevels   = \App\Models\EducationLevel::all();
+            $religionIds       = $religions->pluck('id')->toArray();
+            $schoolClassIds    = $schoolClasses->pluck('id')->toArray();
+            $workIds           = $works->pluck('id')->toArray();
+            $educationLevelIds = $educationLevels->pluck('id')->toArray();
 
             foreach (range(1, 50) as $index) {
                 $userObj = User::create([
@@ -103,7 +105,7 @@ class UserSeeder extends Seeder
                     'password'             => $password,
                     'is_locked'            => $user['is_locked'] ?? 0,
                     'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
-                    'birth_date'           => fake()->optional()->date('Y-m-d'),
+                    'birth_date'           => fake()->date('Y-m-d'),
                     'address'              => fake()->address(),
                     'last_password_change' => date('Y-m-d H:i:s'),
                     'created_by_id'        => 1,
@@ -111,7 +113,7 @@ class UserSeeder extends Seeder
                     'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
                     'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                     'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
-                    'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
+                    'nik'                  => fake()->unique()->numerify('##################'),
                     // 'uuid'                 => fake()->unique()->uuid(),
                     'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                     'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
@@ -130,22 +132,23 @@ class UserSeeder extends Seeder
                     'room'                => 'Room ' . fake()->randomElement(['A', 'B', 'C', 'D', 'E']),
                     'father_nik'          => fake()->unique()->numerify('##################'),
                     'father_name'         => fake()->name('male'),
-                    'father_birth_date'   => fake()->optional()->date('Y-m-d'),
+                    'father_birth_date'   => fake()->date('Y-m-d'),
                     'father_education'    => fake()->randomElement(['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister', 'Doktor']),
                     'father_work_id'      => fake()->randomElement($workIds),
                     'father_income'       => fake()->randomElement([0, 1000000, 2500000, 5000000, 7500000, 10000000]),
                     'mother_nik'          => fake()->unique()->numerify('##################'),
                     'mother_name'         => fake()->name('female'),
-                    'mother_birth_date'   => fake()->optional()->date('Y-m-d'),
+                    'mother_birth_date'   => fake()->date('Y-m-d'),
                     'mother_education'    => fake()->randomElement(['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister', 'Doktor']),
                     'mother_work_id'      => fake()->randomElement($workIds),
                     'mother_income'       => fake()->randomElement([0, 1000000, 2500000, 5000000, 7500000, 10000000]),
                     'guardian_nik'        => fake()->unique()->numerify('##################'),
                     'guardian_name'       => fake()->name(),
-                    'guardian_birth_date' => fake()->optional()->date('Y-m-d'),
+                    'guardian_birth_date' => fake()->date('Y-m-d'),
                     'guardian_education'  => fake()->randomElement(['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister', 'Doktor']),
                     'guardian_work_id'    => fake()->randomElement($workIds),
                     'guardian_income'     => fake()->randomElement([0, 1000000, 2500000, 5000000, 7500000, 10000000]),
+                    'education_level_id'  => fake()->randomElement($educationLevelIds),
                 ]);
                 $userObj->assignRole('siswa');
             }
@@ -158,7 +161,7 @@ class UserSeeder extends Seeder
                     'password'             => $password,
                     'is_locked'            => $user['is_locked'] ?? 0,
                     'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
-                    'birth_date'           => fake()->optional()->date('Y-m-d'),
+                    'birth_date'           => fake()->date('Y-m-d'),
                     'address'              => fake()->address(),
                     'last_password_change' => date('Y-m-d H:i:s'),
                     'created_by_id'        => 1,
@@ -166,7 +169,7 @@ class UserSeeder extends Seeder
                     'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
                     'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                     'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
-                    'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
+                    'nik'                  => fake()->unique()->numerify('##################'),
                     // 'uuid'                 => fake()->unique()->uuid(),
                     'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                     'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
@@ -175,15 +178,46 @@ class UserSeeder extends Seeder
                     'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
                     'uuid'                 => Str::uuid()->toString(),
 
-                    'teacher_nuptk' => fake()->unique()->numerify('################'),
-                    'teacher_mother_name' => fake()->name('female'),
+                    'teacher_nuptk'           => fake()->unique()->numerify('################'),
+                    'teacher_mother_name'     => fake()->name('female'),
                     'teacher_employee_status' => fake()->randomElement(['PNS', 'Non-PNS']),
-                    'teacher_gtk_type' => fake()->randomElement(['Guru Kelas', 'Guru Mapel', 'Tenaga Kependidikan']),
-                    'teacher_position' => fake()->jobTitle(),
+                    'teacher_gtk_type'        => fake()->randomElement(['Guru Kelas', 'Guru Mapel', 'Tenaga Kependidikan']),
+                    'teacher_position'        => fake()->jobTitle(),
+                    'education_level_id'      => fake()->randomElement($educationLevelIds),
 
                 ]);
 
                 $userObj->assignRole('guru');
+            }
+
+            foreach ($educationLevelIds as $educationLevelId) {
+                $userObj = User::create([
+                    'name'                 => $name = fake()->name(),
+                    'email'                => fake()->unique()->safeEmail(),
+                    'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
+                    'password'             => $password,
+                    'is_locked'            => $user['is_locked'] ?? 0,
+                    'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
+                    'birth_date'           => fake()->date('Y-m-d'),
+                    'address'              => fake()->address(),
+                    'last_password_change' => date('Y-m-d H:i:s'),
+                    'created_by_id'        => 1,
+                    'last_updated_by_id'   => null,
+                    'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                    'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
+                    'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
+                    'nik'                  => fake()->unique()->numerify('##################'),
+                    // 'uuid'                 => fake()->unique()->uuid(),
+                    'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
+                    'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
+                    'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
+                    'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
+                    'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                    'uuid'                 => Str::uuid()->toString(),
+                    'education_level_id'   => $educationLevelId,
+                ]);
+
+                $userObj->assignRole('kepala sekolah');
             }
         }
     }

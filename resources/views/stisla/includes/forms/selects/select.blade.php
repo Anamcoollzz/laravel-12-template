@@ -5,7 +5,7 @@
     $name = $name ?? $id;
     $oldValue = old($name);
     $isMultiple = $multiple ?? ($isMultiple ?? false);
-    $isRequired = $required ?? ($isRequired ?? false);
+    $isRequired = isset($required) && $required === true;
     $dname = $d[$name] ?? false;
     if ($isMultiple) {
         $selectedArray = is_array($dname) ? $dname : ($dname ? [$dname] : []);

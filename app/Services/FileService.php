@@ -308,6 +308,20 @@ class FileService
     /**
      * download collection as pdf file
      *
+     * @param string $html
+     * @param string $filename
+     * @param string $paper
+     * @param string $orientation
+     * @return Response
+     */
+    public function downloadPdfFromHtml(string $html, string $filename, string $paper = 'Letter', string $orientation = 'landscape')
+    {
+        return PDF::setPaper($paper, $orientation)->loadHTML($html)->download($filename);
+    }
+
+    /**
+     * download collection as pdf file
+     *
      * @param string $view
      * @param array $data
      * @param string $filename

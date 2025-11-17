@@ -25,6 +25,8 @@
           </div>
         @endif
 
+        @yield('notes')
+
         <div class="card">
           <div class="card-header">
             <h4><i class="{{ $moduleIcon }}"></i> {{ $fullTitle }}</h4>

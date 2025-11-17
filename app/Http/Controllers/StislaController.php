@@ -211,6 +211,8 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected array $fileColumns = [];
 
+    protected string $exportTitle;
+
     /**
      * constructor method
      *
@@ -338,7 +340,7 @@ class StislaController extends Controller implements HasMiddleware
             'canDuplicate'           => $canDuplicate,
             'title'                  => $title,
             'moduleIcon'             => $this->icon,
-            'route_create'           => $canCreate ? route($routePrefix . '.create') : null,
+            'route_create'           => $canCreate ? route($routePrefix . '.create', ['filter_role' => request('filter_role')]) : null,
             'route_restore_all'      => $canShowDeleted && Route::has($routePrefix . '.restore-all') ? route($routePrefix . '.restore-all') : null,
             'route_force_delete_all' => $canShowDeleted && Route::has($routePrefix . '.force-delete-all') ? route($routePrefix . '.force-delete-all') : null,
             'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
@@ -462,12 +464,13 @@ class StislaController extends Controller implements HasMiddleware
         $times      = date('Y-m-d_H-i-s');
         $moduleName = str_replace('-', '_', $this->prefixRoute ?? $this->prefix);
         $data       = [
-            'isExport'   => true,
-            'pdf_name'   => $times . '_' . $moduleName . '.pdf',
-            'excel_name' => $times . '_' . $moduleName . '.xlsx',
-            'csv_name'   => $times . '_' . $moduleName . '.csv',
-            'json_name'  => $times . '_' . $moduleName . '.json',
-            'prefix'     => $this->prefix ?? null,
+            'isExport'    => true,
+            'pdf_name'    => $times . '_' . $moduleName . '.pdf',
+            'excel_name'  => $times . '_' . $moduleName . '.xlsx',
+            'csv_name'    => $times . '_' . $moduleName . '.csv',
+            'json_name'   => $times . '_' . $moduleName . '.json',
+            'prefix'      => $this->prefix ?? null,
+            'exportTitle' => $this->exportTitle ?? $this->title,
         ];
 
         return array_merge($data, $this->getIndexDataFromParent());
@@ -492,7 +495,9 @@ class StislaController extends Controller implements HasMiddleware
      */
     private function execExcel($isXlsx = true)
     {
-        $data  = $this->getExportData();
+        $data  = array_merge($this->getExportData(), [
+            'exportTitle' => $this->exportTitle ?? $this->title,
+        ]);
         $path = 'stisla.' . $this->viewFolder . '.table';
         if (!file_exists(resource_path('views/' . $path . '.blade.php'))) {
             $path = 'stisla.' . $this->prefix . '.table';
@@ -529,8 +534,11 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function pdf(): Response
     {
-        $data  = $this->getExportData();
-        return $this->fileUtil->downloadPdf('stisla.includes.others.export-pdf', $data, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
+        $data  = array_merge($this->getExportData(), [
+            'exportTitle' => $this->exportTitle ?? $this->title,
+        ]);
+        $html = view('stisla.includes.others.export-pdf', $data)->render();
+        return $this->fileUtil->downloadPdfFromHtml($html, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
     }
 
     /**
@@ -582,6 +590,7 @@ class StislaController extends Controller implements HasMiddleware
             'json_name'    => $filename . '.json',
             'moduleIcon'   => $this->icon,
             'canExport'    => $this->canExport ?? $defaultData['canExport'],
+            'exportTitle'  => $this->exportTitle ?? $this->title,
         ], $this->getHasColumns());
     }
 

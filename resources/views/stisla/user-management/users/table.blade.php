@@ -19,7 +19,7 @@
       <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
       <th>{{ __('Email') }}</th>
-      @if ($isRegionExists)
+      @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
         <th>{{ __('Provinsi') }}</th>
         <th>{{ __('Kota/Kabupaten') }}</th>
         <th>{{ __('Kecamatan') }}</th>
@@ -100,7 +100,7 @@
         <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
         @include('stisla.includes.others.td-email')
-        @if ($isRegionExists)
+        @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
           <td>{{ $item->province?->name }}</td>
           <td>{{ $item->city?->name }}</td>
           <td>{{ $item->district?->name }}</td>
