@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WorkSeeder::class);
         $this->call(FacultySeeder::class);
         $this->call(BankSeeder::class);
-        // seeders
+        $this->call(ReligionSeeder::class);
+        // seeders 
     }
 }

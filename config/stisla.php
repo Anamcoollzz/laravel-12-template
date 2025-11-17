@@ -7,6 +7,14 @@ $app = AppEnum::APP_DEFAULT;
 $app = AppEnum::APP_DATAKU;
 $table_excludes = [];
 $permissionExcludes = [];
+$additionalMenus = [];
+$dashboard = [
+    'menu_name' => 'Beranda',
+    'route_name' => 'dashboard.index',
+    'icon' => 'fas fa-fire',
+    'permission' => null,
+    'is_active_if_url_includes' => 'dashboard*'
+];
 $roles = [
     'superadmin',
     'admin',
@@ -113,6 +121,22 @@ if (is_app_chat($app)) {
         'Unisharp File',
         'Stisla Example',
     ];
+    $additionalMenus = [
+        'menu_name' => 'Master',
+        'route_name' => null,
+        'icon' => 'fas fa-cubes',
+        'permission' => null,
+        'is_active_if_url_includes' => null,
+        'childs' => [
+            [
+                'menu_name' => 'Agama',
+                'route_name' => 'religions.index',
+                'icon' => 'fas fa-praying-hands',
+                'permission' => 'Agama',
+                'is_active_if_url_includes' => 'religions*',
+            ],
+        ]
+    ];
 }
 
 return [
@@ -131,14 +155,9 @@ return [
         [
             'group_name' => 'Navigasi',
             'menus' => [
-                [
-                    'menu_name' => 'Beranda',
-                    'route_name' => 'dashboard.index',
-                    'icon' => 'fas fa-fire',
-                    'permission' => null,
-                    'is_active_if_url_includes' => 'dashboard*'
-                ],
+                $dashboard,
                 // additionalmenus
+                $additionalMenus,
                 [
                     'menu_name' => 'Contoh CRUD',
                     'route_name' => 'crud-examples.index',
