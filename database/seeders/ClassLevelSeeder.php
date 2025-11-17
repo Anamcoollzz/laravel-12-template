@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\SchoolClass;
+use App\Models\ClassLevel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class SchoolClassSeeder extends Seeder
+class ClassLevelSeeder extends Seeder
 {
 
     /**
@@ -35,7 +35,7 @@ class SchoolClassSeeder extends Seeder
      */
     public function run()
     {
-        if (Schema::hasTable((new SchoolClass())->getTable()) == false) {
+        if (Schema::hasTable((new ClassLevel())->getTable()) == false) {
             return;
         }
         Schema::disableForeignKeyConstraints();
@@ -47,7 +47,7 @@ class SchoolClassSeeder extends Seeder
         $pass = bcrypt('password');
         // $jobs = file_get_contents(database_path('seeders/data/jobs.json'));
         // $jobs = json_decode($jobs, true);
-        SchoolClass::truncate();
+        ClassLevel::truncate();
         // foreach ($jobs as $job) {
         //     $data[] = [
         //         'job_name' => $job['pekerjaan'],
@@ -58,7 +58,7 @@ class SchoolClassSeeder extends Seeder
         //         'last_updated_by_id' => null,
         //     ];
         // }
-        $table                 = (new SchoolClass())->getTable();
+        $table                 = (new ClassLevel())->getTable();
         $isHasText             = Schema::hasColumn($table, 'text');
         $isHasEmail            = Schema::hasColumn($table, 'email');
         $isHasNumber           = Schema::hasColumn($table, 'number');
@@ -92,22 +92,16 @@ class SchoolClassSeeder extends Seeder
         $isHasAvatar           = Schema::hasColumn($table, 'avatar');
         $isHasDeletedAt        = Schema::hasColumn($table, 'deleted_at');
 
-        $classes = [
-            'Java',
-            'Python',
-            'C++',
-            'JavaScript',
-            'Ruby',
-            'PHP',
-            'Swift',
-            'Kotlin',
-            'C#',
-            'Go',
-            'R',
-            'TypeScript',
+        $levels = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
         ];
 
-        foreach ($classes as $i => $class) {
+        foreach ($levels as $i => $level) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
                 array_push($selectMultiple, $options[$j - 1]);
@@ -156,7 +150,7 @@ class SchoolClassSeeder extends Seeder
                 // 'deleted_at' => null,
 
                 // ini hasil generate dari make:module command
-                'class_name' => $class,
+                'level_name' => $level,
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
@@ -265,7 +259,7 @@ class SchoolClassSeeder extends Seeder
         }
 
         foreach (collect($data)->chunk(20) as $chunkData) {
-            SchoolClass::insert($chunkData->toArray());
+            ClassLevel::insert($chunkData->toArray());
         }
     }
 }

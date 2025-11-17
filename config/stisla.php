@@ -144,7 +144,14 @@ if (is_app_chat($app)) {
                 'icon' => 'fas fa-chalkboard',
                 'permission' => 'Kelas',
                 'is_active_if_url_includes' => 'school-classes*',
-            ]
+            ],
+            [
+                'menu_name' => 'Level Kelas',
+                'route_name' => 'class-levels.index',
+                'icon' => 'fa fa-arrow-turn-down',
+                'permission' => 'Level Kelas',
+                'is_active_if_url_includes' => 'class-levels*'
+            ],
         ]
     ];
     $superadminEmail = 'superadmin@dataku.com';
@@ -169,6 +176,7 @@ return [
             'group_name' => 'Navigasi',
             'menus' => [
                 $dashboard,
+
                 // additionalmenus
                 $additionalMenus,
                 [
