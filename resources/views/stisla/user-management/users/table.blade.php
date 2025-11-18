@@ -199,12 +199,14 @@
                   'variant' => 'warning',
               ])
             @endif
-            @include('stisla.includes.forms.buttons.btn-delete', [
-                'link' => route($routePrefix . '.destroy', [$item->id, 'force_delete' => true]),
-                'tooltipTitle' => 'Hapus Permanen',
-                'icon' => 'fa fa-circle-minus',
-                'variant' => 'danger',
-            ])
+            @if ($canDelete)
+              @include('stisla.includes.forms.buttons.btn-delete', [
+                  'link' => route($routePrefix . '.destroy', [$item->id, 'force_delete' => true]),
+                  'tooltipTitle' => 'Hapus Permanen',
+                  'icon' => 'fa fa-circle-minus',
+                  'variant' => 'danger',
+              ])
+            @endif
             @if ($canBlock && $item->deleted_at === null)
               @if ($item->is_active == 1)
                 @include('stisla.includes.forms.buttons.btn-warning', [
