@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Role;
 use App\Repositories\RegionRepository;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
@@ -19,6 +20,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
+
+        if (is_app_dataku()) {
+            $this->fromSql();
+            return;
+        }
 
         $roles = Role::all();
         $rolesArray = $roles->pluck('name')->toArray();
@@ -229,5 +235,11 @@ class UserSeeder extends Seeder
                     $userObj->assignRole('kepala sekolah');
                 }
         }
+    }
+
+    private function fromSql()
+    {
+        $query = file_get_contents(database_path('data/users.sql'));
+        DB::unprepared($query);
     }
 }
