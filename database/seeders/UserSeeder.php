@@ -239,7 +239,7 @@ class UserSeeder extends Seeder
 
     private function fromSql()
     {
-        $query = file_get_contents(database_path('data/seeders/users.sql'));
+        $query = file_get_contents(database_path('seeders/data/users.sql'));
         DB::unprepared($query);
     }
 }
