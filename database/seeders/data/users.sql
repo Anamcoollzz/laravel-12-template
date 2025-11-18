@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 18, 2025 at 11:31 AM
+-- Generation Time: Nov 18, 2025 at 11:41 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -413,6 +413,16 @@ INSERT INTO `permission_groups` (`id`, `group_name`, `created_at`, `updated_at`)
 (21, 'Tahun Pelajaran', '2025-11-18 10:41:31', '2025-11-18 10:41:31'),
 (22, 'Semester', '2025-11-18 10:41:31', '2025-11-18 10:41:31'),
 (23, 'Pekerjaan', '2025-11-18 10:41:32', '2025-11-18 10:41:32');
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `is_locked`, `guard_name`, `created_by_id`, `last_updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 'superadmin', 1, 'web', NULL, NULL, NULL, NULL),
+(2, 'kepala sekolah', 0, 'web', NULL, NULL, NULL, NULL),
+(3, 'guru', 0, 'web', NULL, NULL, NULL, NULL),
+(4, 'siswa', 0, 'web', NULL, NULL, NULL, NULL);
 
 --
 -- Dumping data for table `role_has_permissions`
