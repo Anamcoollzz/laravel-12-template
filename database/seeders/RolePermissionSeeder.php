@@ -25,8 +25,8 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        if (is_app_dataku())
-            return;
+        // if (is_app_dataku())
+        //     return;
         DB::enableQueryLog();
         Schema::disableForeignKeyConstraints();
         // dd(config('stisla.permission_excludes'));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\GeneralExport;
 use App\Http\Requests\ImportExcelRequest;
 use App\Imports\GeneralImport;
+use App\Models\User;
 use App\Repositories\ActivityLogRepository;
 use App\Repositories\Repository;
 use App\Repositories\RequestLogRepository;
@@ -1233,5 +1234,33 @@ class StislaController extends Controller implements HasMiddleware
         }
 
         return backSuccess($successMessage);
+    }
+
+    /**
+     * show single pdf page
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function singlePdf(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        if ($model instanceof User) {
+            $isSiswa = $model->hasRole('siswa');
+            $isGuru = $model->hasRole('guru');
+            $this->exportTitle = ucwords($model->roles->first()->name);
+            $photo = $this->fileUtil->urlToFilePath($model->photo);
+        }
+
+        $html = view('stisla.includes.others.single-pdf', [
+            'd'           => $model,
+            'title'       => $this->title,
+            'prefix'      => $this->prefix,
+            'exportTitle' => $this->exportTitle ?? $this->title,
+            'isSiswa'     => $isSiswa ?? false,
+            'isGuru'      => $isGuru ?? false,
+            'photo'       => $photo ?? false,
+        ])->render();
+        return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . ' ' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
     }
 }

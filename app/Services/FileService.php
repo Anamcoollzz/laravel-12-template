@@ -510,4 +510,19 @@ class FileService
             $this->executeDeleteFromStorage('public' . $filepath);
         }
     }
+
+    /**
+     * convert url to file path
+     *
+     * @param string $url
+     * @return string
+     */
+    public function urlToFilePath(string $url)
+    {
+        $storageUrl = config('app.url') . '/storage';
+        $filepath = str_replace($storageUrl, '', $url);
+        $filepath = str_replace('http://127.0.0.1:8000/storage', '', $filepath);
+        $filepath = str_replace('http://localhost:8000/storage', '', $filepath);
+        return storage_path('app/public' . $filepath);
+    }
 }

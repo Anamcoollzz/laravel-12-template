@@ -51,6 +51,8 @@
           <th>{{ __('validation.attributes.postal_code') }}</th>
           <th>{{ __('validation.attributes.school_class_id') }}</th>
           <th>{{ __('validation.attributes.class_level_id') }}</th>
+          <th>{{ __('validation.attributes.semester_id') }}</th>
+          <th>{{ __('validation.attributes.school_year_id') }}</th>
           <th>{{ __('validation.attributes.room') }}</th>
           <th>{{ __('validation.attributes.father_nik') }}</th>
           <th>{{ __('validation.attributes.father_name') }}</th>
@@ -151,6 +153,8 @@
             <td>{{ $item->postal_code }}</td>
             <td>{{ $item->schoolclass?->class_name }}</td>
             <td>{{ $item->classlevel?->level_name }}</td>
+            <td>{{ $item->semester?->semester }}</td>
+            <td>{{ $item->schoolyear?->year_name }}</td>
             <td>{{ $item->room }}</td>
             <td>{{ $item->father_nik }}</td>
             <td>{{ $item->father_name }}</td>
@@ -189,6 +193,12 @@
         <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)
           <td style="width: 150px;">
+            @include('stisla.includes.forms.buttons.btn-danger', [
+                'link' => route($routePrefix . '.single-pdf', [$item->id]),
+                'blank' => true,
+                'icon' => 'fa fa-file-pdf',
+                'tooltipTitle' => 'Export PDF',
+            ])
             @if ($canUpdate && $item->deleted_at === null)
               @include('stisla.includes.forms.buttons.btn-edit', ['link' => route($routePrefix . '.edit', [$item->id])])
             @endif

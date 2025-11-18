@@ -17,7 +17,7 @@ class PDFService
      * @param string $orientation
      * @return Response
      */
-    public function downloadPdf(string $html, string $filename = 'filename.pdf', string $paper = 'Letter', string $orientation = 'landscape')
+    public function downloadPdf(string $html, ?string $filename = 'filename.pdf', ?string $paper = 'Letter', ?string $orientation = 'landscape')
     {
         return PDF::setPaper($paper, $orientation)->loadHTML($html)->download($filename);
     }

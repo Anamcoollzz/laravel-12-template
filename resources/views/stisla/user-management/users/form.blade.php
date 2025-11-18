@@ -7,12 +7,15 @@
 
   @csrf
   <div class="row">
-    @include('stisla.user-management.users.avatar')
+    @include('stisla.user-management.users.avatar2')
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input-name', ['required' => true])
     </div>
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input-avatar', ['required' => false])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input-avatar', ['required' => false, 'label' => __('Photo'), 'id' => 'photo'])
     </div>
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input', [
@@ -159,6 +162,22 @@
             'id' => 'class_level_id',
             'options' => $classLevelOptions,
             'label' => __('validation.attributes.class_level_id'),
+            'required' => true,
+        ])
+      </div>
+      <div class="col-md-6">
+        @include('stisla.includes.forms.selects.select', [
+            'id' => 'school_year_id',
+            'options' => $schoolYearOptions,
+            'label' => __('validation.attributes.school_year_id'),
+            'required' => true,
+        ])
+      </div>
+      <div class="col-md-6">
+        @include('stisla.includes.forms.selects.select', [
+            'id' => 'semester_id',
+            'options' => $semesterOptions,
+            'label' => __('validation.attributes.semester_id'),
             'required' => true,
         ])
       </div>

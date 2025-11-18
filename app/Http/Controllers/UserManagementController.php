@@ -11,10 +11,14 @@ use App\Repositories\ClassLevelRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\ReligionRepository;
 use App\Repositories\SchoolClassRepository;
+use App\Repositories\SchoolYearRepository;
+use App\Repositories\SemesterRepository;
+use App\Repositories\UserRepository;
 use App\Repositories\WorkRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -29,6 +33,8 @@ class UserManagementController extends StislaController
     private RegionRepository $regionRepository;
     private Role|null $role;
     private ClassLevelRepository $classLevelRepository;
+    private SchoolYearRepository $schoolYearRepository;
+    private SemesterRepository $semesterRepository;
 
     /**
      * constructor method
@@ -51,8 +57,12 @@ class UserManagementController extends StislaController
         $this->workRepository        = new WorkRepository;
         $this->regionRepository      = new RegionRepository;
         $this->classLevelRepository  = new ClassLevelRepository;
+        $this->schoolYearRepository  = new SchoolYearRepository();
+        $this->semesterRepository    = new SemesterRepository();
+        $this->repository = new UserRepository;
+        $this->title = __('Pengguna');
 
-        if (is_app_dataku() && request('filter_role')) {
+        if ((is_app_dataku() && request('filter_role'))) {
             $this->role        = $this->userRepository->findRole(request('filter_role'));
             $this->exportTitle = is_app_dataku() && $this->role ? ucfirst($this->role->name) : 'Pengguna';
         }
@@ -130,6 +140,8 @@ class UserManagementController extends StislaController
                 'district_code',
                 'village_code',
                 'class_level_id',
+                'school_year_id',
+                'semester_id',
 
                 // teacher data
                 'teacher_nuptk',
@@ -155,6 +167,8 @@ class UserManagementController extends StislaController
 
         if ($request->hasFile('avatar'))
             $data['avatar'] = $this->fileService->uploadAvatar($request->file('avatar'));
+        if ($request->hasFile('photo'))
+            $data['photo'] = $this->fileService->uploadPhoto($request->file('photo'));
         if ($request->filled('password'))
             $data['password'] = bcrypt($request->password);
         return $data;
@@ -182,6 +196,8 @@ class UserManagementController extends StislaController
             'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
             'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
             'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
+            'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
+            'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
             'provinces'          => $this->regionRepository->getProvinces(),
             'roleName'           => $user->roles->first()->name ?? null,
             'roleId'             => $user->roles->first()->id ?? null,
@@ -253,6 +269,8 @@ class UserManagementController extends StislaController
             'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
             'provinces'          => $this->regionRepository->getProvinces(),
             'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
+            'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
+            'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
             'isSiswa'            => $isSiswa,
             'roleName'           => $role->name,
             'roleId'             => $role->id ?? null,

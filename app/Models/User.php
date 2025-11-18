@@ -53,6 +53,7 @@ class User extends Authenticatable implements JWTSubject
         'city_code',
         'district_code',
         'village_code',
+        'photo',
 
         // student
         'nis',
@@ -96,6 +97,8 @@ class User extends Authenticatable implements JWTSubject
         'teacher_position',
 
         'education_level_id',
+        'semester_id',
+        'school_year_id',
     ];
 
     const GENDER_MALE   = 'Laki-laki';
@@ -440,5 +443,25 @@ class User extends Authenticatable implements JWTSubject
     public function classlevel()
     {
         return $this->belongsTo(ClassLevel::class, 'class_level_id');
+    }
+
+    /**
+     * Get the semester associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
+    }
+
+    /**
+     * Get the school year associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function schoolyear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'school_year_id');
     }
 }

@@ -21,10 +21,10 @@ class UserSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        if (is_app_dataku()) {
-            $this->fromSql();
-            return;
-        }
+        // if (is_app_dataku()) {
+        //     $this->fromSql();
+        //     return;
+        // }
 
         $roles = Role::all();
         $rolesArray = $roles->pluck('name')->toArray();
@@ -78,6 +78,7 @@ class UserSeeder extends Seeder
                 'created_by_id'        => 1,
                 'last_updated_by_id'   => null,
                 'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                'photo'                => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
                 'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                 'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
                 'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
@@ -100,11 +101,15 @@ class UserSeeder extends Seeder
             $works             = \App\Models\Work::all();
             $educationLevels   = \App\Models\EducationLevel::all();
             $classLevels       = \App\Models\ClassLevel::all();
+            $schoolYears       = \App\Models\SchoolYear::all();
+            $semesters         = \App\Models\Semester::all();
             $religionIds       = $religions->pluck('id')->toArray();
             $schoolClassIds    = $schoolClasses->pluck('id')->toArray();
             $workIds           = $works->pluck('id')->toArray();
             $educationLevelIds = $educationLevels->pluck('id')->toArray();
             $classLevelIds     = $classLevels->pluck('id')->toArray();
+            $schoolYearIds     = $schoolYears->pluck('id')->toArray();
+            $semesterIds       = $semesters->pluck('id')->toArray();
 
             foreach ($educationLevelIds as $educationLevelId) {
                 foreach (range(1, 50) as $index) {
@@ -160,6 +165,8 @@ class UserSeeder extends Seeder
                         'guardian_work_id'    => fake()->randomElement($workIds),
                         'guardian_income'     => fake()->randomElement([0, 1000000, 2500000, 5000000, 7500000, 10000000]),
                         'education_level_id'  => $educationLevelId,
+                        'school_year_id'      => fake()->randomElement($schoolYearIds),
+                        'semester_id'         => fake()->randomElement($semesterIds),
                     ]);
                     $userObj->assignRole('siswa');
                 }

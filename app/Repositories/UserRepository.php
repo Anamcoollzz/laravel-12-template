@@ -126,6 +126,8 @@ class UserRepository extends Repository
             'schoolclass',
             'religion',
             'classlevel',
+            'schoolyear',
+            'semester',
         ])->get();
         return $users;
     }

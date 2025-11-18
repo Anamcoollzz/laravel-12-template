@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name', 191);
             $table->string('email', 191)->nullable()->unique();
             $table->string('avatar')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 191);
             $table->dateTime('last_login')->nullable();
@@ -102,9 +103,14 @@ return new class extends Migration
             $table->string('teacher_employee_status', 100)->nullable();
             $table->string('teacher_gtk_type', 100)->nullable();
             $table->string('teacher_position', 100)->nullable();
+            // end teacher
 
             $table->unsignedBigInteger('education_level_id')->nullable();
             $table->foreign('education_level_id')->references('id')->on('education_levels')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('semester_id')->nullable();
+            $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('school_year_id')->nullable();
+            $table->foreign('school_year_id')->references('id')->on('school_years')->onUpdate('cascade')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

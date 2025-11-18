@@ -27,6 +27,34 @@
                   'selected' => request('filter_level_id', null),
               ])
             </div>
+            <div class="col-md-6">
+              @php
+                $schoolYears = isset($schoolYears) ? $schoolYears : \App\Models\SchoolYear::select('id', 'year_name')->orderBy('year_name')->get();
+              @endphp
+              @include('stisla.includes.forms.selects.select', [
+                  'id' => 'filter_year_id',
+                  'name' => 'filter_year_id',
+                  'options' => $schoolYears->pluck('year_name', 'id')->toArray(),
+                  'label' => __('validation.attributes.school_year_id'),
+                  'required' => false,
+                  'with_all' => true,
+                  'selected' => request('filter_year_id', null),
+              ])
+            </div>
+            <div class="col-md-6">
+              @php
+                $semesters = isset($semesters) ? $semesters : \App\Models\Semester::select('id', 'semester')->orderBy('semester')->get();
+              @endphp
+              @include('stisla.includes.forms.selects.select', [
+                  'id' => 'filter_semester_id',
+                  'name' => 'filter_semester_id',
+                  'options' => $semesters->pluck('semester', 'id')->toArray(),
+                  'label' => __('validation.attributes.semester_id'),
+                  'required' => false,
+                  'with_all' => true,
+                  'selected' => request('filter_semester_id', null),
+              ])
+            </div>
             <input type="hidden" name="filter_role" value="{{ request('filter_role') }}">
           @else
             <div class="col-md-6">

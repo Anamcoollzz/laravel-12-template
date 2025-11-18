@@ -471,6 +471,12 @@ class Repository extends RepositoryAbstract
                         $query->where('id', request('filter_role'));
                     });
             })
+            ->when(request('filter_semester_id'), function (Builder $query) {
+                $query->where('semester_id', request('filter_semester_id'));
+            })
+            ->when(request('filter_school_year_id'), function (Builder $query) {
+                $query->where('school_year_id', request('filter_school_year_id'));
+            })
             ->when(request('gender'), function (Builder $query) {
                 $query->where('gender', request('gender'));
             })
