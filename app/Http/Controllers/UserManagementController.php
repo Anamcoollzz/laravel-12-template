@@ -422,17 +422,28 @@ class UserManagementController extends StislaController
         // return $this->excel();
         if (is_app_dataku()) {
             if ($this->role->name === 'siswa') {
-                $filepath = public_path('excel_examples/contoh_import_siswa.xlsx');
+                $filepath = public_path('excel_examples/users/contoh_import_siswa.xlsx');
+                $fileurl = url('excel_examples/users/contoh_import_siswa.xlsx');
             } else if ($this->role->name === 'guru') {
-                $filepath = public_path('excel_examples/contoh_import_guru.xlsx');
+                $filepath = public_path('excel_examples/users/contoh_import_guru.xlsx');
+                $fileurl = url('excel_examples/users/contoh_import_guru.xlsx');
             } else if ($this->role->name === 'kepala sekolah') {
-                $filepath = public_path('excel_examples/contoh_import_kepala_sekolah.xlsx');
+                $filepath = public_path('excel_examples/users/contoh_import_kepala_sekolah.xlsx');
+                $fileurl = url('excel_examples/users/contoh_import_kepala_sekolah.xlsx');
             } else if ($this->role->name === 'superadmin') {
-                $filepath = public_path('excel_examples/contoh_import_superadmin.xlsx');
+                $filepath = public_path('excel_examples/users/contoh_import_superadmin.xlsx');
+                $fileurl = url('excel_examples/users/contoh_import_superadmin.xlsx');
             }
         } else {
             $filepath = public_path('excel_examples/sample_users.xlsx');
+            $fileurl = url('excel_examples/sample_users.xlsx');
         }
+
+        return redirect()->away($fileurl);
+
+        return response()->download($filepath, basename($filepath), [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
         return response()->download($filepath);
     }
 
