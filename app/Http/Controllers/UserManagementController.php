@@ -408,6 +408,35 @@ class UserManagementController extends StislaController
     }
 
     /**
+     * download import example
+     *
+     * @return Response
+     */
+    public function importExcelExample2()
+    {
+        // $suffix = 'pengguna';
+        // if (request('filter_role') && is_app_dataku()) {
+        //     $suffix = Str::snake($this->role->name);
+        // }
+        // $this->excelFileName = 'contoh_import_' . $suffix . '.xlsx';
+        // return $this->excel();
+        if (is_app_dataku()) {
+            if ($this->role->name === 'siswa') {
+                $filepath = public_path('excel_examples/contoh_import_siswa.xlsx');
+            } else if ($this->role->name === 'guru') {
+                $filepath = public_path('excel_examples/contoh_import_guru.xlsx');
+            } else if ($this->role->name === 'kepala sekolah') {
+                $filepath = public_path('excel_examples/contoh_import_kepala_sekolah.xlsx');
+            } else if ($this->role->name === 'superadmin') {
+                $filepath = public_path('excel_examples/contoh_import_superadmin.xlsx');
+            }
+        } else {
+            $filepath = public_path('excel_examples/sample_users.xlsx');
+        }
+        return response()->download($filepath);
+    }
+
+    /**
      * import excel file to db
      *
      * @param ImportExcelRequest $request

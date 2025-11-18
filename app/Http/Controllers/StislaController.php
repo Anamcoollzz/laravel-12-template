@@ -213,6 +213,8 @@ class StislaController extends Controller implements HasMiddleware
 
     protected string $exportTitle;
 
+    protected string $excelFileName;
+
     /**
      * constructor method
      *
@@ -343,8 +345,8 @@ class StislaController extends Controller implements HasMiddleware
             'route_create'           => $canCreate ? route($routePrefix . '.create', ['filter_role' => request('filter_role')]) : null,
             'route_restore_all'      => $canShowDeleted && Route::has($routePrefix . '.restore-all') ? route($routePrefix . '.restore-all') : null,
             'route_force_delete_all' => $canShowDeleted && Route::has($routePrefix . '.force-delete-all') ? route($routePrefix . '.force-delete-all') : null,
-            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
-            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
+            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel', ['filter_role' => request('filter_role')]) : null,
+            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example', ['filter_role' => request('filter_role')]) : null,
             'routePdf'               => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
             'routeExcel'             => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
             'routeCsv'               => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
@@ -491,9 +493,9 @@ class StislaController extends Controller implements HasMiddleware
      * download export data as xlsx
      *
      * @param bool $isXlsx
-     * @return Response
+     * @return BinaryFileResponse
      */
-    private function execExcel($isXlsx = true)
+    private function execExcel($isXlsx = true): BinaryFileResponse
     {
         $data  = array_merge($this->getExportData(), [
             'exportTitle' => $this->exportTitle ?? $this->title,
@@ -503,16 +505,16 @@ class StislaController extends Controller implements HasMiddleware
             $path = 'stisla.' . $this->prefix . '.table';
         }
         if ($isXlsx)
-            return $this->fileUtil->downloadExcelGeneral($path, $data, $data['excel_name']);
+            return $this->fileUtil->downloadExcelGeneral($path, $data, $this->excelFileName ?? $data['excel_name']);
         return $this->fileUtil->downloadCsvGeneral($path, $data, $data['csv_name']);
     }
 
     /**
      * download export data as xlsx
      *
-     * @return Response
+     * @return BinaryFileResponse
      */
-    public function excel()
+    public function excel(): BinaryFileResponse
     {
         return $this->execExcel(true);
     }

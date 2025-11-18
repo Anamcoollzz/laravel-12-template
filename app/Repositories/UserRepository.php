@@ -58,6 +58,18 @@ class UserRepository extends Repository
     }
 
     /**
+     * find user by field
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return User
+     */
+    public function findBy(string $field, $value)
+    {
+        return $this->model->where($field, $value)->first();
+    }
+
+    /**
      * find user by twitter id
      *
      * @param string $twitterId
@@ -442,9 +454,12 @@ class UserRepository extends Repository
      * @param array $role
      * @return User
      */
-    public function syncRoles(User $user, array $roles)
+    public function syncRoles(User $user, array|Collection $roles)
     {
-        $roles = Role::whereIn('name', $roles)->get();
+        if ($roles instanceof Collection) {
+        } else {
+            $roles = Role::whereIn('name', $roles)->get();
+        }
         return $user->syncRoles($roles);
     }
 

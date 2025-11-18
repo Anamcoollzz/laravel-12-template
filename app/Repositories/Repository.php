@@ -321,6 +321,20 @@ class Repository extends RepositoryAbstract
     }
 
     /**
+     * countWhereIn
+     *
+     * @param string $column
+     * @param array $data
+     * @return int
+     */
+    public function countWhereIn(string $column, array $data): int
+    {
+        return $this->model->query()
+            ->whereIn($column, $data)
+            ->count();
+    }
+
+    /**
      * get query
      *
      * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -373,9 +387,16 @@ class Repository extends RepositoryAbstract
      * @param string $value
      * @return array
      */
-    public function getSelectOptions($label = 'name', $value = 'id')
+    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [])
     {
-        return $this->query()->select($label, $value)->get()->pluck($label, $value)->toArray();
+        return $this->query()->select($label, $value)
+            ->when(!empty($where), function ($query) use ($where) {
+                $query->where($where);
+            })
+            ->when(!empty($whereIn), function ($query) use ($whereField, $whereIn) {
+                $query->whereIn($whereField, $whereIn);
+            })
+            ->get()->pluck($label, $value)->toArray();
     }
 
     /**
@@ -428,7 +449,8 @@ class Repository extends RepositoryAbstract
                 $query->whereDate('updated_at', '<=', request('filter_end_updated_at'));
             })
             ->when(request('filter_limit', 50), function (Builder $query) {
-                $query->limit(request('filter_limit', 50));
+                if (!is_app_dataku())
+                    $query->limit(request('filter_limit', 50));
             })
             ->when(request('filter_role'), function (Builder $query) {
                 $query->whereHas('roles', function (Builder $query) {

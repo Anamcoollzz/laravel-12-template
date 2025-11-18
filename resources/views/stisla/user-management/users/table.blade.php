@@ -21,6 +21,9 @@
       @if (is_app_dataku() && request('filter_role') === '4')
       @else
         <th>{{ __('Email') }}</th>
+        @if ($isExport)
+          <th>{{ __('Password') }}</th>
+        @endif
       @endif
       @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
         <th>{{ __('Provinsi') }}</th>
@@ -105,7 +108,11 @@
         @if (is_app_dataku() && request('filter_role') === '4')
         @else
           @include('stisla.includes.others.td-email')
+          @if ($isExport)
+            <td>inihanyacontohgantiajakeyanglain</td>
+          @endif
         @endif
+
         @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
           <td>{{ $item->province?->name }}</td>
           <td>{{ $item->city?->name }}</td>

@@ -7,6 +7,7 @@ use App\Models\Bank;
 use App\Models\BankDeposit;
 use App\Models\BankDepositHistory;
 use App\Models\ChatMessage;
+use App\Models\ClassLevel;
 use App\Models\CrudExample;
 use App\Models\Faculty;
 use App\Models\LogRequest;
@@ -14,10 +15,14 @@ use App\Models\Menu;
 use App\Models\MenuGroup;
 use App\Models\Notification;
 use App\Models\PermissionGroup;
+use App\Models\Religion;
 use App\Models\User;
 use App\Services\DatabaseService;
 use Spatie\Permission\Models\Permission;
 use App\Models\Role;
+use App\Models\SchoolClass;
+use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudyProgram;
 use Illuminate\Support\Facades\Schema;
@@ -29,6 +34,54 @@ class DashboardRepository
         $widgets = [];
         $user = auth_user();
 
+        if (can('Agama'))
+            $widgets[] = (object)[
+                'title' => 'Agama',
+                'count' => Religion::count(),
+                'bg'    => 'danger',
+                'icon'  => 'praying-hands',
+                'route' => route('religions.index'),
+            ];
+        if (can('Kelas'))
+            $widgets[] = (object)[
+                'title' => 'Kelas',
+                'count' => SchoolClass::count(),
+                'bg'    => 'primary',
+                'icon'  => 'school',
+                'route' => route('school-classes.index'),
+            ];
+        if (can('Level Kelas'))
+            $widgets[] = (object)[
+                'title' => 'Level Kelas',
+                'count' => ClassLevel::count(),
+                'bg'    => 'success',
+                'icon'  => 'layer-group',
+                'route' => route('class-levels.index'),
+            ];
+        if (can('Pekerjaan'))
+            $widgets[] = (object)[
+                'title' => 'Pekerjaan',
+                'count' => SchoolClass::count(),
+                'bg'    => 'info',
+                'icon'  => 'briefcase',
+                'route' => route('works.index'),
+            ];
+        if (can('Tahun Pelajaran'))
+            $widgets[] = (object)[
+                'title'    => 'Tahun Pelajaran',
+                'count'    => SchoolYear::count(),
+                'bg_color' => 'purple',
+                'icon'     => 'calendar-alt',
+                'route'    => route('school-years.index'),
+            ];
+        if (can('Semester'))
+            $widgets[] = (object)[
+                'title'    => 'Semester',
+                'count'    => Semester::count(),
+                'bg_color' => 'teal',
+                'icon'     => 'calendar',
+                'route'    => route('semesters.index'),
+            ];
         if (can('Curhat'))
             $widgets[] = (object)[
                 'title' => 'Chat',

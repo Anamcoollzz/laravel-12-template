@@ -12,7 +12,7 @@
       <form action="">
         @csrf
         <div class="row">
-          @if (is_app_dataku() && Route::is('user-management.users.index'))
+          @if (is_app_dataku() && Route::is('user-management.users.index') && (request('filter_role') === '3' || request('filter_role') === '4'))
             <div class="col-md-6">
               @php
                 $levels = isset($levels) ? $levels : \App\Models\ClassLevel::select('id', 'level_name')->orderBy('level_name')->get();
