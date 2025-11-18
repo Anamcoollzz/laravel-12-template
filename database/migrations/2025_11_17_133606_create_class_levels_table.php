@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('class_levels', function (Blueprint $table) {
-            $table->id();
-            $table->string('level_name', 50)->comment('Nama Level');
+        if (!in_array('class_levels', config('stisla.table_excludes')))
+            Schema::create('class_levels', function (Blueprint $table) {
+                $table->id();
+                $table->string('level_name', 50)->comment('Nama Level');
 
-            // wajib
-            $table->timestamps();
-            
-            $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
-            $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
-            $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-        
-        });
+                // wajib
+                $table->timestamps();
+
+                $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
+                $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
+                $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+                $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            });
     }
 
     /**

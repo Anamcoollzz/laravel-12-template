@@ -12,18 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('education_levels', function (Blueprint $table) {
-            $table->id();
-            $table->string('education_level', 50)->comment('Jenjang Pendidikan');
+        if (!in_array('education_levels', config('stisla.table_excludes')))
+            Schema::create('education_levels', function (Blueprint $table) {
+                $table->id();
+                $table->string('education_level', 50)->comment('Jenjang Pendidikan');
 
-            // wajib
-            $table->timestamps();
+                // wajib
+                $table->timestamps();
 
-            $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
-            $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
-            $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-        });
+                $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
+                $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
+                $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+                $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            });
     }
 
     /**

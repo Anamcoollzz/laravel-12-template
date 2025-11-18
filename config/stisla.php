@@ -3,13 +3,14 @@
 use App\Enums\AppEnum;
 
 // $app = AppEnum::APP_BLANK;
-$app = AppEnum::APP_DEFAULT;
+// $app = AppEnum::APP_DEFAULT;
 $app = AppEnum::APP_DATAKU;
 $appName = 'Laravel 12 Template';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
 $permissionExcludes = [];
 $additionalMenus = [];
+$additionalMenus2 = [];
 $additionalUser = [];
 $superadminEmail = 'superadmin@laravel12template.com';
 $dashboard = [
@@ -86,6 +87,12 @@ if (is_app_chat($app)) {
         'chat_messages',
         'chat_rooms',
         'regions',
+        'religions',
+        'school_classes',
+        'class_levels',
+        'school_years',
+        'semesters',
+        'education_levels',
     ];
     $roles = [
         'superadmin',
@@ -217,30 +224,31 @@ return [
                 // ],
                 // additionalmenus
                 $additionalMenus,
-                [
+                $additionalMenus2,
+                is_app_dataku($app) ? [
                     'menu_name' => 'Siswa',
                     'route_name' => '#',
                     'uri' => 'user-management/users?filter_role=4',
                     'icon' => 'fas fa-users',
                     'permission' => 'Pengguna',
                     'is_active_if_url_includes' => 'user-management/users?filter_role=4',
-                ],
-                [
+                ] : [],
+                is_app_dataku($app) ? [
                     'menu_name' => 'Kepala Sekolah',
                     'route_name' => '#',
                     'uri' => 'user-management/users?filter_role=2',
                     'icon' => 'fas fa-user-tie',
                     'permission' => 'Pengguna',
                     'is_active_if_url_includes' => 'user-management/users?filter_role=2',
-                ],
-                [
+                ] : [],
+                is_app_dataku($app) ? [
                     'menu_name' => 'Guru',
                     'route_name' => '#',
                     'uri' => 'user-management/users?filter_role=3',
                     'icon' => 'fas fa-chalkboard-teacher',
                     'permission' => 'Pengguna',
                     'is_active_if_url_includes' => 'user-management/users?filter_role=2',
-                ],
+                ] : [],
                 [
                     'menu_name' => 'Contoh CRUD',
                     'route_name' => 'crud-examples.index',
