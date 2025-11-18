@@ -185,7 +185,7 @@ class DashboardRepository
                     'icon'  => 'users',
                     'route' => route('user-management.users.index'),
                 ];
-            if ($exists = Role::where('name', 'siswa')->exists())
+            if ($exists = Role::where('name', 'siswa')->exists() && (is_kepala_sekolah() || is_superadmin()))
                 $widgets[] = (object)[
                     'title' => 'Siswa',
                     'count' => User::role('siswa')->where('education_level_id', session('education_level_id'))->count(),
@@ -193,7 +193,7 @@ class DashboardRepository
                     'icon'  => 'users',
                     'route' => route('user-management.users.index', ['filter_role' => 4]),
                 ];
-            if ($exists = Role::where('name', 'guru')->exists())
+            if ($exists = Role::where('name', 'guru')->exists() && (is_kepala_sekolah() || is_superadmin()))
                 $widgets[] = (object)[
                     'title' => 'Guru',
                     'count' => User::role('guru')->where('education_level_id', session('education_level_id'))->count(),

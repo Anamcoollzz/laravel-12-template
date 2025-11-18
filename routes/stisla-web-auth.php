@@ -71,7 +71,7 @@ Route::prefix('user-management')->as('user-management.')->group(function () {
     Route::get('users/excel', [UserManagementController::class, 'excel'])->name('users.excel');
     Route::get('users/json', [UserManagementController::class, 'json'])->name('users.json');
     // Route::get('users/import-excel-example', [UserManagementController::class, 'importExcelExample2'])->name('users.import-excel-example');
-    Route::get('users/contoh-impor-xlxs', [UserManagementController::class, 'importExcelExample2'])->name('users.import-excel-example');
+    // Route::get('users/contoh-impor-xlxssssssssdasdsada', [UserManagementController::class, 'importExcelExample2'])->name('users.import-excel-example');
     Route::post('users/import-excel', [UserManagementController::class, 'importExcel'])->name('users.import-excel');
     Route::resource('users', UserManagementController::class);
 

@@ -824,7 +824,7 @@ return [
 
         [
             'name' => 'Pengguna',
-            'roles' => ['superadmin', 'kepala sekolah'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [
@@ -839,12 +839,12 @@ return [
         ],
         [
             'name' => 'Pengguna Ubah',
-            'roles' => ['superadmin', 'kepala sekolah'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Detail',
-            'roles' => ['superadmin', 'kepala sekolah'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [

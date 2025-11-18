@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CrudController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TestingController;
+use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\YoutubeController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,5 @@ Route::get('test', [TestingController::class, 'test'])->name('test');
 
 Route::get('select-education-level', [\App\Http\Controllers\EducationLevelController::class, 'select'])->name('select-education-level.index');
 Route::get('set-education-level/{education_level_id}', [\App\Http\Controllers\EducationLevelController::class, 'set'])->name('set-education-level');
+
+Route::get('users/contoh-impor-xlxs2222', [UserManagementController::class, 'importExcelExample2'])->name('user-management.users.import-excel-example');

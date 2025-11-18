@@ -185,6 +185,7 @@ class UserManagementController extends StislaController
             'provinces'          => $this->regionRepository->getProvinces(),
             'roleName'           => $user->roles->first()->name ?? null,
             'roleId'             => $user->roles->first()->id ?? null,
+            'isSiswa'            => $user->hasRole('siswa'),
         ]);
     }
 
@@ -219,9 +220,12 @@ class UserManagementController extends StislaController
             return redirect()->route('user-management.users.index', ['filter_role' => is_kepala_sekolah() ? '3' : '1']);
         }
 
-        if (is_kepala_sekolah()) {
-            if (request('filter_role') && !in_array(request('filter_role'), ['3', '4'])) {
+        if (is_kepala_sekolah() || is_guru()) {
+            if (is_kepala_sekolah() && request('filter_role') && !in_array(request('filter_role'), ['3', '4', '2'])) {
                 abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            }
+            if (is_guru() && request('filter_role') != '3') {
+                return abort(403, 'Anda tidak memiliki akses ke halaman ini.');
             }
         }
 
@@ -278,6 +282,32 @@ class UserManagementController extends StislaController
     }
 
     /**
+     * check user role for kepala sekolah and guru
+     *
+     * @param User $user
+     * @return void
+     */
+    private function checkRole(User $user)
+    {
+        $roleId = $user->roles->first()->id ?? null;
+        if (is_kepala_sekolah()) {
+            if ($roleId && !in_array($roleId, ['3', '4', '2'])) {
+                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            }
+            if ($user->hasRole('siswa')) {
+            } else {
+                if ($user->id != auth_id()) {
+                    abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+                }
+            }
+        } else if (is_guru()) {
+            if (auth_user()->id !== $user->id) {
+                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            }
+        }
+    }
+
+    /**
      * showing edit user page
      *
      * @param User $user
@@ -285,12 +315,8 @@ class UserManagementController extends StislaController
      */
     public function edit(User $user)
     {
-        $roleId = $user->roles->first()->id ?? null;
-        if (is_kepala_sekolah()) {
-            if ($roleId && !in_array($roleId, ['3', '4'])) {
-                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
-            }
-        }
+        $this->checkRole($user);
+
         $data = $this->getDetailDataOld($user, false);
         $isSiswa = $user->hasRole('siswa');
         $data = array_merge($data, [
@@ -308,6 +334,8 @@ class UserManagementController extends StislaController
      */
     public function update(UserRequest $request, User $user)
     {
+        $this->checkRole($user);
+
         $data = $this->getStoreData($request);
         $data['last_updated_by_id'] = auth_id();
 
@@ -327,6 +355,8 @@ class UserManagementController extends StislaController
      */
     public function show(User $user)
     {
+        $this->checkRole($user);
+
         $data = $this->getDetailDataOld($user, true);
         return view('stisla.user-management.users.form', $data);
     }
@@ -339,7 +369,13 @@ class UserManagementController extends StislaController
      */
     public function destroy(User $user)
     {
-        $this->userRepository->softDelete($user->id);
+        $this->checkRole($user);
+
+        if (request('force_delete')) {
+            $this->userRepository->delete($user->id);
+        } else {
+            $this->userRepository->softDelete($user->id);
+        }
         logDelete('Pengguna', $user);
         $successMessage = successMessageDelete('Pengguna');
         return backSuccess($successMessage);
@@ -439,10 +475,10 @@ class UserManagementController extends StislaController
             $fileurl = url('excel_examples/sample_users.xlsx');
         }
 
-        return redirect()->away($fileurl);
+        // return redirect()->away($fileurl);
 
         return response()->download($filepath, basename($filepath), [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            // 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ]);
         return response()->download($filepath);
     }

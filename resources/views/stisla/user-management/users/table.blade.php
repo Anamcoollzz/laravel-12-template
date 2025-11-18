@@ -145,7 +145,7 @@
           @if (request('filter_role') === '4')
             <td>{{ $item->nis }}</td>
             <td>{{ $item->nisn }}</td>
-            <td>{{ $item->religion->religion_name }}</td>
+            <td>{{ $item->religion?->religion_name }}</td>
             <td>{{ $item->rt }}</td>
             <td>{{ $item->rw }}</td>
             <td>{{ $item->postal_code }}</td>
@@ -193,8 +193,18 @@
               @include('stisla.includes.forms.buttons.btn-edit', ['link' => route($routePrefix . '.edit', [$item->id])])
             @endif
             @if ($canDelete && $item->deleted_at === null)
-              @include('stisla.includes.forms.buttons.btn-delete', ['link' => route($routePrefix . '.destroy', [$item->id])])
+              @include('stisla.includes.forms.buttons.btn-delete', [
+                  'link' => route($routePrefix . '.destroy', [$item->id]),
+                  'tooltipTitle' => 'Arsipkan Pengguna',
+                  'variant' => 'warning',
+              ])
             @endif
+            @include('stisla.includes.forms.buttons.btn-delete', [
+                'link' => route($routePrefix . '.destroy', [$item->id, 'force_delete' => true]),
+                'tooltipTitle' => 'Hapus Permanen',
+                'icon' => 'fa fa-circle-minus',
+                'variant' => 'danger',
+            ])
             @if ($canBlock && $item->deleted_at === null)
               @if ($item->is_active == 1)
                 @include('stisla.includes.forms.buttons.btn-warning', [

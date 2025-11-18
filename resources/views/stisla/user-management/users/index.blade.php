@@ -10,8 +10,14 @@
 @endsection
 
 @section('filter_top')
-  @if (Route::is('user-management.users.index'))
-    @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
+  @if (is_app_dataku())
+    @if (Route::is('user-management.users.index') && !is_guru())
+      @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
+    @endif
+  @else
+    @if (Route::is('user-management.users.index'))
+      @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
+    @endif
   @endif
 @endsection
 

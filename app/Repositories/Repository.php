@@ -453,9 +453,19 @@ class Repository extends RepositoryAbstract
                     $query->limit(request('filter_limit', 50));
             })
             ->when(request('filter_role'), function (Builder $query) {
-                $query->whereHas('roles', function (Builder $query) {
-                    $query->where('id', request('filter_role'));
-                });
+                if (is_app_dataku()) {
+                    if (is_kepala_sekolah()) {
+                        if (request('filter_role') == 4) {
+                            $query->whereHas('roles', function (Builder $query) {
+                                $query->where('id', request('filter_role'));
+                            });
+                        } else
+                            $query->where('id', auth_id());
+                    }
+                } else
+                    $query->whereHas('roles', function (Builder $query) {
+                        $query->where('id', request('filter_role'));
+                    });
             })
             ->when(request('gender'), function (Builder $query) {
                 $query->where('gender', request('gender'));
@@ -463,6 +473,9 @@ class Repository extends RepositoryAbstract
             ->when(is_app_dataku(), function (Builder $query) {
                 if (session('education_level_id') && request('filter_role') && request('filter_role') !== '1')
                     $query->where('education_level_id', session('education_level_id'));
+                $query->when(is_guru(), function (Builder $query) {
+                    $query->where('id', auth_user()->id);
+                });
             })
             ->when(request('filter_level_id'), function (Builder $query) {
                 $query->where('class_level_id', request('filter_level_id'));

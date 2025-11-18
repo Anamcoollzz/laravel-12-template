@@ -5,7 +5,7 @@
   $variant = $variant ?? 'danger';
 @endphp
 <a onclick="deleteGlobal(event, '{{ $link }}', '{{ $variant }}')" class="btn btn-sm btn-{{ $variant }} @if ($icon ?? false) btn-icon icon-left @endif" href="#"
-  data-toggle="tooltip" title="{{ $label ?? __('Hapus') }}">
+  data-toggle="tooltip" title="{{ $tooltipTitle ?? ($label ?? __('Hapus')) }}">
   @if ($icon ?? false)
     <i class="{{ $icon }}"></i>
   @endif
