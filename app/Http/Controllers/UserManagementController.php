@@ -289,20 +289,22 @@ class UserManagementController extends StislaController
      */
     private function checkRole(User $user)
     {
-        $roleId = $user->roles->first()->id ?? null;
-        if (is_kepala_sekolah()) {
-            if ($roleId && !in_array($roleId, ['3', '4', '2'])) {
-                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
-            }
-            if ($user->hasRole('siswa')) {
-            } else {
-                if ($user->id != auth_id()) {
+        if (is_app_dataku()) {
+            $roleId = $user->roles->first()->id ?? null;
+            if (is_kepala_sekolah()) {
+                if ($roleId && !in_array($roleId, ['3', '4', '2'])) {
                     abort(403, 'Anda tidak memiliki akses ke halaman ini.');
                 }
-            }
-        } else if (is_guru()) {
-            if (auth_user()->id !== $user->id) {
-                abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+                if ($user->hasRole('siswa')) {
+                } else {
+                    if ($user->id != auth_id()) {
+                        abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+                    }
+                }
+            } else if (is_guru()) {
+                if (auth_user()->id != $user->id) {
+                    abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+                }
             }
         }
     }
