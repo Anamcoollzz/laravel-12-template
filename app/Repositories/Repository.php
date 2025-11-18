@@ -461,6 +461,10 @@ class Repository extends RepositoryAbstract
                             });
                         } else
                             $query->where('id', auth_id());
+                    } else if (is_superadmin()) {
+                        $query->whereHas('roles', function (Builder $query) {
+                            $query->where('id', request('filter_role'));
+                        });
                     }
                 } else
                     $query->whereHas('roles', function (Builder $query) {
