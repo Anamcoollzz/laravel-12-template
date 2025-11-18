@@ -18,7 +18,10 @@
       <th>{{ __('Tanggal Lahir') }}</th>
       <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
-      <th>{{ __('Email') }}</th>
+      @if (is_app_dataku() && request('filter_role') === '4')
+      @else
+        <th>{{ __('Email') }}</th>
+      @endif
       @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
         <th>{{ __('Provinsi') }}</th>
         <th>{{ __('Kota/Kabupaten') }}</th>
@@ -40,11 +43,11 @@
           <th>{{ __('validation.attributes.nis') }}</th>
           <th>{{ __('validation.attributes.nisn') }}</th>
           <th>{{ __('validation.attributes.religion_id') }}</th>
-          <th>{{ __('validation.attributes.religion_id') }}</th>
           <th>{{ __('validation.attributes.rt') }}</th>
           <th>{{ __('validation.attributes.rw') }}</th>
           <th>{{ __('validation.attributes.postal_code') }}</th>
           <th>{{ __('validation.attributes.school_class_id') }}</th>
+          <th>{{ __('validation.attributes.class_level_id') }}</th>
           <th>{{ __('validation.attributes.room') }}</th>
           <th>{{ __('validation.attributes.father_nik') }}</th>
           <th>{{ __('validation.attributes.father_name') }}</th>
@@ -99,7 +102,10 @@
         @include('stisla.includes.others.td-dob', ['DateTime' => $item->birth_date])
         <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
-        @include('stisla.includes.others.td-email')
+        @if (is_app_dataku() && request('filter_role') === '4')
+        @else
+          @include('stisla.includes.others.td-email')
+        @endif
         @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
           <td>{{ $item->province?->name }}</td>
           <td>{{ $item->city?->name }}</td>
@@ -132,31 +138,31 @@
           @if (request('filter_role') === '4')
             <td>{{ $item->nis }}</td>
             <td>{{ $item->nisn }}</td>
-            <td>{{ $item->religion_id }}</td>
-            <td>{{ $item->religion_id }}</td>
+            <td>{{ $item->religion->religion_name }}</td>
             <td>{{ $item->rt }}</td>
             <td>{{ $item->rw }}</td>
             <td>{{ $item->postal_code }}</td>
             <td>{{ $item->schoolclass?->class_name }}</td>
+            <td>{{ $item->classlevel?->level_name }}</td>
             <td>{{ $item->room }}</td>
             <td>{{ $item->father_nik }}</td>
             <td>{{ $item->father_name }}</td>
             <td>{{ $item->father_birth_date }}</td>
             <td>{{ $item->father_education }}</td>
             <td>{{ $item->fatherwork?->job_name }}</td>
-            <td>{{ $item->father_income }}</td>
+            <td>{{ rp($item->father_income) }}</td>
             <td>{{ $item->mother_nik }}</td>
             <td>{{ $item->mother_name }}</td>
             <td>{{ $item->mother_birth_date }}</td>
             <td>{{ $item->mother_education }}</td>
             <td>{{ $item->motherwork?->job_name }}</td>
-            <td>{{ $item->mother_income }}</td>
+            <td>{{ rp($item->mother_income) }}</td>
             <td>{{ $item->guardian_nik }}</td>
             <td>{{ $item->guardian_name }}</td>
             <td>{{ $item->guardian_birth_date }}</td>
             <td>{{ $item->guardian_education }}</td>
             <td>{{ $item->guardianwork?->job_name }}</td>
-            <td>{{ $item->guardian_income }}</td>
+            <td>{{ rp($item->guardian_income) }}</td>
           @endif
 
           @if (request('filter_role') === '3')

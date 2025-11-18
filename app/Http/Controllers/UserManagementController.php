@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Imports\UserImport;
 use App\Models\Role;
 use App\Models\User;
+use App\Repositories\ClassLevelRepository;
 use App\Repositories\RegionRepository;
 use App\Repositories\ReligionRepository;
 use App\Repositories\SchoolClassRepository;
@@ -27,6 +28,7 @@ class UserManagementController extends StislaController
     private WorkRepository $workRepository;
     private RegionRepository $regionRepository;
     private Role|null $role;
+    private ClassLevelRepository $classLevelRepository;
 
     /**
      * constructor method
@@ -48,6 +50,7 @@ class UserManagementController extends StislaController
         $this->schoolClassRepository = new SchoolClassRepository;
         $this->workRepository        = new WorkRepository;
         $this->regionRepository      = new RegionRepository;
+        $this->classLevelRepository  = new ClassLevelRepository;
 
         if (is_app_dataku() && request('filter_role')) {
             $this->role        = $this->userRepository->findRole(request('filter_role'));
@@ -65,10 +68,11 @@ class UserManagementController extends StislaController
         $roleOptions = $this->userRepository->getRoleOptions(is_kepala_sekolah() ? ['siswa', 'guru'] : []);
         $defaultData = $this->getDefaultDataIndex(__('Pengguna'), 'Pengguna', 'user-management.users');
         return array_merge($defaultData, [
-            'data'               => $this->userRepository->getUsers(),
-            'roleCount'          => count($roleOptions),
-            'isRegionExists'     => Schema::hasTable('regions'),
-            'roleOptions'        => $roleOptions,
+            'data'           => $this->userRepository->getUsers(),
+            'roleCount'      => count($roleOptions),
+            'isRegionExists' => Schema::hasTable('regions'),
+            'roleOptions'    => $roleOptions,
+            'isSiswa'        => request('filter_role') === '4',
         ]);
     }
 
@@ -125,6 +129,7 @@ class UserManagementController extends StislaController
                 'city_code',
                 'district_code',
                 'village_code',
+                'class_level_id',
 
                 // teacher data
                 'teacher_nuptk',
@@ -175,6 +180,7 @@ class UserManagementController extends StislaController
             'fullTitle'          => $isDetail ? __('Detail Pengguna') : __('Ubah Pengguna'),
             'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
             'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
+            'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
             'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
             'provinces'          => $this->regionRepository->getProvinces(),
             'roleName'           => $user->roles->first()->name ?? null,
@@ -232,16 +238,17 @@ class UserManagementController extends StislaController
     public function create()
     {
         $roleOptions = $this->userRepository->getRoleOptions();
-        $role = $this->userRepository->findRole(request('filter_role'));
-        $isSiswa = $role ? $role->name === 'siswa' : false;
+        $role        = $this->userRepository->findRole(request('filter_role'));
+        $isSiswa     = $role ? $role->name === 'siswa' : false;
         $defaultData = $this->getDefaultDataCreate(__('Pengguna'), 'user-management.users');
-        $data = array_merge($defaultData, [
+        $data        = array_merge($defaultData, [
             'roleOptions'        => $roleOptions,
             'fullTitle'          => __('Tambah Pengguna'),
             'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
             'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
             'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
             'provinces'          => $this->regionRepository->getProvinces(),
+            'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
             'isSiswa'            => $isSiswa,
             'roleName'           => $role->name,
             'roleId'             => $role->id ?? null,
@@ -305,7 +312,8 @@ class UserManagementController extends StislaController
         $data['last_updated_by_id'] = auth_id();
 
         $userNew = $this->userRepository->update($data, $user->id);
-        $this->userRepository->syncRolesByID($userNew, $request->role);
+        $roles = is_numeric($request->role) ? [$request->role] : $request->role;
+        $this->userRepository->syncRolesByID($userNew, $roles);
         logUpdate('Pengguna', $user, $userNew);
         $successMessage = successMessageUpdate('Pengguna');
         return redirect()->back()->with('successMessage', $successMessage);

@@ -442,6 +442,9 @@ class Repository extends RepositoryAbstract
                 if (session('education_level_id') && request('filter_role') && request('filter_role') !== '1')
                     $query->where('education_level_id', session('education_level_id'));
             })
+            ->when(request('filter_level_id'), function (Builder $query) {
+                $query->where('class_level_id', request('filter_level_id'));
+            })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {
                     $query->oldest();

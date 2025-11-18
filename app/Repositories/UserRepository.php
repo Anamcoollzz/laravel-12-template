@@ -112,6 +112,8 @@ class UserRepository extends Repository
             'guardianwork',
             'religion',
             'schoolclass',
+            'religion',
+            'classlevel',
         ])->get();
         return $users;
     }

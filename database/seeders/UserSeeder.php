@@ -92,10 +92,12 @@ class UserSeeder extends Seeder
             $schoolClasses     = \App\Models\SchoolClass::all();
             $works             = \App\Models\Work::all();
             $educationLevels   = \App\Models\EducationLevel::all();
+            $classLevels       = \App\Models\ClassLevel::all();
             $religionIds       = $religions->pluck('id')->toArray();
             $schoolClassIds    = $schoolClasses->pluck('id')->toArray();
             $workIds           = $works->pluck('id')->toArray();
             $educationLevelIds = $educationLevels->pluck('id')->toArray();
+            $classLevelIds     = $classLevels->pluck('id')->toArray();
 
             foreach (range(1, 50) as $index) {
                 $userObj = User::create([
@@ -129,6 +131,7 @@ class UserSeeder extends Seeder
                     'rw'                  => fake()->numerify('###'),
                     'postal_code'         => fake()->numerify('#####'),
                     'school_class_id'     => fake()->randomElement($schoolClassIds),
+                    'class_level_id'      => fake()->randomElement($classLevelIds),
                     'room'                => 'Room ' . fake()->randomElement(['A', 'B', 'C', 'D', 'E']),
                     'father_nik'          => fake()->unique()->numerify('##################'),
                     'father_name'         => fake()->name('male'),

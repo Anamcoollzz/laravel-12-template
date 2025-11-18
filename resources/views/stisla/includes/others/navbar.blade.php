@@ -148,7 +148,7 @@
       <li><a href="{{ route('tentang-aplikasi') }}" class="nav-link nav-link-lg"><i class="fa fa-info-circle"></i></a>
     @endif --}}
 
-    @if (is_app_dataku())
+    @if (is_app_dataku() && is_superadmin())
       @include('stisla.includes.navbar.user-dropdown-2')
     @endif
     @include('stisla.includes.navbar.user-dropdown')

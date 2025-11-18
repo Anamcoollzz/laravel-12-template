@@ -155,6 +155,14 @@
         ])
       </div>
       <div class="col-md-6">
+        @include('stisla.includes.forms.selects.select', [
+            'id' => 'class_level_id',
+            'options' => $classLevelOptions,
+            'label' => __('validation.attributes.class_level_id'),
+            'required' => true,
+        ])
+      </div>
+      <div class="col-md-6">
         @include('stisla.includes.forms.inputs.input', ['required' => true, 'id' => 'room', 'label' => __('validation.attributes.room')])
       </div>
 

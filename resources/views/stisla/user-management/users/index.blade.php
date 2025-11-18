@@ -11,7 +11,7 @@
 
 @section('filter_top')
   @if (Route::is('user-management.users.index'))
-    @include('stisla.includes.others.filter-default', ['is_show' => false])
+    @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
   @endif
 @endsection
 

@@ -93,6 +93,7 @@ class EducationLevelSeeder extends Seeder
         $isHasDeletedAt        = Schema::hasColumn($table, 'deleted_at');
 
         $levels = [
+            'TK',
             'SD',
             'SMP',
             'SMA',

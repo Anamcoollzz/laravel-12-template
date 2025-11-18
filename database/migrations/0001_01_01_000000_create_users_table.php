@@ -67,6 +67,8 @@ return new class extends Migration
             $table->string('postal_code', 10)->nullable();
             $table->unsignedBigInteger('school_class_id')->nullable();
             $table->foreign('school_class_id')->references('id')->on('school_classes')->onUpdate('cascade')->onDelete('set null');
+            $table->unsignedBigInteger('class_level_id')->nullable();
+            $table->foreign('class_level_id')->references('id')->on('class_levels')->onUpdate('cascade')->onDelete('set null');
             $table->string('room', 50)->nullable();
 
             $table->string('father_nik', 50)->nullable();

@@ -86,6 +86,7 @@ class User extends Authenticatable implements JWTSubject
         'guardian_work_id',
         'guardian_work_id',
         'guardian_income',
+        'class_level_id',
 
         // teacher
         'teacher_nuptk',
@@ -388,7 +389,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function schoolclass()
     {
-        return $this->belongsTo(SchoolClass::class);
+        return $this->belongsTo(SchoolClass::class, 'school_class_id');
     }
 
     /**
@@ -429,5 +430,15 @@ class User extends Authenticatable implements JWTSubject
     public function educationlevel()
     {
         return $this->belongsTo(EducationLevel::class, 'education_level_id');
+    }
+
+    /**
+     * Get the class level associated with the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function classlevel()
+    {
+        return $this->belongsTo(ClassLevel::class, 'class_level_id');
     }
 }

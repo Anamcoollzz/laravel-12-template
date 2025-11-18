@@ -124,17 +124,18 @@ class DashboardRepository
                 'bg_color' => '#8b3f64ff'
             ];
         if (can('Pengguna')) {
-            $widgets[] = (object)[
-                'title' => 'Pengguna',
-                'count' => is_app_chat() ? User::role('user')->count() : User::count(),
-                'bg'    => 'danger',
-                'icon'  => 'users',
-                'route' => route('user-management.users.index'),
-            ];
+            if (!is_app_dataku())
+                $widgets[] = (object)[
+                    'title' => 'Pengguna',
+                    'count' => is_app_chat() ? User::role('user')->count() : User::count(),
+                    'bg'    => 'danger',
+                    'icon'  => 'users',
+                    'route' => route('user-management.users.index'),
+                ];
             if ($exists = Role::where('name', 'siswa')->exists())
                 $widgets[] = (object)[
                     'title' => 'Siswa',
-                    'count' => User::role('siswa')->count(),
+                    'count' => User::role('siswa')->where('education_level_id', session('education_level_id'))->count(),
                     'bg'    => 'info',
                     'icon'  => 'users',
                     'route' => route('user-management.users.index', ['filter_role' => 4]),
@@ -142,15 +143,15 @@ class DashboardRepository
             if ($exists = Role::where('name', 'guru')->exists())
                 $widgets[] = (object)[
                     'title' => 'Guru',
-                    'count' => User::role('guru')->count(),
+                    'count' => User::role('guru')->where('education_level_id', session('education_level_id'))->count(),
                     'bg'    => 'success',
                     'icon'  => 'chalkboard-teacher',
                     'route' => route('user-management.users.index', ['filter_role' => 3]),
                 ];
-            if ($exists = Role::where('name', 'kepala sekolah')->exists())
+            if ($exists = Role::where('name', 'kepala sekolah')->exists() && is_superadmin())
                 $widgets[] = (object)[
                     'title' => 'Kepala Sekolah',
-                    'count' => User::role('kepala sekolah')->count(),
+                    'count' => User::role('kepala sekolah')->where('education_level_id', session('education_level_id'))->count(),
                     'bg'    => 'primary',
                     'icon'  => 'user-tie',
                     'route' => route('user-management.users.index', ['filter_role' => 2]),

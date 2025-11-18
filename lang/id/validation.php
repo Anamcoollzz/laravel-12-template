@@ -236,6 +236,7 @@ return [
         'guardian_work_id'    => 'Pekerjaan Wali',
         'guardian_work_id'    => 'Pekerjaan Wali',
         'guardian_income'     => 'Penghasilan Wali',
+        'class_level_id'      => 'Level Kelas',
 
         // teacher
         'teacher_nuptk'           => 'NUPTK',
