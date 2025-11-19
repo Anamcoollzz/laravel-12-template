@@ -9,6 +9,7 @@ use App\Models\BankDepositHistory;
 use App\Models\ChatMessage;
 use App\Models\ClassLevel;
 use App\Models\CrudExample;
+use App\Models\EducationLevel;
 use App\Models\Faculty;
 use App\Models\LogRequest;
 use App\Models\Menu;
@@ -41,6 +42,14 @@ class DashboardRepository
                 'bg'    => 'danger',
                 'icon'  => 'praying-hands',
                 'route' => route('religions.index'),
+            ];
+        if (can('Jenjang Pendidikan'))
+            $widgets[] = (object)[
+                'title' => 'Jenjang Pendidikan',
+                'count' => EducationLevel::count(),
+                'bg_color'    => 'pink',
+                'icon'  => 'graduation-cap',
+                'route' => route('education-levels.index'),
             ];
         if (can('Kelas'))
             $widgets[] = (object)[
