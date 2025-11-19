@@ -174,6 +174,13 @@ if (is_app_chat($app)) {
                 'is_active_if_url_includes' => 'school-years*'
             ],
             [
+                'menu_name' => 'Jenjang Pendidikan',
+                'route_name' => 'education-levels.index',
+                'icon' => 'fa fa-graduation-cap',
+                'permission' => 'Jenjang Pendidikan',
+                'is_active_if_url_includes' => 'education-levels*'
+            ],
+            [
                 'menu_name' => 'Semester',
                 'route_name' => 'semesters.index',
                 'icon' => 'fa fa-clock',
