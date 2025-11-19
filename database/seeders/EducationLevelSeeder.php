@@ -97,6 +97,7 @@ class EducationLevelSeeder extends Seeder
             'SD',
             'SMP',
             'SMA',
+            'NDK',
             // 'D3',
             // 'S1',
             // 'S2',

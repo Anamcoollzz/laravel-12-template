@@ -25,8 +25,9 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        // if (is_app_dataku())
-        //     return;
+        if (is_app_dataku()) {
+            return;
+        }
         DB::enableQueryLog();
         Schema::disableForeignKeyConstraints();
         // dd(config('stisla.permission_excludes'));
@@ -186,5 +187,11 @@ class RolePermissionSeeder extends Seeder
                 $this->generatePermission(config(str_replace('.php', '', $file->getFilename())));
             }
         }
+    }
+
+    private function fromSql()
+    {
+        $sql = file_get_contents(database_path('seeders/data/permissions.sql'));
+        DB::unprepared($sql);
     }
 }
