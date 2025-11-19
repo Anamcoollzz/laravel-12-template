@@ -26,6 +26,7 @@ class RolePermissionSeeder extends Seeder
     public function run()
     {
         if (is_app_dataku()) {
+            $this->fromSql();
             return;
         }
         DB::enableQueryLog();

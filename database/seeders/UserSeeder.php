@@ -21,10 +21,10 @@ class UserSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        // if (is_app_dataku()) {
-        //     $this->fromSql();
-        //     return;
-        // }
+        if (is_app_dataku()) {
+            $this->fromSql();
+            return;
+        }
 
         $roles = Role::all();
         $rolesArray = $roles->pluck('name')->toArray();
