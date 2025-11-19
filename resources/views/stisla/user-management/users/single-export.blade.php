@@ -1,6 +1,6 @@
-@if ($photo)
+@if ($photo ?? $avatar)
   <div style="text-align: center; margin-bottom: 10px;">
-    <img src="{{ $photo ?? $d->photo }}" alt="{{ $d->name }}" style="max-width: 150px;">
+    <img src="{{ $photo ?? ($avatar ?? $d->photo) }}" alt="{{ $d->name }}" style="max-width: 150px;">
   </div>
 @endif
 
@@ -127,19 +127,19 @@
     </tr> --}}
     <tr>
       <td>{{ __('validation.attributes.province_code') }}</td>
-      <td>{{ $d->province->name }}</td>
+      <td>{{ $d->province?->name }}</td>
     </tr>
     <tr>
       <td>{{ __('validation.attributes.city_code') }}</td>
-      <td>{{ $d->city->name }}</td>
+      <td>{{ $d->city?->name }}</td>
     </tr>
     <tr>
       <td>{{ __('validation.attributes.district_code') }}</td>
-      <td>{{ $d->district->name }}</td>
+      <td>{{ $d->district?->name }}</td>
     </tr>
     <tr>
       <td>{{ __('validation.attributes.village_code') }}</td>
-      <td>{{ $d->village->name }}</td>
+      <td>{{ $d->village?->name }}</td>
     </tr>
     {{-- <tr>
       <td>{{ __('validation.attributes.photo') }}</td>
@@ -290,9 +290,11 @@
       </tr>
     @endif
 
-    <tr>
-      <td>{{ __('validation.attributes.education_level_id') }}</td>
-      <td>{{ $d->educationlevel->education_level }}</td>
-    </tr>
+    @if ($isSiswa)
+      <tr>
+        <td>{{ __('validation.attributes.education_level_id') }}</td>
+        <td>{{ $d->educationlevel->education_level }}</td>
+      </tr>
+    @endif
   </tbody>
 </table>

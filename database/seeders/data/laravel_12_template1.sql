@@ -568,7 +568,7 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id`, `menu_name`, `route_name`, `uri`, `is_blank`, `icon`, `permission`, `is_active_if_url_includes`, `parent_menu_id`, `menu_group_id`, `created_at`, `updated_at`) VALUES
-(1, 'Beranda', 'dashboard.index', NULL, 0, 'fas fa-fire', NULL, 'dashboard*', NULL, 1, '2025-09-02 14:08:30', '2025-09-02 14:08:30'),
+(1, 'Dashboard', 'dashboard.index', NULL, 0, 'fas fa-fire', NULL, 'dashboard*', NULL, 1, '2025-09-02 14:08:30', '2025-09-02 14:08:30'),
 (2, 'Contoh CRUD', 'crud-examples.index', NULL, 0, 'fas fa-atom', 'Contoh CRUD', 'crud-examples*', NULL, 1, '2025-09-02 14:08:30', '2025-09-02 14:08:30'),
 (3, 'Contoh CRUD Yajra', 'crud-examples.index-yajra', NULL, 0, 'fas fa-atom', 'Contoh CRUD Yajra', 'yajra-crud-examples*', NULL, 1, '2025-09-02 14:08:30', '2025-09-02 14:08:30'),
 (4, 'Contoh CRUD Ajax', 'crud-examples.index-ajax', NULL, 0, 'fas fa-atom', 'Contoh CRUD Yajra', 'ajax-crud-examples*', NULL, 1, '2025-09-02 14:08:30', '2025-09-02 14:08:30'),

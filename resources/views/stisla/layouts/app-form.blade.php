@@ -31,6 +31,7 @@
           <div class="card-header">
             <h4><i class="{{ $moduleIcon }}"></i> {{ $fullTitle }}</h4>
             <div class="card-header-action">
+              @yield('left-header-action')
               @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
             </div>
           </div>

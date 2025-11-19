@@ -1,5 +1,14 @@
 @extends('stisla.layouts.app-form')
 
+@section('left-header-action')
+  @include('stisla.includes.forms.buttons.btn-danger', [
+      'link' => route('user-management.users.single-pdf', [$d->id]),
+      'blank' => true,
+      'icon' => 'fa fa-file-pdf',
+      'tooltipTitle' => 'Export PDF',
+  ])
+@endsection
+
 @section('rowForm')
   @isset($d)
     @method('PUT')

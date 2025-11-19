@@ -35,7 +35,7 @@
         <div class="container">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a href="{{ route('dashboard.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>{{ __('Beranda') }}</span></a>
+              <a href="{{ route('dashboard.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>{{ __('Dashboard') }}</span></a>
             </li>
             <li class="nav-item active">
               <a href="#" class="nav-link"><i class="far fa-heart"></i><span>CRUD Generator</span></a>

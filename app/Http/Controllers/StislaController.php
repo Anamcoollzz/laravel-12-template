@@ -212,7 +212,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected array $fileColumns = [];
 
-    protected string $exportTitle;
+    protected ?string $exportTitle;
 
     protected string $excelFileName;
 
@@ -1248,8 +1248,9 @@ class StislaController extends Controller implements HasMiddleware
         if ($model instanceof User) {
             $isSiswa = $model->hasRole('siswa');
             $isGuru = $model->hasRole('guru');
-            $this->exportTitle = ucwords($model->roles->first()->name);
-            $photo = $this->fileUtil->urlToFilePath($model->photo);
+            $this->exportTitle = $model->roles->count() ? ucwords($model->roles->first()->name ?? null) : null;
+            $photo = $this->fileUtil->urlToFilePath($model->photo) ?? null;
+            $avatar = $this->fileUtil->urlToFilePath($model->avatar ?? null);
         }
 
         $html = view('stisla.includes.others.single-pdf', [
@@ -1260,6 +1261,7 @@ class StislaController extends Controller implements HasMiddleware
             'isSiswa'     => $isSiswa ?? false,
             'isGuru'      => $isGuru ?? false,
             'photo'       => $photo ?? false,
+            'avatar'      => $avatar ?? false,
         ])->render();
         return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . ' ' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
     }

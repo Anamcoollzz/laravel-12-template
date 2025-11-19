@@ -237,6 +237,9 @@ class UserManagementController extends StislaController
         }
 
         if (is_kepala_sekolah() || is_guru()) {
+            if (is_guru()) {
+                return redirect()->route('user-management.users.show', ['user' => auth_user()->id]);
+            }
             if (is_kepala_sekolah() && request('filter_role') && !in_array(request('filter_role'), ['3', '4', '2'])) {
                 abort(403, 'Anda tidak memiliki akses ke halaman ini.');
             }

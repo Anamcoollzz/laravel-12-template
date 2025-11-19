@@ -514,11 +514,14 @@ class FileService
     /**
      * convert url to file path
      *
-     * @param string $url
+     * @param string|null $url
      * @return string
      */
-    public function urlToFilePath(string $url)
+    public function urlToFilePath(string|null $url)
     {
+        if (is_null($url)) {
+            return '';
+        }
         $storageUrl = config('app.url') . '/storage';
         $filepath = str_replace($storageUrl, '', $url);
         $filepath = str_replace('http://127.0.0.1:8000/storage', '', $filepath);

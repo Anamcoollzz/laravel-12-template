@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckLaravelVersionMiddleware;
 use App\Http\Middleware\EducationLevelMiddleware;
 use App\Http\Middleware\EnsureAppKey;
 use App\Http\Middleware\LogRequestMiddleware;
@@ -22,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class,  ViewShare::class])->group(base_path('routes/stisla-web.php'));
 
-            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class, ViewShare::class, 'auth', EducationLevelMiddleware::class])->group(base_path('routes/stisla-web-auth.php'));
+            Route::middleware([OverrideConfig::class, 'web', LogRequestMiddleware::class, ViewShare::class, 'auth', EducationLevelMiddleware::class, CheckLaravelVersionMiddleware::class])->group(base_path('routes/stisla-web-auth.php'));
 
             $files = File::files(base_path('routes/modules'));
             foreach ($files as $file) {
