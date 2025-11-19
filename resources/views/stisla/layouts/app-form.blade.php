@@ -32,7 +32,13 @@
             <h4><i class="{{ $moduleIcon }}"></i> {{ $fullTitle }}</h4>
             <div class="card-header-action">
               @yield('left-header-action')
-              @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+              @if (is_app_dataku())
+                @if (!is_guru())
+                  @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+                @endif
+              @else
+                @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+              @endif
             </div>
           </div>
           <div class="card-body">

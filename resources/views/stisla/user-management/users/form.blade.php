@@ -1,6 +1,11 @@
 @extends('stisla.layouts.app-form')
 
 @section('left-header-action')
+  @if (Route::is('user-management.users.show'))
+    @include('stisla.includes.forms.buttons.btn-edit', [
+        'link' => route('user-management.users.edit', [$d->id]),
+    ])
+  @endif
   @include('stisla.includes.forms.buttons.btn-danger', [
       'link' => route('user-management.users.single-pdf', [$d->id]),
       'blank' => true,
