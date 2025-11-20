@@ -25,11 +25,20 @@
           </div>
         @endif
 
+        @yield('notes')
+
         <div class="card">
           <div class="card-header">
             <h4><i class="{{ $moduleIcon }}"></i> {{ $fullTitle }}</h4>
             <div class="card-header-action">
-              @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+              @yield('left-header-action')
+              @if (is_app_dataku())
+                @if (!is_guru())
+                  @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+                @endif
+              @else
+                @include('stisla.includes.forms.buttons.btn-view', ['link' => $routeIndex])
+              @endif
             </div>
           </div>
           <div class="card-body">

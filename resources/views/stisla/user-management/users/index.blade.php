@@ -10,11 +10,26 @@
 @endsection
 
 @section('filter_top')
-  @if (Route::is('user-management.users.index'))
-    @include('stisla.includes.others.filter-default', ['is_show' => false])
+  @if (is_app_dataku())
+    @if (Route::is('user-management.users.index') && !is_guru())
+      @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
+    @endif
+  @else
+    @if (Route::is('user-management.users.index'))
+      @include('stisla.includes.others.filter-default', ['is_show' => request('filter_role') === '4'])
+    @endif
   @endif
 @endsection
 
+@if (is_superadmin() || is_kepala_sekolah())
+  @section('panel11')
+    <div class="mb-3">
+      @foreach ($roleOptions as $item => $role)
+        <a href="?filter_role={{ $item }}" class="btn {{ request('filter_role') == $item ? 'btn-danger' : 'btn-primary' }}">{{ $role }}</a>
+      @endforeach
+    </div>
+  @endsection
+@endif
 
 @push('modals')
   <form action="" enctype="multipart/form-data" method="POST" id="formBlock">

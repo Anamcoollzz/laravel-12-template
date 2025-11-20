@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <h1>{{ $title }}</h1>
+  <h1>{{ $exportTitle ?? $title }}</h1>
   @include('stisla.' . $prefix . '.table')
 </body>
 

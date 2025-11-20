@@ -308,6 +308,20 @@ class FileService
     /**
      * download collection as pdf file
      *
+     * @param string $html
+     * @param string $filename
+     * @param string $paper
+     * @param string $orientation
+     * @return Response
+     */
+    public function downloadPdfFromHtml(string $html, string $filename, string $paper = 'Letter', string $orientation = 'landscape')
+    {
+        return PDF::setPaper($paper, $orientation)->loadHTML($html)->download($filename);
+    }
+
+    /**
+     * download collection as pdf file
+     *
      * @param string $view
      * @param array $data
      * @param string $filename
@@ -495,5 +509,23 @@ class FileService
             $filepath = str_replace('http://localhost:8000/storage', '', $filepath);
             $this->executeDeleteFromStorage('public' . $filepath);
         }
+    }
+
+    /**
+     * convert url to file path
+     *
+     * @param string|null $url
+     * @return string
+     */
+    public function urlToFilePath(string|null $url)
+    {
+        if (is_null($url)) {
+            return '';
+        }
+        $storageUrl = config('app.url') . '/storage';
+        $filepath = str_replace($storageUrl, '', $url);
+        $filepath = str_replace('http://127.0.0.1:8000/storage', '', $filepath);
+        $filepath = str_replace('http://localhost:8000/storage', '', $filepath);
+        return storage_path('app/public' . $filepath);
     }
 }

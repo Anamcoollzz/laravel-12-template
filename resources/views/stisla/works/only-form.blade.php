@@ -10,7 +10,7 @@
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'job_name', 'label' => 'Nama Pekerjaan'])
   </div>
   <div class="col-md-6">
-    @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'department', 'label' => 'Departemen'])
+    @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'department', 'label' => 'Departemen'])
   </div>
 
 

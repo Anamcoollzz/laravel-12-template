@@ -53,6 +53,9 @@ class MenuSeeder extends Seeder
                 // if ($menu['menu_name'] === 'Notifikasi' || $menu['menu_name'] === 'Profil') {
                 //     continue;
                 // }
+                if (!isset($menu['menu_name'])) {
+                    continue;
+                }
                 $menuObj = Menu::create([
                     'menu_name'                 => $menu['menu_name'],
                     'icon'                      => $menu['icon'],

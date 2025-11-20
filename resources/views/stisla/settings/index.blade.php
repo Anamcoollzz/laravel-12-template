@@ -408,7 +408,7 @@
               <br />
               <br />
               <div class="row">
-                @foreach (['_logo_url' => __('Logo'), '_stisla_bg_login' => __('Background Halaman Masuk / Daftar'), '_stisla_bg_home' => __('Background Halaman Beranda')] as $item => $labelSetting)
+                @foreach (['_logo_url' => __('Logo'), '_stisla_bg_login' => __('Background Halaman Masuk / Daftar'), '_stisla_bg_home' => __('Background Halaman Dashboard')] as $item => $labelSetting)
                   <div class="col-md-4 col-lg-3">
                     <a href="{{ $$item }}" target="_blank">
                       <img class="img-thumbnail" src="{{ $$item }}" alt="{{ $labelSetting }}">

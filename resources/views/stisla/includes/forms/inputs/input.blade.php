@@ -1,9 +1,10 @@
 @php
   $props = [];
   $id = $id ?? Str::random(5);
+  $name = $name ?? $id;
   array_push($props, 'id="' . $id . '"');
-  array_push($props, 'name="' . ($name ?? $id) . '"');
-  array_push($props, 'value="' . (old($name ?? $id) ?? ($value ?? ($d[$name ?? $id] ?? ''))) . '"');
+  array_push($props, 'name="' . $name . '"');
+  array_push($props, 'value="' . (old($name) ?? ($value ?? ($d[$name] ?? ''))) . '"');
   array_push($props, isset($placeholder) ? 'placeholder="' . $placeholder . '"' : '');
   array_push($props, isset($accept) ? 'accept="' . $accept . '"' : '');
   array_push($props, isset($min) ? 'min="' . $min . '"' : '');

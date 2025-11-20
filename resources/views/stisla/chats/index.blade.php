@@ -91,11 +91,11 @@
     @endif
 
     @if (is_user() && config('app.is_mobile'))
-      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Beranda</a>
+      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Dashboard</a>
       <a href="#" onclick="if(confirm('Anda yakin?')) { location.href='{{ route('chatting-yuk-delete', $category) }}'; }" class="btn btn-danger btn-icon mb-3"><i class="fa fa-trash"></i> Hapus
         Riwayat Chat</a>
     @elseif(is_user() && is_desktop())
-      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Beranda</a>
+      <a href="{{ route('dashboard.index') }}" class="btn btn-primary mb-3"><i class="fa fa-arrow-left"></i> Kembali Ke Dashboard</a>
       <a href="#" onclick="if(confirm('Anda yakin?')) { location.href='{{ route('chatting-yuk-delete', $category) }}'; }" class="btn btn-danger btn-icon mb-3"><i class="fa fa-trash"></i> Hapus
         Riwayat Chat</a>
     @endif
