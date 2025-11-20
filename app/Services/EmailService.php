@@ -18,9 +18,7 @@ class EmailService
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * prepare config
@@ -161,5 +159,63 @@ class EmailService
             'auth_mode'  => null,
         ]]);
         Mail::to($to)->send($mailable);
+    }
+
+    /**
+     * send brevo email
+     *
+     * @param string $to
+     * @param string $name
+     * @param string $subject
+     * @param string $htmlContent
+     * @return void
+     */
+    public function sendBrevo(string $to, string $name, string $subject, string $htmlContent)
+    {
+
+        $apiKey = config('services.brevo.api_key'); // ganti dengan API key Brevo lu
+
+        $url = 'https://api.brevo.com/v3/smtp/email';
+
+        $payload = [
+            "sender" => [
+                "name"  => config('mail.from.name'),
+                "email" => config('mail.from.address'),
+            ],
+            "to" => [
+                [
+                    "email" => $to,
+                    "name"  => $name,
+                ],
+            ],
+            "subject" => $subject,
+            "htmlContent" => trim($htmlContent),
+        ];
+
+        // dd($payload, $apiKey);
+
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_HTTPHEADER     => [
+                'accept: application/json',
+                'api-key:' . $apiKey,
+                'content-type: application/json',
+            ],
+            CURLOPT_POSTFIELDS     => json_encode($payload),
+        ]);
+
+        $response = curl_exec($ch);
+
+        if ($response === false) {
+            echo 'cURL Error: ' . curl_error($ch);
+        } else {
+            echo 'Response: ' . $response;
+        }
+
+        curl_close($ch);
     }
 }

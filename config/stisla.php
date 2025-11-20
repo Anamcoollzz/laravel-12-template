@@ -3,9 +3,9 @@
 use App\Enums\AppEnum;
 
 // $app = AppEnum::APP_BLANK;
-// $app = AppEnum::APP_DEFAULT;
-$app = AppEnum::APP_DATAKU;
-$app = AppEnum::APP_FINGERPRINT;
+$app = AppEnum::APP_DEFAULT;
+// $app = AppEnum::APP_DATAKU;
+// $app = AppEnum::APP_FINGERPRINT;
 $appName = 'Laravel 12 Template';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
