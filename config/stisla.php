@@ -5,6 +5,7 @@ use App\Enums\AppEnum;
 // $app = AppEnum::APP_BLANK;
 // $app = AppEnum::APP_DEFAULT;
 $app = AppEnum::APP_DATAKU;
+$app = AppEnum::APP_FINGERPRINT;
 $appName = 'Laravel 12 Template';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
@@ -12,6 +13,59 @@ $permissionExcludes = [];
 $additionalMenus = [];
 $additionalMenus2 = [];
 $additionalUser = [];
+$additionalUsers = [
+
+    [
+        'name'              => 'Hairul Anam Admin',
+        'email'             => 'admin@laravel12template.com',
+        'password'          => 'admin',
+        'roles'             => ['admin'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ],
+    [
+        'name'              => 'Hairul Anam User',
+        'email'             => 'user@laravel12template.com',
+        'password'          => 'user',
+        'roles'             => ['user'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ],
+    [
+        'name'              => 'Ahfa User',
+        'email'             => 'ahfauser@laravel12template.com',
+        'password'          => 'user',
+        'roles'             => ['user'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ],
+    [
+        'name'              => 'Hairul Anam Banker',
+        'email'             => 'banker@laravel12template.com',
+        'password'          => 'banker',
+        'roles'             => ['banker'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ],
+    [
+        'name'              => 'Hairul Anam Admin Pendidikan',
+        'email'             => 'adminpendidikan@laravel12template.com',
+        'password'          => 'adminpendidikan',
+        'roles'             => ['admin pendidikan'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ],
+];
 $superadminEmail = 'superadmin@laravel12template.com';
 $dashboard = [
     'menu_name' => 'Dashboard',
@@ -202,6 +256,76 @@ if (is_app_chat($app)) {
     $superadminEmail = 'superadmin@dataku.com';
     $appName = 'DataKu';
     $appDesc = 'Web Dataku adalah aplikasi pengelolaan data siswa dan guru yang mencakup input data, validasi, pencarian, filter, serta manajemen kelas dan jenjang. Sistem dilengkapi dashboard, grafik, import/export Excel, cetak PDF, dan pengaturan role seperti Super Admin, Kepala Sekolah, dan Guru. Fokus pada kemudahan penggunaan, akurasi data, dan workflow administrasi sekolah.';
+} else if (is_app_fingerprint($app)) {
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'notifications',
+        'crud_examples',
+        'religions',
+        'school_classes',
+        'class_levels',
+        'school_years',
+        'semesters',
+        'education_levels',
+        'works',
+    ];
+    $roles = [
+        'superadmin',
+        // 'kepala sekolah',
+        // 'guru',
+        // 'siswa',
+    ];
+    $permissionExcludes = [
+        'Galeri',
+        'Log Aktivitas',
+        'Log Request',
+        'Laravel Log Viewer',
+        'Ubuntu',
+        'MySql',
+        'Backup Database',
+        'Unisharp File',
+        'Stisla Example',
+        'Pekerjaan',
+    ];
+    $additionalMenus = [
+        'menu_name' => 'Fingerprint',
+        'route_name' => null,
+        'icon' => 'fas fa-fingerprint',
+        'permission' => null,
+        'is_active_if_url_includes' => null,
+        'childs' => [
+            [
+                'menu_name' => 'X105-ID',
+                'route_name' => 'fingerprint-x105-id.index',
+                'icon' => 'fas fa-fingerprint',
+                'permission' => 'X105-ID',
+                'is_active_if_url_includes' => 'fingerprint-x105-id*',
+            ],
+        ]
+    ];
+    // $additionalUser = [
+    //     'name'              => 'Hairul Anam Admin Kepala Sekolah',
+    //     'email'             => 'kepalasekolah@dataku.com',
+    //     'password'          => 'kepalasekolah',
+    //     'roles'             => ['kepala sekolah'],
+    //     'email_verified_at' => '2021-04-06 04:06:00',
+    //     'phone_number'      => '6285322778935',
+    //     'birth_date'        => '1998-04-08',
+    //     'address'           => 'Jember'
+    // ];
+    $superadminEmail = 'superadmin@fingerprint.com';
+    $appName = 'Fingerpint';
+    $appDesc = 'Aplikasi Fingerprint untuk manajemen perangkat sidik jari (misal X105-ID): mencakup pendaftaran sidik jari (enrollment), sinkronisasi pengguna, absensi real-time, log kehadiran, monitoring status perangkat, jadwal & shift, ekspor laporan (Excel/PDF), serta pengaturan role Super Admin. Fokus pada keakuratan data presensi, kemudahan integrasi, dan automasi administrasi.';
+    $additionalUsers = [];
 }
 
 return [
@@ -229,6 +353,14 @@ return [
                 //     'permission' => 'Jenjang Pendidikan',
                 //     'is_active_if_url_includes' => 'education-levels*'
                 // ],
+
+                [
+                    'menu_name' => 'Sidik Jari X105-ID',
+                    'route_name' => 'finger-print-x105-ids.index',
+                    'icon' => 'fa fa-fingerprint',
+                    'permission' => 'Sidik Jari X105-ID',
+                    'is_active_if_url_includes' => 'finger-print-x105-ids*'
+                ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,
@@ -1232,7 +1364,7 @@ return [
         ['key' => 'sso_github_redirect', 'value' => '/auth/social/github/callback', 'is_url' => true]
     ],
 
-    'users' => [
+    'users' => array_merge([
         [
             'name'              => 'Hairul Anam Superadmin',
             'email'             => $superadminEmail,
@@ -1244,58 +1376,8 @@ return [
             'birth_date'        => '1998-04-08',
             'address'           => 'Jember'
         ],
-        [
-            'name'              => 'Hairul Anam Admin',
-            'email'             => 'admin@laravel12template.com',
-            'password'          => 'admin',
-            'roles'             => ['admin'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
-        ],
-        [
-            'name'              => 'Hairul Anam User',
-            'email'             => 'user@laravel12template.com',
-            'password'          => 'user',
-            'roles'             => ['user'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
-        ],
-        [
-            'name'              => 'Ahfa User',
-            'email'             => 'ahfauser@laravel12template.com',
-            'password'          => 'user',
-            'roles'             => ['user'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
-        ],
-        [
-            'name'              => 'Hairul Anam Banker',
-            'email'             => 'banker@laravel12template.com',
-            'password'          => 'banker',
-            'roles'             => ['banker'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
-        ],
-        [
-            'name'              => 'Hairul Anam Admin Pendidikan',
-            'email'             => 'adminpendidikan@laravel12template.com',
-            'password'          => 'adminpendidikan',
-            'roles'             => ['admin pendidikan'],
-            'email_verified_at' => '2021-04-06 04:06:00',
-            'phone_number'      => '6285322778935',
-            'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
-        ],
         $additionalUser,
-    ]
+    ], $additionalUsers)
 
 
 ];

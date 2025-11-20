@@ -26,6 +26,7 @@ use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudyProgram;
+use App\Models\Work;
 use Illuminate\Support\Facades\Schema;
 
 class DashboardRepository
@@ -70,7 +71,7 @@ class DashboardRepository
         if (can('Pekerjaan'))
             $widgets[] = (object)[
                 'title' => 'Pekerjaan',
-                'count' => SchoolClass::count(),
+                'count' => Work::count(),
                 'bg'    => 'info',
                 'icon'  => 'briefcase',
                 'route' => route('works.index'),

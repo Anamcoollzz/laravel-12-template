@@ -172,6 +172,20 @@ function is_app_dataku($app = null)
 }
 
 /**
+ * check if app type is fingerprint
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_fingerprint($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_FINGERPRINT;
+    }
+    return config('stisla.app') === AppEnum::APP_FINGERPRINT;
+}
+
+/**
  * get domain from app url
  *
  * @return string
