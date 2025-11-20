@@ -31,6 +31,8 @@
 
     @include('stisla.includes.others.js')
 
+    @yield('vue')
+
   </body>
 
   </html>

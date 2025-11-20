@@ -54,7 +54,7 @@ class WorkRequest extends FormRequest
 
 
             'job_name'   => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
-            'department' => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
+            'department' => 'nullable|string|regex:/^[\pL\s.,]+$/u|max:50',
         ];
     }
 }

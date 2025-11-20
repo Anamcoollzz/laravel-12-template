@@ -3,8 +3,23 @@
 use App\Enums\AppEnum;
 
 // $app = AppEnum::APP_BLANK;
-$app = AppEnum::APP_DEFAULT;
+// $app = AppEnum::APP_DEFAULT;
+$app = AppEnum::APP_DATAKU;
+$appName = 'Laravel 12 Template';
+$appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
+$permissionExcludes = [];
+$additionalMenus = [];
+$additionalMenus2 = [];
+$additionalUser = [];
+$superadminEmail = 'superadmin@laravel12template.com';
+$dashboard = [
+    'menu_name' => 'Dashboard',
+    'route_name' => 'dashboard.index',
+    'icon' => 'fas fa-fire',
+    'permission' => null,
+    'is_active_if_url_includes' => 'dashboard*'
+];
 $roles = [
     'superadmin',
     'admin',
@@ -17,13 +32,32 @@ $roles = [
 ];
 
 if (is_app_chat($app)) {
-    $table_excludes = ['banks', 'bank_deposits', 'bank_deposit_histories', 'faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'notifications'
+    ];
     $roles = [
         'superadmin',
         'user',
     ];
 } else if (is_app_bank($app)) {
-    $table_excludes = ['faculty_leaders', 'ormawas', 'works', 'faculties', 'study_programs', 'students', 'notifications'];
+    $table_excludes = [
+        'faculty_leaders',
+        'ormawas',
+        'works',
+        'faculties',
+        'study_programs',
+        'students',
+        'notifications'
+    ];
     $roles = [
         'superadmin',
         'admin',
@@ -52,13 +86,122 @@ if (is_app_chat($app)) {
         'students',
         'chat_messages',
         'chat_rooms',
-        'regions'
+        'regions',
+        'religions',
+        'school_classes',
+        'class_levels',
+        'school_years',
+        'semesters',
+        'education_levels',
     ];
     $roles = [
         'superadmin',
         'admin',
         'user',
     ];
+} else if (is_app_dataku($app)) {
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'notifications',
+        'crud_examples',
+    ];
+    $roles = [
+        'superadmin',
+        'kepala sekolah',
+        'guru',
+        'siswa',
+    ];
+    $permissionExcludes = [
+        'Galeri',
+        'Log Aktivitas',
+        'Log Request',
+        'Laravel Log Viewer',
+        'Ubuntu',
+        'MySql',
+        'Backup Database',
+        'Unisharp File',
+        'Stisla Example',
+    ];
+    $additionalMenus = [
+        'menu_name' => 'Master',
+        'route_name' => null,
+        'icon' => 'fas fa-cubes',
+        'permission' => null,
+        'is_active_if_url_includes' => null,
+        'childs' => [
+            [
+                'menu_name' => 'Agama',
+                'route_name' => 'religions.index',
+                'icon' => 'fas fa-praying-hands',
+                'permission' => 'Agama',
+                'is_active_if_url_includes' => 'religions*',
+            ],
+            [
+                'menu_name' => 'Kelas',
+                'route_name' => 'school-classes.index',
+                'icon' => 'fas fa-chalkboard',
+                'permission' => 'Kelas',
+                'is_active_if_url_includes' => 'school-classes*',
+            ],
+            [
+                'menu_name' => 'Level Kelas',
+                'route_name' => 'class-levels.index',
+                'icon' => 'fa fa-arrow-turn-down',
+                'permission' => 'Level Kelas',
+                'is_active_if_url_includes' => 'class-levels*'
+            ],
+            [
+                'menu_name' => 'Pekerjaan',
+                'route_name' => 'works.index',
+                'icon' => 'fas fa-bag',
+                'permission' => 'Pekerjaan',
+                'is_active_if_url_includes' => 'works*',
+            ],
+            [
+                'menu_name' => 'Tahun Pelajaran',
+                'route_name' => 'school-years.index',
+                'icon' => 'fa fa-calendar',
+                'permission' => 'Tahun Pelajaran',
+                'is_active_if_url_includes' => 'school-years*'
+            ],
+            [
+                'menu_name' => 'Jenjang Pendidikan',
+                'route_name' => 'education-levels.index',
+                'icon' => 'fa fa-graduation-cap',
+                'permission' => 'Jenjang Pendidikan',
+                'is_active_if_url_includes' => 'education-levels*'
+            ],
+            [
+                'menu_name' => 'Semester',
+                'route_name' => 'semesters.index',
+                'icon' => 'fa fa-clock',
+                'permission' => 'Semester',
+                'is_active_if_url_includes' => 'semesters*'
+            ],
+        ]
+    ];
+    $additionalUser = [
+        'name'              => 'Hairul Anam Admin Kepala Sekolah',
+        'email'             => 'kepalasekolah@dataku.com',
+        'password'          => 'kepalasekolah',
+        'roles'             => ['kepala sekolah'],
+        'email_verified_at' => '2021-04-06 04:06:00',
+        'phone_number'      => '6285322778935',
+        'birth_date'        => '1998-04-08',
+        'address'           => 'Jember'
+    ];
+    $superadminEmail = 'superadmin@dataku.com';
+    $appName = 'DataKu';
+    $appDesc = 'Web Dataku adalah aplikasi pengelolaan data siswa dan guru yang mencakup input data, validasi, pencarian, filter, serta manajemen kelas dan jenjang. Sistem dilengkapi dashboard, grafik, import/export Excel, cetak PDF, dan pengaturan role seperti Super Admin, Kepala Sekolah, dan Guru. Fokus pada kemudahan penggunaan, akurasi data, dan workflow administrasi sekolah.';
 }
 
 return [
@@ -67,6 +210,7 @@ return [
     // 'app' => AppEnum::APP_DEFAULT,
     'app' => $app,
     'table_excludes' => $table_excludes,
+    'permission_excludes' => $permissionExcludes,
     'email' => 'kpakmajalengka@yahoo.co.id',
     'address' => 'Jl. Jendral Ahmad Yani No. 1 Majalengka 45418',
     'colors' => [
@@ -76,14 +220,42 @@ return [
         [
             'group_name' => 'Navigasi',
             'menus' => [
-                [
-                    'menu_name' => 'Beranda',
-                    'route_name' => 'dashboard.index',
-                    'icon' => 'fas fa-fire',
-                    'permission' => null,
-                    'is_active_if_url_includes' => 'dashboard*'
-                ],
+                $dashboard,
+
+                // [
+                //     'menu_name' => 'Jenjang Pendidikan',
+                //     'route_name' => 'education-levels.index',
+                //     'icon' => 'fa fa-graduation-cap',
+                //     'permission' => 'Jenjang Pendidikan',
+                //     'is_active_if_url_includes' => 'education-levels*'
+                // ],
                 // additionalmenus
+                $additionalMenus,
+                $additionalMenus2,
+                is_app_dataku($app) ? [
+                    'menu_name' => 'Siswa',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=4',
+                    'icon' => 'fas fa-users',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=4',
+                ] : [],
+                is_app_dataku($app) ? [
+                    'menu_name' => 'Kepala Sekolah',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=2',
+                    'icon' => 'fas fa-user-tie',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=2',
+                ] : [],
+                is_app_dataku($app) ? [
+                    'menu_name' => 'Guru',
+                    'route_name' => '#',
+                    'uri' => 'user-management/users?filter_role=3',
+                    'icon' => 'fas fa-chalkboard-teacher',
+                    'permission' => 'Pengguna',
+                    'is_active_if_url_includes' => 'user-management/users?filter_role=2',
+                ] : [],
                 [
                     'menu_name' => 'Contoh CRUD',
                     'route_name' => 'crud-examples.index',
@@ -228,13 +400,13 @@ return [
                             'permission' => 'Ormawa',
                             'is_active_if_url_includes' => 'ormawas*',
                         ],
-                        [
-                            'menu_name' => 'Pekerjaan',
-                            'route_name' => 'works.index',
-                            'icon' => 'fas fa-bag',
-                            'permission' => 'Pekerjaan',
-                            'is_active_if_url_includes' => 'works*',
-                        ],
+                        // [
+                        //     'menu_name' => 'Pekerjaan',
+                        //     'route_name' => 'works.index',
+                        //     'icon' => 'fas fa-bag',
+                        //     'permission' => 'Pekerjaan',
+                        //     'is_active_if_url_includes' => 'works*',
+                        // ],
                     ]
                 ],
                 [
@@ -497,27 +669,27 @@ return [
 
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Email',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Password',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Hapus Akun',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
             'group' => 'Profil'
         ],
 
@@ -659,37 +831,37 @@ return [
 
         [
             'name' => 'Pengguna',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Tambah',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Impor Excel',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Ubah',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Detail',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah', 'guru'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Hapus',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
             'name' => 'Pengguna Ekspor',
-            'roles' => ['superadmin'],
+            'roles' => ['superadmin', 'kepala sekolah'],
             'group' => 'Pengguna'
         ],
         [
@@ -752,7 +924,8 @@ return [
         [
             'name' => 'Notifikasi',
             'roles' => ['superadmin', 'admin'],
-            'group' => 'Notifikasi'
+            'group' => 'Notifikasi',
+            'table' => 'notifications',
         ],
 
         [
@@ -823,9 +996,9 @@ return [
     'use_setting' => env('STISLA_USE_SETTING', '2'),
 
     'settings' => [
-        ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
+        ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'PT Anam Developer'],
         ['key' => 'country', 'value' => 'Indonesia'],
@@ -853,19 +1026,19 @@ return [
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_og_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
         ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_twitter_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_twitter_description', 'value' => $appDesc],
         ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
-        ['key' => 'meta_itemprop_headline', 'value' => 'Deskripsi sistem tulis disini'],
-        ['key' => 'meta_itemprop_description', 'value' => 'Deskripsi sistem tulis disini'],
+        ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
+        ['key' => 'meta_itemprop_description', 'value' => $appDesc],
         ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
 
         [
@@ -941,9 +1114,9 @@ return [
     ],
 
     'settings2' => [
-        ['key' => 'application_name', 'value' => 'Laravel 12 Template'],
+        ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
-        ['key' => 'app_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'CV AnamTechno'],
         ['key' => 'country', 'value' => 'Indonesia'],
@@ -972,19 +1145,19 @@ return [
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_og_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
         ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
-        ['key' => 'meta_twitter_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_twitter_description', 'value' => $appDesc],
         ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
-        ['key' => 'meta_itemprop_headline', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
-        ['key' => 'meta_itemprop_description', 'value' => 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.'],
+        ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
+        ['key' => 'meta_itemprop_description', 'value' => $appDesc],
         ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
 
         [
@@ -1062,7 +1235,7 @@ return [
     'users' => [
         [
             'name'              => 'Hairul Anam Superadmin',
-            'email'             => 'superadmin@laravel12template.com',
+            'email'             => $superadminEmail,
             'password'          => 'superadmin',
             'roles'             => ['superadmin'],
             'email_verified_at' => '2021-04-06 04:06:00',
@@ -1120,7 +1293,8 @@ return [
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',
             'address'           => 'Jember'
-        ]
+        ],
+        $additionalUser,
     ]
 
 

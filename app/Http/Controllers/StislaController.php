@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\GeneralExport;
 use App\Http\Requests\ImportExcelRequest;
 use App\Imports\GeneralImport;
+use App\Models\User;
 use App\Repositories\ActivityLogRepository;
 use App\Repositories\Repository;
 use App\Repositories\RequestLogRepository;
@@ -211,6 +212,10 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected array $fileColumns = [];
 
+    protected ?string $exportTitle;
+
+    protected string $excelFileName;
+
     /**
      * constructor method
      *
@@ -338,11 +343,11 @@ class StislaController extends Controller implements HasMiddleware
             'canDuplicate'           => $canDuplicate,
             'title'                  => $title,
             'moduleIcon'             => $this->icon,
-            'route_create'           => $canCreate ? route($routePrefix . '.create') : null,
+            'route_create'           => $canCreate ? route($routePrefix . '.create', ['filter_role' => request('filter_role')]) : null,
             'route_restore_all'      => $canShowDeleted && Route::has($routePrefix . '.restore-all') ? route($routePrefix . '.restore-all') : null,
             'route_force_delete_all' => $canShowDeleted && Route::has($routePrefix . '.force-delete-all') ? route($routePrefix . '.force-delete-all') : null,
-            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel') : null,
-            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example') : null,
+            'routeImportExcel'       => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel', ['filter_role' => request('filter_role')]) : null,
+            'routeExampleExcel'      => $canImportExcel && Route::has($routePrefix . '.import-excel') ? route($routePrefix . '.import-excel-example', ['filter_role' => request('filter_role')]) : null,
             'routePdf'               => $canExport && Route::has($routePrefix . '.pdf') ? route($routePrefix . '.pdf') : null,
             'routeExcel'             => $canExport && Route::has($routePrefix . '.excel') ? route($routePrefix . '.excel') : null,
             'routeCsv'               => $canExport && Route::has($routePrefix . '.csv') ? route($routePrefix . '.csv') : null,
@@ -462,12 +467,13 @@ class StislaController extends Controller implements HasMiddleware
         $times      = date('Y-m-d_H-i-s');
         $moduleName = str_replace('-', '_', $this->prefixRoute ?? $this->prefix);
         $data       = [
-            'isExport'   => true,
-            'pdf_name'   => $times . '_' . $moduleName . '.pdf',
-            'excel_name' => $times . '_' . $moduleName . '.xlsx',
-            'csv_name'   => $times . '_' . $moduleName . '.csv',
-            'json_name'  => $times . '_' . $moduleName . '.json',
-            'prefix'     => $this->prefix ?? null,
+            'isExport'    => true,
+            'pdf_name'    => $times . '_' . $moduleName . '.pdf',
+            'excel_name'  => $times . '_' . $moduleName . '.xlsx',
+            'csv_name'    => $times . '_' . $moduleName . '.csv',
+            'json_name'   => $times . '_' . $moduleName . '.json',
+            'prefix'      => $this->prefix ?? null,
+            'exportTitle' => $this->exportTitle ?? $this->title,
         ];
 
         return array_merge($data, $this->getIndexDataFromParent());
@@ -488,26 +494,28 @@ class StislaController extends Controller implements HasMiddleware
      * download export data as xlsx
      *
      * @param bool $isXlsx
-     * @return Response
+     * @return BinaryFileResponse
      */
-    private function execExcel($isXlsx = true)
+    private function execExcel($isXlsx = true): BinaryFileResponse
     {
-        $data  = $this->getExportData();
+        $data  = array_merge($this->getExportData(), [
+            'exportTitle' => $this->exportTitle ?? $this->title,
+        ]);
         $path = 'stisla.' . $this->viewFolder . '.table';
         if (!file_exists(resource_path('views/' . $path . '.blade.php'))) {
             $path = 'stisla.' . $this->prefix . '.table';
         }
         if ($isXlsx)
-            return $this->fileUtil->downloadExcelGeneral($path, $data, $data['excel_name']);
+            return $this->fileUtil->downloadExcelGeneral($path, $data, $this->excelFileName ?? $data['excel_name']);
         return $this->fileUtil->downloadCsvGeneral($path, $data, $data['csv_name']);
     }
 
     /**
      * download export data as xlsx
      *
-     * @return Response
+     * @return BinaryFileResponse
      */
-    public function excel()
+    public function excel(): BinaryFileResponse
     {
         return $this->execExcel(true);
     }
@@ -529,8 +537,11 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function pdf(): Response
     {
-        $data  = $this->getExportData();
-        return $this->fileUtil->downloadPdf('stisla.includes.others.export-pdf', $data, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
+        $data  = array_merge($this->getExportData(), [
+            'exportTitle' => $this->exportTitle ?? $this->title,
+        ]);
+        $html = view('stisla.includes.others.export-pdf', $data)->render();
+        return $this->fileUtil->downloadPdfFromHtml($html, $data['pdf_name'], $this->paperSize, $this->orientationPdf);
     }
 
     /**
@@ -582,6 +593,7 @@ class StislaController extends Controller implements HasMiddleware
             'json_name'    => $filename . '.json',
             'moduleIcon'   => $this->icon,
             'canExport'    => $this->canExport ?? $defaultData['canExport'],
+            'exportTitle'  => $this->exportTitle ?? $this->title,
         ], $this->getHasColumns());
     }
 
@@ -1222,5 +1234,35 @@ class StislaController extends Controller implements HasMiddleware
         }
 
         return backSuccess($successMessage);
+    }
+
+    /**
+     * show single pdf page
+     *
+     * @param string $id
+     * @return Response
+     */
+    public function singlePdf(string $id)
+    {
+        $model = $this->repository->findOrFail($id);
+        if ($model instanceof User) {
+            $isSiswa = $model->hasRole('siswa');
+            $isGuru = $model->hasRole('guru');
+            $this->exportTitle = $model->roles->count() ? ucwords($model->roles->first()->name ?? null) : null;
+            $photo = $this->fileUtil->urlToFilePath($model->photo) ?? null;
+            $avatar = $this->fileUtil->urlToFilePath($model->avatar ?? null);
+        }
+
+        $html = view('stisla.includes.others.single-pdf', [
+            'd'           => $model,
+            'title'       => $this->title,
+            'prefix'      => $this->prefix,
+            'exportTitle' => $this->exportTitle ?? $this->title,
+            'isSiswa'     => $isSiswa ?? false,
+            'isGuru'      => $isGuru ?? false,
+            'photo'       => $photo ?? false,
+            'avatar'      => $avatar ?? false,
+        ])->render();
+        return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . ' ' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
     }
 }

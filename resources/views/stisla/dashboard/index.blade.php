@@ -13,6 +13,34 @@
       @include('stisla.includes.others.alert-password')
     </div>
 
+    <div class="col-12">
+      @if ($isLaravelOutdated && is_superadmin())
+        @php
+          $rawWa = config('app.developer_contact_whatsapp', '0853-2277-8935');
+          $digits = preg_replace('/\D+/', '', $rawWa); // buang strip/spasi
+          if (str_starts_with($digits, '0')) {
+              $digits = '62' . substr($digits, 1); // 08xx -> 628xx
+          }
+          $defaultMessage = rawurlencode('Halo kak, saya ingin mengajukan permintaan update sistem aplikasi. Mohon informasinya lebih lanjut, terima kasih.');
+        @endphp
+
+        <div class="alert alert-warning text-sm mb-3">
+          <strong>{{ __('Peringatan') }}</strong>
+          <br>
+          Aplikasi ini menggunakan Laravel versi
+          <strong>{{ $laravelCurrentVersion }}</strong>, sedangkan versi terbaru adalah
+          <strong>{{ $laravelLatestVersion }}</strong>.
+          Silakan hubungi developer di
+          <a href="https://wa.me/{{ $digits }}?text={{ $defaultMessage }}" target="_blank"><strong>{{ $rawWa }}</strong></a>
+          atau klik
+          <a href="https://wa.me/{{ $digits }}?text={{ $defaultMessage }}" target="_blank">
+            WhatsApp
+          </a>
+          untuk melakukan update sistem.
+        </div>
+      @endif
+    </div>
+
     <div class="col-12 mb-4">
       <div class="hero text-white hero-bg-image" data-background="{{ $_stisla_bg_home }}">
         <div class="hero-inner">

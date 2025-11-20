@@ -31,7 +31,9 @@ class UserRequest extends FormRequest
                 $user = (new UserRepository)->find($this->user->id ?? $this->user);
                 return [
                     'current_password'          => [
-                        'required', 'min:6', function ($attribute, $value, $fail) use ($user) {
+                        'required',
+                        'min:6',
+                        function ($attribute, $value, $fail) use ($user) {
                             if (!Hash::check($value, $user->password)) {
                                 $fail('Kata sandi yang dimasukkan salah.');
                             }
@@ -49,7 +51,18 @@ class UserRequest extends FormRequest
                     'role'  => 'required',
                 ];
             }
-            $user = (new UserRepository)->findByEmail($this->email);
+
+            if ($this->email)
+                $user = (new UserRepository)->findByEmail($this->email);
+
+            if (is_app_dataku()) {
+                return [
+                    'name'  => 'required',
+                    'email' => 'nullable|email|unique:users,email,' . ($user->id ?? null) . ',id',
+                    'role'  => 'required'
+                ];
+            }
+
             return [
                 'name'  => 'required',
                 'email' => 'required|email|unique:users,email,' . ($user->id ?? null) . ',id',

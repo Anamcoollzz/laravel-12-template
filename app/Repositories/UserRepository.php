@@ -58,6 +58,18 @@ class UserRepository extends Repository
     }
 
     /**
+     * find user by field
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return User
+     */
+    public function findBy(string $field, $value)
+    {
+        return $this->model->where($field, $value)->first();
+    }
+
+    /**
      * find user by twitter id
      *
      * @param string $twitterId
@@ -99,7 +111,24 @@ class UserRepository extends Repository
      */
     public function getUsers()
     {
-        $users = $this->queryFullData()->with(['roles', 'createdBy', 'lastUpdatedBy', 'province', 'city', 'district', 'village'])->get();
+        $users = $this->queryFullData()->with([
+            'roles',
+            'createdBy',
+            'lastUpdatedBy',
+            'province',
+            'city',
+            'district',
+            'village',
+            'fatherwork',
+            'motherwork',
+            'guardianwork',
+            'religion',
+            'schoolclass',
+            'religion',
+            'classlevel',
+            'schoolyear',
+            'semester',
+        ])->get();
         return $users;
     }
 
@@ -130,31 +159,37 @@ class UserRepository extends Repository
     /**
      * get all role data
      *
+     * @param array $names
      * @return Collection
      */
-    public function getRoles()
+    public function getRoles(array $names = [])
     {
-        $roles = Role::with(['permissions'])->withCount([
-            'permissions',
-            'users',
-            'users as male_users_count' => function ($q) {
-                $q->where('gender', User::GENDER_MALE); // sesuaikan value di DB
-            },
-            'users as female_users_count' => function ($q) {
-                $q->where('gender', User::GENDER_FEMALE); // sesuaikan value di DB
-            }
-        ])->latest()->get();
+        $roles = Role::with(['permissions'])
+            ->when(!empty($names), function ($query) use ($names) {
+                $query->whereIn('name', $names);
+            })
+            ->withCount([
+                'permissions',
+                'users',
+                'users as male_users_count' => function ($q) {
+                    $q->where('gender', User::GENDER_MALE); // sesuaikan value di DB
+                },
+                'users as female_users_count' => function ($q) {
+                    $q->where('gender', User::GENDER_FEMALE); // sesuaikan value di DB
+                }
+            ])->latest()->get();
         return $roles;
     }
 
     /**
      * get role as option dropdown
      *
+     * @param array $names
      * @return array
      */
-    public function getRoleOptions()
+    public function getRoleOptions(array $names = [])
     {
-        return $this->getRoles()
+        return $this->getRoles($names)
             ->pluck('name', 'id')
             ->toArray();
     }
@@ -421,9 +456,12 @@ class UserRepository extends Repository
      * @param array $role
      * @return User
      */
-    public function syncRoles(User $user, array $roles)
+    public function syncRoles(User $user, array|Collection $roles)
     {
-        $roles = Role::whereIn('name', $roles)->get();
+        if ($roles instanceof Collection) {
+        } else {
+            $roles = Role::whereIn('name', $roles)->get();
+        }
         return $user->syncRoles($roles);
     }
 

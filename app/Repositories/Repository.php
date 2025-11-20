@@ -321,6 +321,20 @@ class Repository extends RepositoryAbstract
     }
 
     /**
+     * countWhereIn
+     *
+     * @param string $column
+     * @param array $data
+     * @return int
+     */
+    public function countWhereIn(string $column, array $data): int
+    {
+        return $this->model->query()
+            ->whereIn($column, $data)
+            ->count();
+    }
+
+    /**
      * get query
      *
      * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -373,9 +387,16 @@ class Repository extends RepositoryAbstract
      * @param string $value
      * @return array
      */
-    public function getSelectOptions($label = 'name', $value = 'id')
+    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [])
     {
-        return $this->query()->select($label, $value)->get()->pluck($label, $value)->toArray();
+        return $this->query()->select($label, $value)
+            ->when(!empty($where), function ($query) use ($where) {
+                $query->where($where);
+            })
+            ->when(!empty($whereIn), function ($query) use ($whereField, $whereIn) {
+                $query->whereIn($whereField, $whereIn);
+            })
+            ->get()->pluck($label, $value)->toArray();
     }
 
     /**
@@ -428,15 +449,46 @@ class Repository extends RepositoryAbstract
                 $query->whereDate('updated_at', '<=', request('filter_end_updated_at'));
             })
             ->when(request('filter_limit', 50), function (Builder $query) {
-                $query->limit(request('filter_limit', 50));
+                if (!is_app_dataku())
+                    $query->limit(request('filter_limit', 50));
             })
             ->when(request('filter_role'), function (Builder $query) {
-                $query->whereHas('roles', function (Builder $query) {
-                    $query->where('id', request('filter_role'));
-                });
+                if (is_app_dataku()) {
+                    if (is_kepala_sekolah()) {
+                        if (request('filter_role') == 4) {
+                            $query->whereHas('roles', function (Builder $query) {
+                                $query->where('id', request('filter_role'));
+                            });
+                        } else
+                            $query->where('id', auth_id());
+                    } else if (is_superadmin()) {
+                        $query->whereHas('roles', function (Builder $query) {
+                            $query->where('id', request('filter_role'));
+                        });
+                    }
+                } else
+                    $query->whereHas('roles', function (Builder $query) {
+                        $query->where('id', request('filter_role'));
+                    });
+            })
+            ->when(request('filter_semester_id'), function (Builder $query) {
+                $query->where('semester_id', request('filter_semester_id'));
+            })
+            ->when(request('filter_school_year_id'), function (Builder $query) {
+                $query->where('school_year_id', request('filter_school_year_id'));
             })
             ->when(request('gender'), function (Builder $query) {
                 $query->where('gender', request('gender'));
+            })
+            ->when(is_app_dataku(), function (Builder $query) {
+                if (session('education_level_id') && request('filter_role') && request('filter_role') !== '1')
+                    $query->where('education_level_id', session('education_level_id'));
+                $query->when(is_guru(), function (Builder $query) {
+                    $query->where('id', auth_user()->id);
+                });
+            })
+            ->when(request('filter_level_id'), function (Builder $query) {
+                $query->where('class_level_id', request('filter_level_id'));
             })
             ->when(request('filter_sort_by_created_at', 'latest') && count($orderBy) === 0, function (Builder $query) {
                 if (request('filter_sort_by_created_at') === 'oldest') {

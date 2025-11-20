@@ -26,6 +26,9 @@
           @if ($_menu->childs->count() === 0)
             @php
               $_menu_condition = $_menu->permission === null || $_user->can($_menu->permission);
+              if (is_guru() && in_array($_menu->menu_name, ['Kepala Sekolah', 'Siswa', 'Manajemen Pengguna'])) {
+                  $_menu_condition = false;
+              }
             @endphp
             @if ($_menu_condition)
               <li @if (Request::is($_menu->is_active_if_url_includes)) class="active" @endif>
@@ -51,6 +54,9 @@
                       return $_user->can($item);
                   })
                   ->count();
+              if (is_guru() && in_array($_menu->menu_name, ['Kepala Sekolah', 'Siswa', 'Manajemen Pengguna'])) {
+                  $_menu_condition = false;
+              }
             @endphp
             @if ($_menu_condition)
               <li class="nav-item dropdown @if ($_is_active) active @endif">

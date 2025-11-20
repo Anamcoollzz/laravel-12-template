@@ -129,7 +129,9 @@ class CreateModuleCommand extends Command
                 return "'$col' => 'required|unique:$pluralSnake,$col|digits:16',";
             }
             return "'$col'\t\t=> 'required',";
-        }, $columns)), file_get_contents($path)));
+        }, $columnsArray)), file_get_contents($path)));
+        file_put_contents($path, str_replace('// aa', 'return [', file_get_contents($path)));
+        file_put_contents($path, str_replace('// bb', '];', file_get_contents($path)));
         $view = base_path('resources/views/stisla/crud-examples');
         // exec('rm -rf ' . ($path = base_path('resources/views/stisla/' . $prefix)));
         FacadesFile::deleteDirectory($path = base_path('resources/views/stisla/' . $prefix));
@@ -142,7 +144,7 @@ class CreateModuleCommand extends Command
             file_put_contents($fname, str_replace('{{-- columns --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
                 if ($col === 'password') {
                     return "{{-- <th>{{ __('" . $labelsArray[$index] . "') }}</th> --}}";
-                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || Str::contains($col, 'name')) {
+                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || $col === 'name') {
                     return '';
                 }
                 return "<th>{{ __('" . $labelsArray[$index] . "') }}</th>";
@@ -150,7 +152,7 @@ class CreateModuleCommand extends Command
             file_put_contents($fname, str_replace('{{-- columnstd --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
                 if ($col === 'deleted_at') {
                     return "@include('stisla.includes.others.td-deleted-at')";
-                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || Str::contains($col, 'name')) {
+                } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || $col === 'name') {
                     return '';
                     return "@include('stisla.includes.others.td-email')";
                 } else if (Str::endsWith($col, '_date') || $col === 'date' || $col === 'birthdate') {
@@ -213,7 +215,7 @@ class CreateModuleCommand extends Command
                 } else {
                     return "'$col' => fake()->sentence(),";
                 }
-            }, $columns)),
+            }, $columnsArray)),
             file_get_contents($seeder)
         ));
 
@@ -266,6 +268,14 @@ class CreateModuleCommand extends Command
         ",
             file_get_contents($latestMigration)
         ));
+
+        if (Str::contains($file = file_get_contents(database_path('seeders/DatabaseSeeder.php')), '$this->call(' . $name . 'Seeder::class);') === false) {
+            file_put_contents(database_path('seeders/DatabaseSeeder.php'), str_replace(
+                '// seeders',
+                "\$this->call(" . $name . "Seeder::class);\n        // seeders ",
+                file_get_contents(database_path('seeders/DatabaseSeeder.php'))
+            ));
+        }
 
         // exec('cp ' . base_path('config/crud-example-permission.php') . ' ' . ($path = base_path('config/' . $slug . '-permission.php')));
         $this->copy(base_path('config/crud-example-permission.php'), $path = base_path('config/' . $slug . '-permission.php'));

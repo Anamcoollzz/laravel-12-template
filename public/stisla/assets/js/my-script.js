@@ -443,7 +443,7 @@ $('form')
         var label = $formGroup.find('label').text() || '';
         label = label.replaceAll('*', '');
         $invalidFeedback.html($(item).attr('required-message') || label + ' tidak boleh kosong');
-      } else if (item.type == 'email') {
+      } else if (item.type == 'email' && item.hasAttribute('required')) {
         if (!validateEmail(item.value)) {
           notError = false;
           $(item).addClass('is-invalid');

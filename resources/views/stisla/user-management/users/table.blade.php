@@ -18,8 +18,14 @@
       <th>{{ __('Tanggal Lahir') }}</th>
       <th>{{ __('Usia') }}</th>
       <th>{{ __('Alamat') }}</th>
-      <th>{{ __('Email') }}</th>
-      @if ($isRegionExists)
+      @if (is_app_dataku() && request('filter_role') === '4')
+      @else
+        <th>{{ __('Email') }}</th>
+        @if ($isExport)
+          <th>{{ __('Password') }}</th>
+        @endif
+      @endif
+      @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
         <th>{{ __('Provinsi') }}</th>
         <th>{{ __('Kota/Kabupaten') }}</th>
         <th>{{ __('Kecamatan') }}</th>
@@ -33,6 +39,49 @@
       <th>{{ __('Terakhir Masuk') }}</th>
       @if ($_is_login_must_verified)
         <th>{{ __('Waktu Verifikasi') }}</th>
+      @endif
+
+      @if (is_app_dataku())
+        @if (request('filter_role') === '4')
+          <th>{{ __('validation.attributes.nis') }}</th>
+          <th>{{ __('validation.attributes.nisn') }}</th>
+          <th>{{ __('validation.attributes.religion_id') }}</th>
+          <th>{{ __('validation.attributes.rt') }}</th>
+          <th>{{ __('validation.attributes.rw') }}</th>
+          <th>{{ __('validation.attributes.postal_code') }}</th>
+          <th>{{ __('validation.attributes.school_class_id') }}</th>
+          <th>{{ __('validation.attributes.class_level_id') }}</th>
+          <th>{{ __('validation.attributes.semester_id') }}</th>
+          <th>{{ __('validation.attributes.school_year_id') }}</th>
+          <th>{{ __('validation.attributes.room') }}</th>
+          <th>{{ __('validation.attributes.father_nik') }}</th>
+          <th>{{ __('validation.attributes.father_name') }}</th>
+          <th>{{ __('validation.attributes.father_birth_date') }}</th>
+          <th>{{ __('validation.attributes.father_education') }}</th>
+          <th>{{ __('validation.attributes.father_work_id') }}</th>
+          <th>{{ __('validation.attributes.father_income') }}</th>
+          <th>{{ __('validation.attributes.mother_nik') }}</th>
+          <th>{{ __('validation.attributes.mother_name') }}</th>
+          <th>{{ __('validation.attributes.mother_birth_date') }}</th>
+          <th>{{ __('validation.attributes.mother_education') }}</th>
+          <th>{{ __('validation.attributes.mother_work_id') }}</th>
+          <th>{{ __('validation.attributes.mother_income') }}</th>
+          <th>{{ __('validation.attributes.guardian_nik') }}</th>
+          <th>{{ __('validation.attributes.guardian_name') }}</th>
+          <th>{{ __('validation.attributes.guardian_birth_date') }}</th>
+          <th>{{ __('validation.attributes.guardian_education') }}</th>
+          <th>{{ __('validation.attributes.guardian_work_id') }}</th>
+          <th>{{ __('validation.attributes.guardian_income') }}</th>
+        @endif
+
+        @if (request('filter_role') === '3')
+          {{-- // teacher --}}
+          <th>{{ __('validation.attributes.teacher_nuptk') }}</th>
+          <th>{{ __('validation.attributes.teacher_mother_name') }}</th>
+          <th>{{ __('validation.attributes.teacher_employee_status') }}</th>
+          <th>{{ __('validation.attributes.teacher_gtk_type') }}</th>
+          <th>{{ __('validation.attributes.teacher_position') }}</th>
+        @endif
       @endif
 
       {{-- wajib --}}
@@ -58,8 +107,15 @@
         @include('stisla.includes.others.td-dob', ['DateTime' => $item->birth_date])
         <td>{{ $item->age }}</td>
         @include('stisla.includes.others.td-address')
-        @include('stisla.includes.others.td-email')
-        @if ($isRegionExists)
+        @if (is_app_dataku() && request('filter_role') === '4')
+        @else
+          @include('stisla.includes.others.td-email')
+          @if ($isExport)
+            <td>inihanyacontohgantiajakeyanglain</td>
+          @endif
+        @endif
+
+        @if ($isRegionExists && is_app_dataku() && request('filter_role') === '4')
           <td>{{ $item->province?->name }}</td>
           <td>{{ $item->city?->name }}</td>
           <td>{{ $item->district?->name }}</td>
@@ -87,6 +143,49 @@
           @include('stisla.includes.others.td-datetime', ['DateTime' => $item->email_verified_at])
         @endif
 
+        @if (is_app_dataku())
+          @if (request('filter_role') === '4')
+            <td>{{ $item->nis }}</td>
+            <td>{{ $item->nisn }}</td>
+            <td>{{ $item->religion?->religion_name }}</td>
+            <td>{{ $item->rt }}</td>
+            <td>{{ $item->rw }}</td>
+            <td>{{ $item->postal_code }}</td>
+            <td>{{ $item->schoolclass?->class_name }}</td>
+            <td>{{ $item->classlevel?->level_name }}</td>
+            <td>{{ $item->semester?->semester }}</td>
+            <td>{{ $item->schoolyear?->year_name }}</td>
+            <td>{{ $item->room }}</td>
+            <td>{{ $item->father_nik }}</td>
+            <td>{{ $item->father_name }}</td>
+            <td>{{ $item->father_birth_date }}</td>
+            <td>{{ $item->father_education }}</td>
+            <td>{{ $item->fatherwork?->job_name }}</td>
+            <td>{{ rp($item->father_income) }}</td>
+            <td>{{ $item->mother_nik }}</td>
+            <td>{{ $item->mother_name }}</td>
+            <td>{{ $item->mother_birth_date }}</td>
+            <td>{{ $item->mother_education }}</td>
+            <td>{{ $item->motherwork?->job_name }}</td>
+            <td>{{ rp($item->mother_income) }}</td>
+            <td>{{ $item->guardian_nik }}</td>
+            <td>{{ $item->guardian_name }}</td>
+            <td>{{ $item->guardian_birth_date }}</td>
+            <td>{{ $item->guardian_education }}</td>
+            <td>{{ $item->guardianwork?->job_name }}</td>
+            <td>{{ rp($item->guardian_income) }}</td>
+          @endif
+
+          @if (request('filter_role') === '3')
+            {{-- // teacher --}}
+            <td>{{ $item->teacher_nuptk }}</td>
+            <td>{{ $item->teacher_mother_name }}</td>
+            <td>{{ $item->teacher_employee_status }}</td>
+            <td>{{ $item->teacher_gtk_type }}</td>
+            <td>{{ $item->teacher_position }}</td>
+          @endif
+        @endif
+
         {{-- wajib --}}
         @include('stisla.includes.others.td-created-updated-at')
         {{-- @include('stisla.includes.others.td-deleted-at') --}}
@@ -94,11 +193,29 @@
         <td>{{ $item->deletedBy->name ?? '-' }}</td>
         @if (($canUpdate || $canDelete || ($canForceLogin && $item->id != auth_id())) && $isExport === false)
           <td style="width: 150px;">
+            @include('stisla.includes.forms.buttons.btn-danger', [
+                'link' => route($routePrefix . '.single-pdf', [$item->id]),
+                'blank' => true,
+                'icon' => 'fa fa-file-pdf',
+                'tooltipTitle' => 'Export PDF',
+            ])
             @if ($canUpdate && $item->deleted_at === null)
               @include('stisla.includes.forms.buttons.btn-edit', ['link' => route($routePrefix . '.edit', [$item->id])])
             @endif
             @if ($canDelete && $item->deleted_at === null)
-              @include('stisla.includes.forms.buttons.btn-delete', ['link' => route($routePrefix . '.destroy', [$item->id])])
+              @include('stisla.includes.forms.buttons.btn-delete', [
+                  'link' => route($routePrefix . '.destroy', [$item->id]),
+                  'tooltipTitle' => 'Arsipkan Pengguna',
+                  'variant' => 'warning',
+              ])
+            @endif
+            @if ($canDelete)
+              @include('stisla.includes.forms.buttons.btn-delete', [
+                  'link' => route($routePrefix . '.destroy', [$item->id, 'force_delete' => true]),
+                  'tooltipTitle' => 'Hapus Permanen',
+                  'icon' => 'fa fa-circle-minus',
+                  'variant' => 'danger',
+              ])
             @endif
             @if ($canBlock && $item->deleted_at === null)
               @if ($item->is_active == 1)

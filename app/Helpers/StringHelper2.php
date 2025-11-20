@@ -38,3 +38,14 @@ function uuid()
 {
     return \Illuminate\Support\Str::uuid()->toString();
 }
+
+/**
+ * generate image url from name
+ *
+ * @param string $name
+ * @return string
+ */
+function generate_avatar($name)
+{
+    return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128';
+}
