@@ -15,7 +15,10 @@ return new class extends Migration
         if (!in_array('finger_print_x105_ids', config('stisla.table_excludes')))
             Schema::create('finger_print_x105_ids', function (Blueprint $table) {
                 $table->id();
-                $table->string('name', 50)->comment('Nama');
+                $table->string('pin', 50)->comment('PIN');
+                $table->dateTime('datetime')->comment('Date Time');
+                $table->tinyInteger('verified')->comment('Verified');
+                $table->tinyInteger('status')->comment('Status');
 
                 // wajib
                 $table->timestamps();

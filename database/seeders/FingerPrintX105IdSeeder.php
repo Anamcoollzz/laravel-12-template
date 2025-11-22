@@ -141,7 +141,10 @@ class FingerPrintX105IdSeeder extends Seeder
                 // 'deleted_at' => null,
 
                 // ini hasil generate dari make:module command
-                'name' => fake()->name(),
+                'pin' => fake()->sentence(),
+			'datetime' => fake()->sentence(),
+			'verified' => fake()->sentence(),
+			'status' => fake()->sentence(),
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),

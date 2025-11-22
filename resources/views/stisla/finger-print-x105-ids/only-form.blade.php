@@ -1,5 +1,16 @@
 {{-- ini adalah hasil dari make:module --}}
-
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'pin', 'label' => __('PIN')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'datetime', 'label' => __('DateTime')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'verified', 'label' => __('Verified')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'status', 'label' => __('Status')])
+	</div>
 
 
 {{-- yang ini boleh dicopy yang dibutuhin --}}

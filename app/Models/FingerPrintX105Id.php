@@ -64,7 +64,10 @@ class FingerPrintX105Id extends Model
 
         // ini hasil generate dari create:module command
         
-            'name',
+            'pin',
+            'datetime',
+            'verified',
+            'status',
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',

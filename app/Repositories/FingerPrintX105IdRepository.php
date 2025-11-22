@@ -33,7 +33,10 @@ class FingerPrintX105IdRepository extends Repository
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
             
-            'name' => fn(FingerPrintX105Id $item) => $item->name,
+            'pin' => fn(FingerPrintX105Id $item) => $item->pin,
+            'datetime' => fn(FingerPrintX105Id $item) => $item->datetime,
+            'verified' => fn(FingerPrintX105Id $item) => $item->verified,
+            'status' => fn(FingerPrintX105Id $item) => $item->status,
 
 
             // yang ini bisa dikomen aja kalau gak dipakai
@@ -97,7 +100,10 @@ class FingerPrintX105IdRepository extends Repository
                 'orderable'  => false
             ],
             
-            ['data' => 'name', 'name' => 'Nama'],
+            ['data' => 'pin', 'name' => 'PIN'],
+            ['data' => 'datetime', 'name' => 'DateTime'],
+            ['data' => 'verified', 'name' => 'Verified'],
+            ['data' => 'status', 'name' => 'Status'],
 
             // ini bisa dikomen nanti ya kalau tidak digunakan
             ['data' => 'name', 'name' => 'name'],

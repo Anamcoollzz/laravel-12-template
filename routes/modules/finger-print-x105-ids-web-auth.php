@@ -3,7 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-# Sidik Jari X105-ID Module Routes
+# Sidik Jari X105 ID Module Routes
 Route::get('yajra-finger-print-x105-ids', [\App\Http\Controllers\FingerPrintX105IdController::class, 'index'])->name('finger-print-x105-ids.index-yajra');
 Route::get('yajra-finger-print-x105-ids/ajax', [\App\Http\Controllers\FingerPrintX105IdController::class, 'yajraAjax'])->name('finger-print-x105-ids.ajax-yajra');
 Route::get('ajax-finger-print-x105-ids', [\App\Http\Controllers\FingerPrintX105IdController::class, 'index'])->name('finger-print-x105-ids.index-ajax');

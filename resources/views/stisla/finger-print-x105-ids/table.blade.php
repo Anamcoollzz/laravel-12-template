@@ -1,109 +1,237 @@
 @php
+  $isTrashed = $isTrashed ?? false;
+  $isExport = $isExport ?? false;
   $isAjax = $isAjax ?? false;
+  $isYajra = $isYajra ?? false;
   $isAjaxYajra = $isAjaxYajra ?? false;
+  $canExport = $canExport ?? false;
+  $canUpdate = $canUpdate ?? false;
+  $canDelete = $canDelete ?? false;
+  $canDetail = $canDetail ?? false;
 @endphp
 
-@extends('stisla.layouts.app-table')
+<table class="table table-striped @if ($isYajra || $isAjaxYajra) yajra-datatable @endif"
+  @if ($isYajra || $isAjaxYajra) data-ajax-url="{{ $routeYajra }}?isAjaxYajra={{ $isAjaxYajra }}" @else  @if ($isTrashed) id="datatable-trashed" @else id="datatable" @endif
+  @endif
+  @if ($isExport === false && $canExport) data-export="true" data-title="{{ $title }}" @endif>
+  <thead>
+    <tr>
+      @if ($isExport)
+        <th class="text-center">#</th>
+      @else
+        <th>{{ __('No') }}</th>
+      @endif
 
-@section('title')
-  {{ $title = 'Sidik Jari X105-ID' }}
-@endsection
+      {{-- ini adalah hasil dari make:module --}}
+      <th>{{ __('PIN') }}</th>
+		<th>{{ __('DateTime') }}</th>
+		<th>{{ __('Verified') }}</th>
+		<th>{{ __('Status') }}</th>
 
-@section('content')
-  @include('stisla.includes.breadcrumbs.breadcrumb-table')
-  <div class="section-body">
-    <h2 class="section-title">{{ $title }}</h2>
-    <p class="section-lead">{{ __('Menampilkan halaman ' . $title) }}.</p>
-    <div class="row">
-      <div class="col-12">
-        @php
-          $IP = request('ip');
-          $Key = request('key');
-          $id = request('id');
-          $fn = request('fn');
+      {{-- yang ini boleh dikomen --}}
+      @if ($is_has_name ?? false)
+        <th>{{ __('Nama') }}</th>
+      @endif
+      @if ($is_has_phone_number ?? false)
+        <th>{{ __('No HP') }}</th>
+      @endif
+      @if ($is_has_address ?? false)
+        <th>{{ __('Alamat') }}</th>
+      @endif
+      @if ($is_has_birthdate ?? false)
+        <th>{{ __('Tanggal Lahir') }}</th>
+      @endif
+      @if ($is_has_avatar ?? false)
+        <th>{{ __('Avatar') }}</th>
+      @endif
+      @if ($is_has_text ?? false)
+        <th>{{ __('Text') }}</th>
+      @endif
+      @if ($is_has_barcode ?? false)
+        <th>{{ __('Barcode') }}</th>
+      @endif
+      @if ($is_has_qrcode ?? false)
+        <th>{{ __('QR Code') }}</th>
+      @endif
+      @if ($is_has_email ?? false)
+        <th>{{ __('Email') }}</th>
+      @endif
+      @if ($is_has_number ?? false)
+        <th>{{ __('Number') }}</th>
+      @endif
+      @if ($is_has_currency ?? false)
+        <th>{{ __('Currency') }}</th>
+      @endif
+      @if ($is_has_currency_id ?? false)
+        <th>{{ __('Currency IDR') }}</th>
+      @endif
+      @if ($is_has_select ?? false)
+        <th>{{ __('Select') }}</th>
+      @endif
+      @if ($is_has_select2 ?? false)
+        <th>{{ __('Select2') }}</th>
+      @endif
+      @if ($is_has_select2_multiple ?? false)
+        <th>{{ __('Select2 Multiple') }}</th>
+      @endif
+      @if ($is_has_textarea ?? false)
+        <th>{{ __('Textarea') }}</th>
+      @endif
+      @if ($is_has_radio ?? false)
+        <th>{{ __('Radio') }}</th>
+      @endif
+      @if ($is_has_checkbox ?? false)
+        <th>{{ __('Checkbox') }}</th>
+      @endif
+      @if ($is_has_checkbox2 ?? false)
+        <th>{{ __('Checkbox 2') }}</th>
+      @endif
+      @if ($is_has_is_active ?? false)
+        <th>{{ __('Is Active') }}</th>
+      @endif
+      @if ($is_has_tags ?? false)
+        <th>{{ __('Tags') }}</th>
+      @endif
+      @if ($is_has_file ?? false)
+        <th>{{ __('File') }}</th>
+      @endif
+      @if ($is_has_image ?? false)
+        <th>{{ __('Image') }}</th>
+      @endif
+      @if ($is_has_date ?? false)
+        <th>{{ __('Date') }}</th>
+      @endif
+      @if ($is_has_time ?? false)
+        <th>{{ __('Time') }}</th>
+      @endif
+      @if ($is_has_color ?? false)
+        <th>{{ __('Color') }}</th>
+      @endif
+      {{-- @if ($isExport)
+        <th>{{ __('Summernote Simple') }}</th>
+        <th>{{ __('Summernote') }}</th>
+      @endif --}}
 
-          if ($IP == '') {
-              $IP = '192.168.1.201';
-          }
-          if ($Key == '') {
-              $Key = '0';
-          }
-          if ($id == '') {
-              $id = '1';
-          }
-          if ($fn == '') {
-              $fn = '0';
-          }
-        @endphp
+      {{-- wajib --}}
+      <th>{{ __('Created At') }}</th>
+      <th>{{ __('Updated At') }}</th>
+      @if ($isTrashed)
+        <th>{{ __('Deleted At') }}</th>
+      @endif
+      <th>{{ __('Created By') }}</th>
+      <th>{{ __('Last Updated By') }}</th>
+      @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
+        <th>{{ __('Aksi') }}</th>
+      @endif
+    </tr>
+  </thead>
+  <tbody>
+    @if ($isYajra === false)
+      @foreach ($data as $item)
+        <tr>
+          <td>{{ $loop->iteration }}</td>
 
-        <div class="card">
-          <div class="card-header">
-            <h4><i class="{{ $moduleIcon }}"></i> Data {{ $title }}</h4>
-          </div>
-          <div class="card-body">
+          {{-- ini adalah hasil dari make:module --}}
+          <td>{{ $item->pin }}</td>
+		<td>{{ $item->datetime }}</td>
+		<td>{{ $item->verified }}</td>
+		<td>{{ $item->status }}</td>
 
-            <form action="" method="get">
-              <div class="row">
-                <div class="col-md-6">
-                  @include('stisla.includes.forms.inputs.input', ['id' => 'ip', 'label' => 'IP Address', 'value' => $IP])
-                </div>
-                <div class="col-md-6">
-                  @include('stisla.includes.forms.inputs.input', ['id' => 'key', 'label' => 'Comm Key', 'value' => $Key])
-                </div>
-                <div class="col-md-6">
-                  @include('stisla.includes.forms.inputs.input', ['id' => 'id', 'label' => 'User ID', 'value' => $id])
-                </div>
-                <div class="col-md-6">
-                  @include('stisla.includes.forms.inputs.input', ['id' => 'fn', 'label' => 'Finger No', 'value' => $fn])
-                </div>
-                <div class="col-12">
-                  <button class="btn btn-primary" type="submit">Submit</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
+          {{-- yang ini boleh dikomen --}}
+          @if ($is_has_name ?? false)
+            <td>{{ $item->name }}</td>
+          @endif
+          @if ($is_has_phone_number ?? false)
+            @include('stisla.includes.others.td-phone-number')
+          @endif
+          @if ($is_has_address ?? false)
+            @include('stisla.includes.others.td-address')
+          @endif
+          @if ($is_has_birthdate ?? false)
+            @include('stisla.includes.others.td-dob', ['DateTime' => $item->birthdate])
+          @endif
+          @if ($is_has_avatar ?? false)
+            @include('stisla.includes.others.td-avatar')
+          @endif
+          @if ($is_has_text ?? false)
+            <td>{{ $item->text }}</td>
+          @endif
+          @if ($is_has_barcode ?? false)
+            @include('stisla.includes.others.td-barcode')
+          @endif
+          @if ($is_has_qrcode ?? false)
+            @include('stisla.includes.others.td-qrcode')
+          @endif
+          @if ($is_has_email ?? false)
+            @include('stisla.includes.others.td-email')
+          @endif
+          @if ($is_has_number ?? false)
+            <td>{{ $item->number }}</td>
+          @endif
+          @if ($is_has_currency ?? false)
+            @include('stisla.includes.others.td-dollar')
+          @endif
+          @if ($is_has_currency_idr ?? false)
+            @include('stisla.includes.others.td-rp')
+          @endif
+          @if ($is_has_select ?? false)
+            <td>{{ $item->select }}</td>
+          @endif
+          @if ($is_has_select2 ?? false)
+            <td>{{ $item->select2 }}</td>
+          @endif
+          @if ($is_has_select2_multiple ?? false)
+            @include('stisla.includes.others.td-array')
+          @endif
+          @if ($is_has_textarea ?? false)
+            <td>{{ $item->textarea }}</td>
+          @endif
+          @if ($is_has_radio ?? false)
+            <td>{{ $item->radio }}</td>
+          @endif
+          @if ($is_has_checkbox ?? false)
+            @include('stisla.includes.others.td-array', ['arr' => $item->checkbox])
+          @endif
+          @if ($is_has_checkbox2 ?? false)
+            @include('stisla.includes.others.td-array', ['arr' => $item->checkbox2])
+          @endif
+          @if ($is_has_is_active ?? false)
+            @if ($item->is_active)
+              <td><span class="badge badge-success">{{ __('Ya') }}</span></td>
+            @else
+              <td><span class="badge badge-danger">{{ __('Tidak') }}</span></td>
+            @endif
+          @endif
+          @if ($is_has_tags ?? false)
+            @include('stisla.includes.others.td-tags')
+          @endif
+          @if ($is_has_file ?? false)
+            @include('stisla.includes.others.td-file')
+          @endif
+          @if ($is_has_image ?? false)
+            @include('stisla.includes.others.td-image')
+          @endif
+          @if ($is_has_date ?? false)
+            @include('stisla.includes.others.td-datetime', ['DateTime' => $item->date])
+          @endif
+          @if ($is_has_time ?? false)
+            <td>{{ $item->time }}</td>
+          @endif
+          @if ($is_has_color ?? false)
+            @include('stisla.includes.others.td-color')
+          @endif
 
+          {{-- @if ($isExport)
+            <td>{{ $item->summernote_simple }}</td>
+            <td>{{ $item->summernote }}</td>
+          @endif --}}
 
-        @if (request('ip') && !session('errorMessage'))
-          <div class="card">
-            <div class="card-header">
-
-            </div>
-            <div class="card-body">
-              <table cellspacing="2" cellpadding="2" border="1" class="table table-striped table-hover">
-                <tr align="center">
-                  <td><B>UserID</B></td>
-                  <td width="200"><B>FingerID</B></td>
-                  <td><B>Size</B></td>
-                  <td><B>Valid</B></td>
-                  <td align="left"><B>Template</B></td>
-                </tr>
-
-                <?php
-
-                       for($a=0;$a<count($buffer);$a++){
-                        $data=Parse_Data($buffer[$a],"<Row>","</Row>");
-                        $PIN=Parse_Data($data,"<PIN>","</PIN>");
-                        $FingerID=Parse_Data($data,"<FingerID>","</FingerID>");
-                        $Size=Parse_Data($data,"<Size>","</Size>");
-                        $Valid=Parse_Data($data,"<Valid>","</Valid>");
-                        $Template=Parse_Data($data,"<Template>","</Template>");?>
-                <tr align="center">
-                  <td><?= $PIN ?></td>
-                  <td><?= $FingerID ?></td>
-                  <td><?= $Size ?></td>
-                  <td><?= $Valid ?></td>
-                  <td><?= $Template ?></td>
-                </tr>
-                <?php }?>
-              </table>
-            </div>
-          </div>
-        @endif
-
-      </div>
-
-    </div>
-  </div>
-@endsection
+          {{-- wajib --}}
+          @include('stisla.includes.others.td-created-updated-at')
+          @include('stisla.includes.others.td-created-updated-by')
+          @include('stisla.includes.others.td-action')
+        </tr>
+      @endforeach
+    @endif
+  </tbody>
+</table>

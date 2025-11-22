@@ -44,7 +44,10 @@ class FingerPrintX105IdRequest extends FormRequest
         // dd($this);
 
         return [
-            'name' => 'required|string|regex:/^[\pL\s.,]+$/u|max:50',
+            'pin'		=> 'required',
+            'datetime'		=> 'required',
+            'verified'		=> 'required',
+            'status'		=> 'required',
         ];
 
         // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas
