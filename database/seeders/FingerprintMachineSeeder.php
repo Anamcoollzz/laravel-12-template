@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\CrudExample;
+use App\Models\FingerprintMachine;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class CrudExampleSeeder extends Seeder
+class FingerprintMachineSeeder extends Seeder
 {
 
     /**
@@ -35,7 +35,7 @@ class CrudExampleSeeder extends Seeder
      */
     public function run()
     {
-        $table = (new CrudExample())->getTable();
+        $table = (new FingerprintMachine())->getTable();
         if (!Schema::hasTable($table)) {
             return;
         }
@@ -48,7 +48,7 @@ class CrudExampleSeeder extends Seeder
         $pass = bcrypt('password');
         // $jobs = file_get_contents(database_path('seeders/data/jobs.json'));
         // $jobs = json_decode($jobs, true);
-        CrudExample::truncate();
+        FingerprintMachine::truncate();
         // foreach ($jobs as $job) {
         //     $data[] = [
         //         'job_name' => $job['pekerjaan'],
@@ -142,7 +142,10 @@ class CrudExampleSeeder extends Seeder
                 // 'deleted_at' => null,
 
                 // ini hasil generate dari make:module command
-                //columns
+                'pin' => fake()->sentence(),
+			'datetime' => fake()->sentence(),
+			'verified' => fake()->sentence(),
+			'status' => fake()->sentence(),
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
@@ -251,7 +254,7 @@ class CrudExampleSeeder extends Seeder
         }
 
         foreach (collect($data)->chunk(20) as $chunkData) {
-            CrudExample::insert($chunkData->toArray());
+            FingerprintMachine::insert($chunkData->toArray());
         }
     }
 }

@@ -23,112 +23,105 @@
       @endif
 
       {{-- ini adalah hasil dari make:module --}}
-      {{-- columns --}}
+      <th>{{ __('PIN') }}</th>
+		<th>{{ __('DateTime') }}</th>
+		<th>{{ __('Verified') }}</th>
+		<th>{{ __('Status') }}</th>
 
       {{-- yang ini boleh dikomen --}}
       @if ($is_has_name ?? false)
-        <th>{{ __('validation.attributes.name') }}</th>
+        <th>{{ __('Nama') }}</th>
       @endif
       @if ($is_has_phone_number ?? false)
-        <th>{{ __('validation.attributes.phone_number') }}</th>
+        <th>{{ __('No HP') }}</th>
       @endif
       @if ($is_has_address ?? false)
-        <th>{{ __('validation.attributes.address') }}</th>
+        <th>{{ __('Alamat') }}</th>
       @endif
       @if ($is_has_birthdate ?? false)
-        <th>{{ __('validation.attributes.birthdate') }}</th>
+        <th>{{ __('Tanggal Lahir') }}</th>
       @endif
       @if ($is_has_avatar ?? false)
-        <th>{{ __('validation.attributes.avatar') }}</th>
+        <th>{{ __('Avatar') }}</th>
       @endif
       @if ($is_has_text ?? false)
-        <th>{{ __('validation.attributes.text') }}</th>
+        <th>{{ __('Text') }}</th>
       @endif
       @if ($is_has_barcode ?? false)
-        <th>{{ __('validation.attributes.barcode') }}</th>
+        <th>{{ __('Barcode') }}</th>
       @endif
-      @if ($is_has_qr_code ?? false)
-        <th>{{ __('validation.attributes.qr_code') }}</th>
+      @if ($is_has_qrcode ?? false)
+        <th>{{ __('QR Code') }}</th>
       @endif
       @if ($is_has_email ?? false)
-        <th>{{ __('validation.attributes.email') }}</th>
+        <th>{{ __('Email') }}</th>
       @endif
       @if ($is_has_number ?? false)
-        <th>{{ __('validation.attributes.number') }}</th>
+        <th>{{ __('Number') }}</th>
       @endif
       @if ($is_has_currency ?? false)
-        <th>{{ __('validation.attributes.currency') }}</th>
+        <th>{{ __('Currency') }}</th>
       @endif
-      @if ($is_has_currency_idr ?? false)
-        <th>{{ __('validation.attributes.currency_idr') }}</th>
+      @if ($is_has_currency_id ?? false)
+        <th>{{ __('Currency IDR') }}</th>
       @endif
       @if ($is_has_select ?? false)
-        <th>{{ __('validation.attributes.select') }}</th>
+        <th>{{ __('Select') }}</th>
       @endif
       @if ($is_has_select2 ?? false)
-        <th>{{ __('validation.attributes.select2') }}</th>
+        <th>{{ __('Select2') }}</th>
       @endif
       @if ($is_has_select2_multiple ?? false)
-        <th>{{ __('validation.attributes.select2_multiple') }}</th>
+        <th>{{ __('Select2 Multiple') }}</th>
       @endif
       @if ($is_has_textarea ?? false)
-        <th>{{ __('validation.attributes.textarea') }}</th>
+        <th>{{ __('Textarea') }}</th>
       @endif
       @if ($is_has_radio ?? false)
-        <th>{{ __('validation.attributes.radio') }}</th>
+        <th>{{ __('Radio') }}</th>
       @endif
       @if ($is_has_checkbox ?? false)
-        <th>{{ __('validation.attributes.checkbox') }}</th>
+        <th>{{ __('Checkbox') }}</th>
       @endif
       @if ($is_has_checkbox2 ?? false)
-        <th>{{ __('validation.attributes.checkbox2') }}</th>
+        <th>{{ __('Checkbox 2') }}</th>
       @endif
       @if ($is_has_is_active ?? false)
-        <th>{{ __('validation.attributes.is_active') }}</th>
+        <th>{{ __('Is Active') }}</th>
       @endif
       @if ($is_has_tags ?? false)
-        <th>{{ __('validation.attributes.tags') }}</th>
+        <th>{{ __('Tags') }}</th>
       @endif
       @if ($is_has_file ?? false)
-        <th>{{ __('validation.attributes.file') }}</th>
+        <th>{{ __('File') }}</th>
       @endif
       @if ($is_has_image ?? false)
-        <th>{{ __('validation.attributes.image') }}</th>
+        <th>{{ __('Image') }}</th>
       @endif
       @if ($is_has_date ?? false)
-        <th>{{ __('validation.attributes.date') }}</th>
+        <th>{{ __('Date') }}</th>
       @endif
       @if ($is_has_time ?? false)
-        <th>{{ __('validation.attributes.time') }}</th>
+        <th>{{ __('Time') }}</th>
       @endif
       @if ($is_has_color ?? false)
-        <th>{{ __('validation.attributes.color') }}</th>
+        <th>{{ __('Color') }}</th>
       @endif
-      @if (!$isExport)
-        @if ($is_has_summernote_simple ?? false)
-          <th>{{ __('validation.attributes.summernote_simple') }}</th>
-        @endif
-        @if ($is_has_summernote ?? false)
-          <th>{{ __('validation.attributes.summernote') }}</th>
-        @endif
-        @if ($is_has_tinymce ?? false)
-          <th>{{ __('validation.attributes.tinymce') }}</th>
-        @endif
-        @if ($is_has_ckeditor ?? false)
-          <th>{{ __('validation.attributes.ckeditor') }}</th>
-        @endif
-      @endif
+      {{-- @if ($isExport)
+        <th>{{ __('Summernote Simple') }}</th>
+        <th>{{ __('Summernote') }}</th>
+      @endif --}}
 
       {{-- wajib --}}
-      <th>{{ __('validation.attributes.created_at') }}</th>
-      <th>{{ __('validation.attributes.updated_at') }}</th>
+      <th>{{ __('Created At') }}</th>
+      <th>{{ __('Updated At') }}</th>
       @if ($isTrashed)
-        <th>{{ __('validation.attributes.deleted_at') }}</th>
+        <th>{{ __('Deleted At') }}</th>
       @endif
-      <th>{{ __('validation.attributes.created_by') }}</th>
-      <th>{{ __('validation.attributes.updated_by') }}</th>
+      <th>{{ __('Created By') }}</th>
+      <th>{{ __('Last Updated By') }}</th>
       @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
-        <th>{{ __('validation.attributes.actions') }}</th>
+        <th>{{ __('Aksi') }}</th>
       @endif
     </tr>
   </thead>
@@ -139,7 +132,10 @@
           <td>{{ $loop->iteration }}</td>
 
           {{-- ini adalah hasil dari make:module --}}
-          {{-- columnstd --}}
+          <td>{{ $item->pin }}</td>
+		<td>{{ $item->datetime }}</td>
+		<td>{{ $item->verified }}</td>
+		<td>{{ $item->status }}</td>
 
           {{-- yang ini boleh dikomen --}}
           @if ($is_has_name ?? false)
@@ -163,7 +159,7 @@
           @if ($is_has_barcode ?? false)
             @include('stisla.includes.others.td-barcode')
           @endif
-          @if ($is_has_qr_code ?? false)
+          @if ($is_has_qrcode ?? false)
             @include('stisla.includes.others.td-qrcode')
           @endif
           @if ($is_has_email ?? false)
@@ -225,20 +221,10 @@
             @include('stisla.includes.others.td-color')
           @endif
 
-          @if (!$isExport)
-            @if ($is_has_summernote_simple ?? false)
-              @include('stisla.includes.others.td-html', ['htmlItem' => $item->summernote_simple, 'id' => 'summernoteSimple' . $item->id])
-            @endif
-            @if ($is_has_summernote ?? false)
-              @include('stisla.includes.others.td-html', ['htmlItem' => $item->summernote, 'id' => 'summernote' . $item->id])
-            @endif
-            @if ($is_has_tinymce ?? false)
-              @include('stisla.includes.others.td-html', ['htmlItem' => $item->tinymce, 'id' => 'tinymce' . $item->id])
-            @endif
-            @if ($is_has_ckeditor ?? false)
-              @include('stisla.includes.others.td-html', ['htmlItem' => $item->ckeditor, 'id' => 'ckeditor' . $item->id])
-            @endif
-          @endif
+          {{-- @if ($isExport)
+            <td>{{ $item->summernote_simple }}</td>
+            <td>{{ $item->summernote }}</td>
+          @endif --}}
 
           {{-- wajib --}}
           @include('stisla.includes.others.td-created-updated-at')

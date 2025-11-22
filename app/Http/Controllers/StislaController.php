@@ -178,6 +178,13 @@ class StislaController extends Controller implements HasMiddleware
     protected array $data = [];
 
     /**
+     * html columns
+     *
+     * @var array
+     */
+    protected array $htmlColumns = [];
+
+    /**
      * import
      *
      * @var GeneralImport
@@ -190,6 +197,13 @@ class StislaController extends Controller implements HasMiddleware
      * @var bool
      */
     protected bool $isCrud = false;
+
+    /**
+     * is app crud
+     *
+     * @var bool
+     */
+    protected bool $isAppCrud = false;
 
     /**
      * file util
@@ -632,6 +646,8 @@ class StislaController extends Controller implements HasMiddleware
     public function exportExcel()
     {
         $data  = $this->getExportData();
+        if ($this->isAppCrud)
+            return $this->fileUtil->downloadExcelGeneral('stisla.' . $this->prefix . '.only-table', $data, $data['excel_name']);
         return $this->fileUtil->downloadExcelGeneral('stisla.' . $this->prefix . '.table', $data, $data['excel_name']);
     }
 
@@ -643,6 +659,8 @@ class StislaController extends Controller implements HasMiddleware
     public function exportCsv()
     {
         $data  = $this->getExportData();
+        if ($this->isAppCrud)
+            return $this->fileUtil->downloadCsvGeneral('stisla.' . $this->prefix . '.only-table', $data, $data['csv_name']);
         return $this->fileUtil->downloadCsvGeneral('stisla.' . $this->prefix . '.table', $data, $data['csv_name']);
     }
 
@@ -662,12 +680,15 @@ class StislaController extends Controller implements HasMiddleware
         //     'prefix'   => $this->prefix,
         // ])->render();
 
-        $html     = view('stisla.includes.others.export-pdf', [
+        $data = array_merge([
             'title'    => $this->title,
             'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport' => true,
             'prefix'   => $this->prefix,
-        ])->render();
+            'isAppCrud' => $this->isAppCrud,
+        ], $this->getHasColumns());
+
+        $html     = view('stisla.includes.others.export-pdf', $data)->render();
         // return $html;
 
         if ($this->pdfPaperSize === 'A2') {
@@ -889,12 +910,21 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function prepareIndex(Request $request, array $data2 = [])
     {
-        $data = array_merge($this->getIndexDataFromParent($data2), $data2, ['prefix' => $this->prefix]);
+        $data = array_merge($this->getIndexDataFromParent($data2), $data2, [
+            'prefix'      => $this->prefix,
+            'htmlColumns' => $this->htmlColumns,
+            'fileColumns' => $this->fileColumns,
+            'isAppCrud'   => $this->isAppCrud,
+        ]);
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
                 'data'    => view('stisla.' . $this->prefix . '.table', $data)->render(),
             ]);
+        }
+
+        if ($this->isAppCrud) {
+            return view('stisla.' . $this->prefix . '.table', $data);
         }
 
         if ($this->isCrud) {
@@ -919,6 +949,10 @@ class StislaController extends Controller implements HasMiddleware
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
+        }
+
+        if ($this->isAppCrud) {
+            return view('stisla.' . $this->prefix . '.form', $data);
         }
 
         if ($this->isCrud)
@@ -1142,7 +1176,7 @@ class StislaController extends Controller implements HasMiddleware
      *
      * @return array
      */
-    private function getHasColumns(): array
+    protected function getHasColumns(): array
     {
         $columns = $this->repository->getColumns();
         $data = [];
@@ -1252,7 +1286,6 @@ class StislaController extends Controller implements HasMiddleware
             $photo = $this->fileUtil->urlToFilePath($model->photo) ?? null;
             $avatar = $this->fileUtil->urlToFilePath($model->avatar ?? null);
         }
-
         $html = view('stisla.includes.others.single-pdf', [
             'd'           => $model,
             'title'       => $this->title,
@@ -1262,6 +1295,11 @@ class StislaController extends Controller implements HasMiddleware
             'isGuru'      => $isGuru ?? false,
             'photo'       => $photo ?? false,
             'avatar'      => $avatar ?? false,
+            'isAppCrud'   => $this->isAppCrud,
+            'columns'     => $this->repository->getColumns(),
+            'htmlColumns' => $this->htmlColumns,
+            'fileColumns' => $this->fileColumns,
+            'col'         => request('col'),
         ])->render();
         return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . ' ' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
     }

@@ -1102,3 +1102,12 @@ function showImageModal(e, imageUrl) {
     .html('<div class="text-center"><img src="' + imageUrl + '" class="img-fluid" /></div>');
   $('#globalModal').find('.modal-title').html('Preview Gambar');
 }
+
+function showHtmlModal(e, htmlContentId) {
+  e.preventDefault();
+  $('#globalModal').modal('show');
+  $('#globalModal')
+    .find('.modal-body')
+    .html($('#' + htmlContentId).html());
+  $('#globalModal').find('.modal-title').html('Preview HTML');
+}

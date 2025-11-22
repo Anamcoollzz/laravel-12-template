@@ -1,5 +1,16 @@
 {{-- ini adalah hasil dari make:module --}}
-{{-- formcolumns --}}
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'pin', 'label' => __('PIN')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'datetime', 'label' => __('DateTime')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'verified', 'label' => __('Verified')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'status', 'label' => __('Status')])
+	</div>
 
 
 {{-- yang ini boleh dicopy yang dibutuhin --}}
@@ -38,7 +49,7 @@
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode', 'icon' => 'fa fa-barcode'])
   </div>
 @endif
-@if ($is_has_qr_code ?? false)
+@if ($is_has_qrcode ?? false)
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'qr_code', 'label' => 'QR Code', 'icon' => 'fa fa-qrcode'])
   </div>

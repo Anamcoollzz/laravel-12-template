@@ -196,6 +196,7 @@ Route::get('crud-examples', [CrudExampleController::class, 'indexData'])->name('
 Route::get('crud-examples/create', [CrudExampleController::class, 'createData'])->name('crud-examples.create');
 Route::post('crud-examples', [CrudExampleController::class, 'storeData'])->name('crud-examples.store');
 Route::get('crud-examples/{crudExample}', [CrudExampleController::class, 'showData'])->name('crud-examples.show');
+Route::get('crud-examples-single-pdf/{crud_example}', [CrudExampleController::class, 'singlePdf'])->name('crud-examples.single-pdf');
 Route::get('crud-examples/{crudExample}/edit', [CrudExampleController::class, 'editData'])->name('crud-examples.edit');
 Route::put('crud-examples/{crudExample}', [CrudExampleController::class, 'updateData'])->name('crud-examples.update');
 Route::delete('crud-examples/{crudExample}', [CrudExampleController::class, 'destroyData'])->name('crud-examples.destroy');

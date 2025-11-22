@@ -12,7 +12,11 @@
 
 <body>
   <h1>{{ $exportTitle ?? $title }}</h1>
-  @include('stisla.' . $prefix . '.table')
+  @if ($isAppCrud ?? false)
+    @include('stisla.' . $prefix . '.only-table')
+  @else
+    @include('stisla.' . $prefix . '.table')
+  @endif
 </body>
 
 </html>

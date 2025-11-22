@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CrudExampleRequest;
-use App\Repositories\CrudExampleRepository;
+use App\Http\Requests\FingerprintMachineRequest;
+use App\Repositories\FingerprintMachineRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class CrudExampleController extends StislaController
+class FingerprintMachineController extends StislaController
 {
 
     /**
@@ -16,28 +16,22 @@ class CrudExampleController extends StislaController
      */
     public function __construct()
     {
-        $this->title = 'Contoh CRUD';
+        $this->title = 'Mesin Sidik Jari';
 
         parent::__construct();
 
-        $this->icon         = 'fa fa-atom';
-        $this->repository   = new CrudExampleRepository;
-        $this->prefix       = $this->viewFolder = 'crud-examples';
+        $this->icon         = 'fa fa-users-viewfinder';
+        $this->repository   = new FingerprintMachineRepository;
+        $this->prefix       = $this->viewFolder = 'fingerprint-machines';
         $this->pdfPaperSize = 'A2';
         $this->isAppCrud    = true;
-        $this->request      = new CrudExampleRequest;
+        $this->request      = new FingerprintMachineRequest;
         $this->fileColumns  = [
             'file',
             'image',
             'avatar',
         ];
-        $this->htmlColumns  = [
-            'summernote',
-            'summernote_simple',
-            'tinymce',
-            'ckeditor',
-        ];
-        // $this->import     = new CrudExampleImport;
+        // $this->import     = new FingerprintMachineImport;
 
         $this->defaultMiddleware($this->title);
     }
@@ -95,13 +89,13 @@ class CrudExampleController extends StislaController
             $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file') && in_array('file', $columns))
-            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'crud-examples/files');
+            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'fingerprint-machines/files');
 
         if ($request->hasFile('image') && in_array('image', $columns))
-            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'crud-examples/images');
+            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'fingerprint-machines/images');
 
         if ($request->hasFile('avatar') && in_array('avatar', $columns))
-            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
+            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'fingerprint-machines/avatars');
 
         if ($request->password  && in_array('password', $columns))
             $data['password'] = bcrypt($request->password);
@@ -109,8 +103,12 @@ class CrudExampleController extends StislaController
         if (in_array('is_active', $columns))
             $data['is_active'] = $request->filled('is_active');
 
-        //rostart//columns
-        //roend
+        $data = array_merge($data, request()->only([
+            'pin',
+            'datetime',
+            'verified',
+            'status',
+        ]));
 
         return $data;
     }

@@ -269,7 +269,7 @@ if (is_app_chat($app)) {
         'chat_messages',
         'chat_rooms',
         'notifications',
-        'crud_examples',
+        // 'crud_examples',
         'religions',
         'school_classes',
         'class_levels',
@@ -360,6 +360,14 @@ return [
                     'icon' => 'fa fa-fingerprint',
                     'permission' => 'Sidik Jari X105-ID',
                     'is_active_if_url_includes' => 'finger-print-x105-ids*'
+                ],
+
+                [
+                    'menu_name' => 'Mesin Sidik Jari',
+                    'route_name' => 'fingerprint-machines.index',
+                    'icon' => 'fa fa-users-viewfinder',
+                    'permission' => 'Mesin Sidik Jari',
+                    'is_active_if_url_includes' => 'fingerprint-machines*'
                 ],
                 // additionalmenus
                 $additionalMenus,
