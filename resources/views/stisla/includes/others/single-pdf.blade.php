@@ -38,7 +38,11 @@
                 </td>
               @elseif ($column === 'created_by_id')
                 <td>
-                  <a target="_blank" href="{{ $d->$column }}">Cek</a>
+                  {{ $d->createdBy?->name }}
+                </td>
+              @elseif ($column === 'last_updated_by_id')
+                <td>
+                  {{ $d->lastUpdatedBy?->name }}
                 </td>
               @else
                 <td>{{ $d->$column }}</td>

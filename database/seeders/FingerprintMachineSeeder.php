@@ -93,7 +93,9 @@ class FingerprintMachineSeeder extends Seeder
         $isHasAvatar           = Schema::hasColumn($table, 'avatar');
         $isHasDeletedAt        = Schema::hasColumn($table, 'deleted_at');
 
-        foreach (range(1, 20) as $i) {
+        $machines = [1, 2];
+
+        foreach (range(1, 2) as $i) {
             $selectMultiple = [];
             foreach (range(1, Arr::random(range(1, 3))) as $j) {
                 array_push($selectMultiple, $options[$j - 1]);
@@ -142,10 +144,11 @@ class FingerprintMachineSeeder extends Seeder
                 // 'deleted_at' => null,
 
                 // ini hasil generate dari make:module command
-                'pin' => fake()->sentence(),
-			'datetime' => fake()->sentence(),
-			'verified' => fake()->sentence(),
-			'status' => fake()->sentence(),
+                'machine_name' => 'Mesin ' . $machines[$i - 1],
+                'ip' => fake()->ipv4(),
+                'key' => 0,
+                'machine_id' => $machines[$i - 1],
+                'fn' => 0,
                 'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
                 'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
                 'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),

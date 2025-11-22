@@ -25,10 +25,14 @@
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.edit', [$item->id]) }}"><i class="far fa-edit"></i> Ubah</a>
           @endif
           @if ($canDuplicate)
-            <a class="dropdown-item has-icon text-success" href="{{ route($routePrefix . '.duplicate', [$item->id]) }}"><i class="fas fa-copy"></i> Duplikat</a>
+            <a onclick="duplicateGlobal(event, '{{ route($routePrefix . '.duplicate', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-success" href="#">
+              <i class="fas fa-copy"></i> Duplikat
+            </a>
           @endif
           @if ($canDuplicate && $canShowDeleted === false)
-            <a class="dropdown-item has-icon text-danger" href="{{ route($routePrefix . '.duplicate', [$item->id]) }}"><i class="fas fa-trash"></i> Hapus</a>
+            <a onclick="deleteGlobal(event, '{{ route($routePrefix . '.destroy', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-danger" href="#">
+              <i class="fas fa-trash"></i> Hapus
+            </a>
           @else
             <a onclick="deleteGlobal(event, '{{ route($routePrefix . '.destroy', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-warning" href="#">
               <i class="fas fa-trash">
@@ -36,7 +40,7 @@
             </a>
           @endif
           @if ($canShowDeleted)
-            <a onclick="forceDeleteGlobal(event, '{{ route($routePrefix . '.destroy', [$item->id]) }}', 'danger')" class="dropdown-item has-icon text-danger" href="#">
+            <a onclick="forceDeleteGlobal(event, '{{ route($routePrefix . '.force-delete', [$item->id]) }}', 'danger')" class="dropdown-item has-icon text-danger" href="#">
               <i class="fas fa-trash">
               </i> Hapus Permanen
             </a>

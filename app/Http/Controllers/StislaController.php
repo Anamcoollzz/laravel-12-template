@@ -912,7 +912,7 @@ class StislaController extends Controller implements HasMiddleware
     {
         $data = array_merge($this->getIndexDataFromParent($data2), $data2, [
             'prefix'      => $this->prefix,
-            'htmlColumns' => $this->htmlColumns,
+            'htmlColumns' => $this->getHtmlColumns(),
             'fileColumns' => $this->fileColumns,
             'isAppCrud'   => $this->isAppCrud,
         ]);
@@ -1297,10 +1297,27 @@ class StislaController extends Controller implements HasMiddleware
             'avatar'      => $avatar ?? false,
             'isAppCrud'   => $this->isAppCrud,
             'columns'     => $this->repository->getColumns(),
-            'htmlColumns' => $this->htmlColumns,
+            'htmlColumns' => $this->getHtmlColumns(),
             'fileColumns' => $this->fileColumns,
             'col'         => request('col'),
         ])->render();
-        return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . ' ' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
+        return $this->pdfService->downloadPdf($html, filename: Str::snake($this->title . ' ' . $model->name . '_' . date('Y_m_d_h_i_s')) . '.pdf', paper: 'legal', orientation: 'portrait');
+    }
+
+    /**
+     * get html columns
+     *
+     * @return array
+     */
+    protected function getHtmlColumns(): array
+    {
+        $columns = $this->repository->getColumns();
+        $htmlColumns = [];
+        foreach ($columns as $column) {
+            if (in_array($column, $this->htmlColumns)) {
+                $htmlColumns[] = $column;
+            }
+        }
+        return $htmlColumns;
     }
 }

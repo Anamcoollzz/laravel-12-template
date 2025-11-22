@@ -1,16 +1,19 @@
 {{-- ini adalah hasil dari make:module --}}
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'pin', 'label' => __('PIN')])
-	</div>
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'machine_name', 'label' => __('Nama Mesin')])
+</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'datetime', 'label' => __('DateTime')])
-	</div>
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'ip', 'label' => __('IP')])
+</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'verified', 'label' => __('Verified')])
-	</div>
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'key', 'label' => __('Key')])
+</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'status', 'label' => __('Status')])
-	</div>
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'machine_id', 'label' => __('ID Mesin')])
+</div>
+<div class="col-md-6">
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'fn', 'label' => __('FN')])
+</div>
 
 
 {{-- yang ini boleh dicopy yang dibutuhin --}}
@@ -49,7 +52,7 @@
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode', 'icon' => 'fa fa-barcode'])
   </div>
 @endif
-@if ($is_has_qrcode ?? false)
+@if ($is_has_qr_code ?? false)
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'qr_code', 'label' => 'QR Code', 'icon' => 'fa fa-qrcode'])
   </div>

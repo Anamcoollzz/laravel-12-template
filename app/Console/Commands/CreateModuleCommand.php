@@ -87,6 +87,7 @@ class CreateModuleCommand extends Command
         $this->addPermission();
         $this->generateRoute();
         $this->addMenu();
+        $this->generateLang();
         $this->showInfo();
         $this->logCommand();
     }
@@ -253,6 +254,7 @@ Route::get('$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'indexDa
 Route::get('$prefix/create', [\App\Http\Controllers\\{$name}Controller::class, 'createData'])->name('$prefix.create');
 Route::post('$prefix', [\App\Http\Controllers\\{$name}Controller::class, 'storeData'])->name('$prefix.store');
 Route::get('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'showData'])->name('$prefix.show');
+Route::get('$prefix-single-pdf/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'singlePdf'])->name('$prefix.single-pdf');
 Route::get('$prefix/{{$snake}}/edit', [\App\Http\Controllers\\{$name}Controller::class, 'editData'])->name('$prefix.edit');
 Route::put('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'updateData'])->name('$prefix.update');
 Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'destroyData'])->name('$prefix.destroy');
@@ -367,7 +369,8 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
         file_put_contents($path, str_replace('crud-examples', $prefix, file_get_contents($path)));
         file_put_contents($path, str_replace('crudExample', $camel, file_get_contents($path)));
         file_put_contents($path, str_replace('//columns', "\n            " . implode("\n            ", array_map(function ($col, $index) use ($columnsArray, $labelsArray) {
-            return "['data' => '$col', 'name' => '$labelsArray[$index]'],";
+            // return "['data' => '$col', 'name' => '$labelsArray[$index]'],";
+            return "['data' => '$col', 'name' => '$col'],";
         }, $columnsArray, array_keys($columnsArray))), file_get_contents($path)));
         file_put_contents($path, str_replace('// columns', "\n            " . implode("\n            ", array_map(function ($col, $index) use ($columnsArray, $labelsArray, $modelName) {
             return "'$col' => fn($modelName \$item) => \$item->$col,";
@@ -413,11 +416,11 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
             $fname = $view->getRealPath();
             file_put_contents($fname, str_replace('{{-- columns --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
                 if ($col === 'password') {
-                    return "{{-- <th>{{ __('" . $labelsArray[$index] . "') }}</th> --}}";
+                    return "{{-- <th>{{ __('validation.attributes." . $col . "') }}</th> --}}";
                 } else if (Str::contains($col, 'email') || Str::contains($col, 'birthdate') || $col === 'name') {
                     return '';
                 }
-                return "<th>{{ __('" . $labelsArray[$index] . "') }}</th>";
+                return "<th>{{ __('validation.attributes." . $col . "') }}</th>";
             }, $columnsArray, array_keys($columnsArray))), file_get_contents($fname)));
             file_put_contents($fname, str_replace('{{-- columnstd --}}', implode("\n\t\t", array_map(function ($col, $index) use ($labelsArray) {
                 if ($col === 'deleted_at') {
@@ -444,7 +447,7 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
                 implode("\n", array_map(
                     function ($col, $index) use ($labelsArray) {
                         if (Str::endsWith($col, '_id')) {
-                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.selects.select', ['id' => '$col','name' => '$col','options' => '{$col}_options','label' => __('" . $labelsArray[$index] . "'),'required' => true,])\n\t</div>";
+                            return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.selects.select', ['id' => '$col','name' => '$col','options' => '{$col}_options','label' => __('validation.attributes." . $col . "'),'required' => true,])\n\t</div>";
                         } elseif ($col === 'name' || $col === 'birthdate' || $col === 'phone_number' || $col === 'address' || $col === 'birth_date') {
                             return '';
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-name')\n\t</div>";
@@ -456,9 +459,7 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
                             return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input-password')\n\t</div>";
                         }
 
-
-
-                        return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => __('" . $labelsArray[$index] . "')])\n\t</div>";
+                        return "<div class=\"col-md-6\">\n\t\t@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => '$col', 'label' => __('validation.attributes." . $col . "')])\n\t</div>";
                     },
                     $columnsArray,
                     array_keys($columnsArray)
@@ -467,5 +468,17 @@ Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::c
             ));
             file_put_contents($fname, str_replace('crud-examples', $prefix, file_get_contents($fname)));
         }
+    }
+
+    private function generateLang()
+    {
+        $filepath = base_path('lang/id/validation.php');
+        file_put_contents($filepath, str_replace(
+            "'attributes' => [",
+            "'attributes' => [\n        " . implode("\n        ", array_map(function ($col, $index) {
+                return "'$col' => '" . $this->labelsArray[$index] . "',";
+            }, $this->columnsArray, array_keys($this->columnsArray))) . "",
+            file_get_contents($filepath)
+        ));
     }
 }

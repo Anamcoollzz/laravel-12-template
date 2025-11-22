@@ -48,6 +48,13 @@
               <h4><i class="{{ $moduleIcon }}"></i> Data {{ $title }}</h4>
 
               <div class="card-header-action">
+                @if (isset($canShowDeleted) && $canShowDeleted)
+                  @php
+                    $show_deleted = request('show_deleted') === 'true';
+                  @endphp
+                  <a href="?show_deleted={{ $show_deleted ? '' : 'true' }}" class="btn btn-{{ $show_deleted ? 'danger' : 'primary' }}" data-toggle="tooltip"
+                    title="{{ __($show_deleted ? 'Sembunyikan Data Yang Dihapus' : 'Tampilkan Data Yang Dihapus') }}"><i class="fa fa-{{ $show_deleted ? 'eye-slash' : 'eye' }}"></i></a>
+                @endif
                 @if ($canImportExcel)
                   @include('stisla.includes.forms.buttons.btn-import-excel')
                 @endif
@@ -71,7 +78,7 @@
             </div>
           </div>
 
-          @if (isset($canShowDeleted) && $canShowDeleted)
+          @if (isset($canShowDeleted) && $canShowDeleted && request()->get('show_deleted') == 'true')
             <div class="card">
               <div class="card-header">
                 <h4><i class="{{ $moduleIcon }}"></i> Data {{ $title }} Yang Sudah Dihapus</h4>

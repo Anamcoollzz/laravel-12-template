@@ -11,6 +11,7 @@
     <div class="collapse {{ $is_show === false ? '' : 'show' }}" id="collapseFilterData">
       <form action="">
         @csrf
+        <input type="hidden" name="show_deleted" value="{{ request()->get('show_deleted') }}">
         <div class="row">
           @if (is_app_dataku() && Route::is('user-management.users.index') && (request('filter_role') === '3' || request('filter_role') === '4'))
             <div class="col-md-6">
