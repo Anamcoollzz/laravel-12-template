@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PermissionController extends StislaController
@@ -128,6 +129,7 @@ class PermissionController extends StislaController
     {
         $data   = $this->getStoreData($request);
         $result = $this->userRepository->createPermission($data);
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         logCreate('Permission', $result);
 
@@ -159,6 +161,7 @@ class PermissionController extends StislaController
         $before = $this->userRepository->findPermission($permission->id);
         $data   = $this->getStoreData($request);
         $after  = $this->userRepository->updatePermission($permission->id, $data);
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         logUpdate('Permission', $before, $after);
 
@@ -192,6 +195,8 @@ class PermissionController extends StislaController
             $this->userRepository->deletePermission($permission->id);
 
             logDelete('Permission', $before);
+
+            app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
             DB::commit();
 

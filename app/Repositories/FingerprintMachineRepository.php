@@ -33,10 +33,11 @@ class FingerprintMachineRepository extends Repository
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
             
-            'pin' => fn(FingerprintMachine $item) => $item->pin,
-            'datetime' => fn(FingerprintMachine $item) => $item->datetime,
-            'verified' => fn(FingerprintMachine $item) => $item->verified,
-            'status' => fn(FingerprintMachine $item) => $item->status,
+            'machine_name' => fn(FingerprintMachine $item) => $item->machine_name,
+            'ip' => fn(FingerprintMachine $item) => $item->ip,
+            'key' => fn(FingerprintMachine $item) => $item->key,
+            'machine_id' => fn(FingerprintMachine $item) => $item->machine_id,
+            'fn' => fn(FingerprintMachine $item) => $item->fn,
 
 
             // yang ini bisa dikomen aja kalau gak dipakai
@@ -100,10 +101,11 @@ class FingerprintMachineRepository extends Repository
                 'orderable'  => false
             ],
             
-            ['data' => 'pin', 'name' => 'PIN'],
-            ['data' => 'datetime', 'name' => 'DateTime'],
-            ['data' => 'verified', 'name' => 'Verified'],
-            ['data' => 'status', 'name' => 'Status'],
+            ['data' => 'machine_name', 'name' => 'machine_name'],
+            ['data' => 'ip', 'name' => 'ip'],
+            ['data' => 'key', 'name' => 'key'],
+            ['data' => 'machine_id', 'name' => 'machine_id'],
+            ['data' => 'fn', 'name' => 'fn'],
 
             // ini bisa dikomen nanti ya kalau tidak digunakan
             ['data' => 'name', 'name' => 'name'],

@@ -1,1 +1,1 @@
-php artisan make:module FingerprintMachine --columns="pin:PIN,datetime:DateTime,verified:Verified,status:Status" --icon="fa fa-users-viewfinder" --title="Mesin Sidik Jari"
+php artisan make:module FingerprintMachine --columns="machine_name:Nama Mesin,ip:IP,key:Key,machine_id:ID Mesin,fn:FN" --icon="fa fa-users-viewfinder" --title="Mesin Sidik Jari"

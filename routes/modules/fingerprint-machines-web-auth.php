@@ -23,6 +23,7 @@ Route::get('fingerprint-machines', [\App\Http\Controllers\FingerprintMachineCont
 Route::get('fingerprint-machines/create', [\App\Http\Controllers\FingerprintMachineController::class, 'createData'])->name('fingerprint-machines.create');
 Route::post('fingerprint-machines', [\App\Http\Controllers\FingerprintMachineController::class, 'storeData'])->name('fingerprint-machines.store');
 Route::get('fingerprint-machines/{fingerprint_machine}', [\App\Http\Controllers\FingerprintMachineController::class, 'showData'])->name('fingerprint-machines.show');
+Route::get('fingerprint-machines-single-pdf/{fingerprint_machine}', [\App\Http\Controllers\FingerprintMachineController::class, 'singlePdf'])->name('fingerprint-machines.single-pdf');
 Route::get('fingerprint-machines/{fingerprint_machine}/edit', [\App\Http\Controllers\FingerprintMachineController::class, 'editData'])->name('fingerprint-machines.edit');
 Route::put('fingerprint-machines/{fingerprint_machine}', [\App\Http\Controllers\FingerprintMachineController::class, 'updateData'])->name('fingerprint-machines.update');
 Route::delete('fingerprint-machines/{fingerprint_machine}', [\App\Http\Controllers\FingerprintMachineController::class, 'destroyData'])->name('fingerprint-machines.destroy');

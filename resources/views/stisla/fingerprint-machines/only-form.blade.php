@@ -1,18 +1,25 @@
 {{-- ini adalah hasil dari make:module --}}
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'machine_name', 'label' => __('Nama Mesin')])
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'machine_name', 'label' => __('validation.attributes.machine_name')])
 </div>
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'ip', 'label' => __('IP')])
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'ip', 'label' => __('validation.attributes.ip')])
 </div>
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'key', 'label' => __('Key')])
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'key', 'label' => __('validation.attributes.key')])
 </div>
 <div class="col-md-6">
+  {{-- @include('stisla.includes.forms.selects.select', [
+      'id' => 'machine_id',
+      'name' => 'machine_id',
+      'options' => 'machine_id_options',
+      'label' => __('validation.attributes.machine_id'),
+      'required' => true,
+  ]) --}}
   @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'machine_id', 'label' => __('ID Mesin')])
 </div>
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'fn', 'label' => __('FN')])
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'fn', 'label' => __('validation.attributes.fn')])
 </div>
 
 

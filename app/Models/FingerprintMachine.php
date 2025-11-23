@@ -64,10 +64,11 @@ class FingerprintMachine extends Model
 
         // ini hasil generate dari create:module command
         
-            'pin',
-            'datetime',
-            'verified',
-            'status',
+            'machine_name',
+            'ip',
+            'key',
+            'machine_id',
+            'fn',
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',

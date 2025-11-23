@@ -44,10 +44,11 @@ class FingerprintMachineRequest extends FormRequest
         // dd($this);
 
         return [
-            'pin'		=> 'required',
-            'datetime'		=> 'required',
-            'verified'		=> 'required',
-            'status'		=> 'required',
+            'machine_name'		=> 'required',
+            'ip'		=> 'required',
+            'key'		=> 'required',
+            'machine_id'		=> 'required',
+            'fn'		=> 'required',
         ];
 
         // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas

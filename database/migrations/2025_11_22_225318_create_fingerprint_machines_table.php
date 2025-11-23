@@ -15,10 +15,12 @@ return new class extends Migration
         if (!in_array('fingerprint_machines', config('stisla.table_excludes')));
         Schema::create('fingerprint_machines', function (Blueprint $table) {
             $table->id();
-            $table->string('pin', 50)->comment('PIN');
-			$table->string('datetime', 50)->comment('DateTime');
-			$table->string('verified', 50)->comment('Verified');
-			$table->string('status', 50)->comment('Status');
+            $table->string('machine_name', 50)->comment('Nama Mesin');
+			$table->string('ip', 50)->comment('IP');
+			$table->string('key', 50)->comment('Key');
+			$table->unsignedBigInteger('machine_id')->nullable()->comment('ID Mesin');
+			$table->foreign('machine_id')->references('id')->on('machines')->onUpdate('set null')->onDelete('set null');
+			$table->string('fn', 50)->comment('FN');
 
             // wajib
             $table->timestamps();

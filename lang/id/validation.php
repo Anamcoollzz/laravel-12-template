@@ -188,6 +188,11 @@ return [
     */
 
     'attributes' => [
+        'machine_name' => 'Nama Mesin',
+        'ip' => 'IP',
+        'key' => 'Key',
+        'machine_id' => 'ID Mesin',
+        'fn' => 'FN',
         'name'                  => 'Nama',
         'username'              => 'Nama Pengguna',
         'email'                 => 'Alamat Email',
@@ -307,9 +312,6 @@ return [
         "tinymce" => "TinyMCE",
         "ckeditor" => "CKEditor",
         "is_active" => "Aktif",
-
-        // ini hasil generate dari create:module command
-        //columns
         "created_by_id" => "Dibuat Oleh",
         "last_updated_by_id" => "Terakhir Diperbarui Oleh",
         "deleted_at" => "Dihapus Pada",
@@ -321,6 +323,7 @@ return [
         'deleted_by' => 'Dihapus Oleh',
         'actions' => 'Aksi',
         'id' => 'ID',
+        //columns
     ],
 
 ];

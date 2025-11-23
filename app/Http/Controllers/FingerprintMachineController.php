@@ -31,6 +31,12 @@ class FingerprintMachineController extends StislaController
             'image',
             'avatar',
         ];
+        $this->htmlColumns  = [
+            'summernote',
+            'summernote_simple',
+            'tinymce',
+            'ckeditor',
+        ];
         // $this->import     = new FingerprintMachineImport;
 
         $this->defaultMiddleware($this->title);
@@ -104,10 +110,11 @@ class FingerprintMachineController extends StislaController
             $data['is_active'] = $request->filled('is_active');
 
         $data = array_merge($data, request()->only([
-            'pin',
-            'datetime',
-            'verified',
-            'status',
+            'machine_name',
+            'ip',
+            'key',
+            'machine_id',
+            'fn',
         ]));
 
         return $data;
