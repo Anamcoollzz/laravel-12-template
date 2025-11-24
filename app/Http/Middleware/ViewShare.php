@@ -85,6 +85,7 @@ class ViewShare
                 }
             }
             $menus = $this->menuRepository->getMenus();
+            // dd($menus[0]->menus->toArray());
             view()->share('_sidebar_menus', $menus);
 
             if (auth_check() && can('Notifikasi'))

@@ -63,11 +63,13 @@ class FingerPrintX105Id extends Model
 
 
         // ini hasil generate dari create:module command
-        
-            'pin',
-            'datetime',
-            'verified',
-            'status',
+
+        'machine_id',
+        'pin',
+        'date_time',
+        'verified',
+        'status',
+        'work_code',
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',
@@ -83,4 +85,12 @@ class FingerPrintX105Id extends Model
         'checkbox2'        => 'array',
         'select2_multiple' => 'array',
     ];
+
+    /**
+     * Get the machine that owns the FingerPrintX105Id
+     */
+    public function machine(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(FingerprintMachine::class, 'machine_id');
+    }
 }

@@ -185,6 +185,13 @@ class StislaController extends Controller implements HasMiddleware
     protected array $htmlColumns = [];
 
     /**
+     * with columns
+     *
+     * @var array
+     */
+    protected array $withColumns = [];
+
+    /**
      * import
      *
      * @var GeneralImport
@@ -1189,6 +1196,27 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
+     * before index data
+     *
+     * @return void
+     */
+    protected function beforeIndexData()
+    {
+        // to be overridden in child class if needed
+    }
+
+    /**
+     * additional index data
+     *
+     * @return array
+     */
+    protected function additionalIndexData(): array
+    {
+        // to be overridden in child class if needed
+        return [];
+    }
+
+    /**
      * showing data page
      *
      * @param Request $request
@@ -1196,11 +1224,12 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function indexData(Request $request)
     {
+        $this->beforeIndexData();
         $columns = $this->getHasColumns();
         return $this->prepareIndex($request, array_merge([
             'data'        => $this->getIndexData2(),
             'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
-        ], $columns));
+        ], $columns, $this->additionalIndexData()));
     }
 
     /**
@@ -1211,10 +1240,10 @@ class StislaController extends Controller implements HasMiddleware
     public function getIndexData2(?bool $deleted = false)
     {
         return $this->repository->getFullDataWith(
-            [
+            array_merge($this->withColumns, [
                 'createdBy',
                 'lastUpdatedBy',
-            ],
+            ]),
             where: [],
             whereHas: [],
             deleted: $deleted

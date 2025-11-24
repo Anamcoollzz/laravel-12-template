@@ -3,9 +3,9 @@
 use App\Enums\AppEnum;
 
 // $app = AppEnum::APP_BLANK;
-// $app = AppEnum::APP_DEFAULT;
+$app = AppEnum::APP_DEFAULT;
 // $app = AppEnum::APP_DATAKU;
-$app = AppEnum::APP_FINGERPRINT;
+// $app = AppEnum::APP_FINGERPRINT;
 $appName = 'Laravel 12 Template';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
@@ -355,10 +355,10 @@ return [
                 // ],
 
                 [
-                    'menu_name' => 'Sidik Jari X105-ID',
+                    'menu_name' => 'Sidik Jari X105 ID',
                     'route_name' => 'finger-print-x105-ids.index',
                     'icon' => 'fa fa-fingerprint',
-                    'permission' => 'Sidik Jari X105-ID',
+                    'permission' => 'Sidik Jari X105 ID',
                     'is_active_if_url_includes' => 'finger-print-x105-ids*'
                 ],
 

@@ -1,0 +1,1 @@
+php artisan make:module FingerPrintX105Id --columns="machine_id:Nama Mesin,pin:PIN,date_time:DateTime,verified:Verified,status:Status,work_code:Work Code" --icon="fa fa-fingerprint" --title="Sidik Jari X105 ID"

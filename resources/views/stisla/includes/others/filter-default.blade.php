@@ -14,7 +14,7 @@
         <input type="hidden" name="show_deleted" value="{{ request()->get('show_deleted') }}">
         <div class="row">
           @if (is_app_dataku() && Route::is('user-management.users.index') && (request('filter_role') === '3' || request('filter_role') === '4'))
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @php
                 $levels = isset($levels) ? $levels : \App\Models\ClassLevel::select('id', 'level_name')->orderBy('level_name')->get();
               @endphp
@@ -28,7 +28,7 @@
                   'selected' => request('filter_level_id', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @php
                 $schoolYears = isset($schoolYears) ? $schoolYears : \App\Models\SchoolYear::select('id', 'year_name')->orderBy('year_name')->get();
               @endphp
@@ -42,7 +42,7 @@
                   'selected' => request('filter_year_id', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @php
                 $semesters = isset($semesters) ? $semesters : \App\Models\Semester::select('id', 'semester')->orderBy('semester')->get();
               @endphp
@@ -58,7 +58,7 @@
             </div>
             <input type="hidden" name="filter_role" value="{{ request('filter_role') }}">
           @else
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_start_created_at',
@@ -67,7 +67,7 @@
                   'value' => request('filter_start_created_at', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_end_created_at',
@@ -76,7 +76,7 @@
                   'value' => request('filter_end_created_at', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_start_updated_at',
@@ -85,7 +85,7 @@
                   'value' => request('filter_start_updated_at', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_end_updated_at',
@@ -94,7 +94,7 @@
                   'value' => request('filter_end_updated_at', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @php
                 $users = isset($users) ? $users : \App\Models\User::select('id', 'name')->orderBy('name')->get();
               @endphp
@@ -108,7 +108,7 @@
                   'selected' => request('filter_created_by_id', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.selects.select', [
                   'id' => 'filter_last_updated_by_id',
                   'name' => 'filter_last_updated_by_id',
@@ -119,7 +119,7 @@
                   'selected' => request('filter_last_updated_by_id', null),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.selects.select', [
                   'id' => 'filter_sort_by_created_at',
                   'name' => 'filter_sort_by_created_at',
@@ -130,7 +130,7 @@
                   'selected' => request('filter_sort_by_created_at', 'latest'),
               ])
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => true,
                   'name' => 'filter_limit',
@@ -141,7 +141,7 @@
               ])
             </div>
             @if (Route::is('user-management.users.index'))
-              <div class="col-md-6">
+              <div class="col-md-6 col-lg-3">
                 @php
                   $userRepo = new \App\Repositories\UserRepository();
                 @endphp

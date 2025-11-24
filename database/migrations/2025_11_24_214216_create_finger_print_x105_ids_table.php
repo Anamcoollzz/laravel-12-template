@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('fingerprint_machines');
-        if (!in_array('fingerprint_machines', config('stisla.table_excludes')));
-        Schema::create('fingerprint_machines', function (Blueprint $table) {
+        Schema::dropIfExists('finger_print_x105_ids');
+        if (!in_array('finger_print_x105_ids', config('stisla.table_excludes')));
+        Schema::create('finger_print_x105_ids', function (Blueprint $table) {
             $table->id();
-            $table->string('machine_name', 50)->comment('Nama Mesin');
-            $table->string('ip', 50)->comment('IP');
-            $table->string('key', 50)->comment('Key');
-            $table->unsignedBigInteger('machine_id')->nullable()->comment('ID Mesin');
-            $table->foreign('machine_id')->references('id')->on('machines')->onUpdate('set null')->onDelete('set null');
-            $table->string('fn', 50)->comment('FN');
+            $table->unsignedBigInteger('machine_id')->nullable()->comment('Nama Mesin');
+            $table->foreign('machine_id')->references('id')->on('fingerprint_machines')->onUpdate('set null')->onDelete('set null');
+            $table->string('pin', 50)->comment('PIN');
+            $table->string('date_time', 50)->comment('DateTime');
+            $table->string('verified', 50)->comment('Verified');
+            $table->string('status', 50)->comment('Status');
+            $table->string('work_code', 50)->comment('Work Code');
 
             // wajib
             $table->timestamps();
@@ -38,7 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('fingerprint_machines');
+        Schema::dropIfExists('finger_print_x105_ids');
     }
 };

@@ -1,15 +1,21 @@
 {{-- ini adalah hasil dari make:module --}}
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'pin', 'label' => __('PIN')])
+		@include('stisla.includes.forms.selects.select', ['id' => 'machine_id','name' => 'machine_id','options' => 'machine_id_options','label' => __('validation.attributes.machine_id'),'required' => true,])
 	</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'datetime', 'label' => __('DateTime')])
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'pin', 'label' => __('validation.attributes.pin')])
 	</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'verified', 'label' => __('Verified')])
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'date_time', 'label' => __('validation.attributes.date_time')])
 	</div>
 <div class="col-md-6">
-		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'status', 'label' => __('Status')])
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'verified', 'label' => __('validation.attributes.verified')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'status', 'label' => __('validation.attributes.status')])
+	</div>
+<div class="col-md-6">
+		@include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'work_code', 'label' => __('validation.attributes.work_code')])
 	</div>
 
 
@@ -49,7 +55,7 @@
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'barcode', 'label' => 'Barcode', 'icon' => 'fa fa-barcode'])
   </div>
 @endif
-@if ($is_has_qrcode ?? false)
+@if ($is_has_qr_code ?? false)
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'qr_code', 'label' => 'QR Code', 'icon' => 'fa fa-qrcode'])
   </div>

@@ -385,18 +385,32 @@ class Repository extends RepositoryAbstract
      *
      * @param string $label
      * @param string $value
+     * @param array|null $where
+     * @param string|null $whereField
+     * @param array|null $whereIn
+     * @param callable|null $map
      * @return array
      */
-    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [])
+    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [], ?callable $map = null): array
     {
-        return $this->query()->select($label, $value)
+        $query = $this->query()
             ->when(!empty($where), function ($query) use ($where) {
                 $query->where($where);
             })
             ->when(!empty($whereIn), function ($query) use ($whereField, $whereIn) {
                 $query->whereIn($whereField, $whereIn);
             })
-            ->get()->pluck($label, $value)->toArray();
+            ->when($map !== null, function ($query) use ($map) {
+                $query->select('*');
+            })
+            ->when($map === null, function ($query) use ($label, $value) {
+                $query->select($label, $value);
+            })
+            ->get()
+            ->when($map !== null, function ($collection) use ($map) {
+                return $collection->map($map);
+            });
+        return $query->pluck($label, $value)->toArray();
     }
 
     /**
@@ -552,6 +566,11 @@ class Repository extends RepositoryAbstract
     public function updateOrCreate(array $attributes, array $values = [])
     {
         return $this->query()->updateOrCreate($attributes, $values);
+    }
+
+    public function upsert(array $values = [], array $uniqueBy = [])
+    {
+        return $this->query()->upsert($values, $uniqueBy);
     }
 
     /**

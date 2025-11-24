@@ -23,9 +23,10 @@ Route::get('finger-print-x105-ids', [\App\Http\Controllers\FingerPrintX105IdCont
 Route::get('finger-print-x105-ids/create', [\App\Http\Controllers\FingerPrintX105IdController::class, 'createData'])->name('finger-print-x105-ids.create');
 Route::post('finger-print-x105-ids', [\App\Http\Controllers\FingerPrintX105IdController::class, 'storeData'])->name('finger-print-x105-ids.store');
 Route::get('finger-print-x105-ids/{finger_print_x105_id}', [\App\Http\Controllers\FingerPrintX105IdController::class, 'showData'])->name('finger-print-x105-ids.show');
+Route::get('finger-print-x105-ids-single-pdf/{finger_print_x105_id}', [\App\Http\Controllers\FingerPrintX105IdController::class, 'singlePdf'])->name('finger-print-x105-ids.single-pdf');
 Route::get('finger-print-x105-ids/{finger_print_x105_id}/edit', [\App\Http\Controllers\FingerPrintX105IdController::class, 'editData'])->name('finger-print-x105-ids.edit');
 Route::put('finger-print-x105-ids/{finger_print_x105_id}', [\App\Http\Controllers\FingerPrintX105IdController::class, 'updateData'])->name('finger-print-x105-ids.update');
+Route::post('finger-print-x105-ids-get-log', [\App\Http\Controllers\FingerPrintX105IdController::class, 'getAttendanceLog'])->name('finger-print-x105-ids.get-log');
 Route::delete('finger-print-x105-ids/{finger_print_x105_id}', [\App\Http\Controllers\FingerPrintX105IdController::class, 'destroyData'])->name('finger-print-x105-ids.destroy');
 // Route::resource('finger-print-x105-ids', \App\Http\Controllers\FingerPrintX105IdController::class);
 //route
-        

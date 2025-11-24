@@ -44,10 +44,12 @@ class FingerPrintX105IdRequest extends FormRequest
         // dd($this);
 
         return [
+            'machine_id'		=> 'required',
             'pin'		=> 'required',
-            'datetime'		=> 'required',
+            'date_time'		=> 'required',
             'verified'		=> 'required',
             'status'		=> 'required',
+            'work_code'		=> 'required',
         ];
 
         // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas

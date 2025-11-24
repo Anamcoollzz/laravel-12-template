@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\FingerprintMachine;
 use App\Models\FingerPrintX105Id;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -35,7 +36,8 @@ class FingerPrintX105IdSeeder extends Seeder
      */
     public function run()
     {
-        if (Schema::hasTable((new FingerPrintX105Id())->getTable()) == false) {
+        $table = (new FingerPrintX105Id())->getTable();
+        if (!Schema::hasTable($table)) {
             return;
         }
         Schema::disableForeignKeyConstraints();
@@ -58,7 +60,7 @@ class FingerPrintX105IdSeeder extends Seeder
         //         'last_updated_by_id' => null,
         //     ];
         // }
-        $table                 = (new FingerPrintX105Id())->getTable();
+
         $isHasText             = Schema::hasColumn($table, 'text');
         $isHasEmail            = Schema::hasColumn($table, 'email');
         $isHasNumber           = Schema::hasColumn($table, 'number');
@@ -92,164 +94,170 @@ class FingerPrintX105IdSeeder extends Seeder
         $isHasAvatar           = Schema::hasColumn($table, 'avatar');
         $isHasDeletedAt        = Schema::hasColumn($table, 'deleted_at');
 
-        foreach (range(1, 20) as $i) {
-            $selectMultiple = [];
-            foreach (range(1, Arr::random(range(1, 3))) as $j) {
-                array_push($selectMultiple, $options[$j - 1]);
-            }
-            $checkbox = [];
-            foreach (range(1, Arr::random(range(1, 3))) as $j) {
-                array_push($checkbox, $options[$j - 1]);
-            }
-            $checkbox2 = [];
-            foreach (range(1, Arr::random(range(1, 3))) as $j) {
-                array_push($checkbox2, $options[$j - 1]);
-            }
-            $newData = [
-                // ini boleh dikomen nanti ya kalau tidak digunakan
-                'text'               => Str::random(10),
-                'email'              => $email = $faker->email,
-                'number'             => $faker->numberBetween(1, 1000),
-                'currency'           => $faker->numberBetween(1, 10000),
-                'currency_idr'       => $faker->numberBetween(1000, 10000000),
-                'select'             => Arr::random($options),
-                'select2'            => Arr::random($options),
-                'select2_multiple'   => json_encode($selectMultiple),
-                'textarea'           => $faker->text(100),
-                'radio'              => Arr::random($radioOptions),
-                'checkbox'           => json_encode($checkbox),
-                'checkbox2'          => json_encode($checkbox2),
-                'tags'               => implode(',', $checkbox2),
-                'file'               => 'https://picsum.photos/300/200?random=' . $i,
-                'image'              => 'https://picsum.photos/300/200?random=' . $i,
-                'date'               => $faker->date('Y-m-d'),
-                'time'               => $faker->date('H:i:s'),
-                'color'              => $faker->hexColor,
-                'summernote_simple'  => $faker->text(100),
-                'summernote'         => $faker->randomHtml,
-                'tinymce'            => $faker->randomHtml,
-                'ckeditor'           => $faker->randomHtml,
-                'is_active'          => Arr::random([true, false]),
-                'barcode'            => Str::random(10),
-                'qr_code'            => $faker->ean13,
-                'name'               => $faker->name,
-                'password'           => $pass,
-                'avatar'             => $this->generateImage($email),
-                'phone_number'       => $faker->phoneNumber,
-                'birthdate'          => $faker->date('Y-m-d'),
-                'address'            => $faker->address,
-                // 'deleted_at' => null,
+        $machines = FingerprintMachine::all();
 
-                // ini hasil generate dari make:module command
-                'pin' => fake()->sentence(),
-			'datetime' => fake()->sentence(),
-			'verified' => fake()->sentence(),
-			'status' => fake()->sentence(),
-                'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
-                'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
-                'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
-                'created_by_id'      => Arr::random([null, 1]),
-                'last_updated_by_id' => Arr::random([null, 1]),
-            ];
+        foreach ($machines as $machine) {
+            foreach (range(1, 20) as $i) {
+                $selectMultiple = [];
+                foreach (range(1, Arr::random(range(1, 3))) as $j) {
+                    array_push($selectMultiple, $options[$j - 1]);
+                }
+                $checkbox = [];
+                foreach (range(1, Arr::random(range(1, 3))) as $j) {
+                    array_push($checkbox, $options[$j - 1]);
+                }
+                $checkbox2 = [];
+                foreach (range(1, Arr::random(range(1, 3))) as $j) {
+                    array_push($checkbox2, $options[$j - 1]);
+                }
+                $newData = [
+                    // ini boleh dikomen nanti ya kalau tidak digunakan
+                    'text'               => Str::random(10),
+                    'email'              => $email = $faker->email,
+                    'number'             => $faker->numberBetween(1, 1000),
+                    'currency'           => $faker->numberBetween(1, 10000),
+                    'currency_idr'       => $faker->numberBetween(1000, 10000000),
+                    'select'             => Arr::random($options),
+                    'select2'            => Arr::random($options),
+                    'select2_multiple'   => json_encode($selectMultiple),
+                    'textarea'           => $faker->text(100),
+                    'radio'              => Arr::random($radioOptions),
+                    'checkbox'           => json_encode($checkbox),
+                    'checkbox2'          => json_encode($checkbox2),
+                    'tags'               => implode(',', $checkbox2),
+                    'file'               => 'https://picsum.photos/300/200?random=' . $i,
+                    'image'              => 'https://picsum.photos/300/200?random=' . $i,
+                    'date'               => $faker->date('Y-m-d'),
+                    'time'               => $faker->date('H:i:s'),
+                    'color'              => $faker->hexColor,
+                    'summernote_simple'  => $faker->text(100),
+                    'summernote'         => $faker->randomHtml,
+                    'tinymce'            => $faker->randomHtml,
+                    'ckeditor'           => $faker->randomHtml,
+                    'is_active'          => Arr::random([true, false]),
+                    'barcode'            => Str::random(10),
+                    'qr_code'            => $faker->ean13,
+                    'name'               => $faker->name,
+                    'password'           => $pass,
+                    'avatar'             => $this->generateImage($email),
+                    'phone_number'       => $faker->phoneNumber,
+                    'birthdate'          => $faker->date('Y-m-d'),
+                    'address'            => $faker->address,
+                    // 'deleted_at' => null,
 
-            if (!$isHasText) {
-                unset($newData['text']);
-            }
-            if (!$isHasEmail) {
-                unset($newData['email']);
-            }
-            if (!$isHasNumber) {
-                unset($newData['number']);
-            }
-            if (!$isHasCurrency) {
-                unset($newData['currency']);
-            }
-            if (!$isHasCurrencyIdr) {
-                unset($newData['currency_idr']);
-            }
-            if (!$isHasSelect) {
-                unset($newData['select']);
-            }
-            if (!$isHasSelect2) {
-                unset($newData['select2']);
-            }
-            if (!$isHasSelect2Multiple) {
-                unset($newData['select2_multiple']);
-            }
-            if (!$isHasTextarea) {
-                unset($newData['textarea']);
-            }
-            if (!$isHasRadio) {
-                unset($newData['radio']);
-            }
-            if (!$isHasCheckbox) {
-                unset($newData['checkbox']);
-            }
-            if (!$isHasCheckbox2) {
-                unset($newData['checkbox2']);
-            }
-            if (!$isHasTags) {
-                unset($newData['tags']);
-            }
-            if (!$isHasFile) {
-                unset($newData['file']);
-            }
-            if (!$isHasImage) {
-                unset($newData['image']);
-            }
-            if (!$isHasDate) {
-                unset($newData['date']);
-            }
-            if (!$isHasTime) {
-                unset($newData['time']);
-            }
-            if (!$isHasColor) {
-                unset($newData['color']);
-            }
-            if (!$isHasSummernoteSimple) {
-                unset($newData['summernote_simple']);
-            }
-            if (!$isHasSummernote) {
-                unset($newData['summernote']);
-            }
-            if (!$isHasTinymce) {
-                unset($newData['tinymce']);
-            }
-            if (!$isHasCkeditor) {
-                unset($newData['ckeditor']);
-            }
-            if (!$isHasIsActive) {
-                unset($newData['is_active']);
-            }
-            if (!$isHasBarcode) {
-                unset($newData['barcode']);
-            }
-            if (!$isHasQrCode) {
-                unset($newData['qr_code']);
-            }
-            if (!$isHasName) {
-                unset($newData['name']);
-            }
-            if (!$isHasPhoneNumber) {
-                unset($newData['phone_number']);
-            }
-            if (!$isHasBirthdate) {
-                unset($newData['birthdate']);
-            }
-            if (!$isHasAddress) {
-                unset($newData['address']);
-            }
-            if (!$isHasPassword) {
-                unset($newData['password']);
-            }
-            if (!$isHasAvatar) {
-                unset($newData['avatar']);
-            }
-            if (!$isHasDeletedAt) {
-                unset($newData['deleted_at']);
-            }
+                    // ini hasil generate dari make:module command
+                    'machine_id' => $machine->id,
+                    'pin' => fake()->numberBetween(1000, 9999),
+                    'date_time' => fake()->dateTimeBetween('-1 month', 'now'),
+                    'verified' => Arr::random([0, 1, 2]),
+                    'status' => Arr::random([0, 1]),
+                    'work_code' => Arr::random([0, 1]),
+                    'deleted_at'         => Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]),
+                    'created_at'         => $faker->dateTimeBetween('-1 month', 'now'),
+                    'updated_at'         => $faker->dateTimeBetween('-1 month', 'now'),
+                    'created_by_id'      => Arr::random([null, 1]),
+                    'last_updated_by_id' => Arr::random([null, 1]),
+                ];
 
-            array_push($data, $newData);
+                if (!$isHasText) {
+                    unset($newData['text']);
+                }
+                if (!$isHasEmail) {
+                    unset($newData['email']);
+                }
+                if (!$isHasNumber) {
+                    unset($newData['number']);
+                }
+                if (!$isHasCurrency) {
+                    unset($newData['currency']);
+                }
+                if (!$isHasCurrencyIdr) {
+                    unset($newData['currency_idr']);
+                }
+                if (!$isHasSelect) {
+                    unset($newData['select']);
+                }
+                if (!$isHasSelect2) {
+                    unset($newData['select2']);
+                }
+                if (!$isHasSelect2Multiple) {
+                    unset($newData['select2_multiple']);
+                }
+                if (!$isHasTextarea) {
+                    unset($newData['textarea']);
+                }
+                if (!$isHasRadio) {
+                    unset($newData['radio']);
+                }
+                if (!$isHasCheckbox) {
+                    unset($newData['checkbox']);
+                }
+                if (!$isHasCheckbox2) {
+                    unset($newData['checkbox2']);
+                }
+                if (!$isHasTags) {
+                    unset($newData['tags']);
+                }
+                if (!$isHasFile) {
+                    unset($newData['file']);
+                }
+                if (!$isHasImage) {
+                    unset($newData['image']);
+                }
+                if (!$isHasDate) {
+                    unset($newData['date']);
+                }
+                if (!$isHasTime) {
+                    unset($newData['time']);
+                }
+                if (!$isHasColor) {
+                    unset($newData['color']);
+                }
+                if (!$isHasSummernoteSimple) {
+                    unset($newData['summernote_simple']);
+                }
+                if (!$isHasSummernote) {
+                    unset($newData['summernote']);
+                }
+                if (!$isHasTinymce) {
+                    unset($newData['tinymce']);
+                }
+                if (!$isHasCkeditor) {
+                    unset($newData['ckeditor']);
+                }
+                if (!$isHasIsActive) {
+                    unset($newData['is_active']);
+                }
+                if (!$isHasBarcode) {
+                    unset($newData['barcode']);
+                }
+                if (!$isHasQrCode) {
+                    unset($newData['qr_code']);
+                }
+                if (!$isHasName) {
+                    unset($newData['name']);
+                }
+                if (!$isHasPhoneNumber) {
+                    unset($newData['phone_number']);
+                }
+                if (!$isHasBirthdate) {
+                    unset($newData['birthdate']);
+                }
+                if (!$isHasAddress) {
+                    unset($newData['address']);
+                }
+                if (!$isHasPassword) {
+                    unset($newData['password']);
+                }
+                if (!$isHasAvatar) {
+                    unset($newData['avatar']);
+                }
+                if (!$isHasDeletedAt) {
+                    unset($newData['deleted_at']);
+                }
+
+                array_push($data, $newData);
+            }
         }
 
         foreach (collect($data)->chunk(20) as $chunkData) {

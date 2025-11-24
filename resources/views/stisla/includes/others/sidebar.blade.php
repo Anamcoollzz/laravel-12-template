@@ -26,6 +26,7 @@
           @if ($_menu->childs->count() === 0)
             @php
               $_menu_condition = $_menu->permission === null || $_user->can($_menu->permission);
+              //   if($_menu->menu_name === '')
               if (is_guru() && in_array($_menu->menu_name, ['Kepala Sekolah', 'Siswa', 'Manajemen Pengguna'])) {
                   $_menu_condition = false;
               }
