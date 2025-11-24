@@ -16,6 +16,11 @@
   @if ($isExport === false && $canExport) data-export="true" data-title="{{ $title }}" @endif>
   <thead>
     <tr>
+      @if ($isTrashed === false)
+        <th class="td-checkbox no-sort">
+          {{-- <input type="checkbox" id="select_all_checkbox" /> --}}
+        </th>
+      @endif
       @if ($isExport)
         <th class="text-center">#</th>
       @else
@@ -128,7 +133,7 @@
       <th>{{ __('validation.attributes.created_by') }}</th>
       <th>{{ __('validation.attributes.updated_by') }}</th>
       @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
-        <th>{{ __('validation.attributes.actions') }}</th>
+        <th class="td-action no-sort">{{ __('validation.attributes.actions') }}</th>
       @endif
     </tr>
   </thead>
@@ -136,6 +141,11 @@
     @if ($isYajra === false)
       @foreach ($data as $item)
         <tr>
+          @if ($isTrashed === false)
+            <td class="td-checkbox">
+              <input onclick="onCheck()" type="checkbox" class="record_checkbox" data-id="{{ $item->uuid ?? $item->id }}" />
+            </td>
+          @endif
           <td>{{ $loop->iteration }}</td>
 
           {{-- ini adalah hasil dari make:module --}}

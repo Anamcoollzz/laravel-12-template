@@ -35,6 +35,12 @@ function initDataTables() {
         copyTitle: 'Salin ke papanklip',
       },
     },
+    drawCallback: function (settings) {
+      var api = this.api();
+      var info = api.page.info();
+      console.log('Draw, page:', info.page + 1);
+      checkStoredCheckboxes();
+    },
   };
   if ($('#datatable').length > 0 || $('#datatable-trashed').length > 0) {
     var $dtTbl = $('#datatable');
@@ -44,6 +50,7 @@ function initDataTables() {
       var title = $dtTbl.data('title') && $dtTbl.data('title').replace(' ', '_').toLowerCase();
       title = title ? title + '_export' : document.title;
       options['dom'] = 'lBfrtip';
+      options['columnDefs'] = [{ targets: ['no-sort'], orderable: false }];
       options['buttons'] = [
         {
           attr: { id: 'copyDtBtn' },
@@ -213,6 +220,7 @@ function reloadDataTable() {
 }
 
 $(document).ready(function () {
+  $('#deleteCheckBtn').hide();
   if ($('.datatable').length > 0) $('.datatable').DataTable();
 
   if (window.innerWidth <= 425) {
@@ -332,7 +340,7 @@ $(document).ready(function () {
 });
 
 // delete action
-function hapus(e, action_url) {
+function hapus(e, action_url, isFromCheckbox = false) {
   e.preventDefault();
   swal({
     title: 'Anda yakin?',
@@ -749,6 +757,13 @@ function duplicateGlobal(e, action_url, variant = 'success') {
 
 function deleteGlobal(e, action_url, variant = 'danger') {
   e.preventDefault();
+  const isFromCheckbox = $(e.target).attr('id') === 'deleteCheckBtn';
+  if (isFromCheckbox) {
+    if (storageActiveCheckboxes().length == 0) {
+      swal('Info', 'Tidak ada data yang dipilih!', 'info');
+      return;
+    }
+  }
   swal({
     title: 'Anda yakin?',
     text: variant === 'danger' ? 'Sekali dihapus, data tidak akan kembali lagi!' : 'Data akan dipindahkan ke tempat sampah!',
@@ -786,6 +801,12 @@ function deleteGlobal(e, action_url, variant = 'danger') {
       } else {
         $('#formDeleteGlobal').attr('action', action_url);
         $('#formDeleteGlobal').find('input[name="variant"]').val(variant);
+        // alert(isFromCheckbox);
+        if (isFromCheckbox) {
+          console.log('storageActiveCheckboxes()', storageActiveCheckboxes());
+          $('#formDeleteGlobal').find('input[name="checkeds"]').val(JSON.stringify(storageActiveCheckboxes()));
+          clearStoredCheckboxes();
+        }
         document.getElementById('formDeleteGlobal').submit();
       }
     } else {
@@ -1110,4 +1131,60 @@ function showHtmlModal(e, htmlContentId) {
     .find('.modal-body')
     .html($('#' + htmlContentId).html());
   $('#globalModal').find('.modal-title').html('Preview HTML');
+}
+
+function snakeCase(str) {
+  return str
+    .replace(/\s+/g, '_') // Ganti spasi dengan underscore
+    .replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`) // Ganti huruf kapital dengan underscore diikuti huruf kecil
+    .replace(/__+/g, '_') // Ganti multiple underscore dengan single underscore
+    .replace(/^_+|_+$/g, ''); // Hapus underscore di awal dan akhir
+}
+
+function onCheck() {
+  const target = window.event.target;
+  const id = $(target).data('id');
+  const keyStorage = snakeCase($('#prefixUri').val());
+  const storage = JSON.parse(localStorage.getItem(keyStorage)) || [];
+  if (target.checked) {
+    if (!storage.includes(id)) {
+      storage.push(id);
+    }
+    localStorage.setItem(keyStorage, JSON.stringify(storage));
+  } else {
+    const index = storage.indexOf(id);
+    if (index > -1) {
+      storage.splice(index, 1);
+    }
+    localStorage.setItem(keyStorage, JSON.stringify(storage));
+  }
+  if (storage.length > 0) {
+    $('#deleteCheckBtn').show();
+  } else {
+    $('#deleteCheckBtn').hide();
+  }
+}
+
+function storageActiveCheckboxes() {
+  const keyStorage = snakeCase($('#prefixUri').val());
+  const storage = JSON.parse(localStorage.getItem(keyStorage)) || [];
+  return storage;
+}
+
+function clearStoredCheckboxes() {
+  const keyStorage = snakeCase($('#prefixUri').val());
+  localStorage.removeItem(keyStorage);
+}
+
+function checkStoredCheckboxes() {
+  const storage = storageActiveCheckboxes();
+  storage.forEach((id) => {
+    $(`input[data-id="${id}"]`).prop('checked', true);
+  });
+
+  if (storage.length > 0) {
+    $('#deleteCheckBtn').show();
+  } else {
+    $('#deleteCheckBtn').hide();
+  }
 }
