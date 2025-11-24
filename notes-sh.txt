@@ -1,0 +1,1 @@
+zip -r "update_$(date +%Y-%m-%d).zip" . -x "vendor/*" "node_modules/*" ".git/*" "storage/logs/*" "storage/framework/*" "tests/*" ".*" "storage/debugbar/*"

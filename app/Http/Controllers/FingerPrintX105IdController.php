@@ -156,7 +156,7 @@ class FingerPrintX105IdController extends StislaController
         try {
             $machineId = request()->input('filter_machine_id');
             $machine = app(FingerprintMachineRepository::class)->findOrFail($machineId);
-            $logs = $this->fingerPrintService->getAttendanceLog105Id(isDummy: true, fingerprintMachine: $machine);
+            $logs = $this->fingerPrintService->getAttendanceLog105Id(isDummy: false, fingerprintMachine: $machine);
             if ($logs === FingerPrintService::NO_IP) {
                 // session()->flash('error', 'IP mesin sidik jari belum diatur.');
             } else if ($logs == FingerPrintService::ERROR_CONNECT) {
