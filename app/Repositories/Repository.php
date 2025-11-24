@@ -321,6 +321,33 @@ class Repository extends RepositoryAbstract
     }
 
     /**
+     * deleteWhereIn
+     *
+     * @param string $column
+     * @param array $data
+     * @return int
+     */
+    public function deleteWhereIn(string $column, array $data)
+    {
+        return $this->model->query()
+            ->whereIn($column, $data)
+            ->delete();
+    }
+
+    /**
+     * truncate data
+     *
+     * @return int
+     */
+    public function truncate()
+    {
+        Schema::disableForeignKeyConstraints();
+        $result = $this->model->query()->truncate();
+        Schema::enableForeignKeyConstraints();
+        return $result;
+    }
+
+    /**
      * countWhereIn
      *
      * @param string $column

@@ -298,10 +298,10 @@ class StislaController extends Controller implements HasMiddleware
         }
         $this->middlewares = array_merge([
             new Middleware('permission:' . $moduleName),
-            new Middleware('permission:' . $moduleName . ' Tambah', only: ['create', 'store']),
-            new Middleware('permission:' . $moduleName . ' Ubah', only: ['edit', 'update']),
+            new Middleware('permission:' . $moduleName . ' Tambah', only: ['create', 'store', 'storeData']),
+            new Middleware('permission:' . $moduleName . ' Ubah', only: ['edit', 'update', 'updateData']),
             new Middleware('permission:' . $moduleName . ' Detail', only: ['show']),
-            new Middleware('permission:' . $moduleName . ' Hapus', only: ['destroy']),
+            new Middleware('permission:' . $moduleName . ' Hapus', only: ['destroy', 'destroyUsingCheckbox', 'destroyData', 'truncate']),
             new Middleware('permission:' . $moduleName . ' Ekspor', only: ['json', 'excel', 'csv', 'pdf', 'exportJson', 'exportExcel', 'exportCsv', 'exportPdf']),
             new Middleware('permission:' . $moduleName . ' Impor Excel', only: ['importExcel', 'importExcelExample']),
             new Middleware('permission:' . $moduleName . ' Force Login', only: ['forceLogin']),
@@ -1176,6 +1176,60 @@ class StislaController extends Controller implements HasMiddleware
         if (!Schema::hasColumn($model->getTable(), 'deleted_at'))
             $this->fileUtil->deleteFiles($model, $this->fileColumns);
         return $this->executeDestroy($model);
+    }
+
+    /**
+     * delete data using checkbox
+     *
+     * @return Response
+     */
+    public function destroyUsingCheckbox()
+    {
+        request()->validate([
+            'checkeds'   => 'required',
+        ]);
+        $ids = json_decode(request('checkeds', []), true);
+        $models = $this->repository->getWhereIn('id', $ids);
+        if ($models->isEmpty()) {
+            return backError('Tidak ada data yang dipilih.');
+        }
+        $this->repository->deleteWhereIn('id', $ids);
+        logDelete($this->title, $models);
+        $successMessage = successMessageDelete($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
+    }
+
+    /**
+     * truncate all data from db
+     *
+     * @return Response
+     */
+    public function truncate()
+    {
+        if (is_superadmin() == false) {
+            return backError('Hanya superadmin yang dapat melakukan aksi ini.');
+        }
+        $models = $this->repository->all();
+        $this->repository->truncate();
+        logDelete($this->title, $models);
+        $successMessage = successMessageDelete($this->title);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage,
+            ]);
+        }
+
+        return backSuccess($successMessage);
     }
 
     /**

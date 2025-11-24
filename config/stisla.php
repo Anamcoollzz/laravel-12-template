@@ -365,7 +365,7 @@ return [
                 [
                     'menu_name' => 'Mesin Sidik Jari',
                     'route_name' => 'fingerprint-machines.index',
-                    'icon' => 'fa fa-users-viewfinder',
+                    'icon' => 'fas fa-users-viewfinder',
                     'permission' => 'Mesin Sidik Jari',
                     'is_active_if_url_includes' => 'fingerprint-machines*'
                 ],

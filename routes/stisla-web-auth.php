@@ -200,6 +200,8 @@ Route::get('crud-examples-single-pdf/{crud_example}', [CrudExampleController::cl
 Route::get('crud-examples/{crudExample}/edit', [CrudExampleController::class, 'editData'])->name('crud-examples.edit');
 Route::put('crud-examples/{crudExample}', [CrudExampleController::class, 'updateData'])->name('crud-examples.update');
 Route::delete('crud-examples/{crudExample}', [CrudExampleController::class, 'destroyData'])->name('crud-examples.destroy');
+Route::delete('crud-examples-using-checkbox', [CrudExampleController::class, 'destroyUsingCheckbox'])->name('crud-examples.destroy-using-checkbox');
+Route::delete('crud-examples-truncate', [CrudExampleController::class, 'truncate'])->name('crud-examples.truncate');
 // Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK

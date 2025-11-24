@@ -61,10 +61,19 @@
                 @if ($canCreate)
                   @include('stisla.includes.forms.buttons.btn-add', ['link' => $route_create])
                 @endif
+                @if ($canDelete && is_superadmin() === true && Route::has($prefix . '.truncate'))
+                  <a onclick="deleteGlobal(event, '{{ route($prefix . '.truncate') }}')" href="{{ route($prefix . '.truncate') }}" class="btn btn-danger btn-icon" data-toggle="tooltip"
+                    title="Kosongkan Data"><i class="fa fa-trash"></i></a>
+                @endif
                 @yield('btn-action-header')
               </div>
             </div>
             <div class="card-body">
+              @if ($canDelete && Route::has($prefix . '.destroy-using-checkbox'))
+                <a onclick="deleteGlobal(event, '{{ route($prefix . '.destroy-using-checkbox') }}', 'danger', true)" id="deleteCheckBtn" href="" class="btn btn-danger btn-icon mb-3">
+                  <i class="fa fa-trash"></i> Hapus Yang Dipilih
+                </a>
+              @endif
               @include('stisla.includes.forms.buttons.btn-datatable')
               <div class="table-responsive" id="datatable-view">
                 <input type="hidden" id="isYajra" value="{{ $isYajra }}">

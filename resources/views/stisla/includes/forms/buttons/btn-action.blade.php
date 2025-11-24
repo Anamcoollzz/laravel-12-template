@@ -11,7 +11,7 @@
     @include('stisla.includes.forms.buttons.btn-force-delete', ['link' => route($routePrefix . '.force-delete', [$item->id])])
   </td>
 @elseif ($canUpdate || $canDelete || $canDetail || $canDuplicate)
-  <td>
+  <td class="td-action">
     @if ($isAppCrud)
       <div class="dropdown d-inline">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

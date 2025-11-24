@@ -258,6 +258,8 @@ Route::get('$prefix-single-pdf/{{$snake}}', [\App\Http\Controllers\\{$name}Contr
 Route::get('$prefix/{{$snake}}/edit', [\App\Http\Controllers\\{$name}Controller::class, 'editData'])->name('$prefix.edit');
 Route::put('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'updateData'])->name('$prefix.update');
 Route::delete('$prefix/{{$snake}}', [\App\Http\Controllers\\{$name}Controller::class, 'destroyData'])->name('$prefix.destroy');
+Route::delete('$prefix-using-checkbox', [\App\Http\Controllers\\{$name}Controller::class, 'destroyUsingCheckbox'])->name('$prefix.destroy-using-checkbox');
+Route::delete('$prefix-truncate', [\App\Http\Controllers\\{$name}Controller::class, 'truncate'])->name('$prefix.truncate');
 // Route::resource('$prefix', \App\Http\Controllers\\{$name}Controller::class);
 //route
         ";

@@ -35,6 +35,7 @@
 
 <form action="" method="post" id="formDeleteGlobal">
   <input type="hidden" name="variant">
+  <input type="hidden" name="checkeds" value="">
   @method('DELETE')
   @csrf
 </form>
@@ -53,6 +54,8 @@
   {{-- @method('POST') --}}
   @csrf
 </form>
+
+<input type="hidden" id="prefixUri" value="{{ $prefix ?? ($title ?? '') }}">
 
 <!-- General JS Scripts -->
 @if (config('app.is_cdn', false))
@@ -97,7 +100,7 @@
 @stack('js')
 
 <!-- Template JS File -->
-<script src="{{ asset('stisla/assets/js/scripts.js') }}"></script>
+<script src="{{ asset('stisla/assets/js/scripts.min.js') }}"></script>
 <script src="{{ asset('stisla/assets/js/custom.js') }}"></script>
 <script>
   var SIDEBAR_MINI = false;
