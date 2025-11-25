@@ -24,11 +24,12 @@
 
       {{-- ini adalah hasil dari make:module --}}
       <th>{{ __('validation.attributes.machine_id') }}</th>
-		<th>{{ __('validation.attributes.pin') }}</th>
-		<th>{{ __('validation.attributes.date_time') }}</th>
-		<th>{{ __('validation.attributes.verified') }}</th>
-		<th>{{ __('validation.attributes.status') }}</th>
-		<th>{{ __('validation.attributes.work_code') }}</th>
+      <th>{{ __('validation.attributes.machine_name') }}</th>
+      <th>{{ __('validation.attributes.pin') }}</th>
+      <th>{{ __('validation.attributes.date_time') }}</th>
+      <th>{{ __('validation.attributes.verified') }}</th>
+      <th>{{ __('validation.attributes.status') }}</th>
+      <th>{{ __('validation.attributes.work_code') }}</th>
 
       {{-- yang ini boleh dikomen --}}
       @if ($is_has_name ?? false)
@@ -145,11 +146,12 @@
 
           {{-- ini adalah hasil dari make:module --}}
           <td>{{ $item->machine_id }}</td>
-		<td>{{ $item->pin }}</td>
-		<td>{{ $item->date_time }}</td>
-		<td>{{ $item->verified }}</td>
-		<td>{{ $item->status }}</td>
-		<td>{{ $item->work_code }}</td>
+          <td>{{ $item->machine?->machine_name }}</td>
+          <td>{{ $item->pin }}</td>
+          <td>{{ $item->date_time }}</td>
+          <td>{{ $item->verified }}</td>
+          <td>{{ $item->status }}</td>
+          <td>{{ $item->work_code }}</td>
 
           {{-- yang ini boleh dikomen --}}
           @if ($is_has_name ?? false)
