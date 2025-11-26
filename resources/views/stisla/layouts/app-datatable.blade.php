@@ -70,8 +70,24 @@
             </div>
             <div class="card-body">
               @if ($canDelete && Route::has($prefix . '.destroy-using-checkbox'))
-                <a onclick="deleteGlobal(event, '{{ route($prefix . '.destroy-using-checkbox') }}', 'danger', true)" id="deleteCheckBtn" href="" class="btn btn-danger btn-icon mb-3">
+                <a onclick="deleteGlobal(event, '{{ route($prefix . '.destroy-using-checkbox') }}', 'danger', true)" id="deleteCheckBtn" href="#" class="btn btn-danger btn-icon mb-3">
                   <i class="fa fa-trash"></i> Hapus Yang Dipilih
+                </a>
+              @endif
+              @if ($canExport && Route::has($prefix . '.export-pdf-using-checkbox'))
+                <a onclick="executePostGlobal(event, '{{ route($prefix . '.export-pdf-using-checkbox') }}', 'danger', true)" id="exportPdfCheckBtn" href="#" class="btn btn-danger btn-icon mb-3">
+                  <i class="fa fa-file-pdf"></i> Export PDF Yang Dipilih
+                </a>
+                <a onclick="executePostGlobal(event, '{{ route($prefix . '.export-excel-using-checkbox') }}', 'danger', true)" id="exportExcelCheckBtn" href="#"
+                  class="btn btn-success btn-icon mb-3">
+                  <i class="fa fa-file-excel"></i> Export Excel Yang Dipilih
+                </a>
+                <a onclick="executePostGlobal(event, '{{ route($prefix . '.export-csv-using-checkbox') }}', 'danger', true)" id="exportCsvCheckBtn" href="#" class="btn btn-success btn-icon mb-3">
+                  <i class="fa fa-file-csv"></i> Export CSV Yang Dipilih
+                </a>
+                <a onclick="executePostGlobal(event, '{{ route($prefix . '.export-json-using-checkbox') }}', 'danger', true)" id="exportJsonCheckBtn" href="#"
+                  class="btn btn-warning btn-icon mb-3">
+                  <i class="fa fa-file-code"></i> Export JSON Yang Dipilih
                 </a>
               @endif
               @include('stisla.includes.forms.buttons.btn-datatable')

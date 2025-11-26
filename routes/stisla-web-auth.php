@@ -202,6 +202,10 @@ Route::put('crud-examples/{crudExample}', [CrudExampleController::class, 'update
 Route::delete('crud-examples/{crudExample}', [CrudExampleController::class, 'destroyData'])->name('crud-examples.destroy');
 Route::delete('crud-examples-using-checkbox', [CrudExampleController::class, 'destroyUsingCheckbox'])->name('crud-examples.destroy-using-checkbox');
 Route::delete('crud-examples-truncate', [CrudExampleController::class, 'truncate'])->name('crud-examples.truncate');
+Route::post('crud-examples-export-pdf-using-checkbox', [CrudExampleController::class, 'exportPdfUsingCheckbox'])->name('crud-examples.export-pdf-using-checkbox');
+Route::post('crud-examples-export-excel-using-checkbox', [CrudExampleController::class, 'exportExcelUsingCheckbox'])->name('crud-examples.export-excel-using-checkbox');
+Route::post('crud-examples-export-csv-using-checkbox', [CrudExampleController::class, 'exportCsvUsingCheckbox'])->name('crud-examples.export-csv-using-checkbox');
+Route::post('crud-examples-export-json-using-checkbox', [CrudExampleController::class, 'exportJsonUsingCheckbox'])->name('crud-examples.export-json-using-checkbox');
 // Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK

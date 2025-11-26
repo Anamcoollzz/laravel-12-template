@@ -16,7 +16,7 @@
   @if ($isExport === false && $canExport) data-export="true" data-title="{{ $title }}" @endif>
   <thead>
     <tr>
-      @if ($isTrashed === false)
+      @if ($isTrashed === false && $isExport === false)
         <th class="td-checkbox no-sort">
           {{-- <input type="checkbox" id="select_all_checkbox" /> --}}
         </th>
@@ -141,7 +141,7 @@
     @if ($isYajra === false)
       @foreach ($data as $item)
         <tr>
-          @if ($isTrashed === false)
+          @if ($isTrashed === false && $isExport === false)
             <td class="td-checkbox">
               <input onclick="onCheck()" type="checkbox" class="record_checkbox" data-id="{{ $item->uuid ?? $item->id }}" />
             </td>

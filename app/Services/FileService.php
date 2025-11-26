@@ -239,11 +239,30 @@ class FileService
      */
     public function downloadJson(Collection $collection, string $filename)
     {
-        $json = $collection->toJson();
+        $collection->transform(function ($item) {
+            $excludeFields = [
+                'summernote',
+                'summernote_simple',
+                'password',
+                'tinymce',
+                'ckeditor',
+            ];
+            foreach ($excludeFields as $field) {
+                if (isset($item[$field])) {
+                    unset($item[$field]);
+                }
+            }
+            return $item;
+        });
+        // $json = $collection->toJson();
+        // return $json;
+        $json = $collection->toJson(JSON_PRETTY_PRINT);
         $path = 'temp/json/' . $filename;
         Storage::put($path, $json);
+        // return Storage::download($path, $filename);
         $path = storage_path('app/' . $path);
-        return response()->download($path)->deleteFileAfterSend(true);
+        return response()->download($path)
+            ->deleteFileAfterSend(true);
     }
 
     /**

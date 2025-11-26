@@ -55,6 +55,10 @@
   @csrf
 </form>
 
+<form action="" method="post" id="formPostGlobal">
+  @csrf
+</form>
+
 <input type="hidden" id="prefixUri" value="{{ $prefix ?? ($title ?? '') }}">
 
 <!-- General JS Scripts -->

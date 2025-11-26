@@ -1160,8 +1160,16 @@ function onCheck() {
   }
   if (storage.length > 0) {
     $('#deleteCheckBtn').show();
+    $('#exportPdfCheckBtn').show();
+    $('#exportExcelCheckBtn').show();
+    $('#exportCsvCheckBtn').show();
+    $('#exportJsonCheckBtn').show();
   } else {
     $('#deleteCheckBtn').hide();
+    $('#exportPdfCheckBtn').hide();
+    $('#exportExcelCheckBtn').hide();
+    $('#exportCsvCheckBtn').hide();
+    $('#exportJsonCheckBtn').hide();
   }
 }
 
@@ -1184,7 +1192,27 @@ function checkStoredCheckboxes() {
 
   if (storage.length > 0) {
     $('#deleteCheckBtn').show();
+    $('#exportPdfCheckBtn').show();
+    $('#exportExcelCheckBtn').show();
+    $('#exportCsvCheckBtn').show();
+    $('#exportJsonCheckBtn').show();
   } else {
     $('#deleteCheckBtn').hide();
+    $('#exportPdfCheckBtn').hide();
+    $('#exportExcelCheckBtn').hide();
+    $('#exportCsvCheckBtn').hide();
+    $('#exportJsonCheckBtn').hide();
   }
+}
+
+function executePostGlobal(e, action_url) {
+  e.preventDefault();
+  const storage = storageActiveCheckboxes();
+  if (storage.length == 0) {
+    swal('Info', 'Tidak ada data yang dipilih!', 'info');
+    return;
+  }
+  $('#formPostGlobal').attr('action', action_url);
+  $('#formPostGlobal').append('<input type="hidden" name="checkeds" value=\'' + JSON.stringify(storage) + "' />");
+  document.getElementById('formPostGlobal').submit();
 }

@@ -238,6 +238,13 @@ class StislaController extends Controller implements HasMiddleware
     protected string $excelFileName;
 
     /**
+     * excel data
+     *
+     * @var array|Collection
+     */
+    protected array|Collection $excelData = [];
+
+    /**
      * constructor method
      *
      * @return void
@@ -485,8 +492,8 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function getExportData(): array
     {
-        $times      = date('Y-m-d_H-i-s');
-        $moduleName = str_replace('-', '_', $this->prefixRoute ?? $this->prefix);
+        $times      = date('Y-m-d_H.i.s');
+        $moduleName = $this->title;
         $data       = [
             'isExport'    => true,
             'pdf_name'    => $times . '_' . $moduleName . '.pdf',
@@ -495,6 +502,8 @@ class StislaController extends Controller implements HasMiddleware
             'json_name'   => $times . '_' . $moduleName . '.json',
             'prefix'      => $this->prefix ?? null,
             'exportTitle' => $this->exportTitle ?? $this->title,
+            'isAppCrud'   => $this->isAppCrud,
+            'htmlColumns' => $this->htmlColumns,
         ];
 
         return array_merge($data, $this->getIndexDataFromParent());
@@ -597,8 +606,8 @@ class StislaController extends Controller implements HasMiddleware
         if (Route::is($prefix . '.index') || Route::is($prefix . '.index-ajax'))
             $users = $this->userRepository->getLatest();
 
-        $times    = date('Y-m-d_H-i-s');
-        $filename = $times . '_' . Str::snake($title);
+        $times    = date('Y-m-d_H.i.s');
+        $filename = $times . '_' . $title;
 
         return array_merge($defaultData, [
             'data'         => $data,
@@ -639,8 +648,11 @@ class StislaController extends Controller implements HasMiddleware
      */
     public function exportJson()
     {
-        $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.json';
-        $data     = $this->getIndexData() ?? $this->repository->getLatest();
+        $filename = date('Y-m-d_H.i.s') . '_' . $this->title . '.json';
+        if ($this->excelData instanceof Collection) {
+            $data = $this->excelData;
+        } else
+            $data     = $this->getIndexData() ?? $this->repository->getLatest();
 
         return $this->fileUtil->downloadJson($data, $filename);
     }
@@ -653,8 +665,14 @@ class StislaController extends Controller implements HasMiddleware
     public function exportExcel()
     {
         $data  = $this->getExportData();
-        if ($this->isAppCrud)
+        if ($this->excelData instanceof Collection) {
+            $data['data'] = $this->excelData;
+        }
+        $data['isExport'] = true;
+
+        if ($this->isAppCrud) {
             return $this->fileUtil->downloadExcelGeneral('stisla.' . $this->prefix . '.only-table', $data, $data['excel_name']);
+        }
         return $this->fileUtil->downloadExcelGeneral('stisla.' . $this->prefix . '.table', $data, $data['excel_name']);
     }
 
@@ -666,6 +684,11 @@ class StislaController extends Controller implements HasMiddleware
     public function exportCsv()
     {
         $data  = $this->getExportData();
+        if ($this->excelData instanceof Collection) {
+            $data['data'] = $this->excelData;
+        }
+        $data['isExport'] = true;
+
         if ($this->isAppCrud)
             return $this->fileUtil->downloadCsvGeneral('stisla.' . $this->prefix . '.only-table', $data, $data['csv_name']);
         return $this->fileUtil->downloadCsvGeneral('stisla.' . $this->prefix . '.table', $data, $data['csv_name']);
@@ -679,24 +702,17 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function executePdf($data = null)
     {
-        $filename = date('YmdHis') . '_' . Str::snake($this->title) . '.pdf';
-        // $html     = view('stisla.' . $this->prefix . '.export-pdf', [
-        //     'title'    => $this->title,
-        //     'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
-        //     'isExport' => true,
-        //     'prefix'   => $this->prefix,
-        // ])->render();
+        $filename = date('Y-m-d H.i.s') . '_' . $this->title . '.pdf';
 
         $data = array_merge([
-            'title'    => $this->title,
-            'data'     => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
-            'isExport' => true,
-            'prefix'   => $this->prefix,
+            'title'     => $this->title,
+            'data'      => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
+            'isExport'  => true,
+            'prefix'    => $this->prefix,
             'isAppCrud' => $this->isAppCrud,
         ], $this->getHasColumns());
 
         $html     = view('stisla.includes.others.export-pdf', $data)->render();
-        // return $html;
 
         if ($this->pdfPaperSize === 'A2') {
             return $this->pdfService->downloadPdfA2($html, $filename);
@@ -705,6 +721,7 @@ class StislaController extends Controller implements HasMiddleware
         } else if ($this->pdfPaperSize === 'A3') {
             return $this->pdfService->downloadPdfA3($html, $filename);
         }
+        return $this->pdfService->downloadPdf($html, $filename, $this->pdfPaperSize, $this->orientationPdf);
     }
 
     /**
@@ -1179,11 +1196,11 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
-     * delete data using checkbox
+     * execute get checkeds
      *
-     * @return Response
+     * @return Collection|Response
      */
-    public function destroyUsingCheckbox()
+    protected function execCheckeds()
     {
         request()->validate([
             'checkeds'   => 'required',
@@ -1193,6 +1210,18 @@ class StislaController extends Controller implements HasMiddleware
         if ($models->isEmpty()) {
             return backError('Tidak ada data yang dipilih.');
         }
+        return $models;
+    }
+
+    /**
+     * delete data using checkbox
+     *
+     * @return Response
+     */
+    public function destroyUsingCheckbox()
+    {
+        $models = $this->execCheckeds();
+        $ids = $models->pluck('id')->toArray();
         $this->repository->deleteWhereIn('id', $ids);
         logDelete($this->title, $models);
         $successMessage = successMessageDelete($this->title);
@@ -1402,5 +1431,48 @@ class StislaController extends Controller implements HasMiddleware
             }
         }
         return $htmlColumns;
+    }
+
+    /**
+     * download export data as pdf using checkbox
+     *
+     * @return Response
+     */
+    public function exportPdfUsingCheckbox()
+    {
+        return $this->executePdf($this->execCheckeds());
+    }
+
+    /**
+     * download export data as xlsx using checkbox
+     *
+     * @return Response
+     */
+    public function exportExcelUsingCheckbox()
+    {
+        $this->excelData = $this->execCheckeds();
+        return $this->exportExcel();
+    }
+
+    /**
+     * download export data as csv using checkbox
+     *
+     * @return Response
+     */
+    public function exportCsvUsingCheckbox()
+    {
+        $this->excelData = $this->execCheckeds();
+        return $this->exportCsv();
+    }
+
+    /**
+     * download export data as json using checkbox
+     *
+     * @return Response
+     */
+    public function exportJsonUsingCheckbox()
+    {
+        $this->excelData = $this->execCheckeds();
+        return $this->exportJson();
     }
 }

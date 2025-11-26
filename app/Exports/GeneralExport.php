@@ -61,6 +61,7 @@ class GeneralExport implements FromView, ShouldAutoSize
      */
     public function view(): View
     {
-        return view($this->view, $this->data);
+        $view = view($this->view, $this->data);
+        return $view;
     }
 }

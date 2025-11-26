@@ -23,7 +23,9 @@ class CrudExampleController extends StislaController
         $this->icon         = 'fa fa-atom';
         $this->repository   = new CrudExampleRepository;
         $this->prefix       = $this->viewFolder = 'crud-examples';
-        $this->pdfPaperSize = 'A2';
+
+        // ini sesuaiin sama kebutuhan masing-masing, soalnya kalau A1 kan gede banget
+        $this->pdfPaperSize = 'A1';
         $this->isAppCrud    = true;
         $this->request      = new CrudExampleRequest;
         $this->fileColumns  = [
