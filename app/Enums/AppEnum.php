@@ -15,4 +15,5 @@ enum AppEnum: string
     case APP_ECOMMERCE = 'ecommerce';
     case APP_DATAKU = 'dataku';
     case APP_FINGERPRINT = 'fingerprint';
+    case APP_POCARI = 'pocari';
 }

@@ -96,6 +96,69 @@ class UserSeeder extends Seeder
                     $userObj->assignRole('user');
             }
 
+        if (is_app_pocari()) {
+            $users = [
+                [
+                    'name' => 'H1',
+                    'email' => 'h1@pocari.com',
+                ],
+                [
+                    'name' => 'H2',
+                    'email' => 'h2@pocari.com',
+                ],
+                [
+                    'name' => 'H3',
+                    'email' => 'h3@pocari.com',
+                ],
+                [
+                    'name' => 'HC3',
+                    'email' => 'hc3@pocari.com',
+                ],
+                [
+                    'name' => 'Retail',
+                    'email' => 'retail@pocari.com',
+                ],
+                [
+                    'name' => 'Finance',
+                    'email' => 'finance@pocari.com',
+                ],
+                [
+                    'name' => 'Kawil',
+                    'email' => 'kawil@pocari.com',
+                ],
+            ];
+            foreach ($users as $index => $user) {
+                $userObj = User::create([
+                    'name'                 => $name = $user['name'],
+                    'email'                => $user['email'],
+                    'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
+                    'password'             => $password,
+                    'is_locked'            =>  0,
+                    'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
+                    'birth_date'           => fake()->optional()->date('Y-m-d'),
+                    'address'              => fake()->address(),
+                    'last_password_change' => date('Y-m-d H:i:s'),
+                    'created_by_id'        => 1,
+                    'last_updated_by_id'   => null,
+                    'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                    'photo'                => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                    'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
+                    'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
+                    'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
+                    // 'uuid'                 => fake()->unique()->uuid(),
+                    'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
+                    'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
+                    'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
+                    'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
+                    'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                    'uuid'                 => Str::uuid()->toString(),
+                ]);
+
+                if ($isRoleUsersExists)
+                    $userObj->assignRole('user');
+            }
+        }
+
         if (is_app_dataku()) {
             $religions         = \App\Models\Religion::all();
             $schoolClasses     = \App\Models\SchoolClass::all();

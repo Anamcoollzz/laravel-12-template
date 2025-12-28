@@ -10,7 +10,7 @@
   } else {
       $selected = $oldValue ?? ($selected ?? ($dname ?? false));
   }
-  
+
 @endphp
 
 <div class="form-group">
@@ -21,7 +21,7 @@
     @endif
   </label>
   <select @if ($isRequired) required @endif @if ($isMultiple) multiple @endif name="{{ $isMultiple ? $name . '[]' : $name }}" id="{{ $id }}"
-    class="form-control select2">
+    class="form-control select2" style="width: 100%;">
     @if ($with_all ?? false)
       <option value="" @if ($selected == '' || $selected == null) selected @endif>{{ __('Semua') }}</option>
     @endif

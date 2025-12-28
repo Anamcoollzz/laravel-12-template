@@ -1,0 +1,1 @@
+php artisan make:module Category --columns="name" --icon="fas fa-cubes" --title="Kategori"

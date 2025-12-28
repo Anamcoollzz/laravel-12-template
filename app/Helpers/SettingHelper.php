@@ -186,6 +186,20 @@ function is_app_fingerprint($app = null)
 }
 
 /**
+ * check if app type is pocari
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_pocari($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_POCARI;
+    }
+    return config('stisla.app') === AppEnum::APP_POCARI;
+}
+
+/**
  * get domain from app url
  *
  * @return string

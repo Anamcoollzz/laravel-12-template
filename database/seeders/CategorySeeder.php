@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\CrudExample;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class CrudExampleSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Generate a gravatar image URL based on the email address.
@@ -24,7 +24,7 @@ class CrudExampleSeeder extends Seeder
 
     public function run(): void
     {
-        $model = new CrudExample();
+        $model = new Category();
         $table = $model->getTable();
 
         if (!Schema::hasTable($table)) {
@@ -32,7 +32,7 @@ class CrudExampleSeeder extends Seeder
         }
 
         Schema::disableForeignKeyConstraints();
-        CrudExample::truncate();
+        Category::truncate();
 
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());
@@ -52,7 +52,14 @@ class CrudExampleSeeder extends Seeder
         $rows = [];
         $total = 20;
 
-        for ($i = 1; $i <= $total; $i++) {
+        $categories = [
+            'Catatan Notulensi Meeting',
+            'Catatan Supervisi',
+            'KPI Not Achieve',
+        ];
+
+        // for ($i = 1; $i <= $total; $i++) {
+        foreach ($categories as $i => $categoryName) {
             $email = $faker->email;
 
             $selectMultiple = $makeSelectArray();
@@ -112,19 +119,19 @@ class CrudExampleSeeder extends Seeder
             // 'deleted_at' => null,
 
             // ini hasil generate dari make:module command
-            //columns
+            $row['name'] = $categoryName;
 
             $rows[] = $row;
 
             // ✅ Insert per 200/1000 kalau datanya gede. Di contoh ini 20 cukup.
             if (count($rows) >= 200) {
-                CrudExample::insert($rows);
+                Category::insert($rows);
                 $rows = [];
             }
         }
 
         if (!empty($rows)) {
-            CrudExample::insert($rows);
+            Category::insert($rows);
         }
 
         Schema::enableForeignKeyConstraints();

@@ -167,14 +167,23 @@ class CreateModuleCommand extends Command
         file_put_contents($seeder, str_replace(
             '//columns',
             implode("\n\t\t\t", array_map(function ($col) {
+                // if (Str::endsWith($col, '_id')) {
+                //     return "'$col' => fake()->word(),";
+                // } else if ($col == 'name') {
+                //     return "'$col' => fake()->name(),";
+                // } else if ($col == 'email') {
+                //     return "'$col' => fake()->email(),";
+                // } else {
+                //     return "'$col' => fake()->sentence(),";
+                // }
                 if (Str::endsWith($col, '_id')) {
-                    return "'$col' => fake()->word(),";
+                    return "\$row['$col'] = fake()->word();";
                 } else if ($col == 'name') {
-                    return "'$col' => fake()->name(),";
+                    return "\$row['$col'] = fake()->name();";
                 } else if ($col == 'email') {
-                    return "'$col' => fake()->email(),";
+                    return "\$row['$col'] = fake()->email();";
                 } else {
-                    return "'$col' => fake()->sentence(),";
+                    return "\$row['$col'] = fake()->sentence();";
                 }
             }, $columnsArray)),
             file_get_contents($seeder)
