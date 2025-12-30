@@ -393,6 +393,27 @@ if (is_app_chat($app)) {
                 'permission' => 'Function',
                 'is_active_if_url_includes' => 'pocari-functions*'
             ],
+            [
+                'menu_name' => 'Focus Item',
+                'route_name' => 'focus-items.index',
+                'icon' => 'fas fa-cubes',
+                'permission' => 'Focus Item',
+                'is_active_if_url_includes' => 'focus-items*'
+            ],
+            [
+                'menu_name' => 'Work Field',
+                'route_name' => 'work-fields.index',
+                'icon' => 'fas fa-cubes',
+                'permission' => 'Work Field',
+                'is_active_if_url_includes' => 'work-fields*'
+            ],
+            [
+                'menu_name' => 'Status',
+                'route_name' => 'statuses.index',
+                'icon' => 'fas fa-cubes',
+                'permission' => 'Status',
+                'is_active_if_url_includes' => 'statuses*'
+            ],
         ]
     ];
     // $additionalUser = [
@@ -452,7 +473,6 @@ return [
                 //     'permission' => 'Mesin Sidik Jari',
                 //     'is_active_if_url_includes' => 'fingerprint-machines*'
                 // ],
-
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,

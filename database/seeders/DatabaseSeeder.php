@@ -71,6 +71,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FingerPrintX105IdSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(PocariFunctionSeeder::class);
-        // seeders  
+        $this->call(FocusItemSeeder::class);
+        $this->call(WorkFieldSeeder::class);
+        $this->call(StatusSeeder::class);
+        // seeders     
     }
 }

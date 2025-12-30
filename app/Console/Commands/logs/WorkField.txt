@@ -1,0 +1,1 @@
+php artisan make:module WorkField --columns="name" --icon="fas fa-cubes" --title="Work Field"
