@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Contoh CRUD Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Contoh CRUD'
+        'group' => 'Contoh CRUD',
+        'table' => 'crud_examples',
     ],
     [
         'name' => 'Contoh CRUD Filter Data',

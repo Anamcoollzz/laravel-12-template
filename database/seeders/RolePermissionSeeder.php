@@ -17,6 +17,7 @@ class RolePermissionSeeder extends Seeder
     private $groupNames = [];
     private $groups = [];
     private $rolesArray = [];
+    private $isPerModule = false;
 
     /**
      * Run the database seeds.
@@ -69,41 +70,48 @@ class RolePermissionSeeder extends Seeder
         $this->generatePermission();
         $this->perModule();
 
-        // per module generated permission
-        $path = database_path('seeders/data/permission-modules');
-        if (file_exists($path)) {
-            $files = getFileNamesFromDir($path);
-            foreach ($files as $file) {
-                $permissions = json_decode(file_get_contents(database_path('seeders/data/permission-modules/' . $file)), true);
-                foreach ($permissions as $permission) {
-                    if (!in_array($permission['group'], $this->groupNames)) {
-                        $this->groupNames[] = $permission['group'];
-                        $group = PermissionGroup::create([
-                            'group_name' => $permission['group']
-                        ]);
-                        $this->groups[$permission['group']] = $group;
-                        $roles = $this->rolesArray[$permission['group']] = Role::whereIn('name', $permission['roles'])->get();
-                    } else {
-                        $group = $this->groups[$permission['group']];
-                        $roles = $this->rolesArray[$permission['group']];
-                    }
-
-                    if (!in_array($permission['name'], config('stisla.permission_excludes'))) {
-                        $perm = Permission::create([
-                            'name'                => $permission['name'],
-                            'permission_group_id' => $group->id
-                        ]);
-                        // foreach ($permission['roles'] as $role)
-                        //     if (in_array($role, $this->rolesArray))
-                        // $perm->assignRole($role);
-                        $perm->syncRoles($roles);
-                    }
-                }
-            }
-        }
+        $this->checkGroup();
 
         // dd(DB::getQueryLog());
         // dd(DB::getQueryLog()[1859], DB::getQueryLog()[1858], DB::getQueryLog()[1857]);
+
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // per module generated permission
+        $path = database_path('seeders/data/permission-modules');
+        $permissionExcludes = config('stisla.permission_excludes');
+        // dd($permissionExcludes);
+        if (! file_exists($path)) {
+            return;
+        }
+        $files = getFileNamesFromDir($path);
+        foreach ($files as $file) {
+            $permissions = json_decode(file_get_contents(database_path('seeders/data/permission-modules/' . $file)), true);
+            foreach ($permissions as $permission) {
+                if (!in_array($permission['group'], $this->groupNames)) {
+                    $this->groupNames[] = $permission['group'];
+                    $group = PermissionGroup::create([
+                        'group_name' => $permission['group']
+                    ]);
+                    $this->groups[$permission['group']] = $group;
+                    $roles = $this->rolesArray[$permission['group']] = Role::whereIn('name', $permission['roles'])->get();
+                } else {
+                    $group = $this->groups[$permission['group']];
+                    $roles = $this->rolesArray[$permission['group']];
+                }
+
+                if (!in_array($permission['name'], $permissionExcludes)) {
+                    $perm = Permission::create([
+                        'name'                => $permission['name'],
+                        'permission_group_id' => $group->id
+                    ]);
+                    // foreach ($permission['roles'] as $role)
+                    //     if (in_array($role, $this->rolesArray))
+                    // $perm->assignRole($role);
+                    $perm->syncRoles($roles);
+                }
+            }
+        }
     }
 
     /**
@@ -121,8 +129,15 @@ class RolePermissionSeeder extends Seeder
         } else {
             $permissions = $permissions ? $permissions : config('stisla.permissions');
         }
+        $permissionExcludes = config('stisla.permission_excludes');
+        // if ($this->isPerModule) {
+        //     dd($permissions);
+        // }
         foreach ($permissions as $permission) {
-            if (!in_array($permission['group'], $this->groupNames) && (!isset($permission['table']) || (isset($permission['table']) && Schema::hasTable($permission['table'])))) {
+            if (
+                !in_array($permission['group'], $this->groupNames) &&
+                (!isset($permission['table']) || (isset($permission['table']) && Schema::hasTable($permission['table'])))
+            ) {
                 $this->groupNames[] = $permission['group'];
                 $group = PermissionGroup::create([
                     'group_name' => $permission['group']
@@ -154,7 +169,7 @@ class RolePermissionSeeder extends Seeder
                 }
             } else {
                 try {
-                    if (!in_array($permission['name'], config('stisla.permission_excludes'))) {
+                    if (!in_array($permission['name'], $permissionExcludes)) {
                         $perm = Permission::create([
                             'name'                => $name = $permission['name'],
                             'permission_group_id' => $group->id
@@ -177,6 +192,7 @@ class RolePermissionSeeder extends Seeder
      */
     private function perModule()
     {
+        $this->isPerModule = true;
         if (is_app_chat())
             return;
         $files = File::allFiles(base_path('config'));
@@ -194,5 +210,16 @@ class RolePermissionSeeder extends Seeder
     {
         $sql = file_get_contents(database_path('seeders/data/permissions.sql'));
         DB::unprepared($sql);
+    }
+
+    private function checkGroup()
+    {
+        PermissionGroup::withCount('permissions')->get()->each(function ($group) {
+            // dd($group);
+            if ($group->permissions_count === 0) {
+                // dd('Deleting empty permission group: ' . $group->group_name);
+                $group->delete();
+            }
+        });
     }
 }

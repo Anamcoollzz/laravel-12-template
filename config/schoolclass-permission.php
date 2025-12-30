@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Kelas Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Kelas'
+        'group' => 'Kelas',
+        'table' => 'school_classes',
     ],
     [
         'name' => 'Kelas Filter Data',

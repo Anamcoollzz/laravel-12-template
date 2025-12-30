@@ -192,6 +192,8 @@ return [
         'name' => 'name',
         'name' => 'name',
         'name' => 'name',
+        'name' => 'name',
+        'name' => 'name',
         'machine_id' => 'Nama Mesin',
         'pin' => 'PIN',
         'date_time' => 'DateTime',

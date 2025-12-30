@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Level Kelas Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Level Kelas'
+        'group' => 'Level Kelas',
+        'table' => 'class_levels',
     ],
     [
         'name' => 'Level Kelas Filter Data',

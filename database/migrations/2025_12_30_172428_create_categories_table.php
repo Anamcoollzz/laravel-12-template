@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('fingerprint_machines');
-        if (!in_array('fingerprint_machines', config('stisla.table_excludes')))
-            Schema::create('fingerprint_machines', function (Blueprint $table) {
+        Schema::dropIfExists('categories');
+        if (!in_array('categories', config('stisla.table_excludes')))
+            Schema::create('categories', function (Blueprint $table) {
                 $table->id();
-                $table->string('machine_name', 50)->comment('Nama Mesin');
-                $table->string('ip', 50)->comment('IP');
-                $table->string('key', 50)->comment('Key');
-                $table->unsignedBigInteger('machine_id')->nullable()->comment('ID Mesin');
-                $table->foreign('machine_id')->references('id')->on('machines')->onUpdate('set null')->onDelete('set null');
-                $table->string('fn', 50)->comment('FN');
+                $table->string('name', 50)->comment('name');
 
                 // wajib
                 $table->timestamps();
@@ -38,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('fingerprint_machines');
+        Schema::dropIfExists('categories');
     }
 };

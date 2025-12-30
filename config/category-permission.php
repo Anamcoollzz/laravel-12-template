@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Kategori Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Kategori'
+        'group' => 'Kategori',
+        'table' => 'categories',
     ],
     [
         'name' => 'Kategori Filter Data',

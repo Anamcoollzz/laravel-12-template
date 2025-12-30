@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Mesin Sidik Jari Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Mesin Sidik Jari'
+        'group' => 'Mesin Sidik Jari',
+        'table' => 'fingerprint_machines',
     ],
     [
         'name' => 'Mesin Sidik Jari Filter Data',

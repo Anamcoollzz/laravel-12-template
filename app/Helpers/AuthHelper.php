@@ -90,7 +90,7 @@ function can($permission)
  */
 function auth_id()
 {
-    return Auth::id() ?? auth('api')->id();
+    return Auth::id() ?? auth('api')->id() ?? null;
 }
 
 /**

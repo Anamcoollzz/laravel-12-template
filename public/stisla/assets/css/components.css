@@ -258,7 +258,7 @@
       text-align: right; }
       .chat-box .chat-content .chat-item.chat-right .chat-details .chat-text {
         text-align: left;
-        background-color: #6777ef;
+        background-color: #b71c2e;
         color: #fff; }
     .chat-box .chat-content .chat-item > img {
       float: left;
@@ -371,16 +371,16 @@ div.dataTables_wrapper div.dataTables_processing {
   font-size: 12px; }
 
 .ranges li {
-  color: #6777ef; }
+  color: #b71c2e; }
   .ranges li:hover, .ranges li.active {
-    background-color: #6777ef; }
+    background-color: #b71c2e; }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #6777ef; }
+  background-color: #b71c2e; }
 
 /* 1.10 Dropzone */
 .dropzone {
-  border: 2px dashed #6777ef;
+  border: 2px dashed #b71c2e;
   min-height: 240px;
   text-align: center; }
   .dropzone .dz-message {
@@ -470,7 +470,7 @@ tr:first-child > td > .fc-day-grid-event {
   text-shadow: none;
   border-radius: 0; }
   .fc button.fc-state-active {
-    background-color: #6777ef;
+    background-color: #b71c2e;
     color: #fff; }
 
 /* 1.13 Gallery */
@@ -613,7 +613,7 @@ tr:first-child > td > .fc-day-grid-event {
   width: 13px;
   height: 13px;
   background-color: #fff;
-  border: 3px solid #6777ef;
+  border: 3px solid #b71c2e;
   border-radius: 50%; }
 
 .jqvmap-label {
@@ -682,6 +682,9 @@ tr:first-child > td > .fc-day-grid-event {
     border-top: 1px solid #f2f2f2; } }
 
 /* 1.18 Select2 */
+.select2 {
+  width: 100% !important; }
+
 .select2-container--default .select2-search--dropdown .select2-search__field:focus {
   outline: none;
   box-shadow: none; }
@@ -700,7 +703,7 @@ tr:first-child > td > .fc-day-grid-event {
   border-color: #e4e6fc; }
 
 .select2-dropdown {
-  border-color: #e4e6fc !important; }
+  border-color: #ea7381 !important; }
 
 .select2-container.select2-container--open .select2-selection--multiple {
   background-color: #fefeff;
@@ -750,7 +753,7 @@ tr:first-child > td > .fc-day-grid-event {
 .select2-container--default .select2-selection--multiple .select2-selection__choice,
 .select2-container--default .select2-results__option[aria-selected=true],
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: #6777ef;
+  background-color: #b71c2e;
   color: #fff; }
 
 .select2-results__option {
@@ -781,7 +784,7 @@ tr:first-child > td > .fc-day-grid-event {
     min-height: 42px; }
 
 .selectric-open .selectric {
-  border-color: #6777ef; }
+  border-color: #b71c2e; }
 
 .selectric-above .selectric-items, .selectric-below .selectric-items {
   margin-bottom: 10px; }
@@ -797,7 +800,7 @@ tr:first-child > td > .fc-day-grid-event {
     .selectric-items li:hover {
       background-color: #f2f2f2; }
     .selectric-items li.selected, .selectric-items li.highlighted {
-      background-color: #6777ef;
+      background-color: #b71c2e;
       color: #fff; }
 
 /* 1.20 Slider */
@@ -923,8 +926,8 @@ tr:first-child > td > .fc-day-grid-event {
   .swal-button:focus {
     box-shadow: none; }
   .swal-button.swal-button--confirm {
-    box-shadow: 0 2px 6px #acb5f6;
-    background-color: #6777ef; }
+    box-shadow: 0 2px 6px #e13e51;
+    background-color: #b71c2e; }
     .swal-button.swal-button--confirm:focus {
       opacity: .8; }
 
@@ -948,7 +951,7 @@ tr:first-child > td > .fc-day-grid-event {
     height: 100%;
     padding: 0 8px; }
   .bootstrap-tagsinput .tag {
-    background-color: #6777ef;
+    background-color: #b71c2e;
     border-radius: 3px;
     padding: 5px 10px; }
     .bootstrap-tagsinput .tag:first-child {
@@ -1088,10 +1091,10 @@ tr:first-child > td > .fc-day-grid-event {
   padding: 10px;
   line-height: 1;
   border-radius: 3px;
-  border: 2px solid #6777ef;
+  border: 2px solid #b71c2e;
   font-size: 10px;
   font-weight: 500;
-  color: #6777ef;
+  color: #b71c2e;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 10px; }
@@ -1242,11 +1245,11 @@ tr:first-child > td > .fc-day-grid-event {
       .tickets .ticket-items .ticket-item:hover {
         background-color: rgba(63, 82, 227, 0.03); }
         .tickets .ticket-items .ticket-item:hover .ticket-title {
-          color: #6777ef; }
+          color: #b71c2e; }
       .tickets .ticket-items .ticket-item.active {
-        box-shadow: 0 2px 6px #acb5f6;
+        box-shadow: 0 2px 6px #e13e51;
         border-radius: 3px;
-        background-color: #6777ef;
+        background-color: #b71c2e;
         border-bottom: none; }
         .tickets .ticket-items .ticket-item.active .ticket-title, .tickets .ticket-items .ticket-item.active .ticket-desc {
           color: #fff !important; }
@@ -1345,7 +1348,7 @@ tr:first-child > td > .fc-day-grid-event {
 .owl-theme .owl-dots {
   margin-top: 20px !important; }
   .owl-theme .owl-dots .owl-dot.active span {
-    background-color: #6777ef; }
+    background-color: #b71c2e; }
 
 /* 1.36 Activities */
 .activities {
@@ -1362,7 +1365,7 @@ tr:first-child > td > .fc-day-grid-event {
       top: 0;
       width: 2px;
       height: 100%;
-      background-color: #6777ef; }
+      background-color: #b71c2e; }
     .activities .activity:last-child:before {
       display: none; }
     .activities .activity .activity-icon {
@@ -1445,7 +1448,7 @@ tr:first-child > td > .fc-day-grid-event {
   padding: 40px; }
   .empty-state .empty-state-icon {
     position: relative;
-    background-color: #6777ef;
+    background-color: #b71c2e;
     width: 80px;
     height: 80px;
     line-height: 100px;
@@ -1471,13 +1474,13 @@ tr:first-child > td > .fc-day-grid-event {
   margin-bottom: 30px;
   text-align: center; }
   .pricing.pricing-highlight .pricing-title {
-    background-color: #6777ef;
+    background-color: #b71c2e;
     color: #fff; }
   .pricing.pricing-highlight .pricing-cta a {
-    background-color: #6777ef;
+    background-color: #b71c2e;
     color: #fff; }
     .pricing.pricing-highlight .pricing-cta a:hover {
-      background-color: #394eea !important; }
+      background-color: #8b1523 !important; }
   .pricing .pricing-padding {
     padding: 40px; }
   .pricing .pricing-title {
@@ -1486,7 +1489,7 @@ tr:first-child > td > .fc-day-grid-event {
     text-transform: uppercase;
     letter-spacing: 2.5px;
     background-color: #f3f6f8;
-    color: #6777ef;
+    color: #b71c2e;
     border-radius: 0 0 3px 3px;
     display: inline-block;
     padding: 5px 15px; }
@@ -1567,7 +1570,7 @@ tr:first-child > td > .fc-day-grid-event {
  * Thanks to Spectre.css
  */
 .avatar {
-  background: #6777ef;
+  background: #b71c2e;
   border-radius: 50%;
   color: #e3eaef;
   display: inline-block;
@@ -1675,11 +1678,11 @@ tr:first-child > td > .fc-day-grid-event {
       border-radius: 50%;
       background-color: #e3eaef; }
     .wizard-steps .wizard-step.wizard-step-active {
-      box-shadow: 0 2px 6px #acb5f6;
-      background-color: #6777ef;
+      box-shadow: 0 2px 6px #e13e51;
+      background-color: #b71c2e;
       color: #fff; }
       .wizard-steps .wizard-step.wizard-step-active:before {
-        background-color: #6777ef;
+        background-color: #b71c2e;
         color: #fff; }
     .wizard-steps .wizard-step.wizard-step-success {
       background-color: #47c363;

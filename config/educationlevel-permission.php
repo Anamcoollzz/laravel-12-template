@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Jenjang Pendidikan Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Jenjang Pendidikan'
+        'group' => 'Jenjang Pendidikan',
+        'table' => 'education_levels',
     ],
     [
         'name' => 'Jenjang Pendidikan Filter Data',

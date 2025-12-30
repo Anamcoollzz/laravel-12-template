@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Semester Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Semester'
+        'group' => 'Semester',
+        'table' => 'semesters',
     ],
     [
         'name' => 'Semester Filter Data',

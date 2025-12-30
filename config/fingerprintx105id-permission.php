@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Sidik Jari X105 ID Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Sidik Jari X105 ID'
+        'group' => 'Sidik Jari X105 ID',
+        'table' => 'finger_print_x105_ids',
     ],
     [
         'name' => 'Sidik Jari X105 ID Filter Data',

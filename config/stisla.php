@@ -327,6 +327,81 @@ if (is_app_chat($app)) {
     $appName = 'Fingerpint';
     $appDesc = 'Aplikasi Fingerprint untuk manajemen perangkat sidik jari (misal X105-ID): mencakup pendaftaran sidik jari (enrollment), sinkronisasi pengguna, absensi real-time, log kehadiran, monitoring status perangkat, jadwal & shift, ekspor laporan (Excel/PDF), serta pengaturan role Super Admin. Fokus pada keakuratan data presensi, kemudahan integrasi, dan automasi administrasi.';
     $additionalUsers = [];
+} else if (is_app_pocari($app)) {
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'notifications',
+        // 'crud_examples',
+        'religions',
+        'school_classes',
+        'class_levels',
+        'school_years',
+        'semesters',
+        'education_levels',
+        'works',
+        'fingerprint_machines',
+        'crud_examples',
+        'finger_print_x105_ids',
+    ];
+    $roles = [
+        'superadmin',
+        // 'kepala sekolah',
+        // 'guru',
+        // 'siswa',
+    ];
+    $permissionExcludes = [
+        'Galeri',
+        'Log Aktivitas',
+        'Log Request',
+        'Laravel Log Viewer',
+        'Ubuntu',
+        'MySql',
+        'Backup Database',
+        'Unisharp File',
+        'Stisla Example',
+        'Pekerjaan',
+        'Sidik Jari X105 ID',
+        'Mesin Sidik Jari',
+    ];
+    $additionalMenus = [
+        'menu_name' => 'Master Data',
+        'route_name' => null,
+        'icon' => 'fas fa-cubes',
+        'permission' => null,
+        'is_active_if_url_includes' => null,
+        'childs' => [
+            [
+                'menu_name' => 'Kategori',
+                'route_name' => 'categories.index',
+                'icon' => 'fas fa-cubes',
+                'permission' => 'Kategori',
+                'is_active_if_url_includes' => 'categories*',
+            ],
+        ]
+    ];
+    // $additionalUser = [
+    //     'name'              => 'Hairul Anam Admin Kepala Sekolah',
+    //     'email'             => 'kepalasekolah@dataku.com',
+    //     'password'          => 'kepalasekolah',
+    //     'roles'             => ['kepala sekolah'],
+    //     'email_verified_at' => '2021-04-06 04:06:00',
+    //     'phone_number'      => '6285322778935',
+    //     'birth_date'        => '1998-04-08',
+    //     'address'           => 'Jember'
+    // ];
+    $superadminEmail = 'superadmin@pocari.com';
+    $appName = 'Pocari';
+    $appDesc = 'Aplikasi approval pekerjaan adalah sistem manajemen persetujuan proyek yang memfasilitasi alur kerja approval dari cabang ke pusat. Fitur utama mencakup pengajuan pekerjaan dengan detail lengkap, tracking status real-time, notifikasi otomatis, dashboard analytics, manajemen user dengan role berbeda (cabang, supervisor, pusat), ekspor laporan (Excel/PDF), riwayat approval, dan audit trail lengkap. Sistem dirancang untuk meningkatkan efisiensi persetujuan, transparansi data, dan koordinasi antar cabang dengan antarmuka yang user-friendly.';
+    $additionalUsers = [];
 }
 
 return [
@@ -355,29 +430,21 @@ return [
                 //     'is_active_if_url_includes' => 'education-levels*'
                 // ],
 
-                [
-                    'menu_name' => 'Sidik Jari X105 ID',
-                    'route_name' => 'finger-print-x105-ids.index',
-                    'icon' => 'fa fa-fingerprint',
-                    'permission' => 'Sidik Jari X105 ID',
-                    'is_active_if_url_includes' => 'finger-print-x105-ids*'
-                ],
+                // [
+                //     'menu_name' => 'Sidik Jari X105 ID',
+                //     'route_name' => 'finger-print-x105-ids.index',
+                //     'icon' => 'fa fa-fingerprint',
+                //     'permission' => 'Sidik Jari X105 ID',
+                //     'is_active_if_url_includes' => 'finger-print-x105-ids*'
+                // ],
 
-                [
-                    'menu_name' => 'Mesin Sidik Jari',
-                    'route_name' => 'fingerprint-machines.index',
-                    'icon' => 'fas fa-users-viewfinder',
-                    'permission' => 'Mesin Sidik Jari',
-                    'is_active_if_url_includes' => 'fingerprint-machines*'
-                ],
-
-                [
-                    'menu_name' => 'Kategori',
-                    'route_name' => 'categories.index',
-                    'icon' => 'fas fa-cubes',
-                    'permission' => 'Kategori',
-                    'is_active_if_url_includes' => 'categories*'
-                ],
+                // [
+                //     'menu_name' => 'Mesin Sidik Jari',
+                //     'route_name' => 'fingerprint-machines.index',
+                //     'icon' => 'fas fa-users-viewfinder',
+                //     'permission' => 'Mesin Sidik Jari',
+                //     'is_active_if_url_includes' => 'fingerprint-machines*'
+                // ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,
@@ -1202,7 +1269,7 @@ return [
         ],
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
-        ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'stisla_skin', 'value' => 'red'],
         ['key' => 'debugbar', 'value' => 1],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
@@ -1321,7 +1388,7 @@ return [
         ],
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
-        ['key' => 'stisla_skin', 'value' => 'style'],
+        ['key' => 'stisla_skin', 'value' => 'red'],
         ['key' => 'debugbar', 'value' => 2],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],

@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Agama Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Agama'
+        'group' => 'Agama',
+        'table' => 'religions',
     ],
     [
         'name' => 'Agama Filter Data',

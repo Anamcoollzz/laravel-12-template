@@ -46,7 +46,8 @@ return [
     [
         'name' => 'Tahun Pelajaran Terhapus',
         'roles' => ['superadmin'],
-        'group' => 'Tahun Pelajaran'
+        'group' => 'Tahun Pelajaran',
+        'table' => 'school_years',
     ],
     [
         'name' => 'Tahun Pelajaran Filter Data',
