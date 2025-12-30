@@ -386,6 +386,13 @@ if (is_app_chat($app)) {
                 'permission' => 'Kategori',
                 'is_active_if_url_includes' => 'categories*',
             ],
+            [
+                'menu_name' => 'Function',
+                'route_name' => 'pocari-functions.index',
+                'icon' => 'fas fa-cubes',
+                'permission' => 'Function',
+                'is_active_if_url_includes' => 'pocari-functions*'
+            ],
         ]
     ];
     // $additionalUser = [
@@ -445,6 +452,7 @@ return [
                 //     'permission' => 'Mesin Sidik Jari',
                 //     'is_active_if_url_includes' => 'fingerprint-machines*'
                 // ],
+
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,

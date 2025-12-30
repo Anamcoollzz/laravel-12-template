@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FingerprintMachineSeeder::class);
         $this->call(FingerPrintX105IdSeeder::class);
         $this->call(CategorySeeder::class);
-        // seeders 
+        $this->call(PocariFunctionSeeder::class);
+        // seeders  
     }
 }
