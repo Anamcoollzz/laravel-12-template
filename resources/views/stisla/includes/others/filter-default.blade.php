@@ -156,6 +156,79 @@
                 ])
               </div>
             @endif
+
+            @if (Route::is('picas.index'))
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $repo = new \App\Repositories\PocariFunctionRepository();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_function',
+                    'name' => 'filter_function',
+                    'options' => $repo->getSelectOptions(),
+                    'label' => 'Function',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_function', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $repo = new \App\Repositories\WorkFieldRepository();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_work_field',
+                    'name' => 'filter_work_field',
+                    'options' => $repo->getSelectOptions(),
+                    'label' => 'Work Field',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_work_field', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $repo = new \App\Repositories\StatusRepository();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_status',
+                    'name' => 'filter_status',
+                    'options' => $repo->getSelectOptions(),
+                    'label' => 'Status',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_status', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $repo = new \App\Repositories\UserRepository();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_assigned_to',
+                    'name' => 'filter_assigned_to',
+                    'options' => $repo->getSelectOptions(),
+                    'label' => 'Assigned To',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_assigned_to', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $repo = new \App\Repositories\CategoryRepository();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_category',
+                    'name' => 'filter_category',
+                    'options' => $repo->getSelectOptions(),
+                    'label' => 'Category',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_category', null),
+                ])
+              </div>
+            @endif
           @endif
           <div class="col-12">
             @include('stisla.includes.forms.buttons.btn-search')

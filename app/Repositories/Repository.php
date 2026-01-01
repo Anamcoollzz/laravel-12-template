@@ -554,15 +554,20 @@ class Repository extends RepositoryAbstract
      * get full data with relations
      *
      * @param array $relations
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param array|null $where
+     * @param array|null $orderBy
+     * @param array|null $whereHas
+     * @param bool|null $deleted
+     * @param bool|null $isQueryBuilder
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder
      */
-    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [], ?bool $deleted = false)
+    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [], ?bool $deleted = false, ?bool $isQueryBuilder = false)
     {
         if (count($where) > 0) {
             $where = array_filter($where);
         }
 
-        return $this->queryFullData(orderBy: $orderBy)->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)
+        $query = $this->queryFullData(orderBy: $orderBy)->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)
             ->when(count($orderBy) > 0, function ($query) use ($orderBy) {
                 foreach ($orderBy as $column => $direction) {
                     $query->orderBy($column, $direction ?? 'asc');
@@ -579,8 +584,9 @@ class Repository extends RepositoryAbstract
             ->when($deleted, function ($query) {
                 if (method_exists($query, 'onlyTrashed'))
                     $query?->onlyTrashed();
-            })
-            ->get();
+            });
+
+        return $isQueryBuilder ? $query : $query->get();
     }
 
     /**
@@ -763,5 +769,15 @@ class Repository extends RepositoryAbstract
     public function getColumns()
     {
         return Schema::getColumnListing($this->model->getTable());
+    }
+
+    /**
+     * count all data
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->model->count();
     }
 }

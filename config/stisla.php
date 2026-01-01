@@ -461,7 +461,7 @@ return [
                 [
                     'menu_name' => 'Sidik Jari X105 ID',
                     'route_name' => 'finger-print-x105-ids.index',
-                    'icon' => 'fa fa-fingerprint',
+                    'icon' => 'fas fa-fingerprint',
                     'permission' => 'Sidik Jari X105 ID',
                     'is_active_if_url_includes' => 'finger-print-x105-ids*'
                 ],
@@ -472,6 +472,14 @@ return [
                     'icon' => 'fas fa-users-viewfinder',
                     'permission' => 'Mesin Sidik Jari',
                     'is_active_if_url_includes' => 'fingerprint-machines*'
+                ],
+
+                [
+                    'menu_name' => 'Pica',
+                    'route_name' => 'picas.index',
+                    'icon' => 'fas fa-note-sticky',
+                    'permission' => 'Pica',
+                    'is_active_if_url_includes' => 'picas*'
                 ],
                 // additionalmenus
                 $additionalMenus,

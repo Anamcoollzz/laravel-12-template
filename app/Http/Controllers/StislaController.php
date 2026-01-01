@@ -245,6 +245,13 @@ class StislaController extends Controller implements HasMiddleware
     protected array|Collection $excelData = [];
 
     /**
+     * debug data
+     *
+     * @var bool
+     */
+    protected bool $dd = false;
+
+    /**
      * constructor method
      *
      * @return void
@@ -878,6 +885,16 @@ class StislaController extends Controller implements HasMiddleware
     }
 
     /**
+     * get form data
+     *
+     * @return array
+     */
+    protected function formData(): array
+    {
+        return [];
+    }
+
+    /**
      * prepare create form
      *
      * @param Request $request
@@ -894,7 +911,11 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $fullTitle,
-        ], $this->getHasColumns());
+        ], $this->getHasColumns(), $this->formData());
+
+        if ($this->dd) {
+            dd($data);
+        }
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -940,6 +961,11 @@ class StislaController extends Controller implements HasMiddleware
             'fileColumns' => $this->fileColumns,
             'isAppCrud'   => $this->isAppCrud,
         ]);
+
+        if ($this->dd) {
+            dd($data);
+        }
+
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -969,7 +995,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function prepareDetailForm(Request $request, Model $model, bool $isDetail = false, array $data = [])
     {
-        $data = array_merge($this->getDetailData($model, $isDetail), $data);
+        $data = array_merge($this->getDetailData($model, $isDetail), $data, $this->formData());
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -1312,6 +1338,7 @@ class StislaController extends Controller implements HasMiddleware
         return $this->prepareIndex($request, array_merge([
             'data'        => $this->getIndexData2(),
             'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+            'countData'   => $this->repository->count()
         ], $columns, $this->additionalIndexData()));
     }
 

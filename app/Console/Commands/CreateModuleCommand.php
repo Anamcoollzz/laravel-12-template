@@ -151,7 +151,8 @@ class CreateModuleCommand extends Command
         ));
         file_put_contents($latestMigration, str_replace(
             'Schema::create(',
-            "Schema::dropIfExists('" . $pluralSnake . "');
+            "Schema::disableForeignKeyConstraints();
+            Schema::dropIfExists('" . $pluralSnake . "');
         if (!in_array('" . $pluralSnake . "', config('stisla.table_excludes')))
         Schema::create(",
             file_get_contents($latestMigration)
