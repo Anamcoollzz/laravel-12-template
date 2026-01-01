@@ -458,21 +458,21 @@ return [
                 //     'is_active_if_url_includes' => 'education-levels*'
                 // ],
 
-                // [
-                //     'menu_name' => 'Sidik Jari X105 ID',
-                //     'route_name' => 'finger-print-x105-ids.index',
-                //     'icon' => 'fa fa-fingerprint',
-                //     'permission' => 'Sidik Jari X105 ID',
-                //     'is_active_if_url_includes' => 'finger-print-x105-ids*'
-                // ],
+                [
+                    'menu_name' => 'Sidik Jari X105 ID',
+                    'route_name' => 'finger-print-x105-ids.index',
+                    'icon' => 'fa fa-fingerprint',
+                    'permission' => 'Sidik Jari X105 ID',
+                    'is_active_if_url_includes' => 'finger-print-x105-ids*'
+                ],
 
-                // [
-                //     'menu_name' => 'Mesin Sidik Jari',
-                //     'route_name' => 'fingerprint-machines.index',
-                //     'icon' => 'fas fa-users-viewfinder',
-                //     'permission' => 'Mesin Sidik Jari',
-                //     'is_active_if_url_includes' => 'fingerprint-machines*'
-                // ],
+                [
+                    'menu_name' => 'Mesin Sidik Jari',
+                    'route_name' => 'fingerprint-machines.index',
+                    'icon' => 'fas fa-users-viewfinder',
+                    'permission' => 'Mesin Sidik Jari',
+                    'is_active_if_url_includes' => 'fingerprint-machines*'
+                ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,
