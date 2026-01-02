@@ -43,26 +43,26 @@ class DashboardController extends StislaController
 
         $statuses = \App\Models\Status::with(['picas.category', 'picas.assignedto'])->get()->transform(function ($item) {
             $item->type = 'primary';
-            $item->color = '#b71c2e';
-            if ($item->name === 'Open') {
-                $item->type = 'secondary';
-                $item->color = '#6c757d';
-            } elseif ($item->name === 'On Progress') {
-                $item->type = 'warning';
-                $item->color = '#ff9800';
-            } elseif ($item->name === 'Overdue') {
-                $item->type = 'danger';
-                $item->color = '#dc3545';
-            } elseif ($item->name === 'Approval') {
-                $item->type = 'secondary';
-                $item->color = 'purple';
-            } elseif ($item->name === 'Revision') {
-                $item->type = 'secondary';
-                $item->color = '#f552eb';
-            } elseif ($item->name === 'Done') {
-                $item->type = 'secondary';
-                $item->color = 'green';
-            }
+            // $item->color = '#b71c2e';
+            // if ($item->name === 'Open') {
+            //     $item->type = 'secondary';
+            //     $item->color = '#6c757d';
+            // } elseif ($item->name === 'On Progress') {
+            //     $item->type = 'warning';
+            //     $item->color = '#ff9800';
+            // } elseif ($item->name === 'Overdue') {
+            //     $item->type = 'danger';
+            //     $item->color = '#dc3545';
+            // } elseif ($item->name === 'Approval') {
+            //     $item->type = 'secondary';
+            //     $item->color = 'purple';
+            // } elseif ($item->name === 'Revision') {
+            //     $item->type = 'secondary';
+            //     $item->color = '#f552eb';
+            // } elseif ($item->name === 'Done') {
+            //     $item->type = 'secondary';
+            //     $item->color = 'green';
+            // }
             $item->count = \App\Models\Pica::where('status_id', $item->id)->count();
             return $item;
         });

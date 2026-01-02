@@ -28,6 +28,7 @@
       @endif
 
       {{-- ini adalah hasil dari make:module --}}
+      <th>{{ __('validation.attributes.title') }}</th>
       <th>{{ __('validation.attributes.notes') }}</th>
       <th>{{ __('validation.attributes.function_id') }}</th>
       <th>{{ __('validation.attributes.category_id') }}</th>
@@ -161,6 +162,7 @@
           <td>{{ $loop->iteration }}</td>
 
           {{-- ini adalah hasil dari make:module --}}
+          <td>{{ $item->title }}</td>
           <td>{{ $item->notes }}</td>
           <td>{{ $item->pocarifunction->name }}</td>
           <td>{{ $item->category->name }}</td>
@@ -173,7 +175,11 @@
           <td>{{ $item->corrective_action }}</td>
           @include('stisla.includes.others.td-image', ['file' => $item->attachment])
           @include('stisla.includes.others.td-image', ['file' => $item->evidence])
-          <td>{{ $item->status->name }}</td>
+          <td>
+            <span class="badge badge-danger" style="background-color: {{ $item->status->color }}">
+              {{ $item->status->name }}
+            </span>
+          </td>
 
           {{-- yang ini boleh dikomen --}}
           @if ($is_has_name ?? false)

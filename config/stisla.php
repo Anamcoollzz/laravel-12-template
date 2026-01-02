@@ -486,6 +486,27 @@ return [
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'picas*'
                 ],
+                [
+                    'menu_name' => 'On Progress',
+                    'route_name' => 'picas.on-progress',
+                    'icon' => 'fas fa-note-sticky',
+                    'permission' => 'Pica',
+                    'is_active_if_url_includes' => 'on-progress-picas*'
+                ],
+                [
+                    'menu_name' => 'Done',
+                    'route_name' => 'picas.done',
+                    'icon' => 'fas fa-note-sticky',
+                    'permission' => 'Pica',
+                    'is_active_if_url_includes' => 'done-picas*'
+                ],
+                [
+                    'menu_name' => 'Action Needed',
+                    'route_name' => 'picas.action-needed',
+                    'icon' => 'fas fa-note-sticky',
+                    'permission' => 'Pica',
+                    'is_active_if_url_includes' => 'action-needed-picas*'
+                ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,
@@ -864,7 +885,7 @@ return [
                 ],
                 [
                     'menu_name' => 'Server',
-                    'route_name' => '#',
+                    'route_name' => null,
                     'icon' => 'fab fa-linux',
                     'permission' => null,
                     'is_active_if_url_includes' => null,

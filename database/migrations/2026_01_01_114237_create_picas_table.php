@@ -15,6 +15,7 @@ return new class extends Migration
         if (!in_array('picas', config('stisla.table_excludes')))
             Schema::create('picas', function (Blueprint $table) {
                 $table->id();
+                $table->string('title', 50)->comment('Title');
                 $table->text('notes', 50)->comment('Notes');
                 $table->unsignedBigInteger('function_id')->nullable()->comment('Function');
                 $table->foreign('function_id')->references('id')->on('pocari_functions')->onUpdate('set null')->onDelete('set null');

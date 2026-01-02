@@ -64,6 +64,7 @@ class Pica extends Model
 
         // ini hasil generate dari create:module command
 
+        'title',
         'notes',
         'function_id',
         'category_id',

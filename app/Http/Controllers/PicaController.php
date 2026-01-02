@@ -9,6 +9,7 @@ use App\Repositories\PocariFunctionRepository;
 use App\Repositories\StatusRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\WorkFieldRepository;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PicaController extends StislaController
@@ -138,6 +139,7 @@ class PicaController extends StislaController
             $data['is_active'] = $request->filled('is_active');
 
         $data = array_merge($data, request()->only([
+            'title',
             'notes',
             'function_id',
             'category_id',
@@ -212,6 +214,24 @@ class PicaController extends StislaController
             $query->where('status_id', request('filter_status'));
         })->when(request('filter_assigned_to'), function ($query) {
             $query->where('assigned_to', request('filter_assigned_to'));
-        })->get();
+        })
+            ->when(Route::is('picas.on-progress'), function ($query) {
+                $query->whereHas('status', function ($q) {
+                    $q->where('name', 'On Progress');
+                });
+            })
+            ->when(Route::is('picas.done'), function ($query) {
+                $query->whereHas('status', function ($q) {
+                    $q->where('name', 'Done');
+                });
+            })
+            ->when(Route::is('picas.action-needed'), function ($query) {
+                $query->whereHas('status', function ($q) {
+                    $q->where(function ($q) {
+                        $q->where('name', 'Approval')->orWhere('name', 'Revision');
+                    });
+                });
+            })
+            ->get();
     }
 }

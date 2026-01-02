@@ -122,18 +122,19 @@ class PicaSeeder extends Seeder
             // 'deleted_at' => null,
 
             // ini hasil generate dari make:module command
-            $row['notes']                  = fake()->sentence();
+            $row['title']                  = 'Pica Title ' . $i;
+            $row['notes']                  = 'Pica Notes ' . $i;
             $row['function_id']            = Arr::random($functions);
             $row['category_id']            = Arr::random($categories);
             $row['work_field_id']          = Arr::random($workFields);
             $row['deadline']               = $date = fake()->dateTimeBetween('+1 week', '+1 month')->format('Y-m-d');
-            $row['kpi_related']            = fake()->sentence();
+            $row['kpi_related']            = 'KPI Related ' . $i;
             $row['assigned_to']            = Arr::random($assignedTos);
-            $row['created_date']           = date('Y-m-d', strtotime($date . ' -3 days'));
-            $row['problem_identification'] = fake()->sentence();
-            $row['corrective_action']      = fake()->sentence();
-            $row['attachment']             = fake()->sentence();
-            $row['evidence']               = fake()->sentence();
+            $row['created_date']           = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
+            $row['problem_identification'] = 'Pica Problem Identification ' . $i;
+            $row['corrective_action']      = 'Pica Corrective Action ' . $i;
+            $row['attachment']             = "https://picsum.photos/300/200?random={$i}";
+            $row['evidence']               = "https://picsum.photos/300/200?random={$i}";
             $row['status_id']              = Arr::random($statuses);
 
             $rows[] = $row;

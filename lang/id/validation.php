@@ -188,6 +188,7 @@ return [
     */
 
     'attributes' => [
+        'title' => 'Title',
         'notes' => 'Notes',
         'function_id' => 'Function',
         'category_id' => 'Category',

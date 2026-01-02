@@ -85,4 +85,30 @@ class Status extends Model
     {
         return $this->hasMany(Pica::class, 'status_id', 'id');
     }
+
+    public function getColorAttribute()
+    {
+        $name = $this->attributes['name'];
+        $color = '#b71c2e';
+        if ($name === 'Open') {
+            $type = 'secondary';
+            $color = '#6c757d';
+        } elseif ($name === 'On Progress') {
+            $type = 'warning';
+            $color = '#ff9800';
+        } elseif ($name === 'Overdue') {
+            $type = 'danger';
+            $color = '#dc3545';
+        } elseif ($name === 'Approval') {
+            $type = 'secondary';
+            $color = 'purple';
+        } elseif ($name === 'Revision') {
+            $type = 'secondary';
+            $color = '#f552eb';
+        } elseif ($name === 'Done') {
+            $type = 'secondary';
+            $color = 'green';
+        }
+        return $color;
+    }
 }

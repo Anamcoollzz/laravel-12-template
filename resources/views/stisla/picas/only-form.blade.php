@@ -1,5 +1,8 @@
 {{-- ini adalah hasil dari make:module --}}
 <div class="col-md-6">
+  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'title', 'label' => __('validation.attributes.title')])
+</div>
+<div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
 </div>
 {{-- {{ dd(1) }} --}}

@@ -29,6 +29,8 @@ Route::put('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'update
 Route::delete('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'destroyData'])->name('picas.destroy');
 Route::delete('picas-using-checkbox', [\App\Http\Controllers\PicaController::class, 'destroyUsingCheckbox'])->name('picas.destroy-using-checkbox');
 Route::delete('picas-truncate', [\App\Http\Controllers\PicaController::class, 'truncate'])->name('picas.truncate');
+Route::get('on-progress-picas', [\App\Http\Controllers\PicaController::class, 'indexData'])->name('picas.on-progress');
+Route::get('done-picas', [\App\Http\Controllers\PicaController::class, 'indexData'])->name('picas.done');
+Route::get('action-needed-picas', [\App\Http\Controllers\PicaController::class, 'indexData'])->name('picas.action-needed');
 // Route::resource('picas', \App\Http\Controllers\PicaController::class);
 //route
-        
