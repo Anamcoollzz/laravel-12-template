@@ -13,12 +13,12 @@ return [
         'group' => 'Pica',
         'table' => 'picas',
     ],
-    [
-        'name' => 'Pica Impor Excel',
-        'roles' => ['superadmin', 'admin', 'user'],
-        'group' => 'Pica',
-        'table' => 'picas',
-    ],
+    // [
+    //     'name' => 'Pica Impor Excel',
+    //     'roles' => ['superadmin', 'admin', 'user'],
+    //     'group' => 'Pica',
+    //     'table' => 'picas',
+    // ],
     [
         'name' => 'Pica Ubah',
         'roles' => ['superadmin', 'admin', 'user'],

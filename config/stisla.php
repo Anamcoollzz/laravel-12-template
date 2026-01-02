@@ -21,50 +21,50 @@ $additionalUsers = [
         'email'             => 'admin@laravel12template.com',
         'password'          => 'admin',
         'roles'             => ['admin'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ],
     [
         'name'              => 'Hairul Anam User',
         'email'             => 'user@laravel12template.com',
         'password'          => 'user',
         'roles'             => ['user'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ],
     [
         'name'              => 'Ahfa User',
         'email'             => 'ahfauser@laravel12template.com',
         'password'          => 'user',
         'roles'             => ['user'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ],
     [
         'name'              => 'Hairul Anam Banker',
         'email'             => 'banker@laravel12template.com',
         'password'          => 'banker',
         'roles'             => ['banker'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ],
     [
         'name'              => 'Hairul Anam Admin Pendidikan',
         'email'             => 'adminpendidikan@laravel12template.com',
         'password'          => 'adminpendidikan',
         'roles'             => ['admin pendidikan'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ],
 ];
 $superadminEmail = 'superadmin@laravel12template.com';
@@ -249,10 +249,10 @@ if (is_app_chat($app)) {
         'email'             => 'kepalasekolah@dataku.com',
         'password'          => 'kepalasekolah',
         'roles'             => ['kepala sekolah'],
-        'email_verified_at' => '2021-04-06 04:06:00',
+        'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Jember'
+        'address'           => 'Bengkulu'
     ];
     $superadminEmail = 'superadmin@dataku.com';
     $appName = 'DataKu';
@@ -318,10 +318,10 @@ if (is_app_chat($app)) {
     //     'email'             => 'kepalasekolah@dataku.com',
     //     'password'          => 'kepalasekolah',
     //     'roles'             => ['kepala sekolah'],
-    //     'email_verified_at' => '2021-04-06 04:06:00',
+    //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Jember'
+    //     'address'           => 'Bengkulu'
     // ];
     $superadminEmail = 'superadmin@fingerprint.com';
     $appName = 'Fingerpint';
@@ -354,6 +354,7 @@ if (is_app_chat($app)) {
     ];
     $roles = [
         'superadmin',
+        'cabang',
         // 'kepala sekolah',
         // 'guru',
         // 'siswa',
@@ -371,6 +372,9 @@ if (is_app_chat($app)) {
         'Pekerjaan',
         'Sidik Jari X105 ID',
         'Mesin Sidik Jari',
+        // 'Role',
+        'Permission',
+        'Group Permission',
     ];
     $additionalMenus = [
         'menu_name' => 'Master Data',
@@ -416,15 +420,16 @@ if (is_app_chat($app)) {
             ],
         ]
     ];
+    $additionalMenus = [];
     // $additionalUser = [
     //     'name'              => 'Hairul Anam Admin Kepala Sekolah',
     //     'email'             => 'kepalasekolah@dataku.com',
     //     'password'          => 'kepalasekolah',
     //     'roles'             => ['kepala sekolah'],
-    //     'email_verified_at' => '2021-04-06 04:06:00',
+    //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Jember'
+    //     'address'           => 'Bengkulu'
     // ];
     $superadminEmail = 'superadmin@pocari.com';
     $appName = 'Pocari';
@@ -1251,22 +1256,22 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Jember'],
-        ['key' => 'company_name', 'value' => 'PT Anam Developer'],
+        ['key' => 'city', 'value' => 'Bengkulu'],
+        ['key' => 'company_name', 'value' => 'PT Honda Bengkulu'],
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
             'value' => 'assets/icons/favicon.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/logo.png', 'is_url' => true],
-        ['key' => 'since', 'value' => '2021'],
+        ['key' => 'logo', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'PT Anam Developer'],
+        ['key' => 'meta_description', 'value' => 'PT Honda Bengkulu'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1280,18 +1285,18 @@ return [
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/honda.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1369,8 +1374,8 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Jember'],
-        ['key' => 'company_name', 'value' => 'CV AnamTechno'],
+        ['key' => 'city', 'value' => 'Bengkulu'],
+        ['key' => 'company_name', 'value' => 'PT Honda Bengkulu'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
         [
@@ -1378,14 +1383,14 @@ return [
             'value' => 'assets/icons/favicon.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/logo.png', 'is_url' => true],
-        ['key' => 'since', 'value' => '2021'],
+        ['key' => 'logo', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'PT Anam Developer'],
+        ['key' => 'meta_description', 'value' => 'PT Honda Bengkulu'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1399,18 +1404,18 @@ return [
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/honda.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1490,11 +1495,11 @@ return [
             'email'             => $superadminEmail,
             'password'          => 'superadmin',
             'roles'             => ['superadmin'],
-            'email_verified_at' => '2021-04-06 04:06:00',
+            'email_verified_at' => '2025-04-06 04:06:00',
             'is_locked'         => 1,
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',
-            'address'           => 'Jember'
+            'address'           => 'Bengkulu'
         ],
         $additionalUser,
     ], $additionalUsers)

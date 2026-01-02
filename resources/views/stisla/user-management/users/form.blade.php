@@ -5,13 +5,13 @@
     @include('stisla.includes.forms.buttons.btn-edit', [
         'link' => route('user-management.users.edit', [$d->id]),
     ])
+    @include('stisla.includes.forms.buttons.btn-danger', [
+        'link' => route('user-management.users.single-pdf', [$d->id]),
+        'blank' => true,
+        'icon' => 'fa fa-file-pdf',
+        'tooltipTitle' => 'Export PDF',
+    ])
   @endif
-  @include('stisla.includes.forms.buttons.btn-danger', [
-      'link' => route('user-management.users.single-pdf', [$d->id]),
-      'blank' => true,
-      'icon' => 'fa fa-file-pdf',
-      'tooltipTitle' => 'Export PDF',
-  ])
 @endsection
 
 @section('rowForm')
@@ -76,7 +76,7 @@
               'label' => __('Pilih Role'),
               'required' => true,
               'multiple' => true,
-              'selected' => old('role', [$roleId]),
+              'selected' => old('role', isset($roleId) ? [$roleId] : []),
           ])
         </div>
       @elseif(count($roleOptions) == 1)
@@ -268,7 +268,12 @@
         @include('stisla.includes.forms.inputs.input', ['required' => false, 'id' => 'guardian_name', 'label' => __('validation.attributes.guardian_name')])
       </div>
       <div class="col-md-6">
-        @include('stisla.includes.forms.inputs.input', ['required' => false, 'id' => 'guardian_birth_date', 'label' => __('validation.attributes.guardian_birth_date'), 'type' => 'date'])
+        @include('stisla.includes.forms.inputs.input', [
+            'required' => false,
+            'id' => 'guardian_birth_date',
+            'label' => __('validation.attributes.guardian_birth_date'),
+            'type' => 'date',
+        ])
       </div>
       <div class="col-md-6">
         @include('stisla.includes.forms.selects.select', [
@@ -305,7 +310,7 @@
       </div>
     @endif
 
-    @if (!$isSiswa)
+    @if ((is_app_dataku() && !$isSiswa) || !is_app_dataku())
       <div class="col-12">
         <hr>
         <h6>Data Akun Untuk Login</h6>
@@ -338,7 +343,7 @@
 @endsection
 
 @section('vue')
-  @if ($isSiswa)
+  @if (is_app_dataku() && $isSiswa)
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
     <script>

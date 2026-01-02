@@ -98,34 +98,34 @@ class UserSeeder extends Seeder
 
         if (is_app_pocari()) {
             $users = [
-                [
-                    'name' => 'H1',
-                    'email' => 'h1@pocari.com',
-                ],
-                [
-                    'name' => 'H2',
-                    'email' => 'h2@pocari.com',
-                ],
-                [
-                    'name' => 'H3',
-                    'email' => 'h3@pocari.com',
-                ],
-                [
-                    'name' => 'HC3',
-                    'email' => 'hc3@pocari.com',
-                ],
-                [
-                    'name' => 'Retail',
-                    'email' => 'retail@pocari.com',
-                ],
-                [
-                    'name' => 'Finance',
-                    'email' => 'finance@pocari.com',
-                ],
-                [
-                    'name' => 'Kawil',
-                    'email' => 'kawil@pocari.com',
-                ],
+                // [
+                //     'name' => 'H1',
+                //     'email' => 'h1@pocari.com',
+                // ],
+                // [
+                //     'name' => 'H2',
+                //     'email' => 'h2@pocari.com',
+                // ],
+                // [
+                //     'name' => 'H3',
+                //     'email' => 'h3@pocari.com',
+                // ],
+                // [
+                //     'name' => 'HC3',
+                //     'email' => 'hc3@pocari.com',
+                // ],
+                // [
+                //     'name' => 'Retail',
+                //     'email' => 'retail@pocari.com',
+                // ],
+                // [
+                //     'name' => 'Finance',
+                //     'email' => 'finance@pocari.com',
+                // ],
+                // [
+                //     'name' => 'Kawil',
+                //     'email' => 'kawil@pocari.com',
+                // ],
             ];
             foreach ($users as $index => $user) {
                 $userObj = User::create([
