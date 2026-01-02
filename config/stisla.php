@@ -1257,21 +1257,21 @@ return [
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Bengkulu'],
-        ['key' => 'company_name', 'value' => 'PT Honda Bengkulu'],
+        ['key' => 'company_name', 'value' => 'Pocari Project'],
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon.ico',
+            'value' => 'assets/icons/favicon2.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'PT Honda Bengkulu'],
+        ['key' => 'meta_description', 'value' => 'Pocari Project'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1285,18 +1285,18 @@ return [
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/fresh.jpg', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1375,22 +1375,22 @@ return [
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Bengkulu'],
-        ['key' => 'company_name', 'value' => 'PT Honda Bengkulu'],
+        ['key' => 'company_name', 'value' => 'Pocari Project'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon.ico',
+            'value' => 'assets/icons/favicon2.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'PT Honda Bengkulu'],
+        ['key' => 'meta_description', 'value' => 'Pocari Project'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1404,18 +1404,18 @@ return [
         ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
         ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/honda.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
