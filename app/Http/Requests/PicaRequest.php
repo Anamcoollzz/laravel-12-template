@@ -54,8 +54,8 @@ class PicaRequest extends FormRequest
             'created_date'           => 'required|date',
             'problem_identification' => 'required',
             'corrective_action'      => 'required',
-            'attachment'             => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "required|image",
-            'evidence'               => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "required|image",
+            'attachment'             => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "nullable|image",
+            'evidence'               => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "nullable|image",
             'status_id'              => 'required|numeric',
         ];
 

@@ -128,15 +128,15 @@ class CreateModuleCommand extends Command
                     $table = Str::plural(Str::snake(substr($col, 0, -3)));
                     return "\$table->unsignedBigInteger('$col')->nullable()->comment('" . $labelsArray[$index] . "');\n\t\t\t\$table->foreign('$col')->references('id')->on('" . $table . "')->onUpdate('set null')->onDelete('set null');";
                 } else if ($col === 'password') {
-                    return "\$table->string('$col', 191)->comment('" . $labelsArray[$index] . "');";
+                    return "\$table->string('$col', 191)->nullable()->comment('" . $labelsArray[$index] . "');";
                 } else if ($col === 'email') {
                     return "\$table->string('$col', 191)->unique()->comment('" . $labelsArray[$index] . "');";
                 } else if ($col === 'birthdate' || Str::endsWith($col, '_date') || $col === 'date') {
-                    return "\$table->date('$col')->comment('" . $labelsArray[$index] . "');";
+                    return "\$table->date('$col')->nullable()->comment('" . $labelsArray[$index] . "');";
                 }
 
 
-                return "\$table->string('$col', 50)->comment('" . $labelsArray[$index] . "');";
+                return "\$table->string('$col', 50)->nullable()->comment('" . $labelsArray[$index] . "');";
             }, $columnsArray, array_keys($columnsArray))) . "
 
             // wajib

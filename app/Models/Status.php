@@ -63,8 +63,8 @@ class Status extends Model
 
 
         // ini hasil generate dari create:module command
-        
-            'name',
+
+        'name',
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',
@@ -80,4 +80,9 @@ class Status extends Model
         'checkbox2'        => 'array',
         'select2_multiple' => 'array',
     ];
+
+    public function picas()
+    {
+        return $this->hasMany(Pica::class, 'status_id', 'id');
+    }
 }

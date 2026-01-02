@@ -58,13 +58,15 @@
   @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
 </div> --}}
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
+  {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'attachment', 'label' => __('validation.attributes.attachment')]) --}}
+  @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
 </div>
 {{-- <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
 </div> --}}
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
+  {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'evidence', 'label' => __('validation.attributes.evidence')]) --}}
+  @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
 </div>
 <div class="col-md-6">
   @include('stisla.includes.forms.selects.select', [

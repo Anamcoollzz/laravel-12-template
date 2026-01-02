@@ -72,6 +72,112 @@
       </div>
     </div>
 
+    <div class="col-12">
+      <div class="row">
+        @foreach ($statuses as $s)
+          <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+            {{-- <div class="card card-statistic-1" @if ($item->route ?? false) onclick="openTo('{{ $item->route }}')" style="cursor: pointer;" @endif>
+              @if (isset($item->bg_color))
+                <div class="card-icon" style="background-color: {{ $item->bg_color }};">
+                  <i class="fas fa-{{ $item->icon ?? 'fire' }}"></i>
+                </div>
+              @else
+                <div class="card-icon bg-{{ $item->bg }}">
+                  <i class="fas fa-{{ $item->icon ?? 'fire' }}"></i>
+                </div>
+              @endif
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>{{ $s->name ?? 'Nama Modul' }}</h4>
+                </div>
+                <div class="card-body pb-4">
+                  {{ $s->count ?? $loop->iteration . '00' }}
+                </div>
+              </div>
+            </div> --}}
+            <div
+              style="
+                    /* width: 420px; */
+                    /* height: 190px; */
+                    background: {{ $s->color }};
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 2px;
+                    box-sizing: border-box;
+                    "
+              class="mb-3 py-3">
+              <div style="font-size: 20px; font-weight: 800; color: #000; line-height: 1;">
+                {{ $s->name }}
+              </div>
+              <div style="margin-top: 18px; font-size: 32px; font-weight: 900; color: #000; line-height: 1;">
+                {{ $s->count }} PICAs
+              </div>
+            </div>
+          </div>
+        @endforeach
+        @foreach ($statuses as $s)
+          <div class="col-md-2 px-1">
+            <div class="card card-{{ $s->type }}" style="border-color: {{ $s->color }};">
+              <div class="card-header">
+                <h4 class="text-{{ $s->type }}" style="color: {{ $s->color }} !important;">{{ $s->name }}</h4>
+              </div>
+              <div class="card-body" style="padding: 0px;">
+                @foreach ($s->picas as $item)
+                  <div
+                    style="
+                        /* width: 520px; */
+                        background: #ffffff;
+                        border: 1px solid #e6e6e6;
+                        border-radius: 8px;
+                        padding: 18px 18px 14px 18px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        position: relative;
+                        box-sizing: border-box;
+                        overflow: hidden;
+                    "
+                    class="mb-2">
+                    <!-- left accent bar -->
+                    <div
+                      style="
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 10px;
+                        background: {{ $s->color }};
+                        ">
+                    </div>
+
+                    <div style="padding-left: 8px;">
+                      <div style="font-size: 11px; line-height: 1.12; color: #000;">
+                        <span style="font-weight: 800;">PICA Title</span>
+                        <span style="font-weight: 400;"> - {{ $item->category->name }}</span>
+                      </div>
+
+                      <div style="margin-top: 10px; font-size: 10px; line-height: 1.2; color: #000; font-weight: 800;">
+                        Assigned to : {{ $item->assignedto->name }}
+                      </div>
+
+                      <div style="margin-top: 10px; font-size: 10px; line-height: 1.2; color: #2e8b2e; font-weight: 800;">
+                        Deadline : {{ $item->deadline }}
+                      </div>
+
+                      <div style="margin-top: 10px; text-align: right; font-size: 8px; color: #000; cursor: pointer;">
+                        Tap for details...
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+
     @foreach ($widgets ?? range(1, 8) as $item)
       <div class="col-lg-3 col-md-3 col-sm-6 col-12">
         <div class="card card-statistic-1" @if ($item->route ?? false) onclick="openTo('{{ $item->route }}')" style="cursor: pointer;" @endif>

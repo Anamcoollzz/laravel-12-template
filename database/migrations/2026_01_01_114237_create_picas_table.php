@@ -28,8 +28,8 @@ return new class extends Migration
                 $table->date('created_date')->comment('Created Date');
                 $table->text('problem_identification', 50)->comment('Problem Identification');
                 $table->text('corrective_action', 50)->comment('Corrective Action');
-                $table->text('attachment', 50)->comment('Attachment');
-                $table->text('evidence', 50)->comment('Evidence');
+                $table->text('attachment', 50)->nullable()->comment('Attachment');
+                $table->text('evidence', 50)->nullable()->comment('Evidence');
                 $table->unsignedBigInteger('status_id')->nullable()->comment('Status');
                 $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('set null')->onDelete('set null');
 

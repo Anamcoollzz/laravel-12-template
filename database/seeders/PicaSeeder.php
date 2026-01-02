@@ -56,11 +56,11 @@ class PicaSeeder extends Seeder
         $rows = [];
         $total = 20;
 
-        $functions = PocariFunction::all()->pluck('id')->toArray();
-        $categories = Category::all()->pluck('id')->toArray();
-        $workFields = Category::all()->pluck('id')->toArray();
+        $functions   = PocariFunction::all()->pluck('id')->toArray();
+        $categories  = Category::all()->pluck('id')->toArray();
+        $workFields  = Category::all()->pluck('id')->toArray();
         $assignedTos = User::all()->pluck('id')->toArray();
-        $statuses = Status::all()->pluck('id')->toArray();
+        $statuses    = Status::where('name', '!=', 'Overdue')->get()->pluck('id')->toArray();
 
         for ($i = 1; $i <= $total; $i++) {
             $email = $faker->email;
@@ -122,19 +122,19 @@ class PicaSeeder extends Seeder
             // 'deleted_at' => null,
 
             // ini hasil generate dari make:module command
-            $row['notes'] = fake()->sentence();
-            $row['function_id'] = Arr::random($functions);
-            $row['category_id'] = Arr::random($categories);
-            $row['work_field_id'] = Arr::random($workFields);
-            $row['deadline'] = fake()->date();
-            $row['kpi_related'] = fake()->sentence();
-            $row['assigned_to'] = Arr::random($assignedTos);
-            $row['created_date'] = fake()->date();
+            $row['notes']                  = fake()->sentence();
+            $row['function_id']            = Arr::random($functions);
+            $row['category_id']            = Arr::random($categories);
+            $row['work_field_id']          = Arr::random($workFields);
+            $row['deadline']               = $date = fake()->dateTimeBetween('+1 week', '+1 month')->format('Y-m-d');
+            $row['kpi_related']            = fake()->sentence();
+            $row['assigned_to']            = Arr::random($assignedTos);
+            $row['created_date']           = date('Y-m-d', strtotime($date . ' -3 days'));
             $row['problem_identification'] = fake()->sentence();
-            $row['corrective_action'] = fake()->sentence();
-            $row['attachment'] = fake()->sentence();
-            $row['evidence'] = fake()->sentence();
-            $row['status_id'] = Arr::random($statuses);
+            $row['corrective_action']      = fake()->sentence();
+            $row['attachment']             = fake()->sentence();
+            $row['evidence']               = fake()->sentence();
+            $row['status_id']              = Arr::random($statuses);
 
             $rows[] = $row;
 

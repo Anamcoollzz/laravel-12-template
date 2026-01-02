@@ -56,10 +56,10 @@ class StatusSeeder extends Seeder
             'Open',
             'On Progress',
             'Approval',
-            'Watchout',
+            // 'Watchout',
             'Revision',
-            'Overdue',
             'Done',
+            'Overdue',
         ];
         foreach ($categories as $i => $categoryName) {
             $email = $faker->email;
