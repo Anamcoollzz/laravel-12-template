@@ -12,6 +12,12 @@ use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
+    // Default password for seeded users
+    private string $password = '12345';
+    private $isRegionsExists;
+    private $gs;
+    private $provinces;
+
     /**
      * Run the database seeds.
      *
@@ -57,13 +63,13 @@ class UserSeeder extends Seeder
                     $userObj->assignRole($role);
         }
 
-        $isRegionsExists = Schema::hasTable('regions');
-        if ($isRegionsExists) {
-            $gs = new RegionRepository;
-            $provinces = $gs->getProvinces();
+        $this->isRegionsExists = Schema::hasTable('regions');
+        if ($this->isRegionsExists) {
+            $this->gs = new RegionRepository;
+            $this->provinces = $this->gs->getProvinces();
         }
 
-        $password = bcrypt('12345');
+        $this->password = $password = bcrypt('12345');
         if ($isRoleUsersExists)
             foreach (range(1, is_app_blank() ? 5 : 50) as $index) {
                 $userObj = User::create([
@@ -85,16 +91,29 @@ class UserSeeder extends Seeder
                     'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
                     // 'uuid'                 => fake()->unique()->uuid(),
                     'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
-                    'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
-                    'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
-                    'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
-                    'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                    'province_code'        => $this->isRegionsExists ? $province = $this->provinces?->random()?->code : null,
+                    'city_code'            => $this->isRegionsExists ? $city = $this->gs->getCities($province)?->random()?->code : null,
+                    'district_code'        => $this->isRegionsExists ? $district = $this->gs->getDistricts($city)?->random()?->code : null,
+                    'village_code'         => $this->isRegionsExists ? $this->gs->getVillages($district)?->random()?->code : null,
                     'uuid'                 => Str::uuid()->toString(),
                 ]);
 
                 if ($isRoleUsersExists)
                     $userObj->assignRole('user');
             }
+
+        $this->pocariUsers();
+        $this->datakuUsers();
+    }
+
+    private function fromSql()
+    {
+        $query = file_get_contents(database_path('seeders/data/users.sql'));
+        DB::unprepared($query);
+    }
+
+    private function pocariUsers()
+    {
 
         if (is_app_pocari()) {
             $users = [
@@ -127,12 +146,12 @@ class UserSeeder extends Seeder
                 //     'email' => 'kawil@pocari.com',
                 // ],
             ];
-            foreach ($users as $index => $user) {
+            foreach (range(1, 10) as $index => $user) {
                 $userObj = User::create([
-                    'name'                 => $name = $user['name'],
-                    'email'                => $user['email'],
+                    'name'                 => $name = 'Pusat ' . fake('id_ID')->city(),
+                    'email'                => $email = fake('id_ID')->unique()->safeEmail(),
                     'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
-                    'password'             => $password,
+                    'password'             => $this->password,
                     'is_locked'            =>  0,
                     'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
                     'birth_date'           => fake()->optional()->date('Y-m-d'),
@@ -142,23 +161,39 @@ class UserSeeder extends Seeder
                     'last_updated_by_id'   => null,
                     'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
                     'photo'                => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
-                    'is_anonymous'         => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
                     'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
-                    'nik'                  => is_app_chat() ? fake()->unique()->numerify('##################') : null,
-                    // 'uuid'                 => fake()->unique()->uuid(),
-                    'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
-                    'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
-                    'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
-                    'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
-                    'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
                     'uuid'                 => Str::uuid()->toString(),
                 ]);
 
-                if ($isRoleUsersExists)
-                    $userObj->assignRole('user');
+                $userObj->assignRole('pusat');
+            }
+
+            foreach (range(1, 25) as $index => $user) {
+                $userObj = User::create([
+                    'name'                 => $name = 'Cabang ' . fake('id_ID')->city(),
+                    'email'                => $email = fake('id_ID')->unique()->safeEmail(),
+                    'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
+                    'password'             => $this->password,
+                    'is_locked'            =>  0,
+                    'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
+                    'birth_date'           => fake()->optional()->date('Y-m-d'),
+                    'address'              => fake()->address(),
+                    'last_password_change' => date('Y-m-d H:i:s'),
+                    'created_by_id'        => 1,
+                    'last_updated_by_id'   => null,
+                    'avatar'               => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                    'photo'                => 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128',
+                    'gender'               => fake()->randomElement([User::GENDER_MALE, User::GENDER_FEMALE]),
+                    'uuid'                 => Str::uuid()->toString(),
+                ]);
+
+                $userObj->assignRole('cabang');
             }
         }
+    }
 
+    private function datakuUsers()
+    {
         if (is_app_dataku()) {
             $religions         = \App\Models\Religion::all();
             $schoolClasses     = \App\Models\SchoolClass::all();
@@ -181,7 +216,7 @@ class UserSeeder extends Seeder
                         'name'                 => $name = fake()->name(),
                         // 'email'                => fake()->unique()->safeEmail(),
                         'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
-                        'password'             => $password,
+                        'password'             => $this->password,
                         'is_locked'            => $user['is_locked'] ?? 0,
                         'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
                         'birth_date'           => fake()->date('Y-m-d'),
@@ -195,10 +230,10 @@ class UserSeeder extends Seeder
                         'nik'                  => fake()->unique()->numerify('##################'),
                         // 'uuid'                 => fake()->unique()->uuid(),
                         'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
-                        'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
-                        'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
-                        'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
-                        'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                        'province_code'        => $this->isRegionsExists ? $province = $this->provinces?->random()?->code : null,
+                        'city_code'            => $this->isRegionsExists ? $city = $this->gs->getCities($province)?->random()?->code : null,
+                        'district_code'        => $this->isRegionsExists ? $district = $this->gs->getDistricts($city)?->random()?->code : null,
+                        'village_code'         => $this->isRegionsExists ? $this->gs->getVillages($district)?->random()?->code : null,
                         'uuid'                 => Str::uuid()->toString(),
 
                         'nis'                 => fake()->unique()->numerify('##########'),
@@ -242,7 +277,7 @@ class UserSeeder extends Seeder
                         'name'                 => $name = fake()->name(),
                         'email'                => fake()->unique()->safeEmail(),
                         'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
-                        'password'             => $password,
+                        'password'             => $this->password,
                         'is_locked'            => $user['is_locked'] ?? 0,
                         'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
                         'birth_date'           => fake()->date('Y-m-d'),
@@ -256,10 +291,10 @@ class UserSeeder extends Seeder
                         'nik'                  => fake()->unique()->numerify('##################'),
                         // 'uuid'                 => fake()->unique()->uuid(),
                         'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
-                        'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
-                        'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
-                        'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
-                        'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                        'province_code'        => $this->isRegionsExists ? $province = $this->provinces?->random()?->code : null,
+                        'city_code'            => $this->isRegionsExists ? $city = $this->gs->getCities($province)?->random()?->code : null,
+                        'district_code'        => $this->isRegionsExists ? $district = $this->gs->getDistricts($city)?->random()?->code : null,
+                        'village_code'         => $this->isRegionsExists ? $this->gs->getVillages($district)?->random()?->code : null,
                         'uuid'                 => Str::uuid()->toString(),
 
                         'teacher_nuptk'           => fake()->unique()->numerify('################'),
@@ -281,7 +316,7 @@ class UserSeeder extends Seeder
                         'name'                 => $name = fake()->name(),
                         'email'                => fake()->unique()->safeEmail(),
                         'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
-                        'password'             => $password,
+                        'password'             => $this->password,
                         'is_locked'            => $user['is_locked'] ?? 0,
                         'phone_number'         => fake('id_ID')->optional()->phoneNumber(),
                         'birth_date'           => fake()->date('Y-m-d'),
@@ -295,10 +330,10 @@ class UserSeeder extends Seeder
                         'nik'                  => fake()->unique()->numerify('##################'),
                         // 'uuid'                 => fake()->unique()->uuid(),
                         'is_majalengka'        => is_app_chat() ? fake()->randomElement([0, 1]) : 0,
-                        'province_code'        => $isRegionsExists ? $province = $provinces?->random()?->code : null,
-                        'city_code'            => $isRegionsExists ? $city = $gs->getCities($province)?->random()?->code : null,
-                        'district_code'        => $isRegionsExists ? $district = $gs->getDistricts($city)?->random()?->code : null,
-                        'village_code'         => $isRegionsExists ? $gs->getVillages($district)?->random()?->code : null,
+                        'province_code'        => $this->isRegionsExists ? $province = $this->provinces?->random()?->code : null,
+                        'city_code'            => $this->isRegionsExists ? $city = $this->gs->getCities($province)?->random()?->code : null,
+                        'district_code'        => $this->isRegionsExists ? $district = $this->gs->getDistricts($city)?->random()?->code : null,
+                        'village_code'         => $this->isRegionsExists ? $this->gs->getVillages($district)?->random()?->code : null,
                         'uuid'                 => Str::uuid()->toString(),
                         'education_level_id'   => $educationLevelId,
                     ]);
@@ -306,11 +341,5 @@ class UserSeeder extends Seeder
                     $userObj->assignRole('kepala sekolah');
                 }
         }
-    }
-
-    private function fromSql()
-    {
-        $query = file_get_contents(database_path('seeders/data/users.sql'));
-        DB::unprepared($query);
     }
 }

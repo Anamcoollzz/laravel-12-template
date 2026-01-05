@@ -32,7 +32,7 @@ class PicaRepository extends Repository
         })
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
-            
+
             'notes' => fn(Pica $item) => $item->notes,
             'function_id' => fn(Pica $item) => $item->function_id,
             'category_id' => fn(Pica $item) => $item->category_id,
@@ -108,7 +108,7 @@ class PicaRepository extends Repository
                 'searchable' => false,
                 'orderable'  => false
             ],
-            
+
             ['data' => 'notes', 'name' => 'notes'],
             ['data' => 'function_id', 'name' => 'function_id'],
             ['data' => 'category_id', 'name' => 'category_id'],

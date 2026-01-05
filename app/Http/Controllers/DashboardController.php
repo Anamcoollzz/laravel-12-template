@@ -53,10 +53,10 @@ class DashboardController extends StislaController
             // } elseif ($item->name === 'Overdue') {
             //     $item->type = 'danger';
             //     $item->color = '#dc3545';
-            // } elseif ($item->name === 'Approval') {
+            // } elseif ($item->name === 'Need Approval') {
             //     $item->type = 'secondary';
             //     $item->color = 'purple';
-            // } elseif ($item->name === 'Revision') {
+            // } elseif ($item->name === 'Need Revision') {
             //     $item->type = 'secondary';
             //     $item->color = '#f552eb';
             // } elseif ($item->name === 'Done') {

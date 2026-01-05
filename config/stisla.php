@@ -354,6 +354,7 @@ if (is_app_chat($app)) {
     ];
     $roles = [
         'superadmin',
+        'pusat',
         'cabang',
         // 'kepala sekolah',
         // 'guru',
@@ -372,7 +373,7 @@ if (is_app_chat($app)) {
         'Pekerjaan',
         'Sidik Jari X105 ID',
         'Mesin Sidik Jari',
-        // 'Role',
+        'Role',
         'Permission',
         'Group Permission',
     ];
@@ -839,7 +840,7 @@ return [
                 ],
                 [
                     'menu_name' => 'Log',
-                    'route_name' => 'activity-logs.index',
+                    'route_name' => null,
                     'icon' => 'fas fa-clock-rotate-left',
                     'permission' => null,
                     'is_active_if_url_includes' => 'activity-logs*',
@@ -947,22 +948,22 @@ return [
 
         [
             'name' => 'Profil',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru', 'pusat', 'cabang'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Ubah',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru', 'pusat', 'cabang'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Email',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru', 'pusat', 'cabang'],
             'group' => 'Profil'
         ],
         [
             'name' => 'Profil Perbarui Password',
-            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru'],
+            'roles' => ['superadmin', 'admin', 'user', 'banker', 'mahasiswa', 'pimpinan fakultas', 'kepala sekolah', 'guru', 'pusat', 'cabang'],
             'group' => 'Profil'
         ],
         [

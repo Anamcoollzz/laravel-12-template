@@ -61,6 +61,8 @@ class PicaSeeder extends Seeder
         $workFields  = Category::all()->pluck('id')->toArray();
         $assignedTos = User::all()->pluck('id')->toArray();
         $statuses    = Status::where('name', '!=', 'Overdue')->get()->pluck('id')->toArray();
+        $pusatUserIds = User::role('pusat')->get()->pluck('id')->toArray();
+        $cabangUserIds = User::role('cabang')->get()->pluck('id')->toArray();
 
         for ($i = 1; $i <= $total; $i++) {
             $email = $faker->email;
@@ -116,20 +118,21 @@ class PicaSeeder extends Seeder
             if (isset($colSet['deleted_at']))         $row['deleted_at'] = Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]);
             if (isset($colSet['created_at']))         $row['created_at'] = $faker->dateTimeBetween('-1 month', 'now');
             if (isset($colSet['updated_at']))         $row['updated_at'] = $faker->dateTimeBetween('-1 month', 'now');
-            if (isset($colSet['created_by_id']))      $row['created_by_id'] = Arr::random([null, 1]);
+            if (isset($colSet['created_by_id']))      $row['created_by_id'] = Arr::random($pusatUserIds);
             if (isset($colSet['last_updated_by_id'])) $row['last_updated_by_id'] = Arr::random([null, 1]);
 
             // 'deleted_at' => null,
 
             // ini hasil generate dari make:module command
             $row['title']                  = 'Pica Title ' . $i;
-            $row['notes']                  = 'Pica Notes ' . $i;
+            // $row['notes']                  = 'Pica Notes ' . $i;
+            $row['notes']                  = fake()->paragraphs(1, true);
             $row['function_id']            = Arr::random($functions);
             $row['category_id']            = Arr::random($categories);
             $row['work_field_id']          = Arr::random($workFields);
             $row['deadline']               = $date = fake()->dateTimeBetween('+1 week', '+1 month')->format('Y-m-d');
             $row['kpi_related']            = 'KPI Related ' . $i;
-            $row['assigned_to']            = Arr::random($assignedTos);
+            $row['assigned_to']            = Arr::random($cabangUserIds);
             $row['created_date']           = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $row['problem_identification'] = 'Pica Problem Identification ' . $i;
             $row['corrective_action']      = 'Pica Corrective Action ' . $i;

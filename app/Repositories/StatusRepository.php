@@ -32,7 +32,7 @@ class StatusRepository extends Repository
         })
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
-            
+
             'name' => fn(Status $item) => $item->name,
 
 
@@ -96,7 +96,7 @@ class StatusRepository extends Repository
                 'searchable' => false,
                 'orderable'  => false
             ],
-            
+
             ['data' => 'name', 'name' => 'name'],
 
             // ini bisa dikomen nanti ya kalau tidak digunakan
@@ -148,5 +148,43 @@ class StatusRepository extends Repository
     public function getFullData()
     {
         return $this->queryFullData()->with(['createdBy', 'lastUpdatedBy'])->latest()->get();
+    }
+
+    /**
+     * get data as select options
+     *
+     * @param string $label
+     * @param string $value
+     * @param array|null $where
+     * @param string|null $whereField
+     * @param array|null $whereIn
+     * @param callable|null $map
+     * @return array
+     */
+    public function getSelectOptionsApproval($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [], ?callable $map = null): array
+    {
+        $query = $this->query()
+            ->when(!empty($where), function ($query) use ($where) {
+                $query->where($where);
+            })
+            ->when(!empty($whereIn), function ($query) use ($whereField, $whereIn) {
+                $query->whereIn($whereField, $whereIn);
+            })
+            ->when($map !== null, function ($query) use ($map) {
+                $query->select('*');
+            })
+            ->when($map === null, function ($query) use ($label, $value) {
+                $query->select($label, $value);
+            })
+            ->whereIn('id', [
+                \App\Models\Status::STATUS_DONE,
+                \App\Models\Status::STATUS_NEED_REVISION,
+            ])
+            ->oldest()
+            ->get()
+            ->when($map !== null, function ($collection) use ($map) {
+                return $collection->map($map);
+            });
+        return $query->pluck($label, $value)->toArray();
     }
 }

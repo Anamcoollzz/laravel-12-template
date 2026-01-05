@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PicaRequest;
+use App\Models\Status;
 use App\Repositories\CategoryRepository;
 use App\Repositories\PicaRepository;
 use App\Repositories\PocariFunctionRepository;
@@ -37,7 +38,7 @@ class PicaController extends StislaController
         $this->prefix       = $this->viewFolder = 'picas';
 
         // ini sesuaiin sama kebutuhan masing-masing, soalnya kalau A1 kan gede banget
-        $this->pdfPaperSize = 'A1';
+        $this->pdfPaperSize = 'A3';
         $this->isAppCrud    = true;
         $this->request      = new PicaRequest;
         $this->fileColumns  = [
@@ -69,6 +70,8 @@ class PicaController extends StislaController
         $this->statusRepository = new StatusRepository;
         $this->categoryRepository = new CategoryRepository;
         $this->userRepository = new UserRepository;
+
+        $this->isShowExportDatatable = false;
     }
 
     /**
@@ -138,6 +141,22 @@ class PicaController extends StislaController
         if (in_array('is_active', $columns))
             $data['is_active'] = $request->filled('is_active');
 
+        if (Route::is('picas.store')) {
+            $data['status_id'] = Status::STATUS_OPEN;
+        }
+
+        if ($request->has('next_status')) {
+            $data['status_id'] = $request->input('next_status');
+        }
+
+        if ($request->has('status_id')) {
+            $data['status_id'] = $request->input('status_id');
+        }
+
+        if ($request->has('revision_notes')) {
+            $data['revision_notes'] = $request->input('revision_notes');
+        }
+
         $data = array_merge($data, request()->only([
             'title',
             'notes',
@@ -152,8 +171,10 @@ class PicaController extends StislaController
             'corrective_action',
             // 'attachment',
             // 'evidence',
-            'status_id',
+            // 'status_id',
         ]));
+
+        // dd($request->all(), $data);
 
         return $data;
     }
@@ -182,7 +203,7 @@ class PicaController extends StislaController
         return [
             'function_id_options'   => $this->pocariFunctionRepository->getSelectOptions(),
             'work_field_id_options' => $this->workFieldRepository->getSelectOptions(),
-            'status_id_options'     => $this->statusRepository->getSelectOptions(),
+            'status_id_options'     => $this->statusRepository->getSelectOptionsApproval(),
             'category_id_options'   => $this->categoryRepository->getSelectOptions(),
             'assigned_to_options'   => $this->userRepository->getSelectOptions(),
         ];
@@ -228,9 +249,13 @@ class PicaController extends StislaController
             ->when(Route::is('picas.action-needed'), function ($query) {
                 $query->whereHas('status', function ($q) {
                     $q->where(function ($q) {
-                        $q->where('name', 'Approval')->orWhere('name', 'Revision');
+                        $q->where('name', 'Need Approval')->orWhere('name', 'Need Revision');
                     });
                 });
+            })
+            ->when(is_pusat(), function ($query) {
+                // pusat hanya boleh lihat pica yang ditugaskan ke cabang di bawahnya
+                $query->where('created_by_id', auth_id());
             })
             ->get();
     }

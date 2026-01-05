@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str as SupportStr;
+use Psy\Util\Str;
 
 class PicaRequest extends FormRequest
 {
@@ -43,6 +45,26 @@ class PicaRequest extends FormRequest
     {
         // dd($this);
 
+        $url = url()->previous(); // string
+        if (SupportStr::contains($url, 'on-progress-edit')) {
+            return [
+                'problem_identification' => 'required',
+            ];
+        }
+        if (SupportStr::contains($url, 'approval-edit')) {
+            return [
+                'problem_identification' => 'required',
+                'corrective_action'      => 'required',
+                'evidence'               => 'required|image',
+            ];
+        }
+        if (SupportStr::contains($url, 'form-approval')) {
+            return [
+                'revision_notes' => 'nullable',
+                'status_id'       => 'required|numeric',
+            ];
+        }
+
         return [
             'notes'                  => 'required',
             'function_id'            => 'required|numeric',
@@ -52,11 +74,11 @@ class PicaRequest extends FormRequest
             'kpi_related'            => 'required',
             'assigned_to'            => 'required|numeric',
             'created_date'           => 'required|date',
-            'problem_identification' => 'required',
-            'corrective_action'      => 'required',
+            'problem_identification' => 'nullable',
+            'corrective_action'      => 'nullable',
             'attachment'             => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "nullable|image",
             'evidence'               => $this->isMethod('put') || $this->isMethodPut || $isMethodPut ? 'nullable|image' : "nullable|image",
-            'status_id'              => 'required|numeric',
+            'status_id'              => 'nullable|numeric',
         ];
 
         // ini yang gak dibutuhkan bisa dikomen atau butuh sesuatu copy aja taruh ke atas

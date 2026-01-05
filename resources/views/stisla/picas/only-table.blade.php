@@ -16,7 +16,7 @@
   @if ($isExport === false && $canExport) data-export="true" data-title="{{ $title }}" @endif>
   <thead>
     <tr>
-      @if ($isTrashed === false && $isExport === false)
+      @if ($isTrashed === false && $isExport === false && !is_app_pocari())
         <th class="td-checkbox no-sort">
           {{-- <input type="checkbox" id="select_all_checkbox" /> --}}
         </th>
@@ -28,7 +28,7 @@
       @endif
 
       {{-- ini adalah hasil dari make:module --}}
-      <th>{{ __('validation.attributes.title') }}</th>
+      {{-- <th>{{ __('validation.attributes.title') }}</th> --}}
       <th>{{ __('validation.attributes.notes') }}</th>
       <th>{{ __('validation.attributes.function_id') }}</th>
       <th>{{ __('validation.attributes.category_id') }}</th>
@@ -39,8 +39,8 @@
       <th>{{ __('validation.attributes.created_date') }}</th>
       <th>{{ __('validation.attributes.problem_identification') }}</th>
       <th>{{ __('validation.attributes.corrective_action') }}</th>
-      <th>{{ __('validation.attributes.attachment') }}</th>
-      <th>{{ __('validation.attributes.evidence') }}</th>
+      {{-- <th>{{ __('validation.attributes.attachment') }}</th>
+      <th>{{ __('validation.attributes.evidence') }}</th> --}}
       <th>{{ __('validation.attributes.status_id') }}</th>
 
       {{-- yang ini boleh dikomen --}}
@@ -138,13 +138,13 @@
       @endif
 
       {{-- wajib --}}
-      <th>{{ __('validation.attributes.created_at') }}</th>
+      {{-- <th>{{ __('validation.attributes.created_at') }}</th>
       <th>{{ __('validation.attributes.updated_at') }}</th>
       @if ($isTrashed)
         <th>{{ __('validation.attributes.deleted_at') }}</th>
       @endif
       <th>{{ __('validation.attributes.created_by') }}</th>
-      <th>{{ __('validation.attributes.updated_by') }}</th>
+      <th>{{ __('validation.attributes.updated_by') }}</th> --}}
       @if ($isExport === false && ($canUpdate || $canDelete || $canDetail))
         <th class="td-action no-sort">{{ __('validation.attributes.actions') }}</th>
       @endif
@@ -154,7 +154,7 @@
     @if ($isYajra === false)
       @foreach ($data as $item)
         <tr>
-          @if ($isTrashed === false && $isExport === false)
+          @if ($isTrashed === false && $isExport === false && !is_app_pocari())
             <td class="td-checkbox">
               <input onclick="onCheck()" type="checkbox" class="record_checkbox" data-id="{{ $item->uuid ?? $item->id }}" />
             </td>
@@ -162,8 +162,8 @@
           <td>{{ $loop->iteration }}</td>
 
           {{-- ini adalah hasil dari make:module --}}
-          <td>{{ $item->title }}</td>
-          <td>{{ $item->notes }}</td>
+          {{-- <td>{{ $item->title }}</td> --}}
+          <td>{{ limit_words($item->notes, 10) }}</td>
           <td>{{ $item->pocarifunction->name }}</td>
           <td>{{ $item->category->name }}</td>
           <td>{{ $item->workfield->name }}</td>
@@ -173,8 +173,8 @@
           @include('stisla.includes.others.td-datetime', ['DateTime' => $item->created_date])
           <td>{{ $item->problem_identification }}</td>
           <td>{{ $item->corrective_action }}</td>
-          @include('stisla.includes.others.td-image', ['file' => $item->attachment])
-          @include('stisla.includes.others.td-image', ['file' => $item->evidence])
+          {{-- @include('stisla.includes.others.td-image', ['file' => $item->attachment])
+          @include('stisla.includes.others.td-image', ['file' => $item->evidence]) --}}
           <td>
             <span class="badge badge-danger" style="background-color: {{ $item->status->color }}">
               {{ $item->status->name }}
@@ -281,9 +281,9 @@
           @endif
 
           {{-- wajib --}}
-          @include('stisla.includes.others.td-created-updated-at')
-          @include('stisla.includes.others.td-created-updated-by')
-          @include('stisla.includes.others.td-action')
+          {{-- @include('stisla.includes.others.td-created-updated-at')
+          @include('stisla.includes.others.td-created-updated-by') --}}
+          @include('stisla.includes.others.td-action-pica')
         </tr>
       @endforeach
     @endif

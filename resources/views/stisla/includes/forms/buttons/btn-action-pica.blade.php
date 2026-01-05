@@ -24,6 +24,15 @@
           @if ($canUpdate)
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.edit', [$item->id]) }}"><i class="far fa-edit"></i> Ubah</a>
           @endif
+          @if ($item->status_id == \App\Models\Status::STATUS_OPEN && is_cabang())
+            <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.on-progress-edit', [$item->id]) }}"><i class="far fa-edit"></i> Set Ke On Progress</a>
+          @endif
+          @if (($item->status_id == \App\Models\Status::STATUS_ON_PROGRESS || $item->status_id == \App\Models\Status::STATUS_NEED_REVISION) && is_cabang())
+            <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.approval-edit', [$item->id]) }}"><i class="far fa-edit"></i> Set Ke Approval</a>
+          @endif
+          @if ($item->status_id == \App\Models\Status::STATUS_NEED_APPROVAL && is_pusat())
+            <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.form-approval', [$item->id]) }}"><i class="far fa-edit"></i> Form Approval</a>
+          @endif
           @if ($canDuplicate)
             <a onclick="duplicateGlobal(event, '{{ route($routePrefix . '.duplicate', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-success" href="#">
               <i class="fas fa-copy"></i> Duplikat
@@ -65,6 +74,7 @@
       @if ($canUpdate)
         @include('stisla.includes.forms.buttons.btn-edit', ['link' => route($routePrefix . '.edit', [$item->id])])
       @endif
+      @include('stisla.includes.forms.buttons.btn-edit', ['link' => route($routePrefix . '.on-progress-edit', [$item->id]), 'label' => 'On Progress'])
       @if ($canDuplicate)
         @include('stisla.includes.forms.buttons.btn-duplicate', ['link' => route($routePrefix . '.duplicate', [$item->id])])
       @endif

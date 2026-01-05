@@ -1,77 +1,129 @@
 {{-- ini adalah hasil dari make:module --}}
-<div class="col-md-6">
+<div class="col-md-12" id="formPusat">
+  <div class="row">
+    @isset($d)
+      <div class="col-md-12 mb-5">
+        Status:
+        <span class="badge badge-danger" style="background-color: {{ $d->status->color }}">
+          {{ $d->status->name }}
+        </span>
+      </div>
+    @endisset
+    <div class="col-md-6">
+      @include('stisla.includes.forms.selects.select', [
+          'id' => 'category_id',
+          'name' => 'category_id',
+          'options' => $category_id_options,
+          'label' => __('validation.attributes.category_id'),
+          'required' => true,
+      ])
+    </div>
+    {{-- <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'title', 'label' => __('validation.attributes.title')])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
-</div>
-{{-- {{ dd(1) }} --}}
-<div class="col-md-6">
-  @include('stisla.includes.forms.selects.select', [
-      'id' => 'function_id',
-      'name' => 'function_id',
-      'options' => $function_id_options,
-      'label' => __('validation.attributes.function_id'),
-      'required' => true,
-  ])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.selects.select', [
-      'id' => 'category_id',
-      'name' => 'category_id',
-      'options' => $category_id_options,
-      'label' => __('validation.attributes.category_id'),
-      'required' => true,
-  ])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.selects.select', [
-      'id' => 'work_field_id',
-      'name' => 'work_field_id',
-      'options' => $work_field_id_options,
-      'label' => __('validation.attributes.work_field_id'),
-      'required' => true,
-  ])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input-date', ['required' => true, 'name' => 'deadline', 'label' => __('validation.attributes.deadline')])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'kpi_related', 'label' => __('validation.attributes.kpi_related')])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.selects.select', [
-      'id' => 'assigned_to',
-      'name' => 'assigned_to',
-      'options' => $assigned_to_options,
-      'label' => __('validation.attributes.assigned_to'),
-      'required' => true,
-  ])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input-date', ['required' => true, 'name' => 'created_date', 'label' => __('validation.attributes.created_date')])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'problem_identification', 'label' => __('validation.attributes.problem_identification')])
-</div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'corrective_action', 'label' => __('validation.attributes.corrective_action')])
-</div>
-{{-- <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
 </div> --}}
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
+    </div>
+    {{-- {{ dd(1) }} --}}
+    <div class="col-md-6">
+      @include('stisla.includes.forms.selects.select', [
+          'id' => 'function_id',
+          'name' => 'function_id',
+          'options' => $function_id_options,
+          'label' => __('validation.attributes.function_id'),
+          'required' => true,
+      ])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.selects.select', [
+          'id' => 'work_field_id',
+          'name' => 'work_field_id',
+          'options' => $work_field_id_options,
+          'label' => __('validation.attributes.work_field_id'),
+          'required' => true,
+      ])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input-date', ['required' => true, 'name' => 'deadline', 'label' => __('validation.attributes.deadline')])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'kpi_related', 'label' => __('validation.attributes.kpi_related')])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.selects.select', [
+          'id' => 'assigned_to',
+          'name' => 'assigned_to',
+          'options' => $assigned_to_options,
+          'label' => __('validation.attributes.assigned_to'),
+          'required' => true,
+      ])
+    </div>
+    <div class="col-md-6">
+      @include('stisla.includes.forms.inputs.input-date', ['required' => true, 'name' => 'created_date', 'label' => __('validation.attributes.created_date')])
+    </div>
+    <div class="col-md-6">
+      {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'attachment', 'label' => __('validation.attributes.attachment')]) --}}
+      @if (Route::is('picas.show') || Route::is('picas.on-progress-edit') || Route::is('picas.approval-edit'))
+        <h6>Attachment</h6>
+        @if ($d->attachment)
+          <img src="{{ $d->attachment }}" alt="Attachment" class="img-fluid mb-3" style="max-height: 300px;">
+        @else
+          <p>No attachment available.</p>
+        @endif
+      @else
+        @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
+        @if (Route::is('picas.on-progress-edit') || Route::is('picas.form-approval'))
+          @if ($d->attachment)
+            <img src="{{ $d->attachment }}" alt="Attachment" class="img-fluid mb-3" style="max-height: 300px;">
+          @else
+            <p>No attachment available.</p>
+          @endif
+        @endif
+      @endif
+      @if (Route::is('picas.on-progress-edit'))
+        <input type="hidden" name="next_status" value="{{ \App\Models\Status::STATUS_ON_PROGRESS }}">
+      @endif
+      @if (Route::is('picas.approval-edit'))
+        <input type="hidden" name="next_status" value="{{ \App\Models\Status::STATUS_NEED_APPROVAL }}">
+      @endif
+      @if (Route::is('picas.form-approval'))
+        <input id="next_status" type="hidden" name="next_status" value="{{ \App\Models\Status::STATUS_DONE }}">
+      @endif
+    </div>
+    @if ((Route::is('picas.approval-edit') && $d->revision_notes) || Route::is('picas.show'))
+      <div class="col-md-12">
+        @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'revision_notes', 'label' => __('validation.attributes.revision_notes')])
+      </div>
+    @endif
+  </div>
+</div>
+
+<div class="col-12">
+  <hr>
+  <h6>Diisi oleh cabang</h6>
+</div>
 <div class="col-md-6">
-  {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'attachment', 'label' => __('validation.attributes.attachment')]) --}}
-  @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
+  @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'problem_identification', 'label' => __('validation.attributes.problem_identification')])
+</div>
+<div class="col-md-6">
+  @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'corrective_action', 'label' => __('validation.attributes.corrective_action')])
 </div>
 {{-- <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
+  @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
+</div> --}}
+{{-- <div class="col-md-6">
+  @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
 </div> --}}
 <div class="col-md-6">
   {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'evidence', 'label' => __('validation.attributes.evidence')]) --}}
-  @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
+  @if (Route::is('picas.show') || Route::is('picas.form-approval'))
+    <h6>Evidence</h6>
+    <img src="{{ $d->evidence }}" alt="Evidence" class="img-fluid mb-3" style="max-height: 300px;">
+  @else
+    @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
+  @endif
 </div>
-<div class="col-md-6">
+{{-- <div class="col-md-6">
   @include('stisla.includes.forms.selects.select', [
       'id' => 'status_id',
       'name' => 'status_id',
@@ -79,7 +131,30 @@
       'label' => __('validation.attributes.status_id'),
       'required' => true,
   ])
-</div>
+</div> --}}
+
+@if (Route::is('picas.form-approval'))
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-12">
+        <hr>
+        <h6>Diisi oleh pusat</h6>
+      </div>
+      <div class="col-md-6">
+        @include('stisla.includes.forms.selects.select', [
+            'id' => 'status_id',
+            'name' => 'status_id',
+            'options' => $status_id_options,
+            'label' => __('validation.attributes.status_id'),
+            'required' => true,
+        ])
+      </div>
+      <div class="col-md-6">
+        @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'revision_notes', 'label' => __('validation.attributes.revision_notes')])
+      </div>
+    </div>
+  </div>
+@endif
 
 
 {{-- yang ini boleh dicopy yang dibutuhin --}}
@@ -305,3 +380,19 @@
     ])
   </div>
 @endif
+
+@push('scripts')
+  @if (Route::is('picas.on-progress-edit') || Route::is('picas.approval-edit'))
+    <script>
+      $(function() {
+        $('#formPusat').find('.form-control').prop('disabled', true);
+      })
+    </script>
+  @endif
+@endpush
+
+@push('scripts')
+  <script>
+    // $('#status_id').
+  </script>
+@endpush

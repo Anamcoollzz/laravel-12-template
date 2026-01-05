@@ -53,13 +53,13 @@ class StatusSeeder extends Seeder
         $total = 20;
 
         $categories = [
-            'Open',
-            'On Progress',
-            'Approval',
+            Status::STATUS_OPEN => 'Open',
+            Status::STATUS_ON_PROGRESS => 'On Progress',
+            Status::STATUS_NEED_APPROVAL => 'Need Approval',
             // 'Watchout',
-            'Revision',
-            'Done',
-            'Overdue',
+            Status::STATUS_NEED_REVISION => 'Need Revision',
+            Status::STATUS_DONE => 'Done',
+            Status::STATUS_OVERDUE => 'Overdue',
         ];
         foreach ($categories as $i => $categoryName) {
             $email = $faker->email;

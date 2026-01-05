@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="card-body">
-    <div class="collapse {{ $is_show === false ? '' : 'show' }}" id="collapseFilterData">
+    <div class="collapse {{ $is_show === false ? '' : 'show' }} {{ request('_token') ? 'show' : '' }}" id="collapseFilterData">
       <form action="">
         @csrf
         <input type="hidden" name="show_deleted" value="{{ request()->get('show_deleted') }}">
@@ -58,7 +58,32 @@
             </div>
             <input type="hidden" name="filter_role" value="{{ request('filter_role') }}">
           @else
-            <div class="col-md-6 col-lg-3">
+            @if (is_app_pocari())
+              <div class="col-md-6 col-lg-6">
+                @include('stisla.includes.forms.inputs.input-daterangepicker', [
+                    'id' => 'filter_created_date_range',
+                    'label' => 'Range Created Date',
+                    'value' => request('filter_created_date_range', null),
+                ])
+              </div>
+            @else
+              <div class="col-md-6 col-lg-6">
+                @include('stisla.includes.forms.inputs.input-daterangepicker', [
+                    'id' => 'filter_created_at_range',
+                    'label' => 'Range Created At',
+                    'value' => request('filter_created_at_range', null),
+                ])
+              </div>
+            @endif
+
+            <div class="col-md-6 col-lg-6">
+              @include('stisla.includes.forms.inputs.input-daterangepicker', [
+                  'id' => 'filter_updated_at_range',
+                  'label' => 'Range Updated At',
+                  'value' => request('filter_updated_at_range', null),
+              ])
+            </div>
+            {{-- <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_start_created_at',
@@ -75,8 +100,8 @@
                   'label' => 'End Created At',
                   'value' => request('filter_end_created_at', null),
               ])
-            </div>
-            <div class="col-md-6 col-lg-3">
+            </div> --}}
+            {{-- <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => false,
                   'name' => 'filter_start_updated_at',
@@ -93,44 +118,80 @@
                   'label' => 'End Updated At',
                   'value' => request('filter_end_updated_at', null),
               ])
-            </div>
-            <div class="col-md-6 col-lg-3">
-              @php
-                $users = isset($users) ? $users : \App\Models\User::select('id', 'name')->orderBy('name')->get();
-              @endphp
-              @include('stisla.includes.forms.selects.select', [
-                  'id' => 'filter_created_by_id',
-                  'name' => 'filter_created_by_id',
-                  'options' => $users->pluck('name', 'id')->toArray(),
-                  'label' => 'Created By',
-                  'required' => false,
-                  'with_all' => true,
-                  'selected' => request('filter_created_by_id', null),
-              ])
-            </div>
-            <div class="col-md-6 col-lg-3">
-              @include('stisla.includes.forms.selects.select', [
-                  'id' => 'filter_last_updated_by_id',
-                  'name' => 'filter_last_updated_by_id',
-                  'options' => $users->pluck('name', 'id')->toArray(),
-                  'label' => 'Last Updated By',
-                  'required' => false,
-                  'with_all' => true,
-                  'selected' => request('filter_last_updated_by_id', null),
-              ])
-            </div>
-            <div class="col-md-6 col-lg-3">
-              @include('stisla.includes.forms.selects.select', [
-                  'id' => 'filter_sort_by_created_at',
-                  'name' => 'filter_sort_by_created_at',
-                  'options' => ['latest' => 'latest', 'oldest' => 'oldest'],
-                  'label' => 'Sort By Created At',
-                  'required' => false,
-                  'with_all' => false,
-                  'selected' => request('filter_sort_by_created_at', 'latest'),
-              ])
-            </div>
-            <div class="col-md-6 col-lg-3">
+            </div> --}}
+            @if (is_app_pocari())
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $creators = \App\Models\User::role('pusat')->select('id', 'name')->orderBy('name')->get();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_created_by_id',
+                    'name' => 'filter_created_by_id',
+                    'options' => $creators->pluck('name', 'id')->toArray(),
+                    'label' => 'Created By',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_created_by_id', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $users = \App\Models\User::role(['pusat', 'cabang'])
+                      ->select('id', 'name')
+                      ->orderBy('name')
+                      ->get();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_last_updated_by_id',
+                    'name' => 'filter_last_updated_by_id',
+                    'options' => $users->pluck('name', 'id')->toArray(),
+                    'label' => 'Last Updated By',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_last_updated_by_id', null),
+                ])
+              </div>
+            @else
+              <div class="col-md-6 col-lg-3">
+                @php
+                  $users = isset($users) ? $users : \App\Models\User::select('id', 'name')->orderBy('name')->get();
+                @endphp
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_created_by_id',
+                    'name' => 'filter_created_by_id',
+                    'options' => $users->pluck('name', 'id')->toArray(),
+                    'label' => 'Created By',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_created_by_id', null),
+                ])
+              </div>
+              <div class="col-md-6 col-lg-3">
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_last_updated_by_id',
+                    'name' => 'filter_last_updated_by_id',
+                    'options' => $users->pluck('name', 'id')->toArray(),
+                    'label' => 'Last Updated By',
+                    'required' => false,
+                    'with_all' => true,
+                    'selected' => request('filter_last_updated_by_id', null),
+                ])
+              </div>
+            @endif
+            @if (!is_app_pocari())
+              <div class="col-md-6 col-lg-3">
+                @include('stisla.includes.forms.selects.select', [
+                    'id' => 'filter_sort_by_created_at',
+                    'name' => 'filter_sort_by_created_at',
+                    'options' => ['latest' => 'latest', 'oldest' => 'oldest'],
+                    'label' => 'Sort By Created At',
+                    'required' => false,
+                    'with_all' => false,
+                    'selected' => request('filter_sort_by_created_at', 'latest'),
+                ])
+              </div>
+            @endif
+            {{-- <div class="col-md-6 col-lg-3">
               @include('stisla.includes.forms.inputs.input', [
                   'required' => true,
                   'name' => 'filter_limit',
@@ -139,7 +200,7 @@
                   'value' => request('filter_limit', 50),
                   'min' => 1,
               ])
-            </div>
+            </div> --}}
             @if (Route::is('user-management.users.index'))
               <div class="col-md-6 col-lg-3">
                 @php
@@ -157,7 +218,7 @@
               </div>
             @endif
 
-            @if (Route::is('picas.index'))
+            @if (Request::is('*picas*'))
               <div class="col-md-6 col-lg-3">
                 @php
                   $repo = new \App\Repositories\PocariFunctionRepository();
@@ -186,7 +247,7 @@
                     'selected' => request('filter_work_field', null),
                 ])
               </div>
-              <div class="col-md-6 col-lg-3">
+              {{-- <div class="col-md-6 col-lg-3">
                 @php
                   $repo = new \App\Repositories\StatusRepository();
                 @endphp
@@ -199,7 +260,7 @@
                     'with_all' => true,
                     'selected' => request('filter_status', null),
                 ])
-              </div>
+              </div> --}}
               <div class="col-md-6 col-lg-3">
                 @php
                   $repo = new \App\Repositories\UserRepository();

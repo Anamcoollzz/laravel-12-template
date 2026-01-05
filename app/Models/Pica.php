@@ -81,6 +81,7 @@ class Pica extends Model
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',
+        'revision_notes',
     ];
 
     /**

@@ -15,9 +15,9 @@
 
 @if ($canFilterData)
   @section('filter_top')
-    @if (Route::is($prefix . '.index'))
-      @include('stisla.includes.others.filter-default', ['is_show' => false])
-    @endif
+    {{-- @if (Route::is($prefix . '.index')) --}}
+    @include('stisla.includes.others.filter-default', ['is_show' => false])
+    {{-- @endif --}}
   @endsection
 @endif
 

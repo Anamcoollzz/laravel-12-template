@@ -49,3 +49,18 @@ function generate_avatar($name)
 {
     return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&size=128';
 }
+
+/**
+ * limit words in a string
+ *
+ * @param string $text
+ * @param int $limit
+ * @return string
+ */
+function limit_words($text, $limit = 10)
+{
+    $words = preg_split('/\s+/', trim($text));
+    return count($words) > $limit
+        ? implode(' ', array_slice($words, 0, $limit)) . '...'
+        : $text;
+}

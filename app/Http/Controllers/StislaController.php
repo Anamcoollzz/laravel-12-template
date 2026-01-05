@@ -252,6 +252,13 @@ class StislaController extends Controller implements HasMiddleware
     protected bool $dd = false;
 
     /**
+     * show export datatable
+     *
+     * @var bool
+     */
+    protected bool $isShowExportDatatable = true;
+
+    /**
      * constructor method
      *
      * @return void
@@ -604,7 +611,7 @@ class StislaController extends Controller implements HasMiddleware
             // else if (count($this->data) > 0)
             //     $data = $this->data;
             else
-                $data = $this->getIndexData() ?? $this->repository->getFullData();
+                $data = $this->getIndexData2() ?? $this->getIndexData() ?? $this->repository->getFullData();
         }
 
         $defaultData = $this->getDefaultDataIndex($title, $title, $prefix . '');
@@ -713,7 +720,7 @@ class StislaController extends Controller implements HasMiddleware
 
         $data = array_merge([
             'title'     => $this->title,
-            'data'      => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
+            'data'      => ($this->getIndexData2() ?? $this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport'  => true,
             'prefix'    => $this->prefix,
             'isAppCrud' => $this->isAppCrud,
@@ -809,6 +816,9 @@ class StislaController extends Controller implements HasMiddleware
             ]);
         }
 
+        if (is_app_pocari())
+            return redirect()->route($this->prefix . '.index')->with('successMessage', $successMessage);
+
         return backSuccess($successMessage);
     }
 
@@ -880,7 +890,8 @@ class StislaController extends Controller implements HasMiddleware
                 'message' => $successMessage,
             ]);
         }
-
+        if (is_app_pocari())
+            return redirect()->route($this->prefix . '.index')->with('successMessage', $successMessage);
         return backSuccess($successMessage);
     }
 
@@ -1336,9 +1347,10 @@ class StislaController extends Controller implements HasMiddleware
         $this->beforeIndexData();
         $columns = $this->getHasColumns();
         return $this->prepareIndex($request, array_merge([
-            'data'        => $this->getIndexData2(),
-            'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
-            'countData'   => $this->repository->count()
+            'data'                  => $this->getIndexData2(),
+            'deletedData'           => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+            'countData'             => $this->repository->count(),
+            'isShowExportDatatable' => $this->isShowExportDatatable,
         ], $columns, $this->additionalIndexData()));
     }
 

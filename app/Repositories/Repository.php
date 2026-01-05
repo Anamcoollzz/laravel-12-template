@@ -489,6 +489,33 @@ class Repository extends RepositoryAbstract
             ->when(request('filter_end_updated_at'), function (Builder $query) {
                 $query->whereDate('updated_at', '<=', request('filter_end_updated_at'));
             })
+            ->when(request('filter_created_at_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_created_at_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('created_at', '>=', $dates[0])
+                            ->whereDate('created_at', '<=', $dates[1]);
+                    });
+                }
+            })
+            ->when(request('filter_updated_at_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_updated_at_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('updated_at', '>=', $dates[0])
+                            ->whereDate('updated_at', '<=', $dates[1]);
+                    });
+                }
+            })
+            ->when(request('filter_created_date_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_created_date_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('created_date', '>=', $dates[0])
+                            ->whereDate('created_date', '<=', $dates[1]);
+                    });
+                }
+            })
             ->when(request('filter_limit', 50), function (Builder $query) {
                 if (!is_app_dataku())
                     $query->limit(request('filter_limit', 50));

@@ -164,7 +164,7 @@
                         Deadline : {{ $item->deadline }}
                       </div>
 
-                      <div style="margin-top: 10px; text-align: right; font-size: 8px; color: #000; cursor: pointer;">
+                      <div style="margin-top: 10px; text-align: right; font-size: 8px; color: #000; cursor: pointer;" onclick="window.open('{{ route('picas.show', [$item->id]) }}', '_blank')">
                         Tap for details...
                       </div>
                     </div>

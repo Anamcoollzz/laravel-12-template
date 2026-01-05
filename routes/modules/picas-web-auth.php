@@ -25,6 +25,9 @@ Route::post('picas', [\App\Http\Controllers\PicaController::class, 'storeData'])
 Route::get('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'showData'])->name('picas.show');
 Route::get('picas-single-pdf/{pica}', [\App\Http\Controllers\PicaController::class, 'singlePdf'])->name('picas.single-pdf');
 Route::get('picas/{pica}/edit', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.edit');
+Route::get('picas/{pica}/on-progress-edit', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.on-progress-edit');
+Route::get('picas/{pica}/approval-edit', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.approval-edit');
+Route::get('picas/{pica}/form-approval', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.form-approval');
 Route::put('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'updateData'])->name('picas.update');
 Route::delete('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'destroyData'])->name('picas.destroy');
 Route::delete('picas-using-checkbox', [\App\Http\Controllers\PicaController::class, 'destroyUsingCheckbox'])->name('picas.destroy-using-checkbox');

@@ -46,6 +46,8 @@ class CrudExampleController extends StislaController
 
         // hidupkan jika ingin dd datanya
         // $this->dd = true;
+
+        $this->isShowExportDatatable = true;
     }
 
     /**

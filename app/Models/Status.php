@@ -86,26 +86,42 @@ class Status extends Model
         return $this->hasMany(Pica::class, 'status_id', 'id');
     }
 
+    const STATUS_OPEN = 1;
+    const STATUS_ON_PROGRESS = 2;
+    const STATUS_NEED_APPROVAL = 3;
+    const STATUS_NEED_REVISION = 4;
+    const STATUS_DONE = 5;
+    const STATUS_OVERDUE = 6;
+
+    const STATUS_NAMES = [
+        self::STATUS_OPEN          => 'Open',
+        self::STATUS_ON_PROGRESS   => 'On Progress',
+        self::STATUS_OVERDUE       => 'Overdue',
+        self::STATUS_NEED_APPROVAL => 'Need Approval',
+        self::STATUS_NEED_REVISION => 'Need Revision',
+        self::STATUS_DONE          => 'Done',
+    ];
+
     public function getColorAttribute()
     {
-        $name = $this->attributes['name'];
+        $id = $this->attributes['id'];
         $color = '#b71c2e';
-        if ($name === 'Open') {
+        if ($id === self::STATUS_OPEN) {
             $type = 'secondary';
             $color = '#6c757d';
-        } elseif ($name === 'On Progress') {
+        } elseif ($id === self::STATUS_ON_PROGRESS) {
             $type = 'warning';
             $color = '#ff9800';
-        } elseif ($name === 'Overdue') {
+        } elseif ($id === self::STATUS_OVERDUE) {
             $type = 'danger';
             $color = '#dc3545';
-        } elseif ($name === 'Approval') {
+        } elseif ($id === self::STATUS_NEED_APPROVAL) {
             $type = 'secondary';
             $color = 'purple';
-        } elseif ($name === 'Revision') {
+        } elseif ($id === self::STATUS_NEED_REVISION) {
             $type = 'secondary';
             $color = '#f552eb';
-        } elseif ($name === 'Done') {
+        } elseif ($id === self::STATUS_DONE) {
             $type = 'secondary';
             $color = 'green';
         }
