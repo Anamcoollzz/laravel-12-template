@@ -41,7 +41,15 @@ class DashboardController extends StislaController
         // \Debugbar::enable();
         // \Debugbar::disable();
 
-        $statuses = \App\Models\Status::with(['picas.category', 'picas.assignedto'])->get()->transform(function ($item) {
+        $statuses = \App\Models\Status::with(['picas.category', 'picas.assignedto', 'picas' => function ($query) {
+            $query
+                ->when(is_cabang(), function ($query) {
+                    $query->where('assigned_to', auth_id());
+                })
+                ->when(request('filter_assigned_to'), function ($query) {
+                    $query->where('assigned_to', request('filter_assigned_to'));
+                });
+        }])->get()->transform(function ($item) {
             $item->type = 'primary';
             // $item->color = '#b71c2e';
             // if ($item->name === 'Open') {
@@ -63,7 +71,13 @@ class DashboardController extends StislaController
             //     $item->type = 'secondary';
             //     $item->color = 'green';
             // }
-            $item->count = \App\Models\Pica::where('status_id', $item->id)->count();
+            $item->count = \App\Models\Pica::when(is_cabang(), function ($query) {
+                $query->where('assigned_to', auth_id());
+            })
+                ->when(request('filter_assigned_to'), function ($query) {
+                    $query->where('assigned_to', request('filter_assigned_to'));
+                })
+                ->where('status_id', $item->id)->count();
             return $item;
         });
 

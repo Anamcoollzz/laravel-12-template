@@ -73,6 +73,33 @@
     </div>
 
     <div class="col-12">
+      <form action="">
+        @csrf
+        <div class="row">
+          <div class="col-md-6 col-lg-3">
+            @php
+              $users = \App\Models\User::role(['pusat', 'cabang'])
+                  ->select('id', 'name')
+                  ->orderBy('name')
+                  ->get();
+            @endphp
+            @include('stisla.includes.forms.selects.select', [
+                'id' => 'filter_assigned_to',
+                'name' => 'filter_assigned_to',
+                'options' => $users->pluck('name', 'id')->toArray(),
+                'label' => 'Assigned To',
+                'required' => false,
+                'with_all' => true,
+                'selected' => request('filter_assigned_to', null),
+            ])
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary mb-4"><i class="fa fa-filter"></i> Apply Filter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-12">
       <div class="row">
         @foreach ($statuses as $s)
           <div class="col-lg-4 col-md-4 col-sm-6 col-12">

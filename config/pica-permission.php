@@ -21,7 +21,7 @@ return [
     // ],
     [
         'name' => 'Pica Ubah',
-        'roles' => ['superadmin', 'pusat'],
+        'roles' => ['superadmin', 'pusat', 'cabang'],
         'group' => 'Pica',
         'table' => 'picas',
     ],
@@ -51,7 +51,7 @@ return [
     // ],
     [
         'name' => 'Pica Filter Data',
-        'roles' => ['superadmin', 'pusat', 'cabang'],
+        'roles' => ['superadmin', 'pusat'],
         'group' => 'Pica',
         'table' => 'picas',
     ],

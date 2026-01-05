@@ -2,7 +2,7 @@
   $isAjax = $isAjax ?? false;
 @endphp
 
-@extends('stisla.layouts.app-form')
+@extends('stisla.layouts.app-form', ['action' => isset($d) ? route('picas.update2', [$d->id]) : route('picas.store')])
 
 @section('rowForm')
   <div class="row">

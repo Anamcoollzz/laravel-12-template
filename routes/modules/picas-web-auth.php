@@ -29,6 +29,7 @@ Route::get('picas/{pica}/on-progress-edit', [\App\Http\Controllers\PicaControlle
 Route::get('picas/{pica}/approval-edit', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.approval-edit');
 Route::get('picas/{pica}/form-approval', [\App\Http\Controllers\PicaController::class, 'editData'])->name('picas.form-approval');
 Route::put('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'updateData'])->name('picas.update');
+Route::put('picas/{pica}/update', [\App\Http\Controllers\PicaController::class, 'updateData'])->name('picas.update2');
 Route::delete('picas/{pica}', [\App\Http\Controllers\PicaController::class, 'destroyData'])->name('picas.destroy');
 Route::delete('picas-using-checkbox', [\App\Http\Controllers\PicaController::class, 'destroyUsingCheckbox'])->name('picas.destroy-using-checkbox');
 Route::delete('picas-truncate', [\App\Http\Controllers\PicaController::class, 'truncate'])->name('picas.truncate');

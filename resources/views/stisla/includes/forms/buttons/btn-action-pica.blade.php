@@ -21,7 +21,7 @@
           @if ($canDetail)
             <a class="dropdown-item has-icon text-primary" href="{{ route($routePrefix . '.show', [$item->id]) }}"><i class="far fa-eye"></i> Detail</a>
           @endif
-          @if ($canUpdate)
+          @if ($canUpdate && (is_pusat() || is_superadmin()))
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.edit', [$item->id]) }}"><i class="far fa-edit"></i> Ubah</a>
           @endif
           @if ($item->status_id == \App\Models\Status::STATUS_OPEN && is_cabang())
@@ -43,10 +43,12 @@
               <i class="fas fa-trash"></i> Hapus
             </a>
           @else
-            <a onclick="deleteGlobal(event, '{{ route($routePrefix . '.destroy', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-warning" href="#">
-              <i class="fas fa-trash">
-              </i> Hapus
-            </a>
+            @if (!is_cabang())
+              <a onclick="deleteGlobal(event, '{{ route($routePrefix . '.destroy', [$item->id]) }}', 'warning')" class="dropdown-item has-icon text-warning" href="#">
+                <i class="fas fa-trash">
+                </i> Hapus
+              </a>
+            @endif
           @endif
           @if ($canShowDeleted)
             <a onclick="forceDeleteGlobal(event, '{{ route($routePrefix . '.force-delete', [$item->id]) }}', 'danger')" class="dropdown-item has-icon text-danger" href="#">

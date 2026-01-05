@@ -255,7 +255,11 @@ class PicaController extends StislaController
             })
             ->when(is_pusat(), function ($query) {
                 // pusat hanya boleh lihat pica yang ditugaskan ke cabang di bawahnya
-                $query->where('created_by_id', auth_id());
+                // $query->where('created_by_id', auth_id());
+            })
+            ->when(is_cabang(), function ($query) {
+                // cabang hanya boleh lihat pica yang dibuat oleh dirinya sendiri
+                $query->where('assigned_to', auth_id());
             })
             ->get();
     }
