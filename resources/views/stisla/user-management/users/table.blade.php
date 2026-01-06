@@ -12,8 +12,10 @@
     <tr>
       <th class="text-center">#</th>
       <th>{{ __('Nama') }}</th>
-      <th>{{ __('NIK') }}</th>
-      <th>{{ __('Jenis Kelamin') }}</th>
+      @if (!is_app_pocari())
+        <th>{{ __('NIK') }}</th>
+        <th>{{ __('Jenis Kelamin') }}</th>
+      @endif
       <th>{{ __('No HP') }}</th>
       <th>{{ __('Tanggal Lahir') }}</th>
       <th>{{ __('Usia') }}</th>
@@ -101,8 +103,10 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
-        <td>{{ $item->nik }}</td>
-        <td>{{ $item->gender }}</td>
+        @if (!is_app_pocari())
+          <td>{{ $item->nik }}</td>
+          <td>{{ $item->gender }}</td>
+        @endif
         @include('stisla.includes.others.td-phone-number')
         @include('stisla.includes.others.td-dob', ['DateTime' => $item->birth_date])
         <td>{{ $item->age }}</td>
