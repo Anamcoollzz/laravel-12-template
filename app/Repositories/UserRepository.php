@@ -58,6 +58,17 @@ class UserRepository extends Repository
     }
 
     /**
+     * find user by phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function findByPhone(string $phone)
+    {
+        return $this->model->where('phone_number', $phone)->first();
+    }
+
+    /**
      * find user by field
      *
      * @param string $field

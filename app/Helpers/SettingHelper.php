@@ -88,6 +88,20 @@ function is_app_chat($app = null)
 }
 
 /**
+ * check if app type is siaga desa
+ *
+ * @param AppEnum|null $app
+ * @return boolean
+ */
+function is_app_siaga_desa($app = null)
+{
+    if ($app) {
+        return $app === AppEnum::APP_SIAGA_DESA;
+    }
+    return config('stisla.app') === AppEnum::APP_SIAGA_DESA;
+}
+
+/**
  * check if app type is bank
  *
  * @param AppEnum|null $app
