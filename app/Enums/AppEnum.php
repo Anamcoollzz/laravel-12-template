@@ -16,4 +16,5 @@ enum AppEnum: string
     case APP_DATAKU = 'dataku';
     case APP_FINGERPRINT = 'fingerprint';
     case APP_POCARI = 'pocari';
+    case APP_SIAGA_DESA = 'siaga-desa';
 }

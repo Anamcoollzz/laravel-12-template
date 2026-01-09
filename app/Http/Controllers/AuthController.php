@@ -140,6 +140,42 @@ class AuthController extends StislaController
     }
 
     /**
+     * process register siaga desa
+     *
+     * @param RegisterRequest $request
+     * @return Response
+     */
+    public function registerSiagaDesa(RegisterRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $request->only(
+                [
+                    'dusun_rt_rw',
+                ]
+            );
+            $data = array_merge([
+                'phone_number' => $request->phone_number_register,
+                'name' => $request->full_name,
+                'uuid'     => Str::uuid()->toString(),
+                'password' => bcrypt($request->password_register),
+            ], $data);
+            $user = $this->userRepository->create($data);
+            $this->userRepository->assignRole($user, 'masyarakat');
+            logRegister($user);
+            $this->userRepository->login($user);
+            DB::commit();
+            return redirectSuccess(route('siaga-desa.index'), 'Berhasil mendaftar dan masuk ke dalam sistem');
+        } catch (Exception $e) {
+            DB::rollBack();
+            if (Str::contains($e->getMessage(), 'SMTP')) {
+                return backError('Gagal mengirim email verifikasi, silahkan coba lagi nanti');
+            }
+            return backError($e->getMessage());
+        }
+    }
+
+    /**
      * showing login form page
      *
      * @return Response
@@ -221,15 +257,70 @@ class AuthController extends StislaController
     }
 
     /**
+     * process login siaga desa
+     *
+     * @param LoginRequest $request
+     * @return Response
+     */
+    public function loginSiagaDesa(LoginRequest $request)
+    {
+        $maxWrongLogin = 5;
+        $user = $this->userRepository->findByPhone($request->phone_number);
+        if ($user->deleted_at !== null) {
+            return Helper::backError(['email' => $msg = __('Akun anda sudah dihapus, silakan menggunakan akun lain ')], $msg);
+        }
+        if ($user->is_active == 0) {
+            return Helper::backError(['email' => $msg = __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason], $msg);
+        }
+        if (Hash::check($request->password, $user->password)) {
+            if ($user->wrong_login >= $maxWrongLogin) {
+                return Helper::backError(['email' => $msg = __('Akun anda sudah diblokir dikarenakan ') . $user->blocked_reason], $msg);
+            }
+            $loginMustVerified = $this->settingRepository->loginMustVerified();
+
+            if ($loginMustVerified && $user->email_verified_at === null) {
+                return Helper::backError(['email' => __('Email belum diverifikasi')], __('Silakan verifikasi email anda terlebih dahulu'));
+            }
+            $this->userRepository->update([
+                'is_active'      => true,
+                'wrong_login'    => 0,
+                'blocked_reason' => null,
+                'uuid'           => $user->uuid ? $user->uuid : uuid(),
+            ], $user->id);
+            $this->userRepository->login($user);
+            return Helper::redirectSuccess(route('siaga-desa.index'), __('Berhasil masuk ke dalam sistem'));
+        } else {
+            $userNew = $this->userRepository->update(['wrong_login' => $user->wrong_login + 1], $user->id);
+            if ($userNew->wrong_login >= $maxWrongLogin) {
+                $blockedReason = 'Salah memasukkan kata sandi sebanyak 5 kali';
+                $userNew->update([
+                    'is_active' => false,
+                    'blocked_reason' => $blockedReason
+                ]);
+                logExecute(__('Login'), UPDATE, $user, $userNew);
+                return Helper::backError(['email' => __('Akun anda sudah diblokir dikarenakan ') . $blockedReason], __('Anda salah memasukkan kata sandi sebanyak 5 kali, akun diblokir'));
+            }
+            logExecute(__('Login'), UPDATE, $user, $userNew);
+            return Helper::backError(['password' => __('Password yang dimasukkan salah (tersisa ' . $maxWrongLogin - $userNew->wrong_login . ')')], __('Password yang dimasukkan salah (tersisa ' . $maxWrongLogin - $userNew->wrong_login . ')'));
+        }
+        return Helper::backError(['password' => __('Password yang dimasukkan salah')], __('Password yang dimasukkan salah'));
+    }
+
+    /**
      * logout from system
      *
      * @return Response
      */
     public function logout()
     {
+        $user = Auth::user();
+        $hasRoleMasyarakat = $user->hasRole('masyarakat');
         logLogout();
         Auth::logout();
         Session::flush();
+        if ($hasRoleMasyarakat) {
+            return redirect('/');
+        }
         return redirect()->route('login');
     }
 

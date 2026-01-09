@@ -12,7 +12,7 @@
     <tr>
       <th class="text-center">#</th>
       <th>{{ __('Nama') }}</th>
-      @if (!is_app_pocari())
+      @if (!is_app_pocari() && !is_app_siaga_desa())
         <th>{{ __('NIK') }}</th>
         <th>{{ __('Jenis Kelamin') }}</th>
       @endif
@@ -103,7 +103,7 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $item->name }}</td>
-        @if (!is_app_pocari())
+        @if (!is_app_pocari() && !is_app_siaga_desa())
           <td>{{ $item->nik }}</td>
           <td>{{ $item->gender }}</td>
         @endif

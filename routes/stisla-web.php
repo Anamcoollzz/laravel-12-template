@@ -21,11 +21,17 @@ Route::get('auth/verify/{token}', [AuthController::class, 'verify'])->name('veri
 Route::get('auth/register', [AuthController::class, 'registerForm'])->name('register');
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::get('auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout2');
 Route::get('auth/forgot-password', [AuthController::class, 'forgotPasswordForm'])->name('forgot-password');
 Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('auth/reset-password/{token}', [AuthController::class, 'resetPasswordForm'])->name('reset-password');
 Route::post('auth/reset-password/{token}', [AuthController::class, 'resetPassword']);
 Route::get('deposito', [AuthController::class, 'deposito'])->name('deposito');
+
+Route::post('siaga-desa/auth/login', [AuthController::class, 'loginSiagaDesa'])->name('siaga-desa.login-post');
+Route::post('siaga-desa/auth/register', [AuthController::class, 'registerSiagaDesa'])->name('siaga-desa.register');
+Route::post('siaga-desa/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('siaga-desa.logout-post');
+Route::get('siaga-desa/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('siaga-desa.logout-get');
 
 # SOCIAL LOGIN AND REGISTER
 Route::get('auth/social-login/{provider}', [AuthController::class, 'socialLogin'])->name('social-login');

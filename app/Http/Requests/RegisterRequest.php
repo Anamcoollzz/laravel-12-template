@@ -17,6 +17,9 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
+        if (Route::is('siaga-desa.register')) {
+            return true;
+        }
         return (new SettingRepository)->isActiveRegisterPage();
     }
 
@@ -35,6 +38,15 @@ class RegisterRequest extends FormRequest
                 'password'              => 'required|min:4|confirmed',
                 'password_confirmation' => 'required|min:4',
                 'phone_number'          => 'nullable|numeric',
+            ];
+        }
+
+        if (Route::is('siaga-desa.register')) {
+            return [
+                'full_name'                      => 'required',
+                'phone_number_register'          => 'required|numeric|unique:users,phone_number',
+                'dusun_rt_rw'                    => 'required',
+                'password_register'              => 'required|min:4',
             ];
         }
 

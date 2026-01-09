@@ -6,8 +6,9 @@ use App\Enums\AppEnum;
 // $app = AppEnum::APP_DEFAULT;
 // $app = AppEnum::APP_DATAKU;
 // $app = AppEnum::APP_FINGERPRINT;
-$app = AppEnum::APP_POCARI;
-$appName = 'Laravel 12 Template';
+// $app = AppEnum::APP_POCARI;
+$app = AppEnum::APP_SIAGA_DESA;
+$appName = 'Siaga Desa';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
 $permissionExcludes = [];
@@ -24,7 +25,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ],
     [
         'name'              => 'Hairul Anam User',
@@ -34,7 +35,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ],
     [
         'name'              => 'Ahfa User',
@@ -44,7 +45,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ],
     [
         'name'              => 'Hairul Anam Banker',
@@ -54,7 +55,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ],
     [
         'name'              => 'Hairul Anam Admin Pendidikan',
@@ -64,7 +65,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ],
 ];
 $superadminEmail = 'superadmin@laravel12template.com';
@@ -252,7 +253,7 @@ if (is_app_chat($app)) {
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Bengkulu'
+        'address'           => 'Purworejo'
     ];
     $superadminEmail = 'superadmin@dataku.com';
     $appName = 'DataKu';
@@ -321,7 +322,7 @@ if (is_app_chat($app)) {
     //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Bengkulu'
+    //     'address'           => 'Purworejo'
     // ];
     $superadminEmail = 'superadmin@fingerprint.com';
     $appName = 'Fingerpint';
@@ -430,11 +431,67 @@ if (is_app_chat($app)) {
     //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Bengkulu'
+    //     'address'           => 'Purworejo'
     // ];
     $superadminEmail = 'superadmin@pocari.com';
     $appName = 'Pocari';
     $appDesc = 'Aplikasi approval pekerjaan adalah sistem manajemen persetujuan proyek yang memfasilitasi alur kerja approval dari cabang ke pusat. Fitur utama mencakup pengajuan pekerjaan dengan detail lengkap, tracking status real-time, notifikasi otomatis, dashboard analytics, manajemen user dengan role berbeda (cabang, supervisor, pusat), ekspor laporan (Excel/PDF), riwayat approval, dan audit trail lengkap. Sistem dirancang untuk meningkatkan efisiensi persetujuan, transparansi data, dan koordinasi antar cabang dengan antarmuka yang user-friendly.';
+    $additionalUsers = [];
+} else if (is_app_siaga_desa($app)) {
+    $roles = [
+        'superadmin',
+        'masyarakat'
+    ];
+    $table_excludes = [
+        'banks',
+        'bank_deposits',
+        'bank_deposit_histories',
+        'faculty_leaders',
+        'ormawas',
+        'faculties',
+        'study_programs',
+        'students',
+        'chat_messages',
+        'chat_rooms',
+        'notifications',
+        // 'crud_examples',
+        'religions',
+        'school_classes',
+        'class_levels',
+        'school_years',
+        'semesters',
+        'education_levels',
+        'works',
+        'fingerprint_machines',
+        'crud_examples',
+        'finger_print_x105_ids',
+        'functions',
+        'picas',
+        'pocari_functions',
+        'regions',
+        'statuses',
+        'work_fields',
+    ];
+    $superadminEmail = 'superadmin@siagadesa.com';
+    $permissionExcludes = [
+        'Galeri',
+        'Log Aktivitas',
+        'Log Request',
+        'Laravel Log Viewer',
+        'Ubuntu',
+        'MySql',
+        'Backup Database',
+        'Unisharp File',
+        'Stisla Example',
+        'Pekerjaan',
+        'Sidik Jari X105 ID',
+        'Mesin Sidik Jari',
+        'Role',
+        'Permission',
+        'Group Permission',
+    ];
+    $appName = 'Siaga Desa';
+    $appDesc = 'Aplikasi Peminjaman Mobil Desa adalah sistem manajemen kendaraan yang memfasilitasi proses peminjaman mobil desa oleh masyarakat. Fitur utama mencakup pendaftaran kendaraan, pengajuan peminjaman dengan detail lengkap, persetujuan peminjaman, tracking status real-time, notifikasi otomatis, jadwal peminjaman, riwayat peminjaman, manajemen driver, laporan penggunaan kendaraan, serta dokumentasi pemeliharaan. Sistem dirancang untuk meningkatkan efisiensi pengelolaan aset desa, transparansi data peminjaman, dan pelayanan masyarakat dengan antarmuka yang user-friendly dan terintegrasi.';
     $additionalUsers = [];
 }
 
@@ -507,6 +564,14 @@ return [
                     'icon' => 'fas fa-note-sticky',
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'action-needed-picas*'
+                ],
+                
+                [
+                    'menu_name' => 'Mobil Siaga',
+                    'route_name' => 'siaga-cars.index',
+                    'icon' => 'fas fa-car',
+                    'permission' => 'Mobil Siaga',
+                    'is_active_if_url_includes' => 'siaga-cars*'
                 ],
                 // additionalmenus
                 $additionalMenus,
@@ -1278,22 +1343,22 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Bengkulu'],
-        ['key' => 'company_name', 'value' => 'Pocari Project'],
+        ['key' => 'city', 'value' => 'Purworejo'],
+        ['key' => 'company_name', 'value' => 'Desa Sendangsari'],
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon2.ico',
+            'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'Pocari Project'],
+        ['key' => 'meta_description', 'value' => 'Desa Sendangsari'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1304,21 +1369,21 @@ return [
         ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
-        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_title', 'value' => 'Siaga Desa'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
-        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_title', 'value' => 'Siaga Desa'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/siagadesa.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1332,7 +1397,7 @@ return [
         ],
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
-        ['key' => 'stisla_skin', 'value' => 'red'],
+        ['key' => 'stisla_skin', 'value' => 'green'],
         ['key' => 'debugbar', 'value' => 1],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
@@ -1396,23 +1461,23 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Bengkulu'],
-        ['key' => 'company_name', 'value' => 'Pocari Project'],
+        ['key' => 'city', 'value' => 'Purworejo'],
+        ['key' => 'company_name', 'value' => 'Desa Sendangsari'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon2.ico',
+            'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'Pocari Project'],
+        ['key' => 'meta_description', 'value' => 'Desa Sendangsari'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1423,21 +1488,21 @@ return [
         ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
-        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_og_title', 'value' => 'Siaga Desa'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
-        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
+        ['key' => 'meta_twitter_title', 'value' => 'Siaga Desa'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/fresh.jpg', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1451,7 +1516,7 @@ return [
         ],
         ['key' => 'stisla_sidebar_mini', 'value' => '0'],
         ['key' => 'stisla_login_template', 'value' => 'default'],
-        ['key' => 'stisla_skin', 'value' => 'red'],
+        ['key' => 'stisla_skin', 'value' => 'green'],
         ['key' => 'debugbar', 'value' => 2],
 
         ['key' => 'mail_provider', 'value' => 'mailtrap'],
@@ -1521,7 +1586,7 @@ return [
             'is_locked'         => 1,
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',
-            'address'           => 'Bengkulu'
+            'address'           => 'Purworejo'
         ],
         $additionalUser,
     ], $additionalUsers)

@@ -99,6 +99,9 @@ class User extends Authenticatable implements JWTSubject
         'education_level_id',
         'semester_id',
         'school_year_id',
+
+        // siaga desa
+        'dusun_rt_rw',
     ];
 
     const GENDER_MALE   = 'Laki-laki';
