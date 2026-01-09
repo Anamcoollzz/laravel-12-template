@@ -2,12 +2,12 @@
 
 use App\Enums\AppEnum;
 
-// $app = AppEnum::APP_BLANK;
+$app = AppEnum::APP_BLANK;
 // $app = AppEnum::APP_DEFAULT;
 // $app = AppEnum::APP_DATAKU;
 // $app = AppEnum::APP_FINGERPRINT;
 // $app = AppEnum::APP_POCARI;
-$app = AppEnum::APP_SIAGA_DESA;
+// $app = AppEnum::APP_SIAGA_DESA;
 $appName = 'Siaga Desa';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
@@ -565,7 +565,7 @@ return [
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'action-needed-picas*'
                 ],
-                
+
                 [
                     'menu_name' => 'Mobil Siaga',
                     'route_name' => 'siaga-cars.index',
