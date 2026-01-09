@@ -1340,7 +1340,7 @@ return [
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon2.ico',
+            'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
         ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
@@ -1459,7 +1459,7 @@ return [
         ['key' => 'app_is_demo', 'value' => '0'],
         [
             'key' => 'favicon',
-            'value' => 'assets/icons/favicon2.ico',
+            'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
         ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
