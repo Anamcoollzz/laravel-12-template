@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('work_fields');
         if (!in_array('work_fields', config('stisla.table_excludes')))
-        Schema::create('work_fields', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50)->comment('name');
+            Schema::create('work_fields', function (Blueprint $table) {
+                $table->id();
+                $table->string('name', 50)->comment('name');
 
-            // wajib
-            $table->timestamps();
-            
-            $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
-            $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
-            $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
-        
-        });
+                // wajib
+                $table->timestamps();
+
+                $table->unsignedBigInteger('created_by_id')->nullable()->comment('Created By');
+                $table->unsignedBigInteger('last_updated_by_id')->nullable()->comment('Last Updated By');
+                $table->foreign('created_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+                $table->foreign('last_updated_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            });
     }
 
     /**
@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('work_fields');
     }
 };

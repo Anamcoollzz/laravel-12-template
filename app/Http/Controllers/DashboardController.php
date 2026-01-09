@@ -41,11 +41,52 @@ class DashboardController extends StislaController
         // \Debugbar::enable();
         // \Debugbar::disable();
 
+        $statuses = \App\Models\Status::with(['picas.category', 'picas.assignedto', 'picas' => function ($query) {
+            $query
+                ->when(is_cabang(), function ($query) {
+                    $query->where('assigned_to', auth_id());
+                })
+                ->when(request('filter_assigned_to'), function ($query) {
+                    $query->where('assigned_to', request('filter_assigned_to'));
+                });
+        }])->get()->transform(function ($item) {
+            $item->type = 'primary';
+            // $item->color = '#b71c2e';
+            // if ($item->name === 'Open') {
+            //     $item->type = 'secondary';
+            //     $item->color = '#6c757d';
+            // } elseif ($item->name === 'On Progress') {
+            //     $item->type = 'warning';
+            //     $item->color = '#ff9800';
+            // } elseif ($item->name === 'Overdue') {
+            //     $item->type = 'danger';
+            //     $item->color = '#dc3545';
+            // } elseif ($item->name === 'Need Approval') {
+            //     $item->type = 'secondary';
+            //     $item->color = 'purple';
+            // } elseif ($item->name === 'Need Revision') {
+            //     $item->type = 'secondary';
+            //     $item->color = '#f552eb';
+            // } elseif ($item->name === 'Done') {
+            //     $item->type = 'secondary';
+            //     $item->color = 'green';
+            // }
+            $item->count = \App\Models\Pica::when(is_cabang(), function ($query) {
+                $query->where('assigned_to', auth_id());
+            })
+                ->when(request('filter_assigned_to'), function ($query) {
+                    $query->where('assigned_to', request('filter_assigned_to'));
+                })
+                ->where('status_id', $item->id)->count();
+            return $item;
+        });
+
         return view('stisla.dashboard.index', [
-            'widgets' => $widgets,
-            'logs'    => $logs,
-            'user'    => $user,
-            'is_chat' => $is_chat,
+            'widgets'  => $widgets,
+            'logs'     => $logs,
+            'user'     => $user,
+            'is_chat'  => $is_chat,
+            'statuses' => $statuses,
         ]);
     }
 

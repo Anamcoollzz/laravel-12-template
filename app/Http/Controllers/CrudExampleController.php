@@ -40,8 +40,14 @@ class CrudExampleController extends StislaController
             'ckeditor',
         ];
         // $this->import     = new CrudExampleImport;
+        $this->withColumns = [];
 
         $this->defaultMiddleware($this->title);
+
+        // hidupkan jika ingin dd datanya
+        // $this->dd = true;
+
+        $this->isShowExportDatatable = true;
     }
 
     /**
@@ -129,5 +135,48 @@ class CrudExampleController extends StislaController
         // return response()->download($filepath);
 
         return $this->executeImportExcelExample();
+    }
+
+    /**
+     * get form data
+     *
+     * @return array
+     */
+    // protected function formData(): array
+    // {
+    //     return [
+    //         'function_id_options'   => $this->pocariFunctionRepository->getSelectOptions(),
+    //         'work_field_id_options' => $this->workFieldRepository->getSelectOptions(),
+    //         'status_id_options'     => $this->statusRepository->getSelectOptions(),
+    //         'category_id_options'   => $this->categoryRepository->getSelectOptions(),
+    //         'assigned_to_options'   => $this->userRepository->getSelectOptions(),
+    //     ];
+    // }
+
+    /**
+     * get data for index page
+     *
+     * @return Collection|null
+     */
+    public function getIndexData2(?bool $deleted = false)
+    {
+        return $this->repository->getFullDataWith(
+            array_merge($this->withColumns, [
+                'createdBy',
+                'lastUpdatedBy',
+            ]),
+            where: [],
+            whereHas: [],
+            deleted: $deleted,
+            isQueryBuilder: true
+        )->when(request('filter_function_id'), function ($query) {
+            $query->where('function_id', request('filter_function_id'));
+        })->when(request('filter_category_id'), function ($query) {
+            $query->where('category_id', request('filter_category_id'));
+        })->when(request('filter_work_field_id'), function ($query) {
+            $query->where('work_field_id', request('filter_work_field_id'));
+        })->when(request('filter_status_id'), function ($query) {
+            $query->where('status_id', request('filter_status_id'));
+        })->get();
     }
 }

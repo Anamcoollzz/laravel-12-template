@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\MenuGroup;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 
 class MenuSeeder extends Seeder
 {
@@ -80,5 +81,20 @@ class MenuSeeder extends Seeder
                 }
             }
         }
+
+        $permissions = Permission::all();
+        $permissionNames = $permissions->pluck('name')->toArray();
+
+        Menu::all()->each(function ($menu) use ($permissionNames) {
+            if ($menu->permission && !in_array($menu->permission, $permissionNames)) {
+                $menu->delete();
+            }
+        });
+
+        Menu::all()->each(function ($menu) use ($permissionNames) {
+            if ($menu->route_name === null && $menu->childs()->count() === 0) {
+                $menu->delete();
+            }
+        });
     }
 }

@@ -46,7 +46,7 @@ function initDataTables() {
     var $dtTbl = $('#datatable');
     var $dtTblTrashed = $('#datatable-trashed');
 
-    if ($dtTbl.data('export') === true || $dtTblTrashed.data('export') === true) {
+    if (($dtTbl.data('export') === true || $dtTblTrashed.data('export') === true) && $('#isShowExportDatatable').val() === '1') {
       var title = $dtTbl.data('title') && $dtTbl.data('title').replace(' ', '_').toLowerCase();
       title = title ? title + '_export' : document.title;
       options['dom'] = 'lBfrtip';

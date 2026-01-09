@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Status extends Model
+class Pica extends Model
 {
     use HasFactory, UserTrait;
 
@@ -19,7 +19,7 @@ class Status extends Model
      *
      * @var string
      */
-    protected $table = 'statuses';
+    protected $table = 'picas';
 
     /**
      * The attributes that are mass assignable.
@@ -64,10 +64,24 @@ class Status extends Model
 
         // ini hasil generate dari create:module command
 
-        'name',
+        'title',
+        'notes',
+        'function_id',
+        'category_id',
+        'work_field_id',
+        'deadline',
+        'kpi_related',
+        'assigned_to',
+        'created_date',
+        'problem_identification',
+        'corrective_action',
+        'attachment',
+        'evidence',
+        'status_id',
         "created_by_id",
         "last_updated_by_id",
         'deleted_at',
+        'revision_notes',
     ];
 
     /**
@@ -81,50 +95,28 @@ class Status extends Model
         'select2_multiple' => 'array',
     ];
 
-    public function picas()
+    public function pocarifunction()
     {
-        return $this->hasMany(Pica::class, 'status_id', 'id');
+        return $this->belongsTo(PocariFunction::class, 'function_id');
     }
 
-    const STATUS_OPEN = 1;
-    const STATUS_ON_PROGRESS = 2;
-    const STATUS_NEED_APPROVAL = 3;
-    const STATUS_NEED_REVISION = 4;
-    const STATUS_DONE = 5;
-    const STATUS_OVERDUE = 6;
-
-    const STATUS_NAMES = [
-        self::STATUS_OPEN          => 'Open',
-        self::STATUS_ON_PROGRESS   => 'On Progress',
-        self::STATUS_OVERDUE       => 'Overdue',
-        self::STATUS_NEED_APPROVAL => 'Need Approval',
-        self::STATUS_NEED_REVISION => 'Need Revision',
-        self::STATUS_DONE          => 'Done',
-    ];
-
-    public function getColorAttribute()
+    public function category()
     {
-        $id = $this->attributes['id'];
-        $color = '#b71c2e';
-        if ($id === self::STATUS_OPEN) {
-            $type = 'secondary';
-            $color = '#6c757d';
-        } elseif ($id === self::STATUS_ON_PROGRESS) {
-            $type = 'warning';
-            $color = '#ff9800';
-        } elseif ($id === self::STATUS_OVERDUE) {
-            $type = 'danger';
-            $color = '#dc3545';
-        } elseif ($id === self::STATUS_NEED_APPROVAL) {
-            $type = 'secondary';
-            $color = 'purple';
-        } elseif ($id === self::STATUS_NEED_REVISION) {
-            $type = 'secondary';
-            $color = '#f552eb';
-        } elseif ($id === self::STATUS_DONE) {
-            $type = 'secondary';
-            $color = 'green';
-        }
-        return $color;
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function workfield()
+    {
+        return $this->belongsTo(WorkField::class, 'work_field_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+
+    public function assignedto()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

@@ -245,6 +245,20 @@ class StislaController extends Controller implements HasMiddleware
     protected array|Collection $excelData = [];
 
     /**
+     * debug data
+     *
+     * @var bool
+     */
+    protected bool $dd = false;
+
+    /**
+     * show export datatable
+     *
+     * @var bool
+     */
+    protected bool $isShowExportDatatable = true;
+
+    /**
      * constructor method
      *
      * @return void
@@ -597,7 +611,7 @@ class StislaController extends Controller implements HasMiddleware
             // else if (count($this->data) > 0)
             //     $data = $this->data;
             else
-                $data = $this->getIndexData() ?? $this->repository->getFullData();
+                $data = $this->getIndexData2() ?? $this->getIndexData() ?? $this->repository->getFullData();
         }
 
         $defaultData = $this->getDefaultDataIndex($title, $title, $prefix . '');
@@ -706,7 +720,7 @@ class StislaController extends Controller implements HasMiddleware
 
         $data = array_merge([
             'title'     => $this->title,
-            'data'      => ($this->getIndexData() ?? $data ?? $this->repository->getFullData()),
+            'data'      => ($this->getIndexData2() ?? $this->getIndexData() ?? $data ?? $this->repository->getFullData()),
             'isExport'  => true,
             'prefix'    => $this->prefix,
             'isAppCrud' => $this->isAppCrud,
@@ -802,6 +816,9 @@ class StislaController extends Controller implements HasMiddleware
             ]);
         }
 
+        if (is_app_pocari())
+            return redirect()->route($this->prefix . '.index')->with('successMessage', $successMessage);
+
         return backSuccess($successMessage);
     }
 
@@ -873,8 +890,19 @@ class StislaController extends Controller implements HasMiddleware
                 'message' => $successMessage,
             ]);
         }
-
+        if (is_app_pocari())
+            return redirect()->route($this->prefix . '.index')->with('successMessage', $successMessage);
         return backSuccess($successMessage);
+    }
+
+    /**
+     * get form data
+     *
+     * @return array
+     */
+    protected function formData(): array
+    {
+        return [];
     }
 
     /**
@@ -894,7 +922,11 @@ class StislaController extends Controller implements HasMiddleware
             'radioOptions'    => get_options(4),
             'checkboxOptions' => get_options(5),
             'fullTitle'       => $fullTitle,
-        ], $this->getHasColumns());
+        ], $this->getHasColumns(), $this->formData());
+
+        if ($this->dd) {
+            dd($data);
+        }
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -940,6 +972,11 @@ class StislaController extends Controller implements HasMiddleware
             'fileColumns' => $this->fileColumns,
             'isAppCrud'   => $this->isAppCrud,
         ]);
+
+        if ($this->dd) {
+            dd($data);
+        }
+
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -969,7 +1006,7 @@ class StislaController extends Controller implements HasMiddleware
      */
     protected function prepareDetailForm(Request $request, Model $model, bool $isDetail = false, array $data = [])
     {
-        $data = array_merge($this->getDetailData($model, $isDetail), $data);
+        $data = array_merge($this->getDetailData($model, $isDetail), $data, $this->formData());
 
         if ($request->ajax()) {
             return view('stisla.' . $this->prefix . '.only-form', $data);
@@ -1310,8 +1347,10 @@ class StislaController extends Controller implements HasMiddleware
         $this->beforeIndexData();
         $columns = $this->getHasColumns();
         return $this->prepareIndex($request, array_merge([
-            'data'        => $this->getIndexData2(),
-            'deletedData' => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+            'data'                  => $this->getIndexData2(),
+            'deletedData'           => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
+            'countData'             => $this->repository->count(),
+            'isShowExportDatatable' => $this->isShowExportDatatable,
         ], $columns, $this->additionalIndexData()));
     }
 

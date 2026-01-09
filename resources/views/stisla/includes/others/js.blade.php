@@ -1,6 +1,10 @@
 @stack('htmls')
 
 <input type="hidden" id="preloaderImg" value="{{ asset('assets/images/Iphone-spinner-2.gif') }}">
+@php
+  $iss = $isShowExportDatatable ?? false;
+@endphp
+<input type="hidden" id="isShowExportDatatable" value="{{ $iss ? '1' : '0' }}">
 @stack('modals')
 
 <form action="" enctype="multipart/form-data" method="POST" id="formGlobalModal">
@@ -79,6 +83,7 @@
   <script src="{{ asset('stisla/node_modules/moment/min/moment.min.js') }}"></script>
   <script src="{{ asset('stisla/node_modules/axios/dist/axios.min.js') }}"></script>
 @endif
+<script src="{{ asset('stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
 @if (config('stisla.using_vue'))
   <script src="{{ asetku('stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
@@ -123,5 +128,29 @@
   $('form').on('submit', function(event) {
     $(this).find('button').addClass('btn-progress disabled');
     $(this).find('.btn-secondary').addClass('btn-progress disabled');
+  });
+
+  $(document).ready(function() {
+    if ($('.daterange-cus').length) {
+      $('.daterange-cus').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+          format: 'YYYY-MM-DD'
+        },
+        drops: 'down',
+        opens: 'right'
+      });
+      $('.daterange-cus').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+      });
+
+      $('.daterange-cus').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+      });
+
+    }
+    @if (is_app_pocari())
+      setTimeout(() => $('.btn-download-json').remove(), 500);
+    @endif
   });
 </script>
