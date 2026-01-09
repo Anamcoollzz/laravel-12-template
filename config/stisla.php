@@ -565,6 +565,14 @@ return [
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'action-needed-picas*'
                 ],
+                
+                [
+                    'menu_name' => 'Mobil Siaga',
+                    'route_name' => 'siaga-cars.index',
+                    'icon' => 'fas fa-car',
+                    'permission' => 'Mobil Siaga',
+                    'is_active_if_url_includes' => 'siaga-cars*'
+                ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,
