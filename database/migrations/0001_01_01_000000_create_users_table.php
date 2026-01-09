@@ -105,6 +105,10 @@ return new class extends Migration
             $table->string('teacher_position', 100)->nullable();
             // end teacher
 
+            // start siaga desa
+            $table->string('dusun_rt_rw')->nullable();
+            // end siaga desa
+
             $table->unsignedBigInteger('education_level_id')->nullable();
             $table->foreign('education_level_id')->references('id')->on('education_levels')->onUpdate('cascade')->onDelete('set null');
             $table->unsignedBigInteger('semester_id')->nullable();

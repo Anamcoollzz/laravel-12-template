@@ -21,6 +21,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestLogController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SiagaDesaController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudyProgramController;
 use App\Http\Controllers\TestingController;
@@ -371,3 +372,7 @@ Route::get('chatting-yuk/{category}', [ChatController::class, 'index'])->name('c
 Route::get('chatting-yuk-delete/{category}', [ChatController::class, 'reset'])->name('chatting-yuk-delete');
 Route::get('chatting-yuk-users', [ChatController::class, 'users'])->name('chatting-yuk-users');
 Route::resource('chats', ChatController::class);
+
+# SIAGA DESA
+Route::get('siaga-desa', [SiagaDesaController::class, 'index'])->name('siaga-desa.index');
+Route::get('siaga-desa/order-form', [SiagaDesaController::class, 'orderForm'])->name('siaga-desa.order-form');
