@@ -189,20 +189,25 @@ class UserManagementController extends StislaController
         else
             $user->role = $user->roles->first()->id ?? null;
         $defaultData = $this->getDefaultDataDetail(__('Pengguna'), 'user-management.users', $user, $isDetail);
+        $dataku = [];
+        if (is_app_dataku()) {
+            $dataku = [
+                'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
+                'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
+                'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
+                'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
+                'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
+                'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
+            ];
+        }
         return array_merge($defaultData, [
             'roleOptions'        => $roleOptions,
             'fullTitle'          => $isDetail ? __('Detail Pengguna') : __('Ubah Pengguna'),
-            'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
-            'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
-            'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
-            'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
-            'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
-            'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
             'provinces'          => $this->regionRepository->getProvinces(),
             'roleName'           => $user->roles->first()->name ?? null,
             'roleId'             => $user->roles->first()->id ?? null,
             'isSiswa'            => $user->hasRole('siswa'),
-        ]);
+        ], $dataku);
     }
 
     /**
@@ -261,23 +266,29 @@ class UserManagementController extends StislaController
     public function create()
     {
         $roleOptions = $this->userRepository->getRoleOptions();
-        $role        = $this->userRepository->findRole(request('filter_role'));
-        $isSiswa     = $role ? $role->name === 'siswa' : false;
+
         $defaultData = $this->getDefaultDataCreate(__('Pengguna'), 'user-management.users');
-        $data        = array_merge($defaultData, [
-            'roleOptions'        => $roleOptions,
-            'fullTitle'          => __('Tambah Pengguna'),
-            'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
-            'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
-            'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
-            'provinces'          => $this->regionRepository->getProvinces(),
-            'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
-            'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
-            'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
-            'isSiswa'            => $isSiswa,
-            'roleName'           => $role->name,
-            'roleId'             => $role->id ?? null,
-        ]);
+        $dataku = [];
+        if (is_app_dataku()) {
+            $role        = $this->userRepository->findRole(request('filter_role'));
+            $isSiswa     = $role ? $role->name === 'siswa' : false;
+            $dataku = [
+                'religionOptions'    => $this->religionRepository->getSelectOptions('religion_name'),
+                'schoolClassOptions' => $this->schoolClassRepository->getSelectOptions('class_name'),
+                'workOptions'        => $this->workRepository->getSelectOptions('job_name'),
+                'provinces'          => $this->regionRepository->getProvinces(),
+                'classLevelOptions'  => $this->classLevelRepository->getSelectOptions('level_name'),
+                'schoolYearOptions'  => $this->schoolYearRepository->getSelectOptions('year_name'),
+                'semesterOptions'    => $this->semesterRepository->getSelectOptions('semester'),
+                'isSiswa'            => $isSiswa,
+                'roleName'           => $role->name,
+                'roleId'             => $role->id ?? null,
+            ];
+        }
+        $data = array_merge($defaultData, [
+            'roleOptions' => $roleOptions,
+            'fullTitle'   => __('Tambah Pengguna'),
+        ], $dataku);
         // return $data;
         return view('stisla.user-management.users.form', $data);
     }

@@ -489,6 +489,33 @@ class Repository extends RepositoryAbstract
             ->when(request('filter_end_updated_at'), function (Builder $query) {
                 $query->whereDate('updated_at', '<=', request('filter_end_updated_at'));
             })
+            ->when(request('filter_created_at_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_created_at_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('created_at', '>=', $dates[0])
+                            ->whereDate('created_at', '<=', $dates[1]);
+                    });
+                }
+            })
+            ->when(request('filter_updated_at_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_updated_at_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('updated_at', '>=', $dates[0])
+                            ->whereDate('updated_at', '<=', $dates[1]);
+                    });
+                }
+            })
+            ->when(request('filter_created_date_range'), function (Builder $query) {
+                $dates = explode(' - ', request('filter_created_date_range'));
+                if (count($dates) === 2) {
+                    $query->where(function (Builder $q) use ($dates) {
+                        $q->whereDate('created_date', '>=', $dates[0])
+                            ->whereDate('created_date', '<=', $dates[1]);
+                    });
+                }
+            })
             ->when(request('filter_limit', 50), function (Builder $query) {
                 if (!is_app_dataku())
                     $query->limit(request('filter_limit', 50));
@@ -554,15 +581,20 @@ class Repository extends RepositoryAbstract
      * get full data with relations
      *
      * @param array $relations
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param array|null $where
+     * @param array|null $orderBy
+     * @param array|null $whereHas
+     * @param bool|null $deleted
+     * @param bool|null $isQueryBuilder
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder
      */
-    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [], ?bool $deleted = false)
+    public function getFullDataWith(array $relations = [], ?array $where = [], ?array $orderBy = [], ?array $whereHas = [], ?bool $deleted = false, ?bool $isQueryBuilder = false)
     {
         if (count($where) > 0) {
             $where = array_filter($where);
         }
 
-        return $this->queryFullData(orderBy: $orderBy)->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)
+        $query = $this->queryFullData(orderBy: $orderBy)->with(array_merge(['createdBy', 'lastUpdatedBy'], $relations))->where($where)
             ->when(count($orderBy) > 0, function ($query) use ($orderBy) {
                 foreach ($orderBy as $column => $direction) {
                     $query->orderBy($column, $direction ?? 'asc');
@@ -579,8 +611,9 @@ class Repository extends RepositoryAbstract
             ->when($deleted, function ($query) {
                 if (method_exists($query, 'onlyTrashed'))
                     $query?->onlyTrashed();
-            })
-            ->get();
+            });
+
+        return $isQueryBuilder ? $query : $query->get();
     }
 
     /**
@@ -763,5 +796,15 @@ class Repository extends RepositoryAbstract
     public function getColumns()
     {
         return Schema::getColumnListing($this->model->getTable());
+    }
+
+    /**
+     * count all data
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->model->count();
     }
 }

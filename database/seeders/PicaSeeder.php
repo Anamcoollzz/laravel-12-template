@@ -2,13 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Pica;
+use App\Models\PocariFunction;
 use App\Models\Status;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class StatusSeeder extends Seeder
+class PicaSeeder extends Seeder
 {
     /**
      * Generate a gravatar image URL based on the email address.
@@ -24,7 +28,7 @@ class StatusSeeder extends Seeder
 
     public function run(): void
     {
-        $model = new Status();
+        $model = new Pica();
         $table = $model->getTable();
 
         if (!Schema::hasTable($table)) {
@@ -32,7 +36,7 @@ class StatusSeeder extends Seeder
         }
 
         Schema::disableForeignKeyConstraints();
-        Status::truncate();
+        Pica::truncate();
 
         $faker        = \Faker\Factory::create('id_ID');
         $options      = array_values(get_options());
@@ -52,16 +56,15 @@ class StatusSeeder extends Seeder
         $rows = [];
         $total = 20;
 
-        $categories = [
-            Status::STATUS_OPEN => 'Open',
-            Status::STATUS_ON_PROGRESS => 'On Progress',
-            Status::STATUS_NEED_APPROVAL => 'Need Approval',
-            // 'Watchout',
-            Status::STATUS_NEED_REVISION => 'Need Revision',
-            Status::STATUS_DONE => 'Done',
-            Status::STATUS_OVERDUE => 'Overdue',
-        ];
-        foreach ($categories as $i => $categoryName) {
+        $functions   = PocariFunction::all()->pluck('id')->toArray();
+        $categories  = Category::all()->pluck('id')->toArray();
+        $workFields  = Category::all()->pluck('id')->toArray();
+        $assignedTos = User::all()->pluck('id')->toArray();
+        $statuses    = Status::where('name', '!=', 'Overdue')->get()->pluck('id')->toArray();
+        $pusatUserIds = User::role('pusat')->get()->pluck('id')->toArray();
+        $cabangUserIds = User::role('cabang')->get()->pluck('id')->toArray();
+
+        for ($i = 1; $i <= $total; $i++) {
             $email = $faker->email;
 
             $selectMultiple = $makeSelectArray();
@@ -115,25 +118,39 @@ class StatusSeeder extends Seeder
             if (isset($colSet['deleted_at']))         $row['deleted_at'] = Arr::random([null, $faker->dateTimeBetween('-1 month', 'now')]);
             if (isset($colSet['created_at']))         $row['created_at'] = $faker->dateTimeBetween('-1 month', 'now');
             if (isset($colSet['updated_at']))         $row['updated_at'] = $faker->dateTimeBetween('-1 month', 'now');
-            if (isset($colSet['created_by_id']))      $row['created_by_id'] = Arr::random([null, 1]);
+            if (isset($colSet['created_by_id']))      $row['created_by_id'] = Arr::random($pusatUserIds);
             if (isset($colSet['last_updated_by_id'])) $row['last_updated_by_id'] = Arr::random([null, 1]);
 
             // 'deleted_at' => null,
 
             // ini hasil generate dari make:module command
-            $row['name'] = $categoryName;
+            $row['title']                  = 'Pica Title ' . $i;
+            // $row['notes']                  = 'Pica Notes ' . $i;
+            $row['notes']                  = fake()->paragraphs(1, true);
+            $row['function_id']            = Arr::random($functions);
+            $row['category_id']            = Arr::random($categories);
+            $row['work_field_id']          = Arr::random($workFields);
+            $row['deadline']               = $date = fake()->dateTimeBetween('+1 week', '+1 month')->format('Y-m-d');
+            $row['kpi_related']            = 'KPI Related ' . $i;
+            $row['assigned_to']            = Arr::random($cabangUserIds);
+            $row['created_date']           = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
+            $row['problem_identification'] = 'Pica Problem Identification ' . $i;
+            $row['corrective_action']      = 'Pica Corrective Action ' . $i;
+            $row['attachment']             = "https://picsum.photos/300/200?random={$i}";
+            $row['evidence']               = "https://picsum.photos/300/200?random={$i}";
+            $row['status_id']              = Arr::random($statuses);
 
             $rows[] = $row;
 
             // ✅ Insert per 200/1000 kalau datanya gede. Di contoh ini 20 cukup.
             if (count($rows) >= 200) {
-                Status::insert($rows);
+                Pica::insert($rows);
                 $rows = [];
             }
         }
 
         if (!empty($rows)) {
-            Status::insert($rows);
+            Pica::insert($rows);
         }
 
         Schema::enableForeignKeyConstraints();

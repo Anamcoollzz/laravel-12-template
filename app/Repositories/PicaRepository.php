@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Status;
+use App\Models\Pica;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
-class StatusRepository extends Repository
+class PicaRepository extends Repository
 {
 
     /**
@@ -16,7 +16,7 @@ class StatusRepository extends Repository
      */
     public function __construct()
     {
-        $this->model = new Status();
+        $this->model = new Pica();
     }
 
     /**
@@ -33,35 +33,47 @@ class StatusRepository extends Repository
             ->with(['createdBy', 'lastUpdatedBy']);
         $editColumns = [
 
-            'name' => fn(Status $item) => $item->name,
+            'notes' => fn(Pica $item) => $item->notes,
+            'function_id' => fn(Pica $item) => $item->function_id,
+            'category_id' => fn(Pica $item) => $item->category_id,
+            'work_field_id' => fn(Pica $item) => $item->work_field_id,
+            'deadline' => fn(Pica $item) => $item->deadline,
+            'kpi_related' => fn(Pica $item) => $item->kpi_related,
+            'assigned_to' => fn(Pica $item) => $item->assigned_to,
+            'created_date' => fn(Pica $item) => $item->created_date,
+            'problem_identification' => fn(Pica $item) => $item->problem_identification,
+            'corrective_action' => fn(Pica $item) => $item->corrective_action,
+            'attachment' => fn(Pica $item) => $item->attachment,
+            'evidence' => fn(Pica $item) => $item->evidence,
+            'status_id' => fn(Pica $item) => $item->status_id,
 
 
             // yang ini bisa dikomen aja kalau gak dipakai
-            'currency'         => fn(Status $item) => dollar($item->currency),
-            'currency_idr'     => fn(Status $item) => rp($item->currency_idr),
+            'currency'         => fn(Pica $item) => dollar($item->currency),
+            'currency_idr'     => fn(Pica $item) => rp($item->currency_idr),
             'select2_multiple' => '{{implode(", ", $select2_multiple)}}',
             'checkbox'         => '{{implode(", ", $checkbox)}}',
             'checkbox2'        => '{{implode(", ", $checkbox2)}}',
             'tags'             => 'stisla.includes.others.item-tags',
             'file'             => 'stisla.includes.others.item-file',
-            'birthdate'        => fn(Status $item) => view('stisla.includes.others.item-datetime', ['item' => $item]),
-            'email'            => fn(Status $item) => view('stisla.includes.others.item-email', ['item' => $item]),
-            'phone_number'     => fn(Status $item) => view('stisla.includes.others.item-phonenumber', ['item' => $item]),
-            'avatar'           => fn(Status $item) => view('stisla.includes.others.item-image', ['file' => $item->avatar, 'item' => $item]),
-            'image'            => fn(Status $item) => view('stisla.includes.others.item-image', ['file' => $item->image, 'item' => $item]),
-            'barcode'          => fn(Status $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
-            'qr_code'          => fn(Status $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
+            'birthdate'        => fn(Pica $item) => view('stisla.includes.others.item-datetime', ['item' => $item]),
+            'email'            => fn(Pica $item) => view('stisla.includes.others.item-email', ['item' => $item]),
+            'phone_number'     => fn(Pica $item) => view('stisla.includes.others.item-phonenumber', ['item' => $item]),
+            'avatar'           => fn(Pica $item) => view('stisla.includes.others.item-image', ['file' => $item->avatar, 'item' => $item]),
+            'image'            => fn(Pica $item) => view('stisla.includes.others.item-image', ['file' => $item->image, 'item' => $item]),
+            'barcode'          => fn(Pica $item) => \Milon\Barcode\Facades\DNS1DFacade::getBarcodeHTML($item->barcode, 'C39', 1, 10),
+            'qr_code'          => fn(Pica $item) => \Milon\Barcode\Facades\DNS2DFacade::getBarcodeHTML($item->qr_code, 'QRCODE', 3, 3),
             'color'            => 'stisla.includes.others.item-color',
             'created_at'       => '{{\Carbon\Carbon::parse($created_at)->addHour(7)->format("Y-m-d H:i:s")}}',
             'updated_at'       => '{{\Carbon\Carbon::parse($updated_at)->addHour(7)->format("Y-m-d H:i:s")}}',
-            // 'created_by'       => fn(Status $status) => $status->createdBy ? $status->createdBy->name : '-',
-            // 'last_updated_by'  => fn(Status $status) => $status->lastUpdatedBy ? $status->lastUpdatedBy->name : '-',
+            // 'created_by'       => fn(Pica $pica) => $pica->createdBy ? $pica->createdBy->name : '-',
+            // 'last_updated_by'  => fn(Pica $pica) => $pica->lastUpdatedBy ? $pica->lastUpdatedBy->name : '-',
 
             // yang ini butuh action
-            'action'           => function (Status $status) use ($additionalParams) {
-                $isAjaxYajra = Route::is('statuses.index-ajax-yajra') || request('isAjaxYajra') == 1;
+            'action'           => function (Pica $pica) use ($additionalParams) {
+                $isAjaxYajra = Route::is('picas.index-ajax-yajra') || request('isAjaxYajra') == 1;
                 $data = array_merge($additionalParams ? $additionalParams : [], [
-                    'item'        => $status,
+                    'item'        => $pica,
                     'isAjaxYajra' => $isAjaxYajra,
                 ]);
                 return view('stisla.includes.forms.buttons.btn-action', $data);
@@ -71,10 +83,10 @@ class StatusRepository extends Repository
             'editColumns' => $editColumns,
             'rawColumns'  => ['tags', 'file', 'color', 'action', 'image', 'barcode', 'qr_code', 'avatar', 'phone_number', 'email', 'birthdate'],
             'addColumns'  => [
-                'created_by' => function (Status $item) {
+                'created_by' => function (Pica $item) {
                     return $item->createdBy ? $item->createdBy->name : '-';
                 },
-                'last_updated_by' => function (Status $item) {
+                'last_updated_by' => function (Pica $item) {
                     return $item->lastUpdatedBy ? $item->lastUpdatedBy->name : '-';
                 }
             ]
@@ -97,7 +109,19 @@ class StatusRepository extends Repository
                 'orderable'  => false
             ],
 
-            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'notes', 'name' => 'notes'],
+            ['data' => 'function_id', 'name' => 'function_id'],
+            ['data' => 'category_id', 'name' => 'category_id'],
+            ['data' => 'work_field_id', 'name' => 'work_field_id'],
+            ['data' => 'deadline', 'name' => 'deadline'],
+            ['data' => 'kpi_related', 'name' => 'kpi_related'],
+            ['data' => 'assigned_to', 'name' => 'assigned_to'],
+            ['data' => 'created_date', 'name' => 'created_date'],
+            ['data' => 'problem_identification', 'name' => 'problem_identification'],
+            ['data' => 'corrective_action', 'name' => 'corrective_action'],
+            ['data' => 'attachment', 'name' => 'attachment'],
+            ['data' => 'evidence', 'name' => 'evidence'],
+            ['data' => 'status_id', 'name' => 'status_id'],
 
             // ini bisa dikomen nanti ya kalau tidak digunakan
             ['data' => 'name', 'name' => 'name'],
@@ -148,43 +172,5 @@ class StatusRepository extends Repository
     public function getFullData()
     {
         return $this->queryFullData()->with(['createdBy', 'lastUpdatedBy'])->latest()->get();
-    }
-
-    /**
-     * get data as select options
-     *
-     * @param string $label
-     * @param string $value
-     * @param array|null $where
-     * @param string|null $whereField
-     * @param array|null $whereIn
-     * @param callable|null $map
-     * @return array
-     */
-    public function getSelectOptionsApproval($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [], ?callable $map = null): array
-    {
-        $query = $this->query()
-            ->when(!empty($where), function ($query) use ($where) {
-                $query->where($where);
-            })
-            ->when(!empty($whereIn), function ($query) use ($whereField, $whereIn) {
-                $query->whereIn($whereField, $whereIn);
-            })
-            ->when($map !== null, function ($query) use ($map) {
-                $query->select('*');
-            })
-            ->when($map === null, function ($query) use ($label, $value) {
-                $query->select($label, $value);
-            })
-            ->whereIn('id', [
-                \App\Models\Status::STATUS_DONE,
-                \App\Models\Status::STATUS_NEED_REVISION,
-            ])
-            ->oldest()
-            ->get()
-            ->when($map !== null, function ($collection) use ($map) {
-                return $collection->map($map);
-            });
-        return $query->pluck($label, $value)->toArray();
     }
 }

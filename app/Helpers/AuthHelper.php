@@ -114,7 +114,32 @@ function user_can($permission)
     return Auth::user()->can($permission);
 }
 
+/**
+ * get user login email
+ *
+ * @return string
+ */
 function user_email()
 {
     return Auth::user()->email ?? auth('api')->user()->email;
+}
+
+/**
+ * check if user has role pusat
+ *
+ * @return bool
+ */
+function is_pusat()
+{
+    return auth_user()->hasRole('pusat');
+}
+
+/**
+ * check if user has role cabang
+ *
+ * @return bool
+ */
+function is_cabang()
+{
+    return auth_user()->hasRole('cabang');
 }
