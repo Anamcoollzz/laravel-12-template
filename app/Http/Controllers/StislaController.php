@@ -717,13 +717,15 @@ class StislaController extends Controller implements HasMiddleware
     protected function executePdf($data = null)
     {
         $filename = date('Y-m-d H.i.s') . '_' . $this->title . '.pdf';
-
+        $canDuplicate   = can($this->title . ' Duplikat');
         $data = array_merge([
-            'title'     => $this->title,
-            'data'      => ($this->getIndexData2() ?? $this->getIndexData() ?? $data ?? $this->repository->getFullData()),
-            'isExport'  => true,
-            'prefix'    => $this->prefix,
-            'isAppCrud' => $this->isAppCrud,
+            'title'          => $this->title,
+            'data'           => ($this->getIndexData2() ?? $this->getIndexData() ?? $data ?? $this->repository->getFullData()),
+            'isExport'       => true,
+            'prefix'         => $this->prefix,
+            'isAppCrud'      => $this->isAppCrud,
+            'canShowDeleted' => $this->canShowDeleted(),
+            'canDuplicate'   => $canDuplicate,
         ], $this->getHasColumns());
 
         $html     = view('stisla.includes.others.export-pdf', $data)->render();

@@ -212,10 +212,10 @@ Route::get('yajra-contoh-crud', [CrudExampleController::class, 'indexID'])->name
 Route::get('yajra-contoh-crud/ajax', [CrudExampleController::class, 'yajraAjaxID'])->name('contoh-crud.ajax-yajra');
 Route::get('ajax-contoh-crud', [CrudExampleController::class, 'indexID'])->name('contoh-crud.index-ajax');
 Route::get('yajra-ajax-contoh-crud', [CrudExampleController::class, 'indexID'])->name('contoh-crud.index-ajax-yajra');
-Route::get('contoh-crud/pdf', [CrudExampleController::class, 'exportPdfID'])->name('contoh-crud.pdf');
-Route::get('contoh-crud/csv', [CrudExampleController::class, 'exportCsvID'])->name('contoh-crud.csv');
-Route::get('contoh-crud/excel', [CrudExampleController::class, 'exportExcelID'])->name('contoh-crud.excel');
-Route::get('contoh-crud/json', [CrudExampleController::class, 'exportJsonID'])->name('contoh-crud.json');
+Route::get('contoh-crud/pdf', [CrudExampleController::class, 'exportPdf'])->name('contoh-crud.pdf');
+Route::get('contoh-crud/csv', [CrudExampleController::class, 'exportCsv'])->name('contoh-crud.csv');
+Route::get('contoh-crud/excel', [CrudExampleController::class, 'exportExcel'])->name('contoh-crud.excel');
+Route::get('contoh-crud/json', [CrudExampleController::class, 'exportJson'])->name('contoh-crud.json');
 Route::get('contoh-crud/import-excel-example', [CrudExampleController::class, 'importExcelExampleID'])->name('contoh-crud.import-excel-example');
 Route::post('contoh-crud/import-excel', [CrudExampleController::class, 'importExcelID'])->name('contoh-crud.import-excel');
 Route::post('contoh-crud/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('contoh-crud.duplicate');

@@ -25,7 +25,7 @@
         @yield('panel12')
 
         @if ($data->count() > 0 || $isYajra || $isAjaxYajra)
-          @if ($canExport && $data->count() > 100)
+          @if ($canExport)
             <div class="card">
               <div class="card-header">
                 <h4><i class="fa fa-print"></i> {!! __('Aksi Ekspor <small>(Server Side)</small>') !!}</h4>
