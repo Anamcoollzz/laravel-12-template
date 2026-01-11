@@ -13,6 +13,8 @@ Route::get('/', [DashboardController::class, 'home'])->name('home');
 
 # AUTH
 Route::get('auth/login', [AuthController::class, 'loginForm'])->name('login');
+Route::get('autentikasi/masuk', [AuthController::class, 'formMasuk'])->name('form-masuk');
+Route::post('autentikasi/masuk', [AuthController::class, 'masuk']);
 Route::get('auth/login2', [AuthController::class, 'loginForm'])->name('login2');
 Route::post('auth/login', [AuthController::class, 'login'])->name('login-post');
 Route::get('auth/send-email-verification', [AuthController::class, 'verificationForm'])->name('send-email-verification');

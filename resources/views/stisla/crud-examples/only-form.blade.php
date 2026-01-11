@@ -205,7 +205,7 @@
     ])
   </div>
 @endif
-@if ($is_has_tinymce ?? false)
+{{-- @if ($is_has_tinymce ?? false)
   <div class="col-md-12">
     @include('stisla.includes.forms.editors.tinymce', [
         'required' => true,
@@ -224,4 +224,4 @@
         'id' => 'ckeditor',
     ])
   </div>
-@endif
+@endif --}}

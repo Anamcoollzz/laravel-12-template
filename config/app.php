@@ -27,6 +27,7 @@ return [
 
     // api app key required
     'header_key' => env('APP_HEADER_KEY', null),
+    'is_simple' => env('APP_IS_SIMPLE', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -380,12 +380,17 @@ configUpdateAlert(editorConfig);
 
 window.editorInstance = null;
 
-ClassicEditor.create(document.querySelector('.ckeditor5'), editorConfig).then((editor) => {
-  window.editorInstance = editor;
-  editor.model.document.on('change:data', () => {
-    $('.ckeditor5').val(editor.getData());
+window.initCKEditor5 = () => {
+  if ($('.ckeditor5').length === 0) {
+    return;
+  }
+  ClassicEditor.create(document.querySelector('.ckeditor5'), editorConfig).then((editor) => {
+    window.editorInstance = editor;
+    editor.model.document.on('change:data', () => {
+      $('.ckeditor5').val(editor.getData());
+    });
   });
-});
+};
 
 /**
  * This function exists to remind you to update the config needed for premium features.

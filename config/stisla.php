@@ -609,6 +609,14 @@ return [
                     'is_mockup' => true
                 ],
                 [
+                    'menu_name' => 'Contoh CRUD Sederhana',
+                    'route_name' => 'contoh-crud.index',
+                    'icon' => 'fas fa-atom',
+                    'permission' => 'Contoh CRUD',
+                    'is_active_if_url_includes' => 'contoh-crud*',
+                    'is_mockup' => true
+                ],
+                [
                     'menu_name' => 'Contoh CRUD Yajra',
                     'route_name' => 'crud-examples.index-yajra',
                     'icon' => 'fas fa-atom',

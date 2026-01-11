@@ -730,7 +730,7 @@ function duplicateGlobal(e, action_url, variant = 'success') {
     },
   }).then(function (willDelete) {
     if (willDelete) {
-      if ($('#isAjax').val() == 1 || $('#isAjaxYajra').val() == 1) {
+      if (variant === 'danger' && ($('#isAjax').val() == 1 || $('#isAjaxYajra').val() == 1)) {
         swal('Info', 'Sedang memproses...', 'info');
         window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         window.axios
@@ -739,7 +739,9 @@ function duplicateGlobal(e, action_url, variant = 'success') {
             if ($('#isAjaxYajra').val() == 1) {
               reloadDataTable();
             } else {
-              getData();
+              if ($('#refreshPage').val() === '1') {
+                location.reload();
+              } else getData();
             }
             successMsg(response.data.message).then(function () {});
           })
@@ -793,7 +795,9 @@ function deleteGlobal(e, action_url, variant = 'danger') {
             if ($('#isAjaxYajra').val() == 1) {
               reloadDataTable();
             } else {
-              getData();
+              if ($('#refreshPage').val() === '1') {
+                location.reload();
+              } else getData();
             }
             successMsg(response.data.message).then(function () {});
           })
@@ -992,6 +996,10 @@ function onSubmitForm(e) {
   e.preventDefault();
   var form = e.target;
   var formData = new FormData(form);
+  const mode = $('#modalForm').find('.modal-title').text().toLowerCase().includes('tambah') ? 'create' : 'edit';
+  if (mode === 'edit') {
+    formData.append('_method', 'PUT');
+  }
   var action = form.getAttribute('action');
   $('#modalForm').find('button[type="submit"]').attr('disabled', true).html('Menyimpan...');
   window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -1007,12 +1015,18 @@ function onSubmitForm(e) {
           }, 1000);
           $('#modalForm').modal('hide');
         } else {
-          getData();
+          if ($('#refreshPage').val() === '1') {
+            window.location.reload();
+          } else getData();
         }
       });
     })
     .catch(function (error) {
       swal('Gagal', error.response.data.message, 'error');
+    })
+    .finally(() => {
+      $('#modalForm').find('button[type="submit"]').attr('disabled', false).html('Simpan');
+      $('#modalForm').find('.modal-footer').find('.btn').removeAttr('disabled').removeClass('disabled').removeClass('btn-progress');
     });
 }
 
@@ -1031,6 +1045,8 @@ function initForm() {
   initColorPicker();
   initCleave();
   initTags();
+  if (window.initCKEditor5) window.initCKEditor5();
+  iniTinyMCE();
 }
 
 function copyTextToClipboard(text, callback) {
@@ -1215,4 +1231,81 @@ function executePostGlobal(e, action_url) {
   $('#formPostGlobal').attr('action', action_url);
   $('#formPostGlobal').append('<input type="hidden" name="checkeds" value=\'' + JSON.stringify(storage) + "' />");
   document.getElementById('formPostGlobal').submit();
+}
+
+function iniTinyMCE() {
+  if (!window.tinymce) {
+    console.error('TinyMCE is not loaded. Please include the TinyMCE library.');
+    return;
+  }
+  if ($('.tinymce, .tinymce-simple').length === 0) {
+    return;
+  }
+  tinymce.init({
+    selector: '.tinymce, .tinymce-simple',
+    plugins: [
+      // Core editing features
+      'anchor',
+      'autolink',
+      'charmap',
+      'codesample',
+      'emoticons',
+      'link',
+      'lists',
+      'media',
+      'searchreplace',
+      'table',
+      'visualblocks',
+      'wordcount',
+      // Your account includes a free trial of TinyMCE premium features
+      // Try the most popular premium features until Nov 26, 2025:
+      'checklist',
+      'mediaembed',
+      'casechange',
+      'formatpainter',
+      'pageembed',
+      'a11ychecker',
+      'tinymcespellchecker',
+      'permanentpen',
+      'powerpaste',
+      'advtable',
+      'advcode',
+      'advtemplate',
+      'ai',
+      'uploadcare',
+      'mentions',
+      'tinycomments',
+      'tableofcontents',
+      'footnotes',
+      'mergetags',
+      'autocorrect',
+      'typography',
+      'inlinecss',
+      'markdown',
+      'importword',
+      'exportword',
+      'exportpdf',
+    ],
+    toolbar:
+      'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      {
+        value: 'First.Name',
+        title: 'First Name',
+      },
+      {
+        value: 'Email',
+        title: 'Email',
+      },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+    uploadcare_public_key: '176eaf57a06497723863',
+    setup: function (editor) {
+      editor.on('change', function (e) {
+        editor.save();
+      });
+    },
+  });
 }

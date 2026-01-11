@@ -13,14 +13,22 @@
       </div>
       <h2>{{ $emptyTitle ?? __('Kami tidak dapat menemukan data apa pun') }}</h2>
       <p class="lead">
-        {{ $emptyDesc ??__('Maaf kami tidak dapat menemukan data apa pun, untuk menghilangkan pesan ini, buat setidaknya 1 entri.') }}
+        {{ $emptyDesc ?? __('Maaf kami tidak dapat menemukan data apa pun, untuk menghilangkan pesan ini, buat setidaknya 1 entri.') }}
       </p>
       <div class=" mt-4">
         @if ($canImportExcel ?? false)
           @include('stisla.includes.forms.buttons.btn-import-excel', ['icon' => 'fa fa-file-excel', 'label' => __('Impor Excel')])
         @endif
         @if ($canCreate ?? false)
-          @include('stisla.includes.forms.buttons.btn-primary', ['link' => $link, 'icon' => 'fa fa-plus', 'label' => __('Buat baru')])
+          @if ($isAjax)
+            <a @if ($isAjax || $isAjaxYajra) onclick="showModalForm(event, 'create', '{{ $link }}')" @endif data-toggle="tooltip" data-target=""
+              class="btn btn-primary  btn-icon icon-left  btn-" href="{{ $link }}" title="Data {{ $title }}">
+              <i class="fa fa-plus"></i>
+              Buat baru
+            </a>
+          @else
+            @include('stisla.includes.forms.buttons.btn-primary', ['link' => $link, 'icon' => 'fa fa-plus', 'label' => __('Buat baru')])
+          @endif
         @endif
       </div>
       {{-- <a href="#" class="mt-4 bb">Need Help?</a> --}}

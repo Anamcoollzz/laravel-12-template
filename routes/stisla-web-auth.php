@@ -207,6 +207,37 @@ Route::post('crud-examples-export-pdf-using-checkbox', [CrudExampleController::c
 Route::post('crud-examples-export-excel-using-checkbox', [CrudExampleController::class, 'exportExcelUsingCheckbox'])->name('crud-examples.export-excel-using-checkbox');
 Route::post('crud-examples-export-csv-using-checkbox', [CrudExampleController::class, 'exportCsvUsingCheckbox'])->name('crud-examples.export-csv-using-checkbox');
 Route::post('crud-examples-export-json-using-checkbox', [CrudExampleController::class, 'exportJsonUsingCheckbox'])->name('crud-examples.export-json-using-checkbox');
+# CONTOH CRUD ID
+Route::get('yajra-contoh-crud', [CrudExampleController::class, 'indexID'])->name('contoh-crud.index-yajra');
+Route::get('yajra-contoh-crud/ajax', [CrudExampleController::class, 'yajraAjaxID'])->name('contoh-crud.ajax-yajra');
+Route::get('ajax-contoh-crud', [CrudExampleController::class, 'indexID'])->name('contoh-crud.index-ajax');
+Route::get('yajra-ajax-contoh-crud', [CrudExampleController::class, 'indexID'])->name('contoh-crud.index-ajax-yajra');
+Route::get('contoh-crud/pdf', [CrudExampleController::class, 'exportPdfID'])->name('contoh-crud.pdf');
+Route::get('contoh-crud/csv', [CrudExampleController::class, 'exportCsvID'])->name('contoh-crud.csv');
+Route::get('contoh-crud/excel', [CrudExampleController::class, 'exportExcelID'])->name('contoh-crud.excel');
+Route::get('contoh-crud/json', [CrudExampleController::class, 'exportJsonID'])->name('contoh-crud.json');
+Route::get('contoh-crud/import-excel-example', [CrudExampleController::class, 'importExcelExampleID'])->name('contoh-crud.import-excel-example');
+Route::post('contoh-crud/import-excel', [CrudExampleController::class, 'importExcelID'])->name('contoh-crud.import-excel');
+Route::post('contoh-crud/duplicate/{crudExample}', [CrudExampleController::class, 'duplicate'])->name('contoh-crud.duplicate');
+Route::put('contoh-crud/restore/{crudExample}', [CrudExampleController::class, 'restoreID'])->name('contoh-crud.restore');
+Route::put('contoh-crud/restore-all', [CrudExampleController::class, 'restoreAllID'])->name('contoh-crud.restore-all');
+Route::delete('contoh-crud/force-delete/{crud_example}', [CrudExampleController::class, 'forceDeleteID'])->name('contoh-crud.force-delete');
+Route::delete('contoh-crud/force-delete-all', [CrudExampleController::class, 'forceDeleteAllID'])->name('contoh-crud.force-delete-all');
+Route::get('contoh-crud', [CrudExampleController::class, 'semuaData'])->name('contoh-crud.index');
+Route::get('contoh-crud/tambah', [CrudExampleController::class, 'tambah'])->name('contoh-crud.tambah');
+Route::post('contoh-crud/tambah', [CrudExampleController::class, 'post']);
+Route::get('contoh-crud/{crudExample}', [CrudExampleController::class, 'showDataID'])->name('contoh-crud.show');
+Route::get('contoh-crud-single-pdf/{crud_example}', [CrudExampleController::class, 'singlePdf'])->name('contoh-crud.single-pdf');
+Route::get('contoh-crud/{crudExample}/ubah', [CrudExampleController::class, 'ubah'])->name('contoh-crud.ubah');
+Route::put('contoh-crud/{crudExample}/ubah', [CrudExampleController::class, 'perbarui'])->name('contoh-crud.update');
+Route::put('contoh-crud/{crudExample}', [CrudExampleController::class, 'perbarui'])->name('contoh-crud.perbarui');
+Route::delete('contoh-crud/{crudExample}', [CrudExampleController::class, 'hapus'])->name('contoh-crud.hapus');
+Route::delete('contoh-crud-using-checkbox', [CrudExampleController::class, 'destroyUsingCheckboxID'])->name('contoh-crud.destroy-using-checkbox');
+Route::delete('contoh-crud-truncate', [CrudExampleController::class, 'truncateID'])->name('contoh-crud.truncate');
+Route::post('contoh-crud-export-pdf-using-checkbox', [CrudExampleController::class, 'exportPdfUsingCheckboxID'])->name('contoh-crud.export-pdf-using-checkbox');
+Route::post('contoh-crud-export-excel-using-checkbox', [CrudExampleController::class, 'exportExcelUsingCheckboxID'])->name('contoh-crud.export-excel-using-checkbox');
+Route::post('contoh-crud-export-csv-using-checkbox', [CrudExampleController::class, 'exportCsvUsingCheckboxID'])->name('contoh-crud.export-csv-using-checkbox');
+Route::post('contoh-crud-export-json-using-checkbox', [CrudExampleController::class, 'exportJsonUsingCheckboxID'])->name('contoh-crud.export-json-using-checkbox');
 // Route::resource('crud-examples', CrudExampleController::class);
 
 # BANK
