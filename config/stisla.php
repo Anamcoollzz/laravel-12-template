@@ -609,7 +609,7 @@ return [
                     'is_mockup' => true
                 ],
                 [
-                    'menu_name' => 'Contoh CRUD Sederhana',
+                    'menu_name' => 'Contoh CRUD Simple',
                     'route_name' => 'contoh-crud.index',
                     'icon' => 'fas fa-atom',
                     'permission' => 'Contoh CRUD',
