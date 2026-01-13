@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FocusItemSeeder::class);
         $this->call(WorkFieldSeeder::class);
         $this->call(StatusSeeder::class);
-        // $this->call(PicaSeeder::class);
+        $this->call(PicaSeeder::class);
         // seeders
     }
 }

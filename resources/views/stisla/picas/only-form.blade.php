@@ -106,7 +106,13 @@
   @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'problem_identification', 'label' => __('validation.attributes.problem_identification')])
 </div>
 <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'corrective_action', 'label' => __('validation.attributes.corrective_action')])
+  @include('stisla.includes.forms.inputs.input', [
+      'required' => false,
+      'name' => 'corrective_action',
+      'label' => __('validation.attributes.corrective_action'),
+      'readonly' => Route::is('picas.create'),
+      'disabled' => Route::is('picas.create') || Route::is('picas.edit'),
+  ])
 </div>
 {{-- <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
@@ -117,10 +123,15 @@
 <div class="col-md-6">
   {{-- @include('stisla.includes.forms.inputs.input-image', ['required' => !isset($d), 'name' => 'evidence', 'label' => __('validation.attributes.evidence')]) --}}
   @if (Route::is('picas.show') || Route::is('picas.form-approval'))
-    <h6>Evidence</h6>
-    <img src="{{ $d->evidence }}" alt="Evidence" class="img-fluid mb-3" style="max-height: 300px;">
+    <h6>Foto Perbaikan Yang Dilakukan</h6>
+    <img src="{{ $d->evidence }}" alt="Foto Perbaikan Yang Dilakukan" class="img-fluid mb-3" style="max-height: 300px;">
   @else
-    @include('stisla.includes.forms.inputs.input-image', ['required' => false, 'name' => 'evidence', 'label' => __('validation.attributes.evidence')])
+    @include('stisla.includes.forms.inputs.input-image', [
+        'required' => false,
+        'name' => 'evidence',
+        'label' => __('validation.attributes.evidence'),
+        'disabled' => Route::is('picas.create') || Route::is('picas.edit'),
+    ])
   @endif
 </div>
 {{-- <div class="col-md-6">

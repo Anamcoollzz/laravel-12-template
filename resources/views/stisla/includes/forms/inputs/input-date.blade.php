@@ -2,6 +2,6 @@
     'id' => $id ?? 'date',
     'label' => $label ?? __('Tanggal'),
     'icon' => $icon ?? 'fas fa-calendar',
-    'required' => true,
+    'required' => $required ?? true,
     'type' => $type ?? 'date',
 ])

@@ -28,9 +28,11 @@
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input-avatar', ['required' => false])
     </div>
-    <div class="col-md-6">
-      @include('stisla.includes.forms.inputs.input-avatar', ['required' => false, 'label' => __('Photo'), 'id' => 'photo'])
-    </div>
+    @if (!is_app_pocari())
+      <div class="col-md-6">
+        @include('stisla.includes.forms.inputs.input-avatar', ['required' => false, 'label' => __('Photo'), 'id' => 'photo'])
+      </div>
+    @endif
     <div class="col-md-6">
       @include('stisla.includes.forms.inputs.input', [
           'id' => 'phone_number',

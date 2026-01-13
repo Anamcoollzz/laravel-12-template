@@ -464,4 +464,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');
     }
+
+    /**
+     * Get the picas assigned to the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function picas()
+    {
+        return $this->hasMany(\App\Models\Pica::class, 'assigned_to');
+    }
 }

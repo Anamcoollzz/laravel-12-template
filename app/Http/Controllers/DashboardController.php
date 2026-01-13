@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\SettingRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,7 +49,14 @@ class DashboardController extends StislaController
                 })
                 ->when(request('filter_assigned_to'), function ($query) {
                     $query->where('assigned_to', request('filter_assigned_to'));
-                });
+                })
+                ->when(request('filter_category'), function ($query) {
+                    $query->where('category_id', request('filter_category'));
+                })
+                ->when(request('date'), function ($query) {
+                    $query->where('created_date', request('date'));
+                })
+            ;
         }])->get()->transform(function ($item) {
             $item->type = 'primary';
             // $item->color = '#b71c2e';
@@ -81,12 +89,22 @@ class DashboardController extends StislaController
             return $item;
         });
 
+        $cabangs = User::select(['id', 'name'])
+            ->when(is_cabang(), function ($query) {
+                $query->where('id', auth_id());
+            })
+            ->role(['cabang'])->with(['picas.category', 'picas:id,category_id,assigned_to'])->get();
+        $cabangLabels = $cabangs->pluck('name')->toArray();
+        // return $cabangs;
+
         return view('stisla.dashboard.index', [
             'widgets'  => $widgets,
             'logs'     => $logs,
             'user'     => $user,
             'is_chat'  => $is_chat,
             'statuses' => $statuses,
+            'cabangs'  => $cabangs,
+            'cabangLabels' => $cabangLabels,
         ]);
     }
 

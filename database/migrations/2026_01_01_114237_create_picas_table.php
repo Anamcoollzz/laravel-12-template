@@ -27,10 +27,10 @@ return new class extends Migration
                 $table->text('kpi_related', 50)->comment('KPI Related');
                 $table->text('assigned_to', 50)->comment('Assigned To');
                 $table->date('created_date')->comment('Created Date');
-                $table->text('problem_identification', 50)->nullable()->comment('Problem Identification');
-                $table->text('corrective_action', 50)->nullable()->comment('Corrective Action');
+                $table->text('problem_identification', 50)->nullable()->comment('Akar Masalah');
+                $table->text('corrective_action', 50)->nullable()->comment('Perbaikan Yang Dilakukan');
                 $table->text('attachment', 50)->nullable()->comment('Attachment');
-                $table->text('evidence', 50)->nullable()->comment('Evidence');
+                $table->text('evidence', 50)->nullable()->comment('Foto Perbaikan Yang Dilakukan');
                 $table->unsignedBigInteger('status_id')->nullable()->comment('Status');
                 $table->foreign('status_id')->references('id')->on('statuses')->onUpdate('set null')->onDelete('set null');
                 $table->text('revision_notes')->nullable()->comment('Rejection Notes');

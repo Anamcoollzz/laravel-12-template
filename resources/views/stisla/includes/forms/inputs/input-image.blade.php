@@ -7,4 +7,5 @@
     'link_file' => isset($d) ? $d->image : null,
     'link_file_name' => isset($d) ? basename($d->image) : null,
     'icon' => 'fas fa-image',
+    'disabled' => $disabled ?? false,
 ])

@@ -59,7 +59,7 @@ class PicaSeeder extends Seeder
         $functions   = PocariFunction::all()->pluck('id')->toArray();
         $categories  = Category::all()->pluck('id')->toArray();
         $workFields  = Category::all()->pluck('id')->toArray();
-        $assignedTos = User::all()->pluck('id')->toArray();
+        $assignedTos = User::role(['pusat', 'cabang'])->get()->pluck('id')->toArray();
         $statuses    = Status::where('name', '!=', 'Overdue')->get()->pluck('id')->toArray();
         $pusatUserIds = User::role('pusat')->get()->pluck('id')->toArray();
         $cabangUserIds = User::role('cabang')->get()->pluck('id')->toArray();
@@ -134,8 +134,8 @@ class PicaSeeder extends Seeder
             $row['kpi_related']            = 'KPI Related ' . $i;
             $row['assigned_to']            = Arr::random($cabangUserIds);
             $row['created_date']           = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
-            $row['problem_identification'] = 'Pica Problem Identification ' . $i;
-            $row['corrective_action']      = 'Pica Corrective Action ' . $i;
+            $row['problem_identification'] = 'Pica Akar Masalah ' . $i;
+            $row['corrective_action']      = 'Pica Perbaikan Yang Dilakukan ' . $i;
             $row['attachment']             = "https://picsum.photos/300/200?random={$i}";
             $row['evidence']               = "https://picsum.photos/300/200?random={$i}";
             $row['status_id']              = Arr::random($statuses);
