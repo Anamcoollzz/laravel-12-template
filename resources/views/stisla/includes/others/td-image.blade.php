@@ -1,4 +1,12 @@
-@if ($isExport)
+@if ($showInExport ?? false)
+  <td>
+    @if ($path)
+      <img src="{{ $path }}" style="max-width: 200px; width: 200px;" class="img-thumbnail" width="200px;">
+    @else
+      -
+    @endif
+  </td>
+@elseif ($isExport)
   <td>
     @if (Str::contains($item->image, 'http') || Str::contains($item->image, 'https://'))
       <a href="{{ $item->image }}">cek</a>

@@ -95,6 +95,35 @@ class Pica extends Model
         'select2_multiple' => 'array',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['attachment_path', 'evidence_path'];
+
+    public function getAttachmentPathAttribute()
+    {
+        if ($this->attributes['attachment']) {
+            $path = public_path(replace_url_with_public_path($this->attributes['attachment']));
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+        return null;
+    }
+
+    public function getEvidencePathAttribute()
+    {
+        if ($this->attributes['evidence']) {
+            $path = public_path(replace_url_with_public_path($this->attributes['evidence']));
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+        return null;
+    }
+
     public function pocarifunction()
     {
         return $this->belongsTo(PocariFunction::class, 'function_id');

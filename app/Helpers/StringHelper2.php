@@ -64,3 +64,15 @@ function limit_words($text, $limit = 10)
         ? implode(' ', array_slice($words, 0, $limit)) . '...'
         : $text;
 }
+
+/**
+ * replace full url with public path
+ *
+ * @param string $file
+ * @return string
+ */
+function replace_url_with_public_path($file)
+{
+    $string = str_replace(config('app.url'), '', $file);
+    return $string;
+}

@@ -12,6 +12,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\WorkFieldRepository;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PicaController extends StislaController
 {
@@ -209,6 +210,11 @@ class PicaController extends StislaController
         ];
     }
 
+    // public function indexData(Request $request)
+    // {
+    //     return $this->getIndexData2();
+    // }
+
     /**
      * get data for index page
      *
@@ -261,6 +267,7 @@ class PicaController extends StislaController
                 // cabang hanya boleh lihat pica yang dibuat oleh dirinya sendiri
                 $query->where('assigned_to', auth_id());
             })
+            // ->where('attachment', 'like', '%storage%')
             ->get();
     }
 }

@@ -39,9 +39,11 @@
       <th>{{ __('validation.attributes.created_date') }}</th>
       <th>{{ __('validation.attributes.problem_identification') }}</th>
       <th>{{ __('validation.attributes.corrective_action') }}</th>
-      {{-- <th>{{ __('validation.attributes.attachment') }}</th>
-      <th>{{ __('validation.attributes.evidence') }}</th> --}}
-      <th>{{ __('validation.attributes.status_id') }}</th>
+      <th>{{ __('validation.attributes.attachment') }}</th>
+      @if ($isExport)
+        <th>{{ __('validation.attributes.evidence') }}</th>
+        <th>{{ __('validation.attributes.status_id') }}</th>
+      @endif
 
       {{-- yang ini boleh dikomen --}}
       @if ($is_has_name ?? false)
@@ -173,8 +175,10 @@
           @include('stisla.includes.others.td-datetime', ['DateTime' => $item->created_date])
           <td>{{ $item->problem_identification }}</td>
           <td>{{ $item->corrective_action }}</td>
-          {{-- @include('stisla.includes.others.td-image', ['file' => $item->attachment])
-          @include('stisla.includes.others.td-image', ['file' => $item->evidence]) --}}
+          @if ($isExport)
+            @include('stisla.includes.others.td-image', ['file' => $item->attachment, 'showInExport' => true, 'path' => $item->attachment_path])
+            @include('stisla.includes.others.td-image', ['file' => $item->evidence, 'showInExport' => true, 'path' => $item->evidence_path])
+          @endif
           <td>
             <span class="badge badge-danger" style="background-color: {{ $item->status->color }}">
               {{ $item->status->name }}
