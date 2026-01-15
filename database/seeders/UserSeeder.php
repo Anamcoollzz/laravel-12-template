@@ -102,7 +102,7 @@ class UserSeeder extends Seeder
                     $userObj->assignRole('user');
             }
 
-        // $this->pocariUsers();
+        $this->pocariUsers();
         $this->datakuUsers();
     }
 

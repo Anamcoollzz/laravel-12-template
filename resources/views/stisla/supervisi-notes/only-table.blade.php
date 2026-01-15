@@ -28,7 +28,7 @@
       @endif
 
       {{-- ini adalah hasil dari make:module --}}
-      {{-- columns --}}
+      <th>{{ __('validation.attributes.notes') }}</th>
 
       {{-- yang ini boleh dikomen --}}
       @if ($is_has_name ?? false)
@@ -149,7 +149,7 @@
           <td>{{ $loop->iteration }}</td>
 
           {{-- ini adalah hasil dari make:module --}}
-          {{-- columnstd --}}
+          <td>{{ $item->notes }}</td>
 
           {{-- yang ini boleh dikomen --}}
           @if ($is_has_name ?? false)

@@ -188,6 +188,7 @@ return [
     */
 
     'attributes' => [
+        'notes' => 'Notes',
         'revision_notes' => 'Revision Notes',
         'title' => 'Title',
         'notes' => 'Notes',

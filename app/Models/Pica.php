@@ -104,7 +104,7 @@ class Pica extends Model
 
     public function getAttachmentPathAttribute()
     {
-        if ($this->attributes['attachment']) {
+        if (isset($this->attributes['attachment'])) {
             $path = public_path(replace_url_with_public_path($this->attributes['attachment']));
             if (file_exists($path)) {
                 return $path;
@@ -115,7 +115,7 @@ class Pica extends Model
 
     public function getEvidencePathAttribute()
     {
-        if ($this->attributes['evidence']) {
+        if (isset($this->attributes['evidence'])) {
             $path = public_path(replace_url_with_public_path($this->attributes['evidence']));
             if (file_exists($path)) {
                 return $path;

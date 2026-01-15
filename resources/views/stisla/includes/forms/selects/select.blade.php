@@ -1,4 +1,4 @@
-@if (count($options) > 10)
+@if (count($options) > 100)
   @include('stisla.includes.forms.selects.select2')
 @else
   @php
@@ -24,7 +24,7 @@
       @endif
     </label>
     <select @if ($isRequired) required @endif @if ($isMultiple) multiple @endif name="{{ $isMultiple ? $name . '[]' : $name }}" id="{{ $id }}"
-      class="form-control {{ $has_error ? 'is-invalid' : '' }}" @if (isset($disabled) && $disabled) disabled @endif>
+      @isset($vModel) v-model="{{ $vModel }}" @endisset class="form-control {{ $has_error ? 'is-invalid' : '' }}" @if (isset($disabled) && $disabled) disabled @endif>
       @if ($with_all ?? false)
         <option value="">{{ __('Semua') }}</option>
       @endif

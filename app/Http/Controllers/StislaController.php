@@ -259,6 +259,20 @@ class StislaController extends Controller implements HasMiddleware
     protected bool $isShowExportDatatable = true;
 
     /**
+     * show checkbox in datatable
+     *
+     * @var bool
+     */
+    protected bool $isShowCheckbox = true;
+
+    /**
+     * show filter
+     *
+     * @var bool
+     */
+    protected bool $isShowFilter = true;
+
+    /**
      * constructor method
      *
      * @return void
@@ -1351,6 +1365,8 @@ class StislaController extends Controller implements HasMiddleware
             'deletedData'           => $this->canShowDeleted() ? $this->getIndexData2(deleted: true) : collect([]),
             'countData'             => $this->repository->count(),
             'isShowExportDatatable' => $this->isShowExportDatatable,
+            'isShowCheckbox'        => $this->isShowCheckbox,
+            'isShowFilter'          => $this->isShowFilter,
         ], $columns, $this->additionalIndexData()));
     }
 

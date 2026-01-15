@@ -9,21 +9,38 @@
         </span>
       </div>
     @endisset
-    <div class="col-md-6">
-      @include('stisla.includes.forms.selects.select', [
-          'id' => 'category_id',
-          'name' => 'category_id',
-          'options' => $category_id_options,
-          'label' => __('validation.attributes.category_id'),
-          'required' => true,
-      ])
+    <div class="col-md-12" id="app-pocari">
+      <div class="row">
+        <div class="col-md-6">
+          @include('stisla.includes.forms.selects.select', [
+              'id' => 'category_id',
+              'name' => 'category_id',
+              'options' => $category_id_options,
+              'label' => __('validation.attributes.category_id'),
+              'required' => true,
+              'vModel' => 'selectedCategory',
+          ])
+        </div>
+        {{-- <div class="col-md-6">
+          @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'title', 'label' => __('validation.attributes.title')])
+        </div> --}}
+        <div class="col-md-6" v-if="selectedCategory == 2">
+          @include('stisla.includes.forms.selects.select', [
+              'id' => 'notes',
+              'name' => 'notes',
+              'options' => \App\Models\SupervisiNote::all()->pluck('notes', 'notes')->toArray(),
+              'label' => __('validation.attributes.notes'),
+              'required' => true,
+              'vModel' => 'selectedNotes',
+          ])
+        </div>
+        <div class="col-md-6" v-else>
+          @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
+        </div>
+
+      </div>
     </div>
-    {{-- <div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'title', 'label' => __('validation.attributes.title')])
-</div> --}}
-    <div class="col-md-6">
-      @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
-    </div>
+
     {{-- {{ dd(1) }} --}}
     <div class="col-md-6">
       @include('stisla.includes.forms.selects.select', [
@@ -405,5 +422,35 @@
 @push('scripts')
   <script>
     // $('#status_id').
+  </script>
+@endpush
+
+@push('js')
+  <!-- Page Specific JS File -->
+  {{-- <script src="{{ config('stisla.chat_base_url') }}/socket.io/socket.io.js"></script> --}}
+  {{-- <script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script> --}}
+  {{-- <script src="{{ url('stisla') }}/assets/js/page/components-chat-box.js?id=1"></script> --}}
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
+@endpush
+
+@push('scripts')
+  <script>
+    var vm = new Vue({
+      el: '#app-pocari',
+      data: {
+        selectedCategory: '{{ $d->category_id ?? '' }}',
+        selectedNotes: '{{ $d->notes ?? '' }}',
+      },
+      methods: {},
+      watch: {
+        selectedCategory: function(newVal, oldVal) {
+          console.log('Category changed from ' + oldVal + ' to ' + newVal);
+          if (newVal) {
+            alert('Kategori diubah menjadi: ' + newVal);
+          }
+        },
+      },
+      mounted: function() {}
+    });
   </script>
 @endpush

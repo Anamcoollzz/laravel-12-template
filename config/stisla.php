@@ -508,6 +508,14 @@ return [
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'action-needed-picas*'
                 ],
+
+                [
+                    'menu_name' => 'Supervisi Note',
+                    'route_name' => 'supervisi-notes.index',
+                    'icon' => 'fas fa-clipboard',
+                    'permission' => 'Supervisi Note',
+                    'is_active_if_url_includes' => 'supervisi-notes*'
+                ],
                 // additionalmenus
                 $additionalMenus,
                 $additionalMenus2,

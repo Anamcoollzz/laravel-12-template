@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CrudExampleRequest;
-use App\Repositories\CrudExampleRepository;
+use App\Http\Requests\SupervisiNoteRequest;
+use App\Repositories\SupervisiNoteRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class CrudExampleController extends StislaController
+class SupervisiNoteController extends StislaController
 {
 
     /**
@@ -16,18 +16,18 @@ class CrudExampleController extends StislaController
      */
     public function __construct()
     {
-        $this->title = 'Contoh CRUD';
+        $this->title = 'Supervisi Note';
 
         parent::__construct();
 
-        $this->icon         = 'fa fa-atom';
-        $this->repository   = new CrudExampleRepository;
-        $this->prefix       = $this->viewFolder = 'crud-examples';
+        $this->icon         = 'fa fa-clipboard';
+        $this->repository   = new SupervisiNoteRepository;
+        $this->prefix       = $this->viewFolder = 'supervisi-notes';
 
         // ini sesuaiin sama kebutuhan masing-masing, soalnya kalau A1 kan gede banget
         $this->pdfPaperSize = 'A1';
         $this->isAppCrud    = true;
-        $this->request      = new CrudExampleRequest;
+        $this->request      = new SupervisiNoteRequest;
         $this->fileColumns  = [
             'file',
             'image',
@@ -39,7 +39,7 @@ class CrudExampleController extends StislaController
             'tinymce',
             'ckeditor',
         ];
-        // $this->import     = new CrudExampleImport;
+        // $this->import     = new SupervisiNoteImport;
         $this->withColumns = [];
 
         $this->defaultMiddleware($this->title);
@@ -47,9 +47,9 @@ class CrudExampleController extends StislaController
         // hidupkan jika ingin dd datanya
         // $this->dd = true;
 
-        $this->isShowExportDatatable = true;
-        $this->isShowCheckbox = true;
-        $this->isShowFilter = true;
+        $this->isShowExportDatatable = false;
+        $this->isShowCheckbox = false;
+        $this->isShowFilter = false;
     }
 
     /**
@@ -105,13 +105,13 @@ class CrudExampleController extends StislaController
             $data['currency_idr'] = rp_to_double($request->currency_idr);
 
         if ($request->hasFile('file') && in_array('file', $columns))
-            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'crud-examples/files');
+            $data['file'] = $this->fileUtil->uploadToFolder($request->file('file'), 'supervisi-notes/files');
 
         if ($request->hasFile('image') && in_array('image', $columns))
-            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'crud-examples/images');
+            $data['image'] = $this->fileUtil->uploadToFolder($request->file('image'), 'supervisi-notes/images');
 
         if ($request->hasFile('avatar') && in_array('avatar', $columns))
-            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'crud-examples/avatars');
+            $data['avatar'] = $this->fileUtil->uploadToFolder($request->file('avatar'), 'supervisi-notes/avatars');
 
         if ($request->password  && in_array('password', $columns))
             $data['password'] = bcrypt($request->password);
@@ -119,8 +119,9 @@ class CrudExampleController extends StislaController
         if (in_array('is_active', $columns))
             $data['is_active'] = $request->filled('is_active');
 
-        //rostart//columns
-        //roend
+        $data = array_merge($data, request()->only([
+            'notes',
+        ]));
 
         return $data;
     }

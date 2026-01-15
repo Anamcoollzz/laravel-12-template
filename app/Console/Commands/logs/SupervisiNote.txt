@@ -1,0 +1,1 @@
+php artisan make:module SupervisiNote --columns="notes:Notes" --icon="fa fa-clipboard" --title="Supervisi Note"
