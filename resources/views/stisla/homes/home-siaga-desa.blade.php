@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ $_favicon ?? asset('favicon.ico') }}" type="image/x-icon">
   <title>Mobil Siaga Desa | Sendangsari, Bener, Purworejo</title>
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -285,6 +287,11 @@
             <h3 class="text-lg font-bold mb-3">
               Keluar dari sistem
             </h3>
+            <div class="space-y-3">
+              <button onclick="window.location.href='{{ route('siaga-desa.index') }}'" class="w-full bg-primary text-white py-2 rounded-lg text-sm hover:bg-secondary transition">
+                Lihat Pemesanan Saya
+              </button>
+            </div>
             <form id="logoutForm" class="space-y-3" method="POST" action="{{ route('siaga-desa.logout-post') }}">
               @csrf
               <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg text-sm hover:bg-secondary transition">
