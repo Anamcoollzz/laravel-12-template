@@ -471,6 +471,10 @@ if (is_app_chat($app)) {
         'regions',
         'statuses',
         'work_fields',
+        'supervisi_notes',
+        'categories',
+        'functions',
+        'focus_items',
     ];
     $superadminEmail = 'superadmin@siagadesa.com';
     $permissionExcludes = [
@@ -565,13 +569,21 @@ return [
                     'permission' => 'Pica',
                     'is_active_if_url_includes' => 'action-needed-picas*'
                 ],
-                
+
                 [
                     'menu_name' => 'Mobil Siaga',
                     'route_name' => 'siaga-cars.index',
                     'icon' => 'fas fa-car',
                     'permission' => 'Mobil Siaga',
                     'is_active_if_url_includes' => 'siaga-cars*'
+                ],
+                
+                [
+                    'menu_name' => 'Siaga Order',
+                    'route_name' => 'siaga-orders.index',
+                    'icon' => 'fa fa-truck-moving',
+                    'permission' => 'Siaga Order',
+                    'is_active_if_url_includes' => 'siaga-orders*'
                 ],
                 // additionalmenus
                 $additionalMenus,

@@ -376,3 +376,4 @@ Route::resource('chats', ChatController::class);
 # SIAGA DESA
 Route::get('siaga-desa', [SiagaDesaController::class, 'index'])->name('siaga-desa.index');
 Route::get('siaga-desa/order-form', [SiagaDesaController::class, 'orderForm'])->name('siaga-desa.order-form');
+Route::post('siaga-desa/order-form', [SiagaDesaController::class, 'submitOrderForm']);

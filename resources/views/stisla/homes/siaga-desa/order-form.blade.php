@@ -108,7 +108,8 @@
 
     <!-- Form Content -->
     <div class="p-6">
-      <form id="pemesananForm" class="space-y-5">
+      <form id="pemesananForm" class="space-y-5" action="" method="POST">
+        @csrf
         <!-- Nama & HP -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -139,12 +140,12 @@
           <select id="alamatTujuan" name="alamat_tujuan" onchange="toggleOtherInput(this.value)"
             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
             <option value="">-- Pilih Tujuan --</option>
-            <option value="puskesmas_bener" {{ old('alamat_tujuan') == 'puskesmas_bener' ? 'selected' : '' }}>Puskesmas Bener</option>
-            <option value="puskesmas_maron" {{ old('alamat_tujuan') == 'puskesmas_maron' ? 'selected' : '' }}>Puskesmas Maron</option>
-            <option value="rsud_purworejo" {{ old('alamat_tujuan') == 'rsud_purworejo' ? 'selected' : '' }}>
+            <option value="Puskesmas Bener" {{ old('alamat_tujuan') == 'Puskesmas Bener' ? 'selected' : '' }}>Puskesmas Bener</option>
+            <option value="Puskesmas Maron" {{ old('alamat_tujuan') == 'Puskesmas Maron' ? 'selected' : '' }}>Puskesmas Maron</option>
+            <option value="RSUD dr. Tjitrowardojo, Purworejo" {{ old('alamat_tujuan') == 'RSUD dr. Tjitrowardojo, Purworejo' ? 'selected' : '' }}>
               RSUD dr. Tjitrowardojo, Purworejo
             </option>
-            <option value="rsud_kebumen" {{ old('alamat_tujuan') == 'rsud_kebumen' ? 'selected' : '' }}>RSUD Kebumen</option>
+            <option value="RSUD Kebumen" {{ old('alamat_tujuan') == 'RSUD Kebumen' ? 'selected' : '' }}>RSUD Kebumen</option>
             <option value="lainnya" {{ old('alamat_tujuan') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
           </select>
         </div>
@@ -236,10 +237,10 @@
     document
       .getElementById("pemesananForm")
       .addEventListener("submit", function(e) {
-        e.preventDefault();
-        alert(
-          "✅ Permohonan berhasil diajukan!\n\nTim Mobil Siaga Desa Sendangsari akan segera menghubungi Anda via WhatsApp atau telepon dalam 1 jam."
-        );
+        // e.preventDefault();
+        // alert(
+        //   "✅ Permohonan berhasil diajukan!\n\nTim Mobil Siaga Desa Sendangsari akan segera menghubungi Anda via WhatsApp atau telepon dalam 1 jam."
+        // );
         // Di sistem nyata: kirim ke backend
       });
   </script>

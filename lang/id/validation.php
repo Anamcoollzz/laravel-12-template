@@ -188,6 +188,23 @@ return [
     */
 
     'attributes' => [
+        'full_name' => 'Nama Lengkap',
+        'phone_number' => 'No HP',
+        'lokasi_keberangkatan' => 'Lokasi Keberangkatan',
+        'alamat_tujuan' => 'Alamat Tujuan',
+        'car_type' => 'Jenis Mobil',
+        'tgl_penggunaan' => 'Tanggal Penggunaan',
+        'perkiraan_jam' => 'Perkiraan Jam',
+        'additional_notes' => 'Catatan Tambahan',
+        'status' => 'Status',
+        'full_name' => 'Nama Lengkap',
+        'phone_number' => 'No HP',
+        'lokasi_keberangkatan' => 'Lokasi Keberangkatan',
+        'alamat_tujuan' => 'Alamat Tujuan',
+        'car_type' => 'Jenis Mobil',
+        'tgl_penggunaan' => 'Tanggal Penggunaan',
+        'perkiraan_jam' => 'Perkiraan Jam',
+        'additional_notes' => 'Catatan Tambahan',
         'name' => 'name',
         'revision_notes' => 'Revision Notes',
         'title' => 'Title',

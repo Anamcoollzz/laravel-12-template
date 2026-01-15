@@ -58,63 +58,69 @@ return new class extends Migration
             $table->unsignedBigInteger('deleted_by_id')->nullable();
             $table->foreign('deleted_by_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
 
-            // student
-            $table->string('nis')->nullable();
-            $table->string('nisn')->nullable();
-            $table->unsignedBigInteger('religion_id')->nullable();
-            $table->foreign('religion_id')->references('id')->on('religions')->onUpdate('cascade')->onDelete('set null');
-            $table->string('rt', 3)->nullable();
-            $table->string('rw', 3)->nullable();
-            $table->string('postal_code', 10)->nullable();
-            $table->unsignedBigInteger('school_class_id')->nullable();
-            $table->foreign('school_class_id')->references('id')->on('school_classes')->onUpdate('cascade')->onDelete('set null');
-            $table->unsignedBigInteger('class_level_id')->nullable();
-            $table->foreign('class_level_id')->references('id')->on('class_levels')->onUpdate('cascade')->onDelete('set null');
-            $table->string('room', 50)->nullable();
+            if (is_app_dataku()) {
+                // student
+                $table->string('nis')->nullable();
+                $table->string('nisn')->nullable();
+                $table->unsignedBigInteger('religion_id')->nullable();
+                $table->foreign('religion_id')->references('id')->on('religions')->onUpdate('cascade')->onDelete('set null');
+                $table->string('rt', 3)->nullable();
+                $table->string('rw', 3)->nullable();
+                $table->string('postal_code', 10)->nullable();
+                $table->unsignedBigInteger('school_class_id')->nullable();
+                $table->foreign('school_class_id')->references('id')->on('school_classes')->onUpdate('cascade')->onDelete('set null');
+                $table->unsignedBigInteger('class_level_id')->nullable();
+                $table->foreign('class_level_id')->references('id')->on('class_levels')->onUpdate('cascade')->onDelete('set null');
+                $table->string('room', 50)->nullable();
 
-            $table->string('father_nik', 50)->nullable();
-            $table->string('father_name')->nullable();
-            $table->date('father_birth_date')->nullable();
-            $table->string('father_education', 100)->nullable();
-            $table->unsignedBigInteger('father_work_id')->nullable();
-            $table->foreign('father_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
-            $table->double('father_income')->nullable();
+                $table->string('father_nik', 50)->nullable();
+                $table->string('father_name')->nullable();
+                $table->date('father_birth_date')->nullable();
+                $table->string('father_education', 100)->nullable();
+                $table->unsignedBigInteger('father_work_id')->nullable();
+                $table->foreign('father_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+                $table->double('father_income')->nullable();
 
-            $table->string('mother_nik', 50)->nullable();
-            $table->string('mother_name')->nullable();
-            $table->date('mother_birth_date')->nullable();
-            $table->string('mother_education', 100)->nullable();
-            $table->unsignedBigInteger('mother_work_id')->nullable();
-            $table->foreign('mother_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
-            $table->double('mother_income')->nullable();
+                $table->string('mother_nik', 50)->nullable();
+                $table->string('mother_name')->nullable();
+                $table->date('mother_birth_date')->nullable();
+                $table->string('mother_education', 100)->nullable();
+                $table->unsignedBigInteger('mother_work_id')->nullable();
+                $table->foreign('mother_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+                $table->double('mother_income')->nullable();
 
-            $table->string('guardian_nik', 50)->nullable();
-            $table->string('guardian_name')->nullable();
-            $table->date('guardian_birth_date')->nullable();
-            $table->string('guardian_education', 100)->nullable();
-            $table->unsignedBigInteger('guardian_work_id')->nullable();
-            $table->foreign('guardian_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
-            $table->double('guardian_income')->nullable();
-            // end student
+                $table->string('guardian_nik', 50)->nullable();
+                $table->string('guardian_name')->nullable();
+                $table->date('guardian_birth_date')->nullable();
+                $table->string('guardian_education', 100)->nullable();
+                $table->unsignedBigInteger('guardian_work_id')->nullable();
+                $table->foreign('guardian_work_id')->references('id')->on('works')->onUpdate('cascade')->onDelete('set null');
+                $table->double('guardian_income')->nullable();
+                // end student
 
-            // start teacher
-            $table->string('teacher_nuptk')->nullable();
-            $table->string('teacher_mother_name')->nullable();
-            $table->string('teacher_employee_status', 100)->nullable();
-            $table->string('teacher_gtk_type', 100)->nullable();
-            $table->string('teacher_position', 100)->nullable();
-            // end teacher
+                // start teacher
+                $table->string('teacher_nuptk')->nullable();
+                $table->string('teacher_mother_name')->nullable();
+                $table->string('teacher_employee_status', 100)->nullable();
+                $table->string('teacher_gtk_type', 100)->nullable();
+                $table->string('teacher_position', 100)->nullable();
+                // end teacher
+            }
 
-            // start siaga desa
-            $table->string('dusun_rt_rw')->nullable();
-            // end siaga desa
+            if (is_app_siaga_desa()) {
+                // start siaga desa
+                $table->string('dusun_rt_rw')->nullable();
+                // end siaga desa
+            }
 
-            $table->unsignedBigInteger('education_level_id')->nullable();
-            $table->foreign('education_level_id')->references('id')->on('education_levels')->onUpdate('cascade')->onDelete('set null');
-            $table->unsignedBigInteger('semester_id')->nullable();
-            $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('set null');
-            $table->unsignedBigInteger('school_year_id')->nullable();
-            $table->foreign('school_year_id')->references('id')->on('school_years')->onUpdate('cascade')->onDelete('set null');
+            if (is_app_dataku()) {
+                $table->unsignedBigInteger('education_level_id')->nullable();
+                $table->foreign('education_level_id')->references('id')->on('education_levels')->onUpdate('cascade')->onDelete('set null');
+                $table->unsignedBigInteger('semester_id')->nullable();
+                $table->foreign('semester_id')->references('id')->on('semesters')->onUpdate('cascade')->onDelete('set null');
+                $table->unsignedBigInteger('school_year_id')->nullable();
+                $table->foreign('school_year_id')->references('id')->on('school_years')->onUpdate('cascade')->onDelete('set null');
+            }
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

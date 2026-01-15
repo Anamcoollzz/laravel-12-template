@@ -39,11 +39,16 @@ class Repository extends RepositoryAbstract
     /**
      * get all data order by created at desc
      *
+     * @param array|null $where
      * @return Collection
      */
-    public function getLatest()
+    public function getLatest(?array $where = [])
     {
-        return $this->model->latest()->get();
+        return $this->model
+            ->when(count($where) > 0, function ($query) use ($where) {
+                $query->where($where);
+            })
+            ->latest()->get();
     }
 
     /**

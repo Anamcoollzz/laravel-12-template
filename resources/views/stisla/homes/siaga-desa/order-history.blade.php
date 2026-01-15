@@ -70,6 +70,20 @@
 
   <!-- Main Content -->
   <main class="container mx-4 sm:mx-auto px-0 sm:px-4 py-8 max-w-4xl">
+
+    @if (session('success'))
+      <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-800 rounded-lg flex items-center gap-3">
+        <i class="fas fa-check-circle text-lg"></i>
+        <div>
+          <p class="font-medium">Berhasil!</p>
+          <p class="text-sm">{{ session('success') }}</p>
+        </div>
+        <button onclick="this.parentElement.style.display='none'" class="ml-auto text-green-800 hover:text-green-900">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    @endif
+
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
       <div class="p-5 border-b">
         <h2 class="text-xl font-bold text-gray-800">
@@ -87,40 +101,36 @@
           <thead class="bg-gray-50 text-xs uppercase">
             <tr>
               <th class="px-4 py-3 whitespace-nowrap">No</th>
-              <th class="px-4 py-3 whitespace-nowrap">Tanggal</th>
+              <th class="px-4 py-3 whitespace-nowrap">Tanggal Penggunaan</th>
               <th class="px-4 py-3 whitespace-nowrap">Jenis Mobil</th>
               <th class="px-4 py-3 whitespace-nowrap">Tujuan</th>
               <th class="px-4 py-3 whitespace-nowrap">Status</th>
             </tr>
           </thead>
           <tbody class="divide-y">
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3">1</td>
-              <td class="px-4 py-3">10 Jan 2026</td>
-              <td class="px-4 py-3">Ambulans</td>
-              <td class="px-4 py-3">Puskesmas Bener</td>
-              <td class="px-4 py-3">
-                <span class="px-2 py-1 rounded-full text-xs font-medium status-disetujui">Disetujui</span>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3">2</td>
-              <td class="px-4 py-3">05 Jan 2026</td>
-              <td class="px-4 py-3">Logistik</td>
-              <td class="px-4 py-3">RSUD Purworejo</td>
-              <td class="px-4 py-3">
-                <span class="px-2 py-1 rounded-full text-xs font-medium status-selesai">Selesai</span>
-              </td>
-            </tr>
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3">3</td>
-              <td class="px-4 py-3">02 Jan 2026</td>
-              <td class="px-4 py-3">Antar-Jemput</td>
-              <td class="px-4 py-3">Dusun Ngasinan</td>
-              <td class="px-4 py-3">
-                <span class="px-2 py-1 rounded-full text-xs font-medium status-menunggu">Menunggu</span>
-              </td>
-            </tr>
+            @foreach ($data as $item)
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                <td class="px-4 py-3">{{ $item->tgl_penggunaan }}</td>
+                <td class="px-4 py-3">{{ $item->car_type }}</td>
+                <td class="px-4 py-3">{{ $item->alamat_tujuan }}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded-full text-xs font-medium status-{{ strtolower($item->status) }}">{{ $item->status }}</span>
+                </td>
+              </tr>
+            @endforeach
+            @if ($data->isEmpty())
+              <tr>
+                <td colspan="5" class="px-4 py-12 text-center">
+                  <i class="fas fa-inbox text-4xl text-gray-300 mb-3 block"></i>
+                  <p class="text-gray-500 font-medium">Belum ada riwayat pemesanan</p>
+                  <p class="text-sm text-gray-400 mt-1">Mulai dengan membuat pemesanan baru untuk mobil siaga desa</p>
+                  <button onclick="handlePesan()" class="mt-4 bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                    <i class="fas fa-plus mr-1"></i> Buat Pemesanan
+                  </button>
+                </td>
+              </tr>
+            @endif
           </tbody>
         </table>
       </div>

@@ -325,6 +325,7 @@
 
   <script>
     function showTab(tab) {
+      event.preventDefault();
       const login = document.getElementById("login-form");
       const register = document.getElementById("register-form");
       const btnLogin = document.getElementById("btn-login");
