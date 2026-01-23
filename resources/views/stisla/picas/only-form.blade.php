@@ -122,15 +122,25 @@
 <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'problem_identification', 'label' => __('validation.attributes.problem_identification')])
 </div>
-<div class="col-md-6">
-  @include('stisla.includes.forms.inputs.input', [
-      'required' => false,
-      'name' => 'corrective_action',
-      'label' => __('validation.attributes.corrective_action'),
-      'readonly' => Route::is('picas.create'),
-      'disabled' => Route::is('picas.create') || Route::is('picas.edit'),
-  ])
-</div>
+@if (Route::is('picas.on-progress-edit'))
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input', [
+        'required' => false,
+        'name' => 'corrective_action',
+        'label' => __('validation.attributes.corrective_action'),
+    ])
+  </div>
+@else
+  <div class="col-md-6">
+    @include('stisla.includes.forms.inputs.input', [
+        'required' => false,
+        'name' => 'corrective_action',
+        'label' => __('validation.attributes.corrective_action'),
+        'readonly' => Route::is('picas.create'),
+        'disabled' => Route::is('picas.create') || Route::is('picas.edit'),
+    ])
+  </div>
+@endif
 {{-- <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'attachment', 'label' => __('validation.attributes.attachment')])
 </div> --}}
