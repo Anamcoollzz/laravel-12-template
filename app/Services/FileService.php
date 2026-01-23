@@ -37,6 +37,8 @@ class FileService
 
         // vps
         $file->storeAs('public/' . $folderName, $filename);
+        if (is_app_pocari())
+            return asset('storage/public/' . $folderName . '/' . $filename);
         return asset('storage/' . $folderName . '/' . $filename);
 
         // shared hosting

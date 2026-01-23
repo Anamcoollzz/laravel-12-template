@@ -880,6 +880,11 @@ class StislaController extends Controller implements HasMiddleware
         return backSuccess($successMessage);
     }
 
+    protected function afterStoreOrUpdate(Request $request, array $data, Model $model)
+    {
+        // to be overridden in child class
+    }
+
     /**
      * save data to db
      *
@@ -891,6 +896,7 @@ class StislaController extends Controller implements HasMiddleware
     {
         $data   = array_merge($data, $this->getStoreData($request));
         $result = $withUser ? $this->repository->createWithUser($data) : $this->repository->create($data);
+        $this->afterStoreOrUpdate($request, $data, $result);
         logCreate($this->title, $result);
         $successMessage = successMessageCreate($this->title);
 

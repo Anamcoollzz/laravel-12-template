@@ -216,7 +216,8 @@
 
                     <div style="padding-left: 8px;">
                       <div style="font-size: 11px; line-height: 1.12; color: #000;">
-                        <span style="font-weight: 800;">{{ $item->title }}</span>
+                        {{-- <span style="font-weight: 800;">{{ $item->title }}</span> --}}
+                        <span style="font-weight: 800;">{{ limit_words($item->notes, 5) }}</span>
                         <span style="font-weight: 400;"> - {{ $item->category->name }}</span>
                       </div>
 

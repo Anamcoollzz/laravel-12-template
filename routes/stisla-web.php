@@ -41,6 +41,11 @@ Route::get('youtube/view-sync', [YoutubeController::class, 'viewSync'])->name('y
 
 # TEST
 Route::get('test', [TestingController::class, 'test'])->name('test');
+Route::get('test2', [TestingController::class, 'test2'])->name('test2');
+Route::get('test3', [TestingController::class, 'test2'])->name('test3');
+Route::get('test4', function () {
+    dd(\App\Models\Pica::with(['status'])->first());
+});
 
 Route::get('select-education-level', [\App\Http\Controllers\EducationLevelController::class, 'select'])->name('select-education-level.index');
 Route::get('set-education-level/{education_level_id}', [\App\Http\Controllers\EducationLevelController::class, 'set'])->name('set-education-level');

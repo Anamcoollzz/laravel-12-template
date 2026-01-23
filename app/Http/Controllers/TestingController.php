@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\EmailService;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class TestingController extends Controller
@@ -35,5 +36,10 @@ class TestingController extends Controller
         $content = str_replace("}", "]", $content);
         $content = str_replace("{", "[", $content);
         return '<pre>' . $content . '</pre>';
+    }
+
+    public function test2()
+    {
+        Mail::to('hairulanam21@gmail.com')->send(new \App\Mail\PicaMail(\App\Models\Pica::first()));
     }
 }

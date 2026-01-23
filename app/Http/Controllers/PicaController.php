@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PicaRequest;
+use App\Models\Pica;
 use App\Models\Status;
 use App\Repositories\CategoryRepository;
 use App\Repositories\PicaRepository;
@@ -10,6 +11,8 @@ use App\Repositories\PocariFunctionRepository;
 use App\Repositories\StatusRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\WorkFieldRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -178,6 +181,21 @@ class PicaController extends StislaController
         // dd($request->all(), $data);
 
         return $data;
+    }
+
+    protected function afterStoreOrUpdate(Request $request, array $data, Model $model)
+    {
+        Mail::to('hairulanam21@gmail.com')->send(new \App\Mail\PicaMail($model));
+
+        // kirim ke cabang
+        if (filter_var($model->assignedto->email, FILTER_VALIDATE_EMAIL)) {
+            Mail::to($model->assignedto->email)->send(new \App\Mail\PicaMail($model));
+        }
+
+        // kirim ke pusat
+        if (filter_var($model->createdBy->email, FILTER_VALIDATE_EMAIL)) {
+            Mail::to($model->createdBy->email)->send(new \App\Mail\PicaMail($model));
+        }
     }
 
     /**

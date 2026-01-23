@@ -446,7 +446,7 @@
         selectedCategory: function(newVal, oldVal) {
           console.log('Category changed from ' + oldVal + ' to ' + newVal);
           if (newVal) {
-            alert('Kategori diubah menjadi: ' + newVal);
+            // alert('Kategori diubah menjadi: ' + newVal);
           }
         },
       },
