@@ -106,22 +106,22 @@ class Status extends Model
     {
         $id = $this->attributes['id'];
         $color = '#b71c2e';
-        if ($id === self::STATUS_OPEN) {
+        if ($id == self::STATUS_OPEN) {
             $type = 'secondary';
             $color = '#6c757d';
-        } elseif ($id === self::STATUS_ON_PROGRESS) {
+        } elseif ($id == self::STATUS_ON_PROGRESS) {
             $type = 'warning';
             $color = '#ff9800';
-        } elseif ($id === self::STATUS_OVERDUE) {
+        } elseif ($id == self::STATUS_OVERDUE) {
             $type = 'danger';
             $color = '#dc3545';
-        } elseif ($id === self::STATUS_NEED_APPROVAL) {
+        } elseif ($id == self::STATUS_NEED_APPROVAL) {
             $type = 'secondary';
             $color = 'purple';
-        } elseif ($id === self::STATUS_NEED_REVISION) {
+        } elseif ($id == self::STATUS_NEED_REVISION) {
             $type = 'secondary';
             $color = '#f552eb';
-        } elseif ($id === self::STATUS_DONE) {
+        } elseif ($id == self::STATUS_DONE) {
             $type = 'secondary';
             $color = 'green';
         }

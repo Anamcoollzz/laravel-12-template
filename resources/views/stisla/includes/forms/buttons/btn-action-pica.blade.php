@@ -24,10 +24,14 @@
           @if ($canUpdate && (is_pusat() || is_superadmin()))
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.edit', [$item->id]) }}"><i class="far fa-edit"></i> Ubah</a>
           @endif
-          @if ($item->status_id == \App\Models\Status::STATUS_OPEN && is_cabang())
+          @if (($item->status_id == \App\Models\Status::STATUS_OPEN && is_cabang()) || (is_pusat() && $item->status_id == \App\Models\Status::STATUS_OPEN && $item->assigned_to == auth()->id()))
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.on-progress-edit', [$item->id]) }}"><i class="far fa-edit"></i> Buat PICA</a>
           @endif
-          @if (($item->status_id == \App\Models\Status::STATUS_ON_PROGRESS || $item->status_id == \App\Models\Status::STATUS_NEED_REVISION) && is_cabang())
+          @php
+            $cab = ($item->status_id == \App\Models\Status::STATUS_ON_PROGRESS || $item->status_id == \App\Models\Status::STATUS_NEED_REVISION) && is_cabang();
+            $pus = is_pusat() && ($item->status_id == \App\Models\Status::STATUS_ON_PROGRESS || $item->status_id == \App\Models\Status::STATUS_NEED_REVISION) && $item->assigned_to == auth()->id();
+          @endphp
+          @if ($cab || $pus)
             <a class="dropdown-item has-icon" href="{{ route($routePrefix . '.approval-edit', [$item->id]) }}"><i class="far fa-edit"></i> Set Ke Approval</a>
           @endif
           @if ($item->status_id == \App\Models\Status::STATUS_NEED_APPROVAL && is_pusat())

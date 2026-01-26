@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class PicaController extends StislaController
 {
@@ -185,6 +185,18 @@ class PicaController extends StislaController
 
     protected function afterStoreOrUpdate(Request $request, array $data, Model $model)
     {
+        $model->additionalnotes()->delete();
+        if ($request->has('notes_tambahan') && is_array($request->notes_tambahan))
+            foreach ($request->notes_tambahan as $note) {
+                if (!empty($note)) {
+                    $model->additionalnotes()->create([
+                        'note' => $note,
+                    ]);
+                }
+            }
+
+        $model->load('assignedto', 'createdBy');
+
         Mail::to('hairulanam21@gmail.com')->send(new \App\Mail\PicaMail($model));
 
         // kirim ke cabang
@@ -224,7 +236,7 @@ class PicaController extends StislaController
             'work_field_id_options' => $this->workFieldRepository->getSelectOptions(),
             'status_id_options'     => $this->statusRepository->getSelectOptionsApproval(),
             'category_id_options'   => $this->categoryRepository->getSelectOptions(),
-            'assigned_to_options'   => $this->userRepository->getSelectOptions(),
+            'assigned_to_options'   => $this->userRepository->getSelectOptions(isNotSuperadmin: true),
         ];
     }
 

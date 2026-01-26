@@ -820,6 +820,7 @@ class StislaController extends Controller implements HasMiddleware
     {
         $data    = $this->getStoreData($request);
         $newData = $withUser ? $this->repository->updateWithUser($data, $model->id) : $this->repository->update($data, $model->id);
+        $this->afterStoreOrUpdate($request, $data, $newData);
         logUpdate($this->title, $model, $newData);
         $successMessage = successMessageUpdate($this->title);
 

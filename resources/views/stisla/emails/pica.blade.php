@@ -26,9 +26,15 @@
 
               <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                 <tr>
-                  <td style="padding:8px 0;font-weight:bold;width:150px;">Judul PICA</td>
+                  <td style="padding:8px 0;font-weight:bold;width:150px;">Notes</td>
                   <td style="padding:8px 0;">: {{ $judul_pica }}</td>
                 </tr>
+                @foreach ($pica->additionalnotes as $additionalnote)
+                  <tr>
+                    <td style="padding:8px 0;font-weight:bold;width:150px;">Notes {{ $loop->iteration + 1 }}</td>
+                    <td style="padding:8px 0;">: {{ $additionalnote->note }}</td>
+                  </tr>
+                @endforeach
                 <tr>
                   <td style="padding:8px 0;font-weight:bold;">Kategori</td>
                   <td style="padding:8px 0;">: {{ $kategori }}</td>
@@ -43,6 +49,11 @@
 
               <p style="margin-top:20px;">
                 Silakan login ke sistem untuk melihat detail lengkap PICA.
+              </p>
+              <p style="margin-top:20px;text-align:center;">
+                <a href="{{ route('picas.index') }}" style="display:inline-block;padding:12px 30px;background-color:#d32f2f;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:bold;">
+                  Lihat Detail PICA
+                </a>
               </p>
             </td>
           </tr>

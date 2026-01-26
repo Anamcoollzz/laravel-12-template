@@ -148,4 +148,9 @@ class Pica extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
+
+    public function additionalnotes()
+    {
+        return $this->hasMany(AdditionalNote::class, 'pica_id');
+    }
 }

@@ -418,7 +418,7 @@ class Repository extends RepositoryAbstract
      * @param callable|null $map
      * @return array
      */
-    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [], ?callable $map = null): array
+    public function getSelectOptions($label = 'name', $value = 'id', ?array $where = [], ?string $whereField = null, ?array $whereIn = [], ?callable $map = null, ?bool $isNotSuperadmin = null): array
     {
         $query = $this->query()
             ->when(!empty($where), function ($query) use ($where) {
@@ -432,6 +432,11 @@ class Repository extends RepositoryAbstract
             })
             ->when($map === null, function ($query) use ($label, $value) {
                 $query->select($label, $value);
+            })
+            ->when($isNotSuperadmin !== null, function ($query) use ($isNotSuperadmin) {
+                if ($isNotSuperadmin) {
+                    $query->role(['pusat', 'cabang']);
+                }
             })
             ->get()
             ->when($map !== null, function ($collection) use ($map) {

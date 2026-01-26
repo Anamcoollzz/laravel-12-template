@@ -149,7 +149,7 @@ class UserSeeder extends Seeder
             foreach (range(1, 10) as $index => $user) {
                 $userObj = User::create([
                     'name'                 => $name = 'Pusat ' . fake('id_ID')->city(),
-                    'email'                => $email = fake('id_ID')->unique()->safeEmail(),
+                    'email'                => str_replace(' ', '.', strtolower($name)) . '@gmail.com',
                     'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
                     'password'             => $this->password,
                     'is_locked'            =>  0,
@@ -170,8 +170,8 @@ class UserSeeder extends Seeder
 
             foreach (range(1, 25) as $index => $user) {
                 $userObj = User::create([
-                    'name'                 => $name = 'Cabang ' . fake('id_ID')->city(),
-                    'email'                => $email = fake('id_ID')->unique()->safeEmail(),
+                    'name'                 => $name = 'Cabang ' . fake('id_ID')->unique()->city(),
+                    'email'                => str_replace(' ', '.', strtolower($name)) . '@gmail.com',
                     'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
                     'password'             => $this->password,
                     'is_locked'            =>  0,
@@ -275,7 +275,7 @@ class UserSeeder extends Seeder
                 foreach (range(1, 5) as $index) {
                     $userObj = User::create([
                         'name'                 => $name = fake()->name(),
-                        'email'                => fake()->unique()->safeEmail(),
+                        'email'                => str_replace(' ', '.', strtolower($name)) . '@school.dataku.id',
                         'email_verified_at'    => fake()->optional()->dateTimeThisDecade()?->format('Y-m-d H:i:s'),
                         'password'             => $this->password,
                         'is_locked'            => $user['is_locked'] ?? 0,

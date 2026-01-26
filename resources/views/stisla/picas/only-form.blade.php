@@ -11,7 +11,7 @@
     @endisset
     <div class="col-md-12" id="app-pocari">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           @include('stisla.includes.forms.selects.select', [
               'id' => 'category_id',
               'name' => 'category_id',
@@ -24,7 +24,7 @@
         {{-- <div class="col-md-6">
           @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'title', 'label' => __('validation.attributes.title')])
         </div> --}}
-        <div class="col-md-6" v-if="selectedCategory == 2">
+        <div class="col-md-12" v-if="selectedCategory == 2">
           @include('stisla.includes.forms.selects.select', [
               'id' => 'notes',
               'name' => 'notes',
@@ -34,10 +34,20 @@
               'vModel' => 'selectedNotes',
           ])
         </div>
-        <div class="col-md-6" v-else>
+        <div class="col-md-12" v-else>
           @include('stisla.includes.forms.inputs.input', ['required' => true, 'name' => 'notes', 'label' => __('validation.attributes.notes')])
         </div>
-
+        <div class="col-md-12" v-for="(note, index) in notesTambahan" :key="index">
+          <div class="form-group">
+            <label for="rPiCs">Notes @{{ index + 2 }}
+              {{-- <span style="color: rgb(220, 53, 69);">*</span> --}}
+            </label>
+            <input v-model="notesTambahan[index]" id="rPiCs" name="notes_tambahan[]" :value="notesTambahan[index]" required="required" type="text" step="any" class="form-control">
+          </div>
+        </div>
+        <div class="col-12" v-if="notesTambahan.length < 4">
+          <a href="" class="btn btn-primary" @click.prevent="addNote">Tambah Note</a>
+        </div>
       </div>
     </div>
 
@@ -450,8 +460,17 @@
       data: {
         selectedCategory: '{{ $d->category_id ?? '' }}',
         selectedNotes: '{{ $d->notes ?? '' }}',
+        notesTambahan: @json($d->additionalnotes ?? []).map(function(item) {
+          return item.note;
+        }),
       },
-      methods: {},
+      methods: {
+        addNote: function() {
+          if (this.notesTambahan.length < 5) {
+            this.notesTambahan.push('');
+          }
+        },
+      },
       watch: {
         selectedCategory: function(newVal, oldVal) {
           console.log('Category changed from ' + oldVal + ' to ' + newVal);

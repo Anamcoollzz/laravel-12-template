@@ -46,6 +46,7 @@ class PicaMail extends Mailable
                 'kategori' => $this->pica->category->name,
                 'status' => $this->pica->status->name,
                 'tahun' => date('Y'),
+                'pica' => $this->pica,
             ],
         );
     }
