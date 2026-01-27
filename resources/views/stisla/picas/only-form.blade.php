@@ -45,7 +45,7 @@
             <input v-model="notesTambahan[index]" id="rPiCs" name="notes_tambahan[]" :value="notesTambahan[index]" required="required" type="text" step="any" class="form-control">
           </div>
         </div>
-        <div class="col-12" v-if="notesTambahan.length < 4">
+        <div class="col-12" v-if="notesTambahan.length < 4 && !isDisabled">
           <a href="" class="btn btn-primary" @click.prevent="addNote">Tambah Note</a>
         </div>
       </div>
@@ -132,7 +132,7 @@
 <div class="col-md-6">
   @include('stisla.includes.forms.inputs.input', ['required' => false, 'name' => 'problem_identification', 'label' => __('validation.attributes.problem_identification')])
 </div>
-@if (Route::is('picas.on-progress-edit'))
+@if (Route::is('picas.on-progress-edit') || Route::is('picas.approval-edit'))
   <div class="col-md-6">
     @include('stisla.includes.forms.inputs.input', [
         'required' => false,
@@ -435,6 +435,7 @@
       $(function() {
         $('#formPusat').find('.form-control').prop('disabled', true);
       })
+      window.isDisabled = true
     </script>
   @endif
 @endpush
@@ -459,10 +460,11 @@
       el: '#app-pocari',
       data: {
         selectedCategory: '{{ $d->category_id ?? '' }}',
-        selectedNotes: '{{ $d->notes ?? '' }}',
+        selectedNotes: '{!! $d->notes ?? '' !!}',
         notesTambahan: @json($d->additionalnotes ?? []).map(function(item) {
           return item.note;
         }),
+        isDisabled: window.isDisabled || {{ Route::is('picas.show') ? 'true' : 'false' }},
       },
       methods: {
         addNote: function() {
