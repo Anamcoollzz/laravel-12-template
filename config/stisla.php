@@ -25,7 +25,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ],
     [
         'name'              => 'Hairul Anam User',
@@ -35,7 +35,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ],
     [
         'name'              => 'Ahfa User',
@@ -45,7 +45,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ],
     [
         'name'              => 'Hairul Anam Banker',
@@ -55,7 +55,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ],
     [
         'name'              => 'Hairul Anam Admin Pendidikan',
@@ -65,7 +65,7 @@ $additionalUsers = [
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ],
 ];
 $superadminEmail = 'superadmin@laravel12template.com';
@@ -253,7 +253,7 @@ if (is_app_chat($app)) {
         'email_verified_at' => '2025-04-06 04:06:00',
         'phone_number'      => '6285322778935',
         'birth_date'        => '1998-04-08',
-        'address'           => 'Purworejo'
+        'address'           => 'Jember'
     ];
     $superadminEmail = 'superadmin@dataku.com';
     $appName = 'DataKu';
@@ -322,7 +322,7 @@ if (is_app_chat($app)) {
     //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Purworejo'
+    //     'address'           => 'Jember'
     // ];
     $superadminEmail = 'superadmin@fingerprint.com';
     $appName = 'Fingerpint';
@@ -431,7 +431,7 @@ if (is_app_chat($app)) {
     //     'email_verified_at' => '2025-04-06 04:06:00',
     //     'phone_number'      => '6285322778935',
     //     'birth_date'        => '1998-04-08',
-    //     'address'           => 'Purworejo'
+    //     'address'           => 'Jember'
     // ];
     $superadminEmail = 'superadmin@pocari.com';
     $appName = 'Pocari';
@@ -1351,7 +1351,7 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Purworejo'],
+        ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'CV Anam Techno'],
         ['key' => 'country', 'value' => 'Indonesia'],
         [
@@ -1469,7 +1469,7 @@ return [
         ['key' => 'application_name', 'value' => $appName],
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
-        ['key' => 'city', 'value' => 'Purworejo'],
+        ['key' => 'city', 'value' => 'Jember'],
         ['key' => 'company_name', 'value' => 'CV Anam Techno'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
@@ -1594,7 +1594,7 @@ return [
             'is_locked'         => 1,
             'phone_number'      => '6285322778935',
             'birth_date'        => '1998-04-08',
-            'address'           => 'Purworejo'
+            'address'           => 'Jember'
         ],
         $additionalUser,
     ], $additionalUsers)
