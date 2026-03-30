@@ -8,7 +8,7 @@ $app = AppEnum::APP_BLANK;
 // $app = AppEnum::APP_FINGERPRINT;
 // $app = AppEnum::APP_POCARI;
 // $app = AppEnum::APP_SIAGA_DESA;
-$appName = 'Siaga Desa';
+$appName = 'Laravel 12 Template';
 $appDesc = 'Ini adalah template laravel versi 12 terbaru dengan menggunakan Stisla sebagai dashboard adminnya. Silakan kembangkan sesuai dengan kebutuhan aplikasi Anda.';
 $table_excludes = [];
 $permissionExcludes = [];
@@ -490,7 +490,7 @@ if (is_app_chat($app)) {
         'Permission',
         'Group Permission',
     ];
-    $appName = 'Siaga Desa';
+    $appName = 'Laravel 12 Template';
     $appDesc = 'Aplikasi Peminjaman Mobil Desa adalah sistem manajemen kendaraan yang memfasilitasi proses peminjaman mobil desa oleh masyarakat. Fitur utama mencakup pendaftaran kendaraan, pengajuan peminjaman dengan detail lengkap, persetujuan peminjaman, tracking status real-time, notifikasi otomatis, jadwal peminjaman, riwayat peminjaman, manajemen driver, laporan penggunaan kendaraan, serta dokumentasi pemeliharaan. Sistem dirancang untuk meningkatkan efisiensi pengelolaan aset desa, transparansi data peminjaman, dan pelayanan masyarakat dengan antarmuka yang user-friendly dan terintegrasi.';
     $additionalUsers = [];
 }
@@ -1352,21 +1352,21 @@ return [
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Purworejo'],
-        ['key' => 'company_name', 'value' => 'Desa Sendangsari'],
+        ['key' => 'company_name', 'value' => 'CV Anam Techno'],
         ['key' => 'country', 'value' => 'Indonesia'],
         [
             'key' => 'favicon',
             'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'Desa Sendangsari'],
+        ['key' => 'meta_description', 'value' => 'CV Anam Techno'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1377,21 +1377,21 @@ return [
         ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
-        ['key' => 'meta_og_title', 'value' => 'Siaga Desa'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
-        ['key' => 'meta_twitter_title', 'value' => 'Siaga Desa'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' =>  'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
@@ -1470,7 +1470,7 @@ return [
         ['key' => 'application_version', 'value' => '1.0.0'],
         ['key' => 'app_description', 'value' => $appDesc],
         ['key' => 'city', 'value' => 'Purworejo'],
-        ['key' => 'company_name', 'value' => 'Desa Sendangsari'],
+        ['key' => 'company_name', 'value' => 'CV Anam Techno'],
         ['key' => 'country', 'value' => 'Indonesia'],
         ['key' => 'app_is_demo', 'value' => '0'],
         [
@@ -1478,14 +1478,14 @@ return [
             'value' => 'assets/icons/favicon_siaga_desa.ico',
             'is_url' => true
         ],
-        ['key' => 'logo', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'logo', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'since', 'value' => '2025'],
 
         [
             'key' => 'meta_author',
             'value' => 'Hairul Anam'
         ],
-        ['key' => 'meta_description', 'value' => 'Desa Sendangsari'],
+        ['key' => 'meta_description', 'value' => 'CV Anam Techno'],
         [
             'key' => 'meta_keywords',
             'value' => 'Sistem Informasi, Pemrograman, Github, PHP, Laravel, Stisla, Heroku, Gitlab, MySQL'
@@ -1496,21 +1496,21 @@ return [
         ['key' => 'meta_geo_placename', 'value' => 'Indonesia'],
         ['key' => 'meta_og_locale', 'value' => 'id_ID'],
         ['key' => 'meta_og_type', 'value' => 'website'],
-        ['key' => 'meta_og_title', 'value' => 'Siaga Desa'],
+        ['key' => 'meta_og_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_og_description', 'value' => $appDesc],
         ['key' => 'meta_og_url', 'value' => env('APP_URL')],
-        ['key' => 'meta_og_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_og_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         // twitter
         ['key' => 'meta_twitter_card', 'value' => 'summary_large_image'],
-        ['key' => 'meta_twitter_title', 'value' => 'Siaga Desa'],
+        ['key' => 'meta_twitter_title', 'value' => 'Laravel 12 Template'],
         ['key' => 'meta_twitter_description', 'value' => $appDesc],
-        ['key' => 'meta_twitter_image', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_twitter_image', 'value' => 'assets/images/logo.png', 'is_url' => true],
         ['key' => 'meta_twitter_domain', 'value' => domain()],
         ['key' => 'meta_twitter_url', 'value' => env('APP_URL')],
         // itemprop
         ['key' => 'meta_itemprop_headline', 'value' => $appDesc],
         ['key' => 'meta_itemprop_description', 'value' => $appDesc],
-        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/siagadesa.png', 'is_url' => true],
+        ['key' => 'meta_itemprop_thumbnailUrl', 'value' => 'assets/images/logo.png', 'is_url' => true],
 
         [
             'key' => 'stisla_bg_home',
